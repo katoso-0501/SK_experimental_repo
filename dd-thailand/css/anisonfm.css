@@ -1,0 +1,46 @@
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.heart {
+    display: inline-block;
+    position: relative;
+    border: 25px solid transparent;
+    border-top-color: #ff2000;
+}
+
+.heart:before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    background-color: #FF2000;
+    left: 0;
+    top: 12px;
+}
+
+.heart:after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    background-color: #FF2000;
+    right: 0;
+    top: 12px;
+}
