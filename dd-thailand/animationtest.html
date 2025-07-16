@@ -528,6 +528,9 @@
         <p class="modal_message"></p>
     </div>
     <div class="time_setting">
+        <p class="general-remove-default-pics">
+            <button>Remove Default Pics</button>
+        </p>
         <p class="general-millisec-settings">
             <label>
                 <input type="tel" name="milsec" class="millisec" value="400"> milli seconds
@@ -590,34 +593,34 @@
         <figure class="variableImgRoot"><img src="./img/beat01.jpg" alt class="variableImg" ></figure>
     </div>
     <div class="image_wrapper monkeyDance">
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="https://static.wikia.nocookie.net/edwikia/images/8/8e/Vlcsnap-2017-05-14-10h29m54s773.png" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="https://64.media.tumblr.com/e2bf6d71129a05a177324c69db6f14f5/d0ce1e36c7b0b467-44/s500x750/7d6e89e80660e80eb041ff5a946b21cc206cd097.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/VideoCapture_20241102-194749.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="https://static.wikia.nocookie.net/edwikia/images/8/8e/Vlcsnap-2017-05-14-10h29m54s773.png" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
-        <div class="animated_parent">
+        <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
     </div>
@@ -906,7 +909,14 @@
             }, 3000);
         }
 
-        
+        // Remove The Default Pictures
+        document.querySelector('.general-remove-default-pics button').addEventListener('click', ()=>{
+            document.querySelectorAll('.defaultPic').forEach(f=>{
+                f.remove();
+            });
+
+            document.querySelector('.general-remove-default-pics button').setAttribute("disabled", "disabled");
+        });
     </script>
 </body>
 </html>
