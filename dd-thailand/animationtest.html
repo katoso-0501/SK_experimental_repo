@@ -481,6 +481,12 @@
             font-size: 32px;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.1s ease-out, filter 0.4s ease-out;
+        }
+
+        .general-bpm-settings > button:active {
+            transform: scale(0.89);
+            filter: brightness(2);
         }
 
         .general-stop-button button {
@@ -493,7 +499,13 @@
             font-size: 32px;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.1s ease-out, filter 0.4s ease-out;
         }
+        .general-stop-button button:active {
+            transform: scale(0.89);
+            filter: brightness(2);
+        }
+
 
         .beat_changers button {
             width: 18%;
@@ -507,6 +519,12 @@
             font-size: 24px;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.1s ease-out, filter 0.4s ease-out;
+        }
+
+        .beat_changers button:active {
+            transform: scale(0.89);
+            filter: brightness(2);
         }
 
         .beat_changers button +
