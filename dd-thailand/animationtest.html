@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handy Rhythm Counter</title>
     <style>
+        html {
+            width: 100%;
+            background-color:  #202020;
+        }
+
+        body {
+            background: white;
+            transition: all 0.4s;
+            padding: 0;
+            margin: 0;
+        }
+
+        body.onehandMode {
+            margin-left: 30%;
+        }
+
+        .time_setting p{
+            margin: 0;
+            padding: 8px;
+        }
+
         body,input,button {
             font-family: "CartoGothic Std","Hind", "Hind Siliguri",sans-serif;
         }
@@ -415,6 +436,10 @@
     </style>
 
     <style media="(max-width: 768px)">
+        body {
+            overflow-x: hidden;
+        }
+        
         .general-bpm-settings {
             display: flex;
             flex-wrap: wrap;
@@ -497,7 +522,6 @@
             margin: 0 0 200px;
         }
         
-        
         .image_wrapper {
             display: flex;
             gap: 24px;
@@ -531,8 +555,9 @@
         <p class="modal_message"></p>
     </div>
     <div class="time_setting">
-        <p class="general-remove-default-pics">
-            <button>Remove Default Pics</button>
+        <p class="">
+            <button class="general-remove-default-pics">Remove Default Pics</button>
+            <button class="general-toggle-one-hand-mode">One Hand Mode</button>
         </p>
         <p class="general-millisec-settings">
             <label>
@@ -913,12 +938,17 @@
         }
 
         // Remove The Default Pictures
-        document.querySelector('.general-remove-default-pics button').addEventListener('click', ()=>{
+        document.querySelector('.general-remove-default-pics').addEventListener('click', ()=>{
             document.querySelectorAll('.defaultPic').forEach(f=>{
                 f.remove();
             });
 
-            document.querySelector('.general-remove-default-pics button').setAttribute("disabled", "disabled");
+            document.querySelector('.general-remove-default-pics').setAttribute("disabled", "disabled");
+        });
+
+        //  Toggle One-hand Mode
+        document.querySelector('.general-toggle-one-hand-mode').addEventListener('click', ()=>{
+            document.querySelector('body').classList.toggle('onehandMode');
         });
     </script>
 </body>
