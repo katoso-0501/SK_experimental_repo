@@ -17,6 +17,11 @@
             margin: 0;
         }
 
+        body.whenDazzlingBeating {
+            background: #202020;
+            color: #FFFFFF;
+        }
+
         body.onehandMode {
             margin-left: 30%;
             margin-top: 18vh;
@@ -97,11 +102,82 @@
         
         .behavior_options {
             max-width: 540px;
+            display: flex;
+            flex-wrap: wrap;
         }
         
-        .behavior_options label {
+        /* Customize Behavior Radio Buttons */
+        .behavior_options label input + span {
+            position: relative;
             display: inline-flex;
             align-items: center;
+            justify-content: space-between;
+            border-radius: 8px;
+            padding: 0 8px 0 34px;
+            margin: 4px 2px 4px 0;
+            height: 24px;
+            background-color: #FFFFFF;
+            /* border: 1px solid #808080; */
+            box-shadow: 0 0 4px rgba(80,80,80, .80);
+            color: #202020;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .behavior_options label input:checked + span {
+            color: #ed8743
+        }
+
+        .behavior_options label input  {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .behavior_options label input + span:before{
+            content: "";
+            left: 0;
+            top: 0;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 0;
+            /* border: 2px solid #602020; */
+            margin-right: 8px;
+            cursor: pointer;
+            padding: 0;
+            margin: 0 4px 0 0;
+            transition: all 0.4s;
+            background-color: #441b00;
+        }
+
+        .behavior_options label input:checked + span:before {
+            background-color: #ed8743;
+            color: #FFFFFF;
+        }
+        
+        .behavior_options label input + span:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 5px;
+            height: 16px;
+            left: 9px;
+            top: calc(50% - 10px);
+            border-radius: 2px;
+            border-right: solid 2px #FFFFFF;
+            border-bottom: solid 2px #FFFFFF;
+            transform: rotate(45deg);
+            -webkit-mask-image: linear-gradient(to right, transparent 48%, black 52%);
+            mask-image: linear-gradient(to right, transparent 48%, black 52%);
+            mask-repeat: no-repeat; 
+            mask-size: 120px;
+            mask-position: 0 center;
+            transition: all 0.4s;
+        }
+        
+        .behavior_options label input:checked + span:after {
+            mask-position: -70px center;
+            /* mask-size: 44px; */
         }
         
         .image_wrapper {
@@ -185,6 +261,11 @@
 
         .glimmering .animated_image {
             animation: glimmering .40s infinite linear;
+            animation-fill-mode: forwards;
+        }
+
+        .dazzling .animated_image {
+            animation: dazzling .40s infinite linear;
             animation-fill-mode: forwards;
         }
 
@@ -313,19 +394,34 @@
             }
         }
 
+        @keyframes dazzling {
+            0%{
+                filter: brightness(0.31);
+            }
+            5%{
+                filter: brightness(2);
+            }
+            88%{
+                filter: brightness(0.1);
+            }
+            100%{
+                filter: brightness(0.31);
+            }
+        }
+
         @keyframes animator2{
-        0%{
-            transform:scale(1);
-        }
-        10%{
-            transform:scale(0.1);
-        }
-        40%{
-            transform:scale(1);
-        }
-        100%{
-            transform:scale(1);
-        }
+            0%{
+                transform:scale(1);
+            }
+            10%{
+                transform:scale(0.1);
+            }
+            40%{
+                transform:scale(1);
+            }
+            100%{
+                transform:scale(1);
+            }
         }
 
         @keyframes animator5{
@@ -616,17 +712,18 @@
 
         <p class="behavior_indication">Animation Behavior: <span>Monkey Dance</span></p>
         <p class="behavior_options">
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer1" checked> Monkey Dance</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer2"> Heartbeat</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer3"> Jumper</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer4"> See Saw</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer5"> Blinker</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer6"> Acrobatic</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer7"> Moonsault</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer8"> Gelatin</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer9"> Tornado Spin</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer10"> Glimmering</label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer11"> Do Nothing!</label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer1" checked><span>Monkey Dance</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer2"><span>Heartbeat</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer3"><span>Jumper</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer4"><span>See Saw</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer5"><span>Blinker</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer6"><span>Acrobatic</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer7"><span>Moonsault</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer8"><span>Gelatin</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer9"><span>Tornado Spin</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer10"><span>Glimmering</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer11"><span>Dazzling</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer12"><span>Do Nothing!</span></label>
         </p>
 
         <p>Add a picture file and make it beat!</p>
@@ -639,7 +736,7 @@
         </div>
     </div>
     <div class="" style="margin-bottom: 0px">
-        <figure class="variableImgRoot"><img src="./img/beat01.jpg" alt class="variableImg" ></figure>
+        <figure class="variableImgRoot"><img loading="eager" src="./img/beat01.jpg" alt class="variableImg" ></figure>
     </div>
     <div class="image_wrapper monkeyDance">
         <div class="animated_parent defaultPic">
@@ -785,6 +882,7 @@
                 ["gelatin", "Gelatin"],
                 ["tornadoSpin", "Tornado Spin"],
                 ["glimmering", "Glimmering"],
+                ["dazzling", "Dazzling"],
                 ["doNothing", "Do Nothing!"],
             ] 
             ;
@@ -792,6 +890,7 @@
                 animationBehavior = index;
 
                 // Remove Animation Classes
+                document.querySelector('body').classList.remove("whenDazzlingBeating");
                 const iw = document.querySelector('.image_wrapper');
                 for(let d = 0; d < names.length; d++){
                     iw.classList.remove(names[d][0]);
@@ -800,6 +899,10 @@
                 // Add Selected Animation
                 iw.classList.add(names[index][0]);
                 document.querySelector('.behavior_indication span').textContent = names[index][1];
+
+                if(names[index][0] === "dazzling"){
+                    document.querySelector('body').classList.add("whenDazzlingBeating");
+                }
             });
         });
 
@@ -940,6 +1043,8 @@
                 }
             }
             reader.readAsDataURL(file);
+            // Unselect the file in the file input
+            document.querySelector('#imageFile').value = '';
         });
 
         // Pop up modal with message
