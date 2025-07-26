@@ -141,7 +141,6 @@
             width: 24px;
             height: 24px;
             border-radius: 0;
-            /* border: 2px solid #602020; */
             margin-right: 8px;
             cursor: pointer;
             padding: 0;
@@ -177,7 +176,6 @@
         
         .behavior_options label input:checked + span:after {
             mask-position: -70px center;
-            /* mask-size: 44px; */
         }
         
         .image_wrapper {
@@ -396,16 +394,16 @@
 
         @keyframes dazzling {
             0%{
-                filter: brightness(0.31);
+                filter: brightness(0.31) drop-shadow(0 0 5px #FFFFFF);
             }
             5%{
-                filter: brightness(2);
+                filter: brightness(2) drop-shadow(0 0 35px #FFFFFF);
             }
             88%{
-                filter: brightness(0.1);
+                filter: brightness(0.1) drop-shadow(0 0 5px rgba(255,255,255,0));
             }
             100%{
-                filter: brightness(0.31);
+                filter: brightness(0.31) drop-shadow(0 0 5px rgba(255,255,255,0));
             }
         }
 
