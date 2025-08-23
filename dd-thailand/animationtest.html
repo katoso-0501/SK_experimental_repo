@@ -207,6 +207,46 @@
             object-fit: contain;
         }
 
+        #imageFile {
+            visibility: hidden;
+        }
+
+        .new_add_image_to_beat {
+            text-align: center;
+            position: relative;
+            font-size: 20px;
+            padding-bottom: 100px;
+            margin: 120px auto 0;
+            color: #20af20;
+            cursor: pointer;
+        }
+
+        .new_add_image_to_beat:before {
+            content: "+";
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: #ffffff;
+            background: #20af20;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            font-weight: 400;
+            transition: all 0.4s;
+        }
+        
+        .new_add_image_to_beat:hover:before {
+            transform: translate(-50%, -50%) scale(1.1);
+            color: #20af20;
+            background: #ffffff;
+        }
+
         /* Each Animation Settings*/
         .monkeyDance .animated_parent {
             animation: animator6 0.40s infinite linear;
@@ -267,10 +307,42 @@
             animation-fill-mode: forwards;
         }
 
+        .marchingPerformance .animated_parent {
+            width: calc(50% - 48px);
+            height: 180px;
+        }
+
+        .marchingPerformance  .animated_parent:nth-child(even) .animated_image {
+            animation: marchingPerformance_even .40s infinite alternate linear;
+            animation-fill-mode: forwards;
+        }
+
+        .marchingPerformance .animated_parent:nth-child(odd) .animated_image {
+            animation: marchingPerformance_odd .40s infinite alternate linear;
+            animation-fill-mode: forwards;
+        }
+        
+        .marchingPerformance  .animated_parent:nth-child(odd).oddEvenInverted {
+            /* transform: translateX(50%); */
+        }
+
+        .marchingPerformance  .animated_parent:nth-child(even).oddEvenInverted .animated_image {
+            /* animation: marchingPerformance_even .40s infinite alternate-reverse linear;
+            animation-fill-mode: forwards; */
+        }
+        
+        .marchingPerformance  .animated_parent:nth-child(even).oddEvenInverted {
+            /* transform: translateX(50.0%); */
+        }
+
+        .marchingPerformance .animated_parent:nth-child(even).oddEvenInverted .animated_image {
+            /* animation: marchingPerformance_odd .40s infinite alternate-reverse linear;
+            animation-fill-mode: forwards; */
+        }
+
         .doNothing .animated_image {
             animation: none;
         }
-
 
         @keyframes blinker{
             0%{
@@ -404,6 +476,28 @@
             }
             100%{
                 filter: brightness(0.31) drop-shadow(0 0 5px rgba(255,255,255,0));
+            }
+        }
+
+        @keyframes marchingPerformance_odd {
+            0%{
+                transform: translateX(0);
+            }
+
+
+            100%{
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes marchingPerformance_even {
+            0%{
+                transform: translateX(0);
+            }
+            
+
+            100%{
+                transform: translateX(-100%);
             }
         }
 
@@ -663,6 +757,14 @@
             left: 0;
             top: 32px;
         }
+        .new_add_image_to_beat {
+            padding-bottom: 250px;
+        }
+        
+        .new_add_image_to_beat::before {
+            top: 80px
+        }
+
     </style>
 </head>
 <body>
@@ -721,13 +823,11 @@
             <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer9"><span>Tornado Spin</span></label>
             <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer10"><span>Glimmering</span></label>
             <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer11"><span>Dazzling</span></label>
-            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer12"><span>Do Nothing!</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer12"><span>Marching Performance</span></label>
+            <label><input type="radio" name="animation_behavior" class="behavior_changer behavior_changer13"><span>Do Nothing!</span></label>
         </p>
-
-        <p>Add a picture file and make it beat!</p>
-        <p>
-            <input type="file" id="imageFile">
-        </p>
+        
+        <input type="file" id="imageFile">
 
         <div class="beat_lamp_root">
             <div class="beat_lamp_child"></div>
@@ -767,6 +867,10 @@
         <div class="animated_parent defaultPic">
             <img class="animated_image" src="./img/actual_life__portrait1.jpg" alt="">
         </div>
+    </div>
+
+    <div class="new_add_image_to_beat">
+        <p>Add a picture file and make it beat!</p>
     </div>
 
     <script>
@@ -881,6 +985,7 @@
                 ["tornadoSpin", "Tornado Spin"],
                 ["glimmering", "Glimmering"],
                 ["dazzling", "Dazzling"],
+                ["marchingPerformance", "Marching Performance"],
                 ["doNothing", "Do Nothing!"],
             ] 
             ;
@@ -897,9 +1002,22 @@
                 // Add Selected Animation
                 iw.classList.add(names[index][0]);
                 document.querySelector('.behavior_indication span').textContent = names[index][1];
+                document.querySelectorAll('.animated_parent').forEach(f=>{f.classList.remove('oddEvenInverted')});
 
                 if(names[index][0] === "dazzling"){
                     document.querySelector('body').classList.add("whenDazzlingBeating");
+                }
+                
+                if(names[index][0] === "marchingPerformance"){
+                    let oddEvenFlip = 1;
+                    for (let f = 0 ; f<document.querySelectorAll('.animated_parent').length; f++){
+                        if(f % 2 === 0) {
+                            oddEvenFlip *= -1;
+                        }
+                        if(oddEvenFlip <= -1) {
+                            document.querySelectorAll('.animated_parent')[f].classList.add('oddEvenInverted');
+                        }
+                    }
                 }
             });
         });
@@ -1074,6 +1192,10 @@
         document.querySelector('.general-toggle-one-hand-mode').addEventListener('click', ()=>{
             document.querySelector('body').classList.toggle('onehandMode');
         });
+
+        document.querySelector('.new_add_image_to_beat').addEventListener('click', ()=>{
+            document.querySelector('#imageFile').click();
+        })
     </script>
 </body>
 </html>
