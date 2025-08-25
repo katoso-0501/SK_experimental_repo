@@ -313,12 +313,12 @@
         }
 
         .marchingPerformance  .animated_parent:nth-child(even) .animated_image {
-            animation: marchingPerformance_even .40s infinite alternate linear;
+            animation: marchingPerformance_even .40s infinite  linear;
             animation-fill-mode: forwards;
         }
 
         .marchingPerformance .animated_parent:nth-child(odd) .animated_image {
-            animation: marchingPerformance_odd .40s infinite alternate linear;
+            animation: marchingPerformance_odd .40s infinite  linear;
             animation-fill-mode: forwards;
         }
         
@@ -484,9 +484,40 @@
                 transform: translateX(0);
             }
 
+            2% {
+                transform: translateX(-4%);
+            }
+
+            9% {
+                
+                transform: translateX(104%);
+            }
+            
+            11% {
+                
+                transform: translateX(100%);
+            }
+            
+            50% {
+                
+                transform: translateX(100%);
+            }
+
+            52% {
+                transform: translateX(105%);
+
+            }
+
+            60%{
+                transform: translateX(-2%);
+            }
+
+            62%{
+                transform: translateX(0%);
+            }
 
             100%{
-                transform: translateX(100%);
+                transform: translateX(0%);
             }
         }
 
@@ -494,10 +525,35 @@
             0%{
                 transform: translateX(0);
             }
-            
 
-            100%{
+            2% {
+                transform: translateX(4%);
+            }
+
+            9% {
+                
+                transform: translateX(-104%);
+            }
+            11% {
+                
                 transform: translateX(-100%);
+            }
+            
+            50% {
+                transform: translateX(-100%);
+            }
+            
+            52% {
+                transform: translateX(105%);
+
+            }
+
+            60%{
+                transform: translateX(2%);
+            }
+
+            62%{
+                transform: translateX(-0%);
             }
         }
 
@@ -1018,6 +1074,16 @@
                             document.querySelectorAll('.animated_parent')[f].classList.add('oddEvenInverted');
                         }
                     }
+
+                    document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
+                
+                    const a = (millisec * 2) + "ms";
+                  
+                    f.style.animation = null;
+                    f.style.animationDuration = a;
+                    f.style.animationIterationCount = "infinite";
+                     });
+
                 }
             });
         });
@@ -1109,12 +1175,24 @@
                 popupModal('BPM is too high to perform.');
             } else {
                 const c = Math.floor((60 / Number(input.value)) * 1000);
-                millisec = c;
+
+                if(document.querySelector('.animated_parent').classList.contains('marchingPerformance')) {
+                    millisec = c * 2;
+                } else {
+                    millisec = c;
+                }
+                
                 document.querySelector('.millisec').value = c;
             }
 
             document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
+                
                 let a = millisec + "ms";
+                if(document.querySelector('.animated_parent').classList.contains('marchingPerformance')) {
+                 a = (millisec * 2) + "ms";
+                }else{
+                 a = millisec + "ms";
+                }
                 f.style.animation = null;
                 f.style.animationDuration = a;
                 f.style.animationIterationCount = "infinite";
