@@ -16,6 +16,11 @@
             padding: 0;
             margin: 0;
         }
+        
+        body.upwardSwipePrevention 
+        .time_setting {
+            padding-top: 700px;
+        }
 
         body.whenDazzlingBeating {
             background: #202020;
@@ -1274,7 +1279,28 @@
 
         document.querySelector('.new_add_image_to_beat').addEventListener('click', ()=>{
             document.querySelector('#imageFile').click();
-        })
+        });
+
+        // To prevent refreshing by swiping upward
+        let upwardSwipePrevention = false;
+        window.addEventListener("scroll", ()=>{
+            if(window.innerWidth <= 768) {
+                document.querySelector('body').classList.add('upwardSwipePrevention');
+                upwardSwipePrevention = true;
+            }else{
+                document.querySelector('body').classList.remove('upwardSwipePrevention');
+                upwardSwipePrevention = false;
+            }
+
+            if(upwardSwipePrevention) {
+                if(window.scrollY<=600) {
+                    window.scrollTo(0, 601);
+                }
+            }
+        });
+
+        
+
     </script>
 </body>
 </html>
