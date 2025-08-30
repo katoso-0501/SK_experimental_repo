@@ -783,7 +783,7 @@
         }
 
         .beat_lamp_root {
-            top: 300px;
+            top: 1000px;
             left: 8px;
         }
         
@@ -1284,6 +1284,17 @@
         // To prevent refreshing by swiping upward
         let upwardSwipePrevention = false;
         window.addEventListener("scroll", ()=>{
+            preventUpwardSwipeRefreshing();
+        });
+        window.addEventListener("load", ()=>{
+            preventUpwardSwipeRefreshing();
+        });
+        window.addEventListener("resize", ()=>{
+            preventUpwardSwipeRefreshing();
+        });
+
+        function preventUpwardSwipeRefreshing () {
+
             if(window.innerWidth <= 768) {
                 document.querySelector('body').classList.add('upwardSwipePrevention');
                 upwardSwipePrevention = true;
@@ -1297,9 +1308,7 @@
                     window.scrollTo(0, 601);
                 }
             }
-        });
-
-        
+        }
 
     </script>
 </body>
