@@ -47,6 +47,7 @@ document.querySelector('.button_update').addEventListener('click', ()=>{
         console.log(Number(input.value));
         millisec = input.value;
         document.querySelector('.bpm').value = Math.floor((60 / input.value) * 1000);
+        document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
     }
 
 
@@ -144,15 +145,20 @@ document.querySelectorAll(".behavior_changer").forEach(function(d,g){
                 }
             }
 
-            document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
-        
-            const a = (millisec * 2) + "ms";
-          
-            f.style.animation = null;
-            f.style.animationDuration = a;
-            f.style.animationIterationCount = "infinite";
-             });
-
+            document.querySelectorAll(".animated_parent, .animated_image").forEach(f=>{
+                const a = (millisec * 2) + "ms";
+            
+                f.style.animation = null;
+                f.style.animationDuration = a;
+                f.style.animationIterationCount = "infinite";
+            });
+        }else{
+            document.querySelectorAll(".animated_parent, .animated_image").forEach(f=>{
+                const a = (millisec ) + "ms";
+                f.style.animation = null;
+                f.style.animationDuration = a;
+                f.style.animationIterationCount = "infinite";
+            });
         }
     });
 });
@@ -245,7 +251,7 @@ function changeTempoByBPM () {
     } else {
         const c = Math.floor((60 / Number(input.value)) * 1000);
 
-        if(document.querySelector('.animated_parent').classList.contains('marchingPerformance')) {
+        if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
             millisec = c * 2;
         } else {
             millisec = c;
@@ -254,24 +260,40 @@ function changeTempoByBPM () {
         document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
         document.querySelector('.millisec').value = c;
     }
+    if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
+        document.querySelectorAll(".animated_parent , .animated_image").forEach(f=>{
+            let a = millisec + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
+        document.querySelectorAll(".beat_lamp_child").forEach(f=>{
+            let a = (millisec / 2) + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
 
-    document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
-        
-        let a = millisec + "ms";
-        if(document.querySelector('.animated_parent').classList.contains('marchingPerformance')) {
-         a = (millisec * 2) + "ms";
-        }else{
-         a = millisec + "ms";
-        }
-        f.style.animation = null;
-        f.style.animationDuration = a;
-        f.style.animationIterationCount = "infinite";
-    });
+    } else {
+
+        document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
+            let a = millisec + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
+    }
+
     
     clearInterval(interv);
     currentBeat = 0;
     updateBeat();
-    interv = setInterval(updateBeat,millisec);
+    
+    if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
+        interv = setInterval(updateBeat,(millisec / 2));
+    } else {
+        interv = setInterval(updateBeat,millisec);
+    }
     document.querySelector('.beat_lamp_child').style.display="block";
 }
 

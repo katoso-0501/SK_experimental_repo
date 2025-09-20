@@ -62,8 +62,8 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .preloaded_beat_images img {
-    width: 1px;
-    height: 1px;
+    width: 12px;
+    height: 12px;
 }
 
 .sticky_bpm_indicator {
