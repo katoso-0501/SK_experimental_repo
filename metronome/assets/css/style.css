@@ -76,9 +76,14 @@ body::-webkit-scrollbar-thumb:hover {
     align-items: center;
     justify-content: center;
     height: 40px;
-    width: 100%;
+    width: 100lvw;
     background: #F8F8F8;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.whenDazzlingBeating .sticky_bpm_indicator {
+    color: #FFFFFF;
+    background: #202020;
 }
 
 .sticky_bpm_indicator.expanded {
