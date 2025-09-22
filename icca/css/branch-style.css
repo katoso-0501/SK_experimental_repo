@@ -1,0 +1,75 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500');
+/* CSS Document */
+
+h1 small{font-family:'Reem Kufi',sans-serif;}
+
+
+@media only screen and (min-width:961px){
+	h1{
+		background:url(../img/h1_subtitle.png) right no-repeat,url(../img/branches/branch-h1.jpg) 0% 50% no-repeat,#0768CF;
+		background-size:700px,70%;
+		color:white;
+		padding:70px 0;
+		padding-left:calc(100% - 570px);
+		font-weight: bold;
+		letter-spacing:3px;
+		font-size:26pt;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		letter-spacing:0;
+		font-size:16pt;
+		display: block;
+	}
+	section{
+		padding:60px 0;
+	}
+	#atlas{
+		background:url(../img/atlas.jpg) 50% 100% no-repeat;
+		font-size:0;
+		padding:360px 0;
+	}
+	section ul{
+		text-align:center;
+	}
+	section li{
+		display:inline-block;
+		background-color:blue;
+		padding-top:220px;
+		width:380px;
+		margin:0 20px;
+	}
+	section li .subtitles{
+		text-align:left;
+		font-size:16pt;
+		background:#F40037;
+		color:white;
+		padding:5px 15px;
+	}
+	section li small{
+		display:block;
+		font-size:10pt;
+		margin-top:3px;
+		letter-spacing:6px;
+		font-family: 'Quicksand', sans-serif;
+	}
+	#bangkok{
+		background:url('../img/branches/branch-bangkok.jpg') 0% 45%;
+		background-size:100%;
+	}
+	#chiangmai{
+		background:url('../img/branches/branch-chiangmai.jpg') center 0%;
+		background-size:110%;
+	}
+	#hochiminh{
+		background:url('../img/branches/branch-hochiminh.jpg') 0% 45%;
+		background-size:100%;
+	}
+	#shanghai{
+		background:url('../img/branches/branch-shanghai.jpg') 50% 0%;
+		background-size:105%;
+	}
+	.blue-bg{background-color:#EFFDFF;}
+	.white-bg{background-color:#FFFFFF;}
+}

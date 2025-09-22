@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+	margin:0;
+	padding:0;
+	text-decoration: none;
+	list-style-type:none;
+	font-weight:normal;
+}
+body{
+	font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";/**/
+	overflow-y:scroll;
+}
+h1,h2,h3,h4,h5,h6,p,body,a{
+	color:#222222;
+}

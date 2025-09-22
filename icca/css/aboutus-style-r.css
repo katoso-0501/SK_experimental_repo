@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+/* * * * * * * * * * * *
+ * PC less than 960px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:960px){
+	h1{
+		background:url(../img/h1_subtitle_resp.png) center bottom no-repeat,url(../img/aboutus-h1.jpg) 50% 50%;
+		padding:180px 0 10px;
+		background-size:960px,110%;
+		font-size:18pt;
+		text-align:center;
+		color:white;
+		font-weight:bold;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		display: block;
+		font-size:10pt;
+	}
+	#assoc-profile{padding:60px 0;}
+	#assoc-profile table{
+		width:85%;
+		margin:0 auto;
+		padding:0;
+		text-align:left;
+	}
+	#assoc-profile th{
+		width:190px;
+	}
+	#assoc-profile th,#assoc-profile td{
+		padding:8px 0;
+		line-height:32px;
+		font-size:12pt;
+	}
+	#assoc-profile .master-header{
+		
+		padding:8px 0 10px 0px;
+		vertical-align: top;
+		font-weight:bold !important;
+		width:100px;
+	}
+	#assoc-profile .horizon-line{
+		background:black;
+		line-height:0;
+		padding:0;
+		height:1px;
+	}
+	#bangkok-photo{
+		font-size:0;
+		padding-bottom:360px;
+
+		background:url(../img/bangkok-margin.jpg) center top ,#870282;
+		background-size:108%;
+	}
+}
+@media only screen and (max-width:600px){
+	#assoc-profile{padding:60px 0;}
+	#assoc-profile table{
+		width:95%;
+		margin:0 auto;
+		padding:0;
+		text-align:left;
+	}
+	#assoc-profile th{
+		width:190px;
+	}
+	#assoc-profile th,#assoc-profile td{
+		padding:4px 0;
+		line-height:28px;
+		font-size:9pt;
+	}
+	#assoc-profile .master-header{
+		
+		padding:4px 0 10px 0px;
+		vertical-align: top;
+		font-weight:bold !important;
+		width:100px;
+	}
+	#assoc-profile .horizon-line{
+		background:black;
+		line-height:0;
+		padding:0;
+		height:1px;
+	}
+	#bangkok-photo{
+		font-size:0;
+		padding-bottom:180px;
+
+		background:url(../img/bangkok-margin.jpg) ,#870282;
+		background-size:100%;
+	}
+}

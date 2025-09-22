@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+
+h1 small{font-family:'Reem Kufi',sans-serif;}
+/* * * * * * * * * * * *
+ * PC more than 960px * 
+* * * * * * * * * * * */
+@media only screen and (min-width:961px){
+	#assoc-profile{padding:60px 0;}
+	h1{
+		background:url(../img/h1_subtitle.png) right no-repeat,url(../img/aboutus-h1.jpg) 0% 40% no-repeat,#0768CF;
+		background-size:700px,70%;
+		color:white;
+		padding:70px 0;
+		padding-left:calc(100% - 570px);
+		font-weight: bold;
+		letter-spacing:3px;
+		font-size:26pt;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		letter-spacing:0;
+		font-size:16pt;
+		display: block;
+	}
+	#assoc-profile table{
+		width:660px;
+		margin:-30px auto 0;
+		padding:0;
+		font-size:12pt;
+		text-align:left;
+	}
+	#assoc-profile th{
+		width:190px;
+	}
+	#assoc-profile th,#assoc-profile td{
+		padding:8px 0;
+		line-height:35px;
+	}
+	#assoc-profile .master-header{
+		padding:8px 0 8px 30px;
+		font-weight:bold !important;
+		vertical-align:top;
+		width:155px;
+	}
+	#assoc-profile .horizon-line{
+		background:black;
+		line-height:0;
+		padding:0;
+		height:1px;
+	}
+	#bangkok-photo{
+		font-size:0;
+		padding-bottom:360px;
+
+		background:url(../img/bangkok-margin.jpg) center 10%,#870282;
+		background-size:100%;
+	}
+}

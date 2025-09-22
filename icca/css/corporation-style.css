@@ -1,0 +1,158 @@
+@charset "utf-8";
+/* CSS Document */
+
+h1 small{font-family:'Reem Kufi',sans-serif;}
+/* * * * * * * * * * * *
+ * PC more than 960px * 
+* * * * * * * * * * * */
+@media only screen and (min-width:961px){
+	section{padding:60px 0;}
+	h1{
+		background:url(../img/h1_subtitle.png) right no-repeat,url(../img/corporation-h1.jpg) 0% 50% no-repeat,#0768CF;
+		background-size:700px,70%;
+		color:white;
+		padding:70px 0;
+		padding-left:calc(100% - 570px);
+		font-weight: bold;
+		letter-spacing:3px;
+		font-size:26pt;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		letter-spacing:0;
+		font-size:16pt;
+		display: block;
+	}
+	#incorporated{
+		text-align:center;
+	}
+	.incorporated-list{
+		width:270px;
+		margin:0 20px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	h3{
+		font-size:14pt;
+		text-align:center;
+		padding-bottom:5px;
+		border-bottom:#38A1EC 3px solid;
+	}
+	h3 small{
+		font-size:7pt;
+		display:block;
+	}
+	.incorporated-list li{
+		text-align:left;
+		background:url(../img/corporation-li.png) left center no-repeat;
+		font-size:12.2pt;
+		text-indent:20px;
+		margin:20px 20px;
+	}
+}
+/* * * * * * * * * * * *
+ * PC less than 960px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:960px){
+	h1{
+		background:url(../img/h1_subtitle_resp.png) center bottom no-repeat,url(../img/corporation-h1.jpg) 50% 50%;
+		padding:180px 0 10px;
+		background-size:960px,100%;
+		font-size:18pt;
+		text-align:center;
+		color:white;
+		font-weight:bold;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		display: block;
+		font-size:10pt;
+	}
+	section{padding:60px 0;}
+	.incorporated-list{
+		width:80%;
+		margin:0 auto 40px;
+	}
+	h3{
+		font-size:16pt;
+		text-indent: 9px;
+		border-left:5px solid  #38A1EC;
+		margin-bottom:10px;
+		font-weight:bold;
+	}
+	h3 small{
+		display:block;
+		font-size:10pt;
+	}
+	#partners img{
+		width:90%;
+		max-width:480px;
+	}
+	.incorporated-list ul{
+		width:90%;
+		margin:0 auto;
+	}
+	.incorporated-list li{
+		display:inline-block;
+		width:48%;
+		background:url(../img/corporation-li.png) left center no-repeat;
+		background-size:8px;
+
+		font-size:12pt;
+		text-indent:15px;
+		margin:12.5px 0;
+	}
+}
+/* * * * * * * * * * * *
+ * PC less than 600px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:600px){
+	h1{
+		background:url(../img/h1_subtitle_resp.png) center bottom no-repeat,url(../img/corporation-h1.jpg) 50% 50%;
+		padding:180px 0 10px;
+		background-size:960px,100%;
+		font-size:18pt;
+		text-align:center;
+		color:white;
+		font-weight:bold;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		display: block;
+		font-size:10pt;
+	}
+	section{padding:60px 0;}
+	.incorporated-list{
+		width:80%;
+		margin:0 auto 40px;
+	}
+	h3{
+		font-size:12pt;
+		text-indent: 9px;
+		border-left:5px solid  #38A1EC;
+		margin-bottom:10px;
+		font-weight:bold;
+	}
+	h3 small{
+		display:block;
+		font-size:8pt;
+	}
+	#partners img{
+		width:90%;
+		max-width:480px;
+	}
+	.incorporated-list ul{
+		width:90%;
+		margin:0 auto;
+	}
+	.incorporated-list li{
+		display:inline-block;
+		width:48%;
+		background:url(../img/corporation-li.png) left center no-repeat;
+		background-size:5px;
+
+		font-size:9pt;
+		text-indent:10px;
+		margin:12.5px 0;
+	}
+}

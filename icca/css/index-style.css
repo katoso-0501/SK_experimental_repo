@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media only screen and (min-width:961px){
+	#index{
+		background:url(../img/index-bg.jpg) center no-repeat;
+		background-size:1920px;
+	}
+	#index h1{
+		background:url(../img/h1_bg.png) repeat-y;
+		text-align:center;
+		width:260px;
+		font-weight:bold;
+		font-size:20pt;
+		padding:220px 60px 220px 50px;
+		margin-left:60%;
+		text-shadow:2px 2px 6px #a0a0a0;
+	}
+	#index img{
+		/*width:200px;*/
+		padding-bottom:20px;
+	}
+	#index small{
+		display:block;
+		margin-top:20px;
+		font-size:12pt;
+	}
+	#motives{padding:60px 0;}
+	#motives p{
+		width:860px;
+		margin-left:auto;
+		margin-right:auto;
+		line-height:2em;
+	}
+}
+@media only screen and (max-width:960px){
+	#index{
+		background:url(../img/index-bg.jpg) center no-repeat;
+		background-size:140%;
+		padding:190px 0 20px;
+	}
+	#index figure{display:none;}
+	#index h1{
+		margin-right:10px;
+		color:white;
+		font-size:14pt;
+		text-align:right;
+
+	}
+	#index small{
+		display:block;
+		margin-top:5px;
+		font-size:6pt;
+	}
+	#motives{
+		padding:60px 0;
+	}
+	#motives p{
+		width:90%;
+		margin:0 auto;
+		line-height:1.9em;
+		font-size:10pt;
+	}
+	#motives .align-r{text-align:center !important;}
+}

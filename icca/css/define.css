@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css?family=Reem+Kufi');
+
+.floatclear{clear:both;}
+
+.fs-10{font-size:10pt !important;}
+.fs-12{font-size:12pt !important;}
+.fs-14{font-size:14pt !important;}
+.fs-16{font-size:16pt !important;}
+.fs-18{font-size:18pt !important;}
+
+.blue-bg{background-color: #DEF9FF;}
+
+.align-c{text-align: center;}
+.align-r{text-align: right;}
+
+@media only screen and (min-width:961px){
+	h2{text-align:center;font-weight:bold;font-size:18pt;padding:0 0 30px;margin-bottom:60px;background:url(../img/h2_orn.gif) center bottom no-repeat;}
+	h2 small{
+		font-weight:bold;
+		font-size:9pt;
+		margin-top:20px;
+		line-height:0;
+		display:block;
+	}
+	.box1280{width:1280px; margin-left:auto;margin-right:auto;}
+	.box1440{width:1440px; margin-left:auto;margin-right:auto;}
+}
+
+@media only screen and (max-width:960px){
+	h2{
+		text-align:center;
+		font-weight:bold;
+		font-size:14pt;
+		padding:0 0 20px;
+		margin-bottom:40px;
+		background:url(../img/h2_orn.gif) center bottom no-repeat;
+		background-size:20px;
+	}
+	h2 small{
+		font-weight:bold;
+		font-size:6pt;
+		margin-top:15px;
+		line-height:0;
+		display:block;
+	}
+}
+
+@keyframes rainbow-flash{
+	0%{	background-color:#FF0000;}
+	10%{background-color:#FF00ED;}
+	20%{background-color:#FFF500;}
+	30%{background-color:#00B3FF;}
+	40%{background-color:#7900FF;}
+	50%{background-color:#59FF00;}
+	60%{background-color:#FF9600;}
+	70%{background-color:#001DFF;}
+	80%{background-color:#F7047D;}
+	90%{background-color:#00FFC3;}
+	100%{background-color:#FF0000;}
+}

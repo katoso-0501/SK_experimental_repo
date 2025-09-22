@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+
+h1 small{font-family:'Reem Kufi',sans-serif;}
+/* PC over 961px */
+@media only screen and (min-width:961px){
+
+	h1{
+		background:url(../img/h1_subtitle.png) right no-repeat,url(../img/works-h1.jpg) 50% 40%;
+		background-size:700px,100%;
+		color:white;
+		padding:70px 0;
+		padding-left:calc(100% - 570px);
+		font-weight: bold;
+		letter-spacing:3px;
+		font-size:26pt;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		letter-spacing:0;
+		font-size:16pt;
+		display: block;
+	}
+	dl{padding:40px 0;}
+	dl:after{
+		display:block;
+		clear:both;
+		content:"";
+	}
+	dt{
+		float:left;
+		position:relative;
+		background:url(../img/works_dt.png) left center no-repeat;
+		padding:25px 5px 25px;
+		line-height:0;
+		margin:40px 45px 40px 65px;
+		width:250px;
+		font-size:12pt;
+		color:white;
+		font-weight:bold;
+	}
+	dd{
+		float: left;
+		width:180px;
+		text-align:center;
+	}
+	dd figcaption{
+		padding-top:5px;
+		height:50px;
+		font-size:11pt;
+		line-height:18pt;
+	}
+	.blue-bg{background-color:#EFFDFF;}
+	#for-abroad-traveller{
+		background:url(../img/for-abroad-traveller.jpg) 50% 30%;
+		background-size:100%;
+	}
+	#employments{
+		background:url(../img/lecture-for-foreigners.jpg) 35% 75%;
+		background-size:3200px;
+	}
+	#it-assistance{
+		background:url(../img/it-support.jpg) 50% 40%;
+		background-size:100%;
+	}
+	#international-marriage{
+		background:url(../img/international-marriage.jpg) 50% 40%;
+		background-size:100%;
+	}
+}

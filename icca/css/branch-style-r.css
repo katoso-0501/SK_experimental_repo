@@ -1,0 +1,124 @@
+@charset "utf-8";
+/* CSS Document */
+/* * * * * * * * * * * *
+ * PC less than 960px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:960px){
+	h1{
+		background:url(../img/h1_subtitle_resp.png) center bottom no-repeat,url(../img/branches/branch-h1.jpg) 50% 30%;
+		padding:180px 0 10px;
+		background-size:960px,900px;
+		font-size:18pt;
+		text-align:center;
+		color:white;
+		font-weight:bold;
+		text-shadow:2px 2px 5px #444444;
+	}
+	h1 small{
+		display: block;
+		font-size:10pt;
+	}
+	section{
+		padding:60px 0;
+	}
+	#atlas{
+		background:url(../img/atlas.jpg) 50% 100% no-repeat;
+		background-size:900px;
+		font-size:0;
+		padding-bottom: 360px;
+	}
+	section ul{
+		text-align:center;
+	}
+	section li{
+		display:inline-block;
+		background-color:blue;
+		padding-top:150px;
+		width:44%;
+		margin:0 2.5%;
+	}
+	section li .subtitles{
+		text-align:left;
+		font-size:14pt;
+		background:#F40037;
+		color:white;
+		text-indent:12px;
+		padding:5px 0;
+	}
+	section li small{
+		display:block;
+		font-size:8pt;
+		margin-top:3px;
+		letter-spacing:1px;
+		font-family: 'Quicksand', sans-serif;
+	}
+	#bangkok{
+		background:url('../img/branches/branch-bangkok.jpg') 0% 35%;
+		background-size:100%;
+	}
+	#chiangmai{
+		background:url('../img/branches/branch-chiangmai.jpg') center 50%;
+		background-size:420px;
+	}
+	#hochiminh{
+		background:url('../img/branches/branch-hochiminh.jpg') 50% 50%;
+		background-size:120%;
+	}
+	#shanghai{
+		background:url('../img/branches/branch-shanghai.jpg') 50% 100%;
+		background-size:500px;
+	}
+	.blue-bg{background-color:#EFFDFF;}
+	.white-bg{background-color:#FFFFFF;}
+}
+/* * * * * * * * * * * *
+ * PC less than 600px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:600px){
+	h1{
+		background:url(../img/h1_subtitle_resp.png) center bottom no-repeat,url(../img/branches/branch-h1.jpg) 50% 30%;
+		padding:180px 0 10px;
+		background-size:960px,120%;
+	}
+	section{
+		padding:60px 0;
+	}
+	#atlas{
+		background:url(../img/atlas.jpg) 50% 100% no-repeat;
+		background-size:900px;
+		font-size:0;
+		padding-bottom: 360px;
+	}
+	section li{
+		padding-top:150px;
+		width:44%;
+		margin:0 2.5%;
+	}
+	section li .subtitles{
+		text-align:left;
+		font-size:10pt;
+		text-indent:5px;
+		padding:5px 0;
+	}
+	section li small{
+		font-size:7pt;
+		margin-top:3px;
+		letter-spacing:0;
+	}
+	#bangkok{
+		background:url('../img/branches/branch-bangkok.jpg') 0% 45%;
+		background-size:100%;
+	}
+	#chiangmai{
+		background:url('../img/branches/branch-chiangmai.jpg') center 0%;
+		background-size:200%;
+	}
+	#hochiminh{
+		background:url('../img/branches/branch-hochiminh.jpg') 50% 50%;
+		background-size:160%;
+	}
+	#shanghai{
+		background:url('../img/branches/branch-shanghai.jpg') 50% 0;
+		background-size:185%;
+	}
+}

@@ -1,0 +1,241 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.works{background-image:url(../img/nav-icon/works.png);}
+.branches{background-image:url(../img/nav-icon/branch.png);}
+.companies{background-image:url(../img/nav-icon/corporations.png);}
+.aboutus{background-image:url(../img/nav-icon/aboutus.png);}
+
+/* * * * * * * * * * * *
+ * PC over 1440px   * 
+* * * * * * * * * * * */
+@media only screen and (min-width:961px) {
+
+	/* * * * * ヘッダー部分開始 * * * * */
+	#smp-header{display: none;}
+	#pc-header{display:block;}
+	header{background-color: #D2D2D2;}
+
+	
+	.index-headings {
+		display: block;
+		background: url(../img/header-logo.png) left center no-repeat;
+		padding: 25px 0 15px 150px;
+		color: #222222;
+		width: 400px;
+		float: left;
+	}
+
+	.contact-addresses {float: right;}
+	.contact-addresses a {
+		width: 170px;
+		padding: 5px 0 5px 40px;
+		margin: 30px 0 0 20px;
+		display: inline-block;
+		text-align: left;
+		color: white;
+	}
+	.contact-addresses .tel {background: url(../img/footer-icon/tel.png) 5% center no-repeat, #38A1EC;}
+	.contact-addresses .email {background: url(../img/footer-icon/email.png) 5% center no-repeat, #38A1EC;}
+	#pc-header nav {background-color: #C9C9C9;}
+	#pc-header nav a {
+	display: inline-block;
+	font-size: 11pt;
+	width: 360px;
+	transition: 0.4s;
+	margin-right: -5px;
+	padding: 60px 0 10px;
+	text-align: center;
+	background-position: center 20%;
+	background-repeat: no-repeat;
+}
+	#pc-header nav a:hover {
+	background-color: #707070;
+	color: white;
+}	
+	/* * * * * フッター部分開始 * * * * */
+	footer {
+		background-color: #4E4E4E;
+		color: white;
+		padding: 20px 0;
+	}
+	footer li {
+	font-size: 11pt;
+	padding: 2px 0;
+	padding-left: 30px;
+	background-position: left center !important;
+	background-repeat: no-repeat !important;
+}
+	footer li.tel {background: url(../img/footer-icon/tel.png);}
+	footer li.address {background: url(../img/footer-icon/address.png);}
+	footer li.email {background: url(../img/footer-icon/email.png);}
+	footer .copyright {color: white;float: right;margin-top: -25px;font-size: 11pt;}
+}
+/* * * * * * * * * * * *
+ * PC less than 960px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:960px) {
+	#pc-header{display:none;}
+	header{padding-top:70px;}
+	#smp-header{
+		display: block;
+		position:fixed;
+		z-index:20000;
+		width:100%;
+		top:0;
+		left:0;
+		background: url(../img/header-logo.png) center no-repeat,#D2D2D2;
+		background-size:100px;
+	}
+	#smp-menu-btn{
+		background:url(../img/smp-menu/smp-menu-btn.gif) center no-repeat;
+		display:block;
+		width:70px;
+		margin-left:5px;
+		height:70px;
+		float:left;
+	}
+	.index-headings{
+		display: block;
+		margin:0 auto;
+		background:transparent;
+		height:70px;
+		width:110px;
+	}
+	/* * * * * フッター部分開始 * * * * */
+	footer {
+		background-color: #4E4E4E;
+		color: white;
+		padding: 20px 0 0;
+	}
+	footer ul{
+		width:95%;
+		margin: 0 auto;
+		text-align:center;
+	}
+	footer li {
+		font-size: 11pt;
+		text-align:left;
+		float:none;
+		display:inline-block;
+		width:29%;
+		padding: 10px 0;
+		padding-left: 25px;
+		background-position: left center !important;
+		background-repeat: no-repeat !important;
+	}
+	footer li.tel {background: url(../img/footer-icon/tel.png);}
+	footer li.address {background: url(../img/footer-icon/address.png);}
+	footer li.email {background: url(../img/footer-icon/email.png);}
+	footer .copyright {
+		clear:both;
+		color: white;
+		text-align: center;
+		padding:40px 0;
+		font-size: 11pt;
+	}
+	/* スマートフォンメニュー */
+	#smp-menu{
+		display:none;
+		position:fixed;
+		top:0;left:0;
+		background:rgba(0,0,0,0.6);
+		color:white;
+		width:100%;
+		height:100%;
+	}
+	#menu-window{
+		position:absolute;
+		width:62%;
+		height:99%;
+		padding:3% 4% 0;
+		box-shadow:2px 0 5px #222222;
+		background-color:#D6D6D6;
+	}
+	.close-btn{
+		display:block;
+		position:absolute;
+		top:20px;
+		right:20px;
+		background:url(../img/smp-menu/close_btn.png) center no-repeat;
+		font-size:0;
+		width:30px;
+		height:30px;
+	}
+	nav a{
+		display:block;
+		font-size:14pt;
+		padding:15px 0;
+		margin:10px 0 0;
+		text-indent:50px;
+		transition:0.4s;
+		background-position:left center;
+		background-repeat:no-repeat;
+		background-size:35px;
+	}
+	nav a:hover{
+		background-color:#8e8e8e;
+	}
+	.contact-addresses{font-size:11pt;margin-top:30px;}
+	.contact-addresses a {
+		font-size:12pt;
+		width: 280px;
+		line-height:0;
+		padding: 20px 0;
+		padding-left:40px;
+		margin: 10px 0 20px;
+		display:block;
+		color: white;
+	}	
+	.contact-addresses .tel {background: url(../img/footer-icon/tel.png) 10px center no-repeat, #38A1EC;}
+	.contact-addresses .email {background: url(../img/footer-icon/email.png) 10px center no-repeat, #38A1EC;}
+}
+/* * * * * * * * * * * *
+ * PC less than 600px * 
+* * * * * * * * * * * */
+@media only screen and (max-width:600px) {
+	/* * * * * ヘッダー部分開始 * * * * */
+	header{padding-top:50px;}
+	#smp-header{
+		display: block;
+		position:fixed;
+		width:100%;
+		top:0;
+		left:0;
+		background: url(../img/header-logo.png) center no-repeat,#D2D2D2;
+		background-size:70px;
+	}
+	.index-headings{
+		height:50px;
+	}
+	#smp-menu-btn{
+		width:50px;
+		height:50px;
+	}
+	/* * * * * スマートフォンメニュー */
+	#menu-window .fs-16{font-size:12pt !important;margin-bottom:5px;}
+	#menu-window .fs-10{font-size:6pt !important;width:90% !important;max-width:320px;margin-bottom:15px;}
+	nav a{
+		font-size:11pt;
+		padding:15px 0;
+		margin:0 0 10px;
+		text-indent:35px;
+		background-size:25px !important;
+	}
+	.contact-addresses a {
+		font-size:9.5pt;
+		width: 140px;
+		padding: 15px 0;
+		padding-left:40px;
+		margin: 10px 0;
+	}
+	/* フッター*/
+	footer li {
+		font-size: 9pt;
+		float:left;
+		width:42%;
+		padding-left: 8%;
+	}
+	footer .copyright {font-size: 8pt;}
+}
