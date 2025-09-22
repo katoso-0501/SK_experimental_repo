@@ -1,0 +1,246 @@
+/* CSS Document */
+
+
+main {
+	padding: 15% 0;
+}
+#about-the-party{display:none;}
+#home_catch {
+	padding: 80px 0;
+	font-size: 190%;
+	font-family: "Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+	letter-spacing: 5px;
+}
+
+#home_catch strong {
+	font-size: 150%;
+	color: #e68181;
+	font-weight: lighter;
+}
+
+#home_catch span {
+	font-size: 80%;
+}
+#home_catch img{display: none;}
+#home_recommend {
+	background: url(../img/home_recommend_bg.jpg) no-repeat;
+	background-size: cover;
+}
+
+#home_recommend .contents {
+	padding: 35px;
+	background: rgba(255,255,255,0.7);
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+#home_recommend .contents > div {
+	padding: 40px 100px;
+	outline: 1px solid #bea86e;
+	font-family: Georgia,游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+	letter-spacing: 3px;
+}
+
+#home_recommend .contents h3 {
+	padding: 0 0 10px 0;
+	font-size: 160%;
+	border-bottom: 1px solid #bea86e;
+	text-align: center;
+}
+
+#home_recommend .contents ul {
+	padding: 20px 0;
+}
+
+#home_recommend .contents li {
+	padding: 20px 0 0 0;
+	font-size: 115%;
+}
+
+#home_recommend .contents li:before {
+	content: url(../img/home_recommend_icon.png);
+	margin: 0 10px 0 0;
+}
+
+#home_point {
+}
+
+#home_point h3 {
+	display: block;
+	width: 298px;
+	height: 118px;
+	padding: 90px 0;
+	border-radius: 150px;
+	border: 1px solid #bea86e;
+	font-family: Georgia,游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+	text-align: center;
+	font-size: 260%;
+	font-weight: lighter;
+	letter-spacing: 3px;
+	float: left;
+}
+
+#home_point h3 span {
+	display: block;
+	padding: 10px 0;
+	color: #bea86e;
+	font-size: 40%;
+	letter-spacing: normal;
+	font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN",メイリオ,Meiryo,sans-serif;
+}
+
+#home_point .contents > div {
+	display: block;
+	width: 300px;
+	min-height: 300px;
+	margin: 0 0 70px 0;
+	float: left;
+}
+
+#home_point .contents > div:nth-child(2),
+#home_point .contents > div:nth-child(5) {
+	margin: 0 70px 70px 70px;
+}
+
+#home_point h4 {
+	padding: 10px 0;
+	color: #bea86e;
+	font-size: 140%;
+	font-family: Georgia,游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+}
+
+#home_point p {
+	font-size: 80%;
+}
+
+#home_point a {
+	display: block;
+	margin: 20px 0 0 0;
+	padding: 8px 0;
+	color: #bea86e;
+	border: 1px solid #bea86e;
+	font-size: 80%;
+	text-align: center;
+}
+
+#home_point a:hover {
+	background: #bea86e;
+	color: #ffffff;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+
+
+
+main {
+	padding: 15% 0;
+}
+
+main p {
+	padding: 2% 6%;
+}
+
+#home_catch {
+	font-size: 110%;
+	letter-spacing: 0;
+}
+
+#home_catch strong {
+	font-size: 150%;
+}
+
+#home_catch span {
+	font-size: 80%;
+}
+
+#home_recommend {
+}
+
+#home_recommend .contents {
+	width: calc(96% - 40px);
+	padding: 20px;
+}
+
+#home_recommend .contents > div {
+	padding: 20px;
+}
+
+#home_recommend .contents h3 {
+	font-size: 130%;
+}
+
+#home_recommend .contents ul {
+	padding: 0;
+}
+
+#home_recommend .contents li {
+	margin: 10px 0;
+	padding: 0 0 0 20px;
+	background: url(../img/home_recommend_icon.png) no-repeat left top;
+	font-size: 100%;
+}
+
+#home_recommend .contents li:before {
+	display: none;
+}
+
+#home_point {
+}
+
+#home_point h3 {
+	display: block;
+	width: 298px;
+	margin: 0 auto;
+	height: 118px;
+	padding: 90px 0;
+	border-radius: 150px;
+	border: 1px solid #bea86e;
+	float: none;
+}
+
+#home_point h3 span {
+	font-size: 40%;
+}
+
+#home_point .contents > div {
+	display: block;
+	width: 85%;
+	min-height:inherit;
+	margin: 0 auto;
+	padding: 60px 0 0 0;
+	float: none;
+}
+
+#home_point .contents > div:nth-child(2),
+#home_point .contents > div:nth-child(5) {
+	margin: 0 auto;
+}
+
+#home_point h4 {
+}
+
+#home_point h4 br {
+	display: none;
+}
+
+#home_point img {
+	width: 100%;
+}
+
+#home_point p {
+	font-size: 80%;
+}
+
+#home_point a {
+	font-size: 80%;
+}
+
+
+
+}
+

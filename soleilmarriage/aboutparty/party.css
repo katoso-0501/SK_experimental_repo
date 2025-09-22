@@ -1,0 +1,212 @@
+@charset "utf-8";
+
+/* CSS Document */
+#two-tribes{background:black;color:white;font-family: 'OCR A Std', fantasy;font-size: 24pt;display:none;}#two-tribes h1 {margin-bottom: 65px;}#two-tribes p{margin-bottom: 55px;}
+
+#introduction {background: url(../img/about-party/intro_bg.jpg);}
+#introduction h2 {
+	font-size: 20pt;
+	margin-bottom: 40px;
+}
+#introduction p {
+	text-align: left;
+	font-family: "Hiragino Mincho ProN", HG明朝E, 游明朝, "Yu Mincho", YuMincho, メイリオ, Meiryo, serif;
+	width: 720px;
+	line-height: 2em;
+	margin-left: auto;
+	margin-right: auto;
+}
+#introduction p img {
+	margin-left: 540px;
+}
+.eyecatch {
+	display: block;
+	background: green;
+	padding: 0;
+	height:320px;
+	font-size: 0;
+	line-height: 0;
+}
+.party1 {
+	background: url(../img/about-party/party01.jpg) center 45%;
+	background-size: 100%;
+}
+.party2 {
+	background: url(../img/about-party/party02.jpg) center 45%;
+	background-size: 100%;
+}
+#informations h3 {
+	display: block;
+	padding: 0 0 4% 0;
+	text-align: center;
+	font-size: 220%;
+	font-family: Georgia, 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", HGS明朝E, メイリオ, Meiryo, serif;
+	letter-spacing: 2px;
+}
+#informations h3 span {
+	display: block;
+	color: #bea86e;
+	font-size: 35%;
+	letter-spacing: 0;
+}
+#informations h4 {
+	position: relative;
+	width: 690px;
+	padding-left: 30px;
+	text-align: left;
+	border-bottom: 1px solid #bea86e;
+	font-size: 135%;
+	font-weight: bold;
+	margin: 0 auto;
+	line-height: 1em;
+	padding-bottom: 10px;
+}
+#informations h4:before {
+	position: absolute;
+	content: "";
+	background: url(../img/about-party/h4-ornament.png) no-repeat;
+	width: 77px;
+	top: 0;
+	left: -50px;
+	height: 30px;
+}
+#informations h4 span {
+	font-family: Georgia, 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", HGS明朝E, メイリオ, Meiryo, serif;
+	font-weight: normal;
+	font-size: 70%;
+	line-height: 2em;
+	display: block;
+	float: right;
+}
+#informations p {
+	width: 700px;
+	line-height: 37px;
+	font-size: 92%;
+	letter-spacing: 0;
+	margin: 19px auto 30px;
+	text-align: left;
+}
+#contact-address div {
+	width: 678px;
+	margin: 20px auto;
+	padding: 60px 0 60px;
+	background: url(../img/about_catch_bg01.png) left top no-repeat, url(../img/about_catch_bg02.png) right top no-repeat, url(../img/about_catch_bg03.png) left bottom no-repeat, url(../img/about_catch_bg04.png) right bottom no-repeat;
+	border: 1px solid white;
+	outline: 20px solid #ffd1e3;
+	background-color: #ffd1e3;
+}
+#contact-address .primary {
+	margin: 60px auto;
+	width: 510px;
+}
+#contact-address .primary span {
+	display: block;
+	text-align: left;
+	font-size: 10pt;
+	line-height: 20px;
+}
+#contact-address .secondary {
+	display: block;
+	margin-left: 13%;
+	width: 37%;
+	text-align: left;
+	font-size: 90%;
+	float: left;
+}
+#contact-address .tertiary {
+	display: block;
+	width: 32%;
+	margin-right: 14%;
+	padding: 25px 0;
+	border-radius: 4px;
+	border: 1px solid #ffffff;
+	outline: 3px solid #bea86e;
+	background: #bea86e;
+	color: #ffffff;
+	font-size: 100%;
+	text-align: center;
+	font-family: Georgia, 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN", HGS明朝E, メイリオ, Meiryo, serif;
+	float: right;
+}
+@media only screen and (max-width:768px) {
+	#introduction h2{
+		font-size:120%;
+		margin:30px 0;
+		width:95%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	#introduction p{
+		width:85%;
+		font-size:80%;
+	}
+	#introduction p img{
+		display:block;
+		width:120px;
+		margin:20px auto 40px;
+		float:none !important;
+	}
+	.for-pc{display:none;}
+	.party1{background-size:160%;}
+	.party2{background-size:260%;}
+	#informations h3 {
+		display: block;
+		padding: 0 0 9% 0;
+		text-align: center;
+		font-size: 220%;
+		font-family: Georgia,游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+		letter-spacing: 2px;
+	}
+	#informations h3 span {
+		display: block;
+		color: #bea86e;
+		font-size: 35%;
+		letter-spacing: 0;
+	}
+	#informations h4{
+		z-index:1;
+		padding:0 0 5px 0;
+		width:95%;
+		text-indent:45px;
+		margin:0 auto;
+		font-size:120%;
+	}
+	#informations h4:before{
+		left:0;
+		background-size:55%;
+		top:5px;
+	}
+	#informations h4 span{
+		line-height: 20px;
+		font-size:50%;
+	}
+	#informations p{
+		width:85%;
+		margin:30px auto;
+		font-size:10pt;
+		line-height: 2em;
+	}
+	#contact-address{
+		width:100%;
+		margin:50px 0;
+		padding:25px 0;
+		background-color: #ffd1e3;
+	}
+	#contact-address div {
+		width: 90%;
+		margin: 0 auto;
+		padding:70px 0;
+		background: url(../img/about_catch_bg01.png) left top no-repeat, url(../img/about_catch_bg02.png) right top no-repeat, url(../img/about_catch_bg03.png) left bottom no-repeat, url(../img/about_catch_bg04.png) right bottom no-repeat;
+		background-size:55px;
+		border: 1px solid white;
+		outline: 0;
+	}
+	#contact-address p{font-size:11pt;margin:0 2.5% 30px;}
+	#contact-address p br{display:none;}
+	#contact-address .primary{width:95%;margin:0 auto;}
+	#contact-address .primary img{width:100%;max-width: 480px;}
+	#contact-address .primary span{font-size:9pt;line-height: 20px;margin:0 2%;}
+	#contact-address .secondary{float:none;width:100%;margin:30px auto;max-width:250px;}
+	#contact-address .secondary img{display: block;margin:20px 0;}
+	#contact-address .tertiary{float:none;width:70%;margin:0 auto;padding:15px 0;font-size:10pt;}
+}

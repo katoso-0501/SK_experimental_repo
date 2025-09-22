@@ -1,0 +1,5 @@
+AuthUserfile /home/ae14702y6y/.htpasswd
+AuthGroupfile /dev/null
+AuthName "Please enter your ID and password"
+AuthType Basic
+require valid-user
