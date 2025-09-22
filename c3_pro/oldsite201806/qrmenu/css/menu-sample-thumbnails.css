@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+
+#izakaya li{
+	background-size:225px;
+	transition:0.5s;
+}
+#izakaya li:hover{
+	background-size:300px;
+}
+#izakaya li:nth-child(1){
+	background-image:url('../img/menu-sample/izakaya-1/Izakayademo1thumb.jpg');
+	background-position:50%;
+}
+#izakaya li:nth-child(2){
+	background-image:url('../img/menu-sample/izakaya-1/Izakayademo2thumb.jpg');
+	background-position:50%;
+}

@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+header {
+	background: #246DAE;
+}
+#header-title-logo p {
+	color: white;
+	text-indent: 15px;
+	margin-bottom: 7px;
+	font-size: 11pt;
+}
+#header-contact {
+	background: url('../img/header-parts/contact_bg.jpg');
+	border: 2px solid #ADD4FF;
+}
+
+#form-btn {
+	background:url('../img/header-parts/form-button/fb1.png'),url('../img/header-parts/form-button/fb3.png') no-repeat,#4198F9;
+	background-position:50% 50%,690% 50%;
+	box-shadow:1px 1px 3px #202020;
+
+}
+#form-btn:after{
+	background:url('../img/header-parts/form-button/fb2.png') center;
+}
+#form-btn:hover{
+	background-position:50% 50%,0% 50%;
+}
+#form-btn:hover:after{
+	animation:form-icon-anime alternate linear infinite 0.5s;
+	-webkit-animation:form-icon-anime alternate linear infinite 0.5s;
+	-moz-animation:form-icon-anime alternate linear infinite 0.5s;
+	-ms-animation:form-icon-anime alternate linear infinite 0.5s;
+}
+@keyframes form-icon-anime{
+	0%{left:205px;}
+	50%{left:210px;}
+	100%{left:205px;}
+}
+
+#main_articles {
+	background: url('../img/outside-bg.jpg'), #FFFEC6;
+	background-size: 3px;
+}
+#main_articles .contents {
+	background: #ffffff;
+	border: #a0a0a0 solid 1px;
+	box-shadow: 2px 2px 10px #999;
+	border-top: none;
+	border-bottom: none;
+}
+.common-box {
+	background: url('../img/common-box-c3.png') center no-repeat, url('../img/common-box-bg.jpg');
+	background-size: 240px, 3px;
+	border: 0;
+}
+h2 {
+	background: url('../img/h2_ornament.png');
+	background-position: center bottom;
+	background-repeat: no-repeat;
+	
+	font-size: 23pt;
+	font-weight: 700;
+	text-shadow: 1px 1px 4px #a0a0a0;
+	color: #1866AF;
+}
+footer {
+	background: #5C5A5A;
+	color: #ffffff;
+}
+footer a {
+	color: white;
+}
+#copyright {
+	font-size: 10pt;
+}

@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+
+h1{
+	background:rgba(0,0,0,0.73);
+}
+h2{
+	font-size:15pt;
+	color:#ffffff;
+	text-shadow:0 0 6px #ffffff;
+	background-image:url('../img/h2_bg.jpg');
+}
+h2 small{
+	font-size:12pt;
+	text-shadow:none;
+}
+h3{
+	font-size:16pt;
+}
+#ninjin-sirisiri{
+	background:url('../img/slideshow/slideshow1.jpg');
+	background-position:50%;
+}
+
+#qr-menu-points h4{
+	color:#3A77C6;
+	font-size:14pt;
+	border-bottom:#3a77c6 2px solid;
+}
+#qr-menu-points p{
+	font-size:11pt;
+}

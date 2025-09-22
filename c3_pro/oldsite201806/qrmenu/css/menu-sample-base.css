@@ -1,0 +1,81 @@
+@charset "utf-8";
+/* CSS Document */
+
+#sample_menus{
+	color:white;
+	width:940px;
+	margin:0 auto 60px;
+}
+#sample_menus article{
+	background:#292929;
+	width:470px;
+	display:inline-block;
+	margin:0;
+}
+#sample_menus .title-container{
+	height:90px;
+	width:370px;
+	padding-left:90px;
+	margin:0 auto;
+	background-image:url('../img/menu-sample/izakaya_icon.png');
+	background-position:left center;
+	background-repeat:no-repeat;
+}
+#sample_menus .title-container h4{
+	font-size:14pt;
+	padding-top:10px;
+}
+#sample_menus .title-container p{
+	font-size:10.5pt;
+	line-height:1.5em;
+}
+#sample_menus .sample-container{
+	width:460px;
+	margin:10px 5px 5px;
+}
+#sample_menus .sample-container li{
+	width:230px;
+	height:145px;
+	display:inline-block;
+	vertical-align:top;	
+}
+#sample_menus .sample-container li a{
+	color:white;
+	display:block;
+	padding-top:45px;
+	text-align:center;
+	font-size:9pt;
+	min-height:100px;
+	position:relative;
+}
+#sample_menus .sample-container li a{
+	background:rgba(0,0,0,0);
+	opacity:0;
+	transition:0.5s;
+}
+#sample_menus .sample-container li a:hover{
+	background:rgba(0,0,0,0.6);
+	opacity:1;
+}
+#sample_menus .sample-container li a:before{
+	position:absolute;
+	content:"";
+	border:15px solid transparent;
+	border-bottom-color:white;
+	left:95px;
+	bottom:6px;
+}
+#sample_menus .sample-container li a:after{
+	position:absolute;
+	content:"";
+	width:2px;
+	bottom:5px;
+	left:112px;
+	border-bottom:5px solid white;
+	transition:0.5s;
+}
+#sample_menus .sample-container li:hover a:after{
+	width:220px;
+	bottom:5px;
+	left:5px;
+}

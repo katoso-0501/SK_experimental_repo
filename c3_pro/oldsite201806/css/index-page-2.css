@@ -1,0 +1,128 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* * * * * * * * 
+       Base 
+ * * * * * * * */
+#leave-to-us-list {
+	width: 940px;
+	margin: 0 auto;
+}
+#leave-to-us-list li {
+	clear: both;
+	padding: 10px 10px;
+	margin: 20px 0;
+	position: relative;
+}
+#leave-to-us-list li .photo-container {
+	display: table-cell;
+	width: 440px;
+	height: 270px;
+}
+
+.paragraph-area h4{text-align:center;}
+#about-qr-menu a{
+	text-align:center;
+	display:block;
+	width:320px;
+	box-shadow:1px 1px 5px #444444;
+}
+
+#leave-to-us-list li .paragraph-area {
+	display: table-cell;
+	vertical-align: middle;
+	width: 440px;
+	padding-left: 40px;
+}
+.paragraph-area p {
+	margin:0 10px;
+}
+#some-service-different-price {
+	width: 800px;
+	text-align: center;
+	margin: 30px auto;
+}
+#some-service-different-price p {
+	text-align: left;
+	margin: 0;
+	display: inline-block;
+	width: 480px;
+	vertical-align: middle;
+}
+.twenty-four-aged-student {
+	display: inline-block;
+	width: 240px;
+	height: 40px;
+	vertical-align: bottom;
+}
+#web-site-translation {
+	width: 800px;
+	padding: 10px 5px;
+	margin: 0 auto;
+
+}
+#web-site-translation .paragraph-area {
+	display: table-cell;
+	vertical-align: middle;
+	width: 400px;
+	text-align: center;
+}
+
+/* * * * * * * * 
+     Design
+ * * * * * * * */
+#about-qr-menu h4 {
+	font-size: 14pt;
+	font-weight: bold;
+	color:#293491;
+	border-bottom:2px solid #293491;
+	margin-bottom: 10px;
+}
+#about-qr-menu p {
+	font-size: 12pt;
+}
+#leave-to-us-photo-01 {
+	background: url('../img/leave-to-us/leave-to-us-photo01.jpg') center no-repeat;
+	background-size: 460px;
+}
+#leave-to-us-photo-02 {
+	background: url('../img/leave-to-us/leave-to-us-photo02.jpg') center no-repeat;
+	background-size: 460px;
+}
+#leave-to-us-photo-03 {
+	background: url('../img/leave-to-us/leave-to-us-photo03.jpg') center no-repeat;
+	background-size: 460px;
+}
+#leave-to-us-photo-04 {
+	background: url('../img/leave-to-us/leave-to-us-photo04.jpg') center 20% no-repeat;
+	background-size: 460px;
+}
+#about-qr-menu a{
+	color:white;
+	background:#1A70D5;
+	width:320px;
+	padding:10px 0;
+	margin:10px auto;
+}
+#about-qr-menu a:hover{
+	background:#7FB3EF;
+}
+.paragraph-area p {
+	font-size: 16pt;
+	font-weight:normal;
+	text-shadow:0 0 0.7px black;
+	color:#202020;
+}
+#some-service-different-price p {
+	font-size: 17pt;
+}
+.twenty-four-aged-student {
+	background: url('../img/btn-for-details.png');
+}
+.twenty-four-aged-student:hover {
+	background-position: center 40px;
+}
+#web-site-translation {
+	background: url('../img/website-translate/web-site-translation-02-bg.jpg') center 70%;
+	box-shadow: 2px 2px 6px;
+}

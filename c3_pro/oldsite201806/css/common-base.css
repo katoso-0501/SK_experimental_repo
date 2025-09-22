@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+	text-decoration: none;
+	list-style-type: none;
+}
+.secret-to-you{
+	display:none;
+}
+header {
+	padding: 5px 0;
+
+	position: relative;
+}
+header:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+.contents {
+	width: 960px;
+	margin: 0 auto;
+}
+#header-title-logo {
+	width: 630px;
+	float: left;
+	padding: 5px 0;
+}
+#header-title-logo img {
+	width: 240px;
+}
+#header-contact {
+	padding:4px 0;
+	margin: 6px 0;
+	width: 312px;
+	text-align: center;
+	float: right;
+}
+#header-contact img {
+	display: block;
+	margin: 0 auto;
+}
+#form-btn {
+	margin:5px 0;
+	position:relative;
+	width:240px;height:37px;
+	
+	vertical-align:middle;
+	display: inline-block;
+	
+	transition:0.4s;
+	-webkit-transition:0.4s;
+	-o-transition:0.4s;
+	-ms-transition:0.4s;
+}
+#form-btn:after{
+	position:absolute;
+	content:"";
+	width:37px;
+	height:37px;
+	top:0;
+	left:205px;
+}
+#breadcrumbs{
+	padding:20px 0 30px;
+	margin:0 auto;
+	width:940px;
+}
+#breadcrumbs li{
+	display:inline;
+}
+#breadcrumbs li a{
+	font-size:10pt;
+	background: url('../img/outside-bg.jpg'), #FFFEC6;
+	background-size: 3px;
+	color:#303030;
+	margin-right:25px;
+	padding:5px  14px;
+	border-radius:2px;
+	box-shadow:1px 1px 4px #606060;
+	position:relative;
+}
+#breadcrumbs li a:hover{
+	background:linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.6) 100%),url('../img/outside-bg.jpg'), #FFFEC6;
+}
+#breadcrumbs li a:active{
+	box-shadow:none;
+}
+#breadcrumbs li a:after{
+	content:' > ';
+	position:absolute;
+	top:5px;
+	right:-18px;
+}
+#breadcrumbs li:last-child a:after{
+	display:none;
+}
+#main_articles .contents {
+	padding: 5px 0;
+}
+h2 {
+	width: 840px;
+	
+	margin: 40px 0 20px;
+	padding: 10px 60px 20px;	
+}
+h3.common-heading {
+	width: 920px;
+	margin: 10px auto;
+}
+.popup{
+	position:absolute;
+}
+section {
+	clear: both;
+	margin: 30px 0;
+}
+footer {
+	text-align: center;
+	padding: 20px 0;
+}
+footer ul {
+	width: 640px;
+	margin: 20px auto;
+	display: none;
+}
+footer li {
+	width: 5%;
+	display: table-cell;
+	vertical-align: middle;
+}

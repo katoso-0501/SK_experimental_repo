@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* * * * * * * * 
+      Base
+ * * * * * * * */
+.examples-list {
+	width: 940px;
+	margin: 10px auto;
+	clear: both;
+}
+.examples-header {
+	width: 270px;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+.examples-expl {
+	display: table-cell;
+	width: 670px;
+}
+.expl-contents {
+	width: 660px;
+	margin-left: 10px;
+}
+.expl-contents li {
+	display: block;
+	margin: 0;
+	width: 330px;
+	height: 205px;
+	float: left;
+}
+#expl-sightseeing {
+	width: 660px;
+	margin-left: 10px;
+}
+#expl-sightseeing img {
+	display: block;
+}
+
+/* * * * * * * * 
+     Design
+ * * * * * * * */
+
+.examples-header.header01 {
+	background: url('../img/examples/examples-header-bg-01.jpg') center;
+}
+.examples-header.header02 {
+	background: url('../img/examples/examples-header-bg-02.jpg') 40% center;
+	background-size:800px;
+}
+.examples-header.header03 {
+	background: url('../img/examples/examples-header-bg-03.jpg') center;
+}
