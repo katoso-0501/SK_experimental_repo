@@ -1,0 +1,184 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* * * * * * * * * * * *
+   Paralax Modified 
+* * * * * * * * * * * */
+header,#index_to_alternative,footer{
+	position:relative;
+	z-index: 10000;
+}
+section{
+	padding:0;
+}
+#index_to_alternative{
+	text-align: center;
+	margin-top:10px;
+}
+#story-1,.moving1{
+	position:relative;
+	z-index: 11 !important;
+}
+
+#story-1 .moving1 h1{
+	padding:10% 0 20%;
+}
+.moving1{
+	position: relative;
+	z-index: 12;
+	width: 100%;
+	padding-top: 5%;
+	background:url(../img/index_prlx_bg1.png) center 60% repeat-x;
+	background-size:80%;
+	text-align: center;
+}
+.moving1 p{
+	position: relative;
+	padding-bottom: 5%;
+}
+.moving1 p span{
+	position:absolute;
+	display: block;
+	width:100%;
+	text-align: center;
+	left:0;
+	font-size:20pt;
+	top:40px;
+	animation: scrollArrow 0.7s infinite alternate linear;
+}
+#story-2 .story{
+	background:white;
+}
+/*
+.moving4.start{
+	top:0px;
+}
+
+.moving4 .end{
+	top:300px;
+}
+*/
+.moving3{
+	z-index:109;
+	position: relative;
+	margin-top:0px;
+	width:100%;
+}
+.moving3 div{
+	position: relative;
+}
+.moving3 img{
+	position: relative;
+	z-index:101;
+	width:100%;
+	max-width: 1920px;
+	margin: 0 auto;
+}
+.moving3 div img.photoframe{
+	width:30%;
+	max-width:500px;
+	position:absolute;
+	z-index: 200;
+	top:80px;
+	left:10%;
+}
+.moving3 div:nth-child(even) img.photoframe{
+	left:60%;
+}
+
+.moving3 div{
+	padding:80px 0 240px;
+	/* 
+	padding:200px 0;
+	*/
+}
+.moving3 div a{
+	position:absolute;
+	display: block;
+	left:25%;
+	bottom:28%;
+	width:180px;
+	color:white;
+	background-color:#6D3F76;
+	padding:15px 10px;
+}
+.moving3 div a:after{
+	content:">";
+	float: right;
+}
+.moving3 div a:hover{
+	background-color:#A56CB0;
+}
+.moving4{
+	position: absolute;
+	top:50px;
+	left:0;
+	z-index: 100;
+}
+.moving5{
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.moving5 img{
+	width:100%;
+}
+.moving5 .ripple{
+	position:absolute;
+
+	font-size:0;
+	display: block;
+	width:25px;
+	height:25px;
+	
+	transition:2s;
+	
+	border-radius: 50%;
+	border:1px solid white;
+}
+.moving6{
+	position:absolute;
+	top:1500px;
+	left:0;
+	width:60%;
+}
+.moving6.start{
+	top:-220px;
+}
+/**/
+.moving7{
+	position:absolute;
+	width:100%;
+	top:520px;
+}
+.moving7.start{
+	top:-220px;
+}
+/* Ending Parallax zone */
+
+#index_about_ddthailand {
+	padding-top:60px;
+}
+#index_about_ddthailand > p{
+	margin-bottom: 20px;
+}
+#index_about_ddthailand div{
+	text-align: center;
+	width:600px;
+	margin:50px auto 0;
+}
+#index_about_ddthailand div p{
+	margin-top:30px;
+	text-align: left;
+}
+#story-foo footer{
+	margin-top: 10%;
+}
+@keyframes scrollArrow{
+	0%{
+		top:40px;
+	}
+	100%{
+		top:50px;
+	}
+}

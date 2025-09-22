@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<title>This page has been moved!</title>
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	body{
+		font-family:Segoe UI,"Yu Gothic","游ゴシック", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+		background:#000000;
+	}
+	h1{
+		margin:60px 0;
+		width:100%;
+		color:#FFFFFF;
+		text-align: center;
+		background:repeating-linear-gradient(115deg,#FFFFFF 0px, #000000 2px, #FFFFFF 4px),#000000;
+		padding:30px 0;
+	}
+	h1 div{
+		width:100%;
+		padding:60px 0;
+		background:#000000;
+		background:linear-gradient(to bottom,rgba(0,0,0,0) 0, rgba(0,0,0,1) 20px,rgba(0,0,0,1) calc(100% - 20px), rgba(0,0,0,0) 100%);
+		font-size:30pt;
+	}
+	h1 div span{
+		display: block;
+		font-size:15pt;
+	}
+	p{
+		color:#FFFFFF;
+		margin:0 2%;	
+		animation:showingup 0.4s;
+	}
+	p.hidden_message{
+		display: none;
+		animation:none;
+	}
+	p.shrinking{
+		animation:shrinks 0.4s;
+	}
+	@keyframes showingup{
+		0%{
+			-webkit-transform:scaleX(0);
+			transform:scaleX(0);
+		}
+		100%{
+			-webkit-transform:scaleX(1);
+			transform:scaleX(1);
+		}
+	}
+	@keyframes shrinks{
+		0%{
+			-webkit-transform:scaleX(1);
+			transform:scaleX(1);
+		}
+		100%{
+			-webkit-transform:scaleX(0);
+			transform:scaleX(0);
+		}
+	}
+</style>
+</head>
+<body>
+	<h1>
+		<div>
+			このページは移転しました。
+			<span>This site has been moved!</span>
+		</div>
+	</h1>
+	<p>
+		DD-THAILANDのページが正式リリースされ、新しいURLになりました。新しいURLは、 <a href="http://dd-thailand.net">http://dd-thailand.net</a>です。DD-THAILANDのサイトを今後ともよろしくお願いいたします<span class="secretary">。</span>
+	</p>
+	<p class="hidden_message">
+		聞くも涙、語るも涙の事件がありました。横浜の真金町の、77歳になる老噺家が、旅から旅で落語をやって、一生懸命稼いでいるのに家族はその間ハワイ旅行へ出かけ、そしてその老噺家は楽屋で貰った弁当を一人寂しく温めて食べてたんですが、ここ2、3日その落語の仕事も地方の仕事も無く、弁当も貰えずに終いには水道に口をつけたまま干からびて亡くなったという孤独な…。
+	</p>
+</body>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+	$('.secretary').on('click', function(){
+		$('p').addClass('shrinking');
+		setTimeout(function(){$('p').hide();$('p.hidden_message').show();$('p.hidden_message').removeClass('hidden_message shrinking');},400);
+	});
+</script>
+</html>

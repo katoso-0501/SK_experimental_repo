@@ -1,0 +1,198 @@
+@charset "utf-8";
+/* CSS Document */
+h1,h2,h3,h4,h5,h6,p,ul,li,blockquote,div,span,ol,a,header,footer,body,head,i,dt,dl,dd,article,main,figure,figcaption,aside{
+	margin:0;
+	padding:0;
+	list-style: none;
+	text-decoration: none;
+}
+body{
+	font-family:'Segoe UI','游ゴシック','Yu Gothic',"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	max-width: 2560px;
+	margin:0 auto;
+	background:#333333;
+}
+.contents{
+	width:960px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.floatables:after{
+	display: block;
+	content:"";
+	clear:both;
+}
+section{
+	padding:60px 0;
+	background:white;
+}
+.bg_even{
+	background:#F7EBF3;
+}
+a{
+	transition:0.4s;
+}
+p{
+	font-size:12pt;
+	line-height: 1.7em;
+}
+h2{
+	text-align: center;
+	width:720px;
+	margin:0 auto 60px;
+	padding:54px 0 5px;
+	font-size:19pt;
+	background:url(../img/h2_ornament.png) center top no-repeat;
+	border-bottom:1px solid #8A186E;
+}
+
+header .for-pc{
+	background:url(../img/header_bg1.jpg) center no-repeat;
+}
+header .goTop,
+footer .goTop{
+	display: block;
+	float: left;
+	background:url(../img/dd_logo_white.png) left center no-repeat;
+	font-size:0;
+	width:210px;
+	height:69px;
+}
+header .goTop:hover,
+footer .goTop:hover{
+	opacity: 0.7;
+}
+header .goInquiry{float: right;}
+header .goInquiry,footer .goInquiry{
+	display: block;
+	width:163px;
+	border:1px solid #202020;
+	outline:#face00 4px solid;
+	line-height: 0;
+	padding:10px 0;
+	margin:16px 4px;
+	text-align: center;
+	background-color:#FACF00;
+	color:#202020;
+}
+.goInquiry:hover{
+	background-color:#FFE87A;
+	outline-color:#FFE87A;
+}
+header .goInquiry *,
+footer .goInquiry *{
+	vertical-align: middle;
+}
+header .goInquiry img,
+footer .goInquiry img{
+	margin-left: 10px;
+}
+header nav{
+	background:url(../img/header_nav_bg.png) center no-repeat, #352D3E;
+}
+header nav ul{
+	width:960px;
+	margin-left:auto;
+	margin-right:auto;
+}
+header nav li{
+	width:160px;
+	float: left;
+	
+}
+header nav li a{
+	text-align: center;
+	display: block;
+	color:white;
+	line-height: 0;
+	height: 0;
+	padding:20px 0;
+}
+header nav li a:hover{
+	background:#930773;
+}
+footer{
+	background:url(../img/footer_bg1.jpg) top repeat-x,url(../img/footer_bg2.jpg);
+	padding:30px 0 0;
+	color:white;
+}
+footer .goTop{
+	width:147px;
+	background-size:147px;
+	margin-right: 25px;
+}
+footer nav{
+	float: left;
+	margin: 25px 0;
+}
+footer nav a{
+	font-size:10pt;
+	color:white;
+	margin-right:10px;
+	padding-right: 10px;
+	border-right: 1px solid white;
+}
+footer nav a:hover{
+	color:#FACF00;
+	text-decoration: underline;
+}
+footer nav a:last-child{
+	margin-right: 0;
+	padding-right: 0;
+	border:none;
+}
+footer .goInquiry{
+	float: right;
+	width:140px;
+	font-size:10pt;
+}
+footer .goInquiry img{
+	width:100px;
+}
+
+.fa-phone{
+	transform: scaleX(-1);
+}
+footer ul{
+	margin:20px 0 30px;
+	display: table;
+}
+footer li{
+	display: table-cell;
+}
+footer li:first-child{
+	width:550px;
+}
+footer li h3{
+	line-height: 0;
+	height: 0;
+	padding:10px 0 10px 5px;
+	border-left: 5px solid #FACF00;
+	font-size:13pt;
+	margin-bottom: 15px;
+}
+footer li p{
+	padding:0 15px;
+}
+footer li small{
+	display: block;
+}
+footer #sitemode{
+	display: block;
+	text-align: center;
+	border:1px solid #e2b2ff;
+	padding:5px 10px;
+	width:208px;
+	margin: 0 auto 30px;
+	color:#E2B2FF;
+}
+footer #sitemode:hover{
+	background:#e2b2ff;
+	color:#312839;
+}
+footer #copy{
+	background-color:#544664;
+	line-height: 0;
+	padding:25px 0;
+	text-align: center;
+}

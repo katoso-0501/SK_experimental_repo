@@ -1,0 +1,122 @@
+@charset "utf-8";
+/* CSS Document */
+
+#index{
+	position:relative;
+	background:url(../img/smp-top-index-bg.png) bottom;
+	text-align: center;
+	padding:90px 0 200px;
+	margin-bottom: -90px;
+	z-index: 100;
+}
+#index h1 img{
+	width:70%;
+	max-width: 300px;
+}
+#big-heading1{
+	background:url(../img/smp-top-bigheading1_bg.jpg) center no-repeat,#000000;
+	position:relative;
+	z-index:99;
+}
+#big-heading2{
+	background:url(../img/smp-top-bigheading2_bg.jpg) center no-repeat,#000000;
+	position:relative;
+	z-index:97;
+}
+#big-heading3{
+	background:url(../img/smp-top-bigheading3_bg.jpg) center no-repeat,#000000;
+	position:relative;
+	z-index:95;
+}
+#big-heading4{
+	background:url(../img/smp-top-bigheading4_bg.jpg) center no-repeat,#000000;
+	position:relative;
+	z-index:93;
+}
+.bh{
+	padding:55% 0 0;
+	background-size:cover !important;
+}
+#big-heading1 p{
+	display: block;
+	position: absolute;
+	width:100%;
+	font-size:0;
+	background: url(../img/smp-top-bigheading1_caption.png) center bottom no-repeat;
+	z-index: 150;
+		padding:100px 0;
+		margin:10px 0 -0px;
+		background-size:170%;
+		bottom:-21%;
+		left:0;
+	}
+	#big-heading2 p{
+		display: block;
+		position: absolute;
+		width:100%;
+		font-size:0;
+		background: url(../img/smp-top-bigheading2_caption.png) center bottom no-repeat;
+		z-index: 150;
+		padding:100px 0;
+		margin:10px 0 -0px;
+		background-size:170%;
+		bottom:-21%;
+		left:0;
+	}
+	#big-heading3 p{
+		display: block;
+		position: absolute;
+		width:100%;
+		font-size:0;
+		background: url(../img/smp-top-bigheading3_caption.png) center bottom no-repeat;
+		z-index: 150;
+		padding:100px 0;
+		margin:10px 0 -0px;
+		background-size:170%;
+		bottom:-21%;
+		left:0;
+	}
+	#big-heading4 p{
+		display: block;
+		position: absolute;
+		width:100%;
+		font-size:0;
+		background: url(../img/smp-top-bigheading4_caption.png) center bottom no-repeat;
+		z-index: 150;
+		padding:100px 0;
+		margin:10px 0 -0px;
+		background-size:170%;
+		bottom:-21%;
+		left:0;
+	}
+#about-ddthailand{
+	padding:0;
+	margin-top:-1%;
+}
+#about-ddthailand div:first-child{
+	padding:10% 0 40px;
+	box-shadow: 0 2px 7px #555555;
+	background:url(../img/smp-top-aboutdd-bg.jpg);
+}
+#about-ddthailand div:last-child{
+	background:url(../img/smp-top-jaidee.png) center -250px no-repeat;
+	padding:170px 0 40px;
+}
+@media only screen and (min-width:768px){
+	#index{
+		background-size:cover;
+		background-position:center -10px;
+		background-repeat: no-repeat;
+	}
+	.bh p{
+		background-size:112% !important;
+		bottom:-15% !important;
+	}
+	#about-ddthailand div:last-child{
+		background-position:50px -220px;
+		padding:70px 0;
+	}
+	#about-ddthailand div:last-child p{
+		margin-left:300px;
+	}
+}

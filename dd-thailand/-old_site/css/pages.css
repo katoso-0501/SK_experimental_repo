@@ -1,0 +1,1780 @@
+@charset "utf-8";
+/* CSS Document */
+
+#index{
+	background:url(../img/h1_outer_bg.jpg) center;
+	background-size: cover;
+	margin:0;
+	padding:90px 0;
+}
+#index h1{
+	font-size:18pt;
+	width:620px;
+	text-align: center;
+	background: url(../img/h1_inner_bg.png) center no-repeat;
+	line-height: 0;
+	padding:60px 0;
+	color:white;
+	margin:0 auto;
+}
+section .goInquiry{
+	display: block;
+	width:267px;
+	font-size:13pt;
+	border:1px solid #202020;
+	outline:#face00 4px solid;
+	line-height: 0;
+	padding:10px 0;
+	margin:16px 4px;
+	text-align: center;
+	background-color:#FACF00;
+	color:#202020;
+}
+section .goInquiry img{
+	margin-left:10px;
+}
+.commonH1{
+	background:url(../img/commonH1_ornament.png) left  center no-repeat;
+	margin:40px 0 30px;
+	padding-left: 32px;
+	font-size: bold;
+}
+.commonH2{
+	width:300px;
+	margin-left:auto;
+	margin-right:auto;
+	background:url(../img/commonH2_bg.jpg) center no-repeat;
+	height: 0;
+	line-height: 0;
+	padding:30px 0;
+	color:white;
+	text-align: center;
+	font-size:14pt;
+}
+.ptp_link{
+	display: block;
+	background-color:#4D1A41;
+	color:white;
+	line-height: 0;
+	height:0;
+	padding: 22.5px 10px;
+	width:220px;
+}
+.ptp_link:hover{
+	background-color:#822C6E;
+}
+.ptp_link:after{
+	content: ">";
+	float: right;
+}
+/* * * * * * * * * * * * * * * * * * *
+ Immigration Page
+* * * * * * * * * * * * * * * * * * */
+#immigration_overview p{
+	margin:30px 0 0;
+}
+#immigration_services li{
+	margin-bottom: 60px;
+}
+#immigration_services li > img{
+	float: left;
+	margin-left: 20px;
+	box-shadow: 2px 2px 4px #666666;
+}
+#immigration_services li > div{
+	position:relative;
+	float: right;
+	width:569px;
+	padding:15px 15px;
+	margin-top:27px;
+	margin-right: 20px;
+	background:white;
+	filter:drop-shadow(6px 6px 6px #999);
+}
+#immigration_services li > div div{
+	border:1px solid #aaaaaa;
+	padding:20px 15px;
+}
+#immigration_services li h3{
+	position:absolute;
+	width:300px;
+	background:url(../img/immigration_service_h3_ornament.jpg) left top no-repeat;
+	color:white;
+	line-height: 0;
+	height: 0;
+	left:-18px;
+	top:-15px;	
+	font-size:13pt;
+	padding:12px 0 30px;
+	text-align: center;
+}
+#immigration_services li h3:after{
+	content:"";
+	position:absolute;
+	left:5px;
+	bottom:-12px;
+	width:0;
+	height:0;
+	border:solid 12px transparent;
+	border-bottom-color:#4D1A41;
+	transform:rotate(45deg);
+}
+#immigration_services li p{
+	font-size:11pt;
+	line-height: 2em;
+}
+#immigration_services .goInquiry{
+	margin-left:auto;
+	margin-right: auto;
+	margin-top: 80px;
+	margin-bottom:19px;
+}
+#immigration_basic_price{
+	text-align: center;
+}
+#immigration_basic_price p{
+	font-size: 0;
+}
+#immigration_contents ul li{
+	width:240px;
+	position: relative;
+	float:left;
+	margin:25px 0;
+}
+#immigration_contents ul li img{
+	float:left;
+}
+#immigration_contents ul li p{
+	float:right;
+	font-size:10pt;
+	font-weight: bold;
+	color:#4D1A41;
+	width:180px;
+}
+#immigration_contents ul li p.row1{
+	padding-top:13px;
+	margin-bottom: -40px;
+}
+#immigration_contents ul li span{
+	position: absolute;
+	width:240px;
+	letter-spacing: -1px;
+	font-size:10pt;
+	left:0;
+	bottom:-29px;
+	padding:5px 0;
+	border-radius: 4px;
+	background-color:#700182;
+	text-align: center;
+	color:white;
+}
+#immigration_contents ul li span:before{
+	content:"";
+	position:absolute;
+	left:5px;
+	top:-15px;
+	background:url(../img/immigration_support_popup.png);
+	width:10px;
+	height:18px;
+}
+#immigration_contents h4{
+	font-size:14pt;
+	font-weight: normal;
+	text-align: center;
+	margin:50px 0;
+}
+#immigration_contents .flexibles{
+	display: flex;
+	justify-content: space-between;
+}
+#immigration_contents .flexibles span{
+	display: block;
+	font-size:11pt;
+}
+#immigration_contents div.floatables{
+	width:760px;
+	display: table;
+	margin:50px auto;
+}
+#immigration_contents div.floatables p{
+	display: table-cell;
+	width:520px;
+}
+#immigration_services div.floatables a.ptp_link{
+	display: table-cell;
+}
+#immigration_contents dl{
+	display: table;
+	width:758px;
+	margin:0 auto;
+	border:1px solid #535353;
+}
+#immigration_contents dt{
+	display: table-cell;
+	background-color:#535353;
+	color:white;
+	text-align: center;
+	vertical-align: middle;
+	width:195px;
+	padding:20px 0;
+	font-weight: bold;
+}
+#immigration_contents dd{
+	display: table-cell;
+	font-size:11pt;
+	line-height: 2em;
+	padding:20px 20px;
+}
+/* * * * * * * * * * * * * * * * * * *
+Flow Page
+* * * * * * * * * * * * * * * * * * */
+#flow_ordered_list ol > li{
+	position:relative;
+	padding-top:120px;
+	padding-bottom: 0px;
+}
+#flow_ordered_list ol > li:first-child{
+	padding-top:40px;
+}
+#flow_ordered_list ol > li:nth-child(odd){
+	background-color:#FDF1FF;
+}
+#flow_ordered_list ol > li:nth-child(even){
+	background-color:#FBE4FF;
+}
+#flow_ordered_list ol > li:after{
+	content:"";
+	position:absolute;
+	width:960px;
+	height:180px;
+	bottom:-85px;
+	z-index:50;
+	left:0;
+	background: url(../img/flow_footbg1.png) left top no-repeat;
+}
+#flow_ordered_list ol > li:nth-child(even):after{
+	background: url(../img/flow_footbg2.png) left top no-repeat;
+}
+#flow_ordered_list ol > li:last-child{
+	background-color:#220036;
+	color:white;
+}
+#flow_ordered_list ol > li:last-child:after{
+	display: none;
+}
+#flow_ordered_list ol li > img{
+	float: left;
+	position:relative;
+	z-index:52;
+	margin-left: 17px;
+}
+#flow_ordered_list ol li > div{
+	position:relative;
+	width:695px;
+	margin-left:248px;
+	/*margin-right: 17px;*/
+	z-index:52;
+}
+#flow_ordered_list ol li div h3{
+	border-bottom:1px dashed #626262;
+	padding-bottom: 9px;
+	margin-bottom: 20px;
+}
+#flow_ordered_list ol li div h3 img{
+	vertical-align: middle;
+	margin-right: 15px;
+}
+#flow_ordered_list ol li div p{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#flow_ordered_list ol li div div{
+	background:rgba(255,255,255,0.7);
+	width:540px;
+	padding:10px;
+	margin:15px auto;
+	font-size:11pt;
+}
+#flow_ordered_list ol li div div li{
+	background:url(../img/flow_listitem1.png) left center no-repeat;
+	line-height: 0;
+	height: 0;
+	padding:10px 0 10px 20px;
+	margin:10px 0;
+}
+#flow_ordered_list .guide_and_link{
+	background:none;
+	display: table;
+}
+#flow_ordered_list .guide_and_link p{
+	padding: 0;
+	margin:0;
+	width:300px;
+	display: table-cell;
+}
+#flow_ordered_list .guide_and_link .ptp_link{
+	display: table-cell;
+}
+#flow_ordered_list ol li .with_icons table{
+	margin:0;
+	width: 100%;
+}
+#flow_ordered_list ol li .with_icons table th,
+#flow_ordered_list ol li .with_icons table td{
+	padding:10px 0;
+}
+#flow_ordered_list ol li .with_icons table p{
+	margin:0 0 0 10px;
+}
+#flow_ordered_list ol li .with_icons.row2 table{
+	margin:0 12.5px;
+	width: 245px;
+	float:left;
+}
+#flow_ordered_list ol li .with_icons.row2 table th{
+	width:40px;
+}
+#flow_ordered_list ol li .with_icons.column2 th{
+	width:70px;
+	text-align: center;
+}
+#flow_ordered_list ol li .with_icons.column2 h4{
+	font-size:13pt;
+	margin-left: 5pt;
+}
+#flow_ordered_list ol li .with_icons.column2 p{
+	margin-left: 5pt;
+}
+#flow_ordered_list ol > li:last-child{
+	background:url(../img/flow_finish1.jpg) center,red;
+	padding:140px 0 100px;
+	width:100%;
+	text-align: center;
+}
+
+#flow_ordered_list ol > li:last-child img{
+	float: none;
+	padding: 0;
+	margin:0;
+	-moz-filter:drop-shadow(3px 3px 15px #222222);
+	-webkit-filter:drop-shadow(3px 3px 15px #222222);
+	-ms-filter:drop-shadow(3px 3px 15px #222222);
+	-o-filter:drop-shadow(3px 3px 15px #222222);
+	filter:drop-shadow(3px 3px 15px #222222);
+}
+#flow_in_thailand ul{
+	display: flex;
+	justify-content: space-between;
+	width:880px;
+	margin:0 auto;
+}
+#flow_in_thailand li{
+	width:270px;
+}
+#flow_in_thailand li h3 img{
+	display: block;
+}
+#flow_in_thailand li p{
+	margin:20px 25px;
+}
+/* * * * * * * * * * * * * * * * * * *
+ Charges Page
+* * * * * * * * * * * * * * * * * * */
+#charges_support_tariff .basic_price{
+	text-align: center;
+	margin-bottom: 30px;
+}
+#charges_support_tariff .basic_price p{
+	font-size:0;
+}
+#charges_support_tariff .flexibles{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 30px;
+}
+#charges_support_tariff .charges_support_extension{
+	margin:30px auto;
+	border-bottom:2px solid #6d3f76;
+	padding:0 0 10px;
+	width:700px;
+	text-align: center;
+	background:url(../img/charge_support_ext1.png) left no-repeat, url(../img/charge_support_ext2.png) right no-repeat;
+}
+.charges_support_extension h4{
+	color:white;
+	background:#6D3F76;
+	display: inline;
+	font-size:12pt;
+	margin-right: 15px;
+	padding:2px 10px;
+}
+.charges_support_extension p{
+	display: inline;
+	font-size:12pt;
+}
+.charges_support_extension strong{
+	font-size:14pt;
+}
+.charges_attend_tariff{
+	width:420px;
+	margin:0 auto;
+}
+.charges_attend_tariff table{
+	width:400px;
+	margin:0 auto;
+	border-spacing: 4px 4px;
+}
+.charges_attend_tariff th{
+	background-color:#6D3F76;
+	color:white;
+	padding:15px 0;
+	width:150px;
+	border:1px solid #444444;
+}
+.charges_attend_tariff td{
+	background-color:#ffffff;
+	width:270px;
+	padding:10px 20px;
+	border:1px solid #444444;
+}
+.charges_attend_tariff p{
+	font-size:11pt;
+	margin: 5px 0 40px;
+}
+.charges_hotline{
+	margin:0 auto;
+	width:810px;
+	background:url(../img/charges_hotline_bg1.png) center 5px no-repeat,
+		url(../img/charges_hotline_bg2.png) center calc(100% - 5px) no-repeat;
+	padding:44px 44px;
+	border:1px solid #DCDCDC;
+}
+.charges_hotline img{
+	float: left;
+}
+.charges_hotline .floatables{
+	margin: 40px 0;
+}
+.charges_hotline .floatables p{
+	float: right;
+	width:440px;
+	margin-top:20px;
+}
+.charges_hotline .floatables p small{
+	display: block;
+	margin-top:20px;
+}
+.charges_hotline h5{
+	font-size:12pt;
+	background:url(../img/charges_hotline_h5.png) left center no-repeat;
+	color:#6D3F76;
+	border-bottom:2px solid #6d3f76;
+	padding-left: 30px;
+	padding-bottom: 5px;
+}
+.charges_hotline > p{
+	width:770px;
+	margin: 10px auto 0;
+	font-size:11pt;
+	line-height: 2em;
+	position:relative;
+}
+.charges_hotline > p span{
+	float:right;
+}
+.charges_support_basis li{
+	width:290px;
+	margin:20px 15px;
+	float: left;
+}
+.charges_support_basis li img{
+	margin-top:5px;
+	float:left;
+}
+.charges_support_basis li h3{
+	color:#222222;
+	font-size:13pt;
+	line-height: 0;
+	height: 0;
+	width:220px;
+	padding:10px 0 15px;
+	margin-left: 70px;
+	margin-bottom: 5px;
+	border-bottom:2px solid #6d3f76;
+}
+.charges_support_basis li p{
+	margin-left: 70px;
+	width:220px;
+	font-size:11pt;
+	line-height: 15pt;
+}
+.charges_support_basis > p{
+	margin:15px 40px 0;
+}
+#charges_other_support .flexibles{
+	display: -webkit-flex;
+	display: flex;
+	width:950px;
+	height:450px;
+	justify-content: space-between;
+	align-content: space-between;
+	flex-flow:wrap;
+}
+#charges_other_support .flexibles li{
+	flex-basis: 300px;
+	background:url(../img/charges_other_service_bg.jpg) center no-repeat,white;
+}
+#charges_other_support .flexibles h4{
+	text-align: center;
+	background:url(../img/charges_other_service_h4_orn.png) center bottom no-repeat;
+	height: 0;
+	font-size:12pt;
+	line-height: 0;
+	padding:25px 0 30px;
+}
+#charges_other_support .flexibles p{
+	width:265px;
+	margin:10px auto 0;
+	font-size:11pt;
+	height:70px;
+}
+.charges_introducing_dokodemotv{
+	text-align: center;
+}
+.charges_introducing_dokodemotv h4{
+	margin-bottom: 40px;
+}
+.charges_introducing_dokodemotv div{
+	background:white;
+	padding:5px 0;
+	width:600px;
+	text-align: left;
+	margin:30px auto 90px;
+}
+.charges_introducing_dokodemotv div table{
+	border-top:1px solid #61395B;
+	border-bottom: 1px solid #61395b;
+	width:99%;
+	padding:0 30px;
+	line-height: 20pt;
+	background:url(../img/charges_24hr_allch1.png) left center no-repeat,url(../img/charges_24hr_allch2.png) right center no-repeat;
+	margin:0 auto;
+}
+
+.charges_introducing_dokodemotv div th{
+	width:70px;
+	padding:8px 0;
+	vertical-align: middle;
+}
+.charges_special_offer2{
+	position:relative;
+	z-index:97;
+	width:720px;
+	margin:50px auto 0;
+}
+.charges_special_offer2 > div{
+	position: relative;
+	background:url(../img/charges_spoffer_bg.jpg),#F2E0A6;
+	box-shadow: 2px 2px 6px;
+	padding:75px 0;
+	z-index:99;
+	width:720px;
+	margin:50px auto;
+}
+.charges_special_offer2 h3{
+	position:absolute;
+	z-index: 100;
+	top:-40px;
+	left:-30px;
+}
+.charges_special_offer2:before{
+	content:"";
+	position:absolute;
+	background:url(../img/charges_spoffer_h3-2.png);
+	width:100px;
+	height:100px;
+	top:-50px;
+	left:-55px;
+	z-index: 95;
+}
+.charges_special_offer2:after{
+	content:"";
+	position: absolute;
+	background:url(../img/charges_spoffer_footer.png) center no-repeat;
+	width:802px;
+	height:120px;
+	left:-40px;
+	bottom:-22px;
+	z-index: 100;
+}
+.charges_special_offer2 > span{
+	z-index:100;
+	position: absolute;
+	top:-20px;
+	right:-19px;
+}
+.charges_special_offer2 ul{
+	width:600px;
+	margin:0 auto;
+}
+.charges_special_offer2 ul li{
+	float: left;
+	width:160px;
+	margin:0 20px;
+	text-align: center;
+}
+
+.charges_special_offer2 ul li h4{
+	font-size:14pt;
+	background:url(../img/charges_spoffer_h4.png) center bottom no-repeat;
+	height:0;
+	line-height: 0;
+	padding:10px 0 35px;
+}
+.charges_special_offer2 ul li p{
+	margin:10px 5px 0;
+	font-size:35pt;
+	line-height: 35pt;
+	font-family: 'Lato', sans-serif;
+	letter-spacing: 2px;
+}
+.charges_special_offer2 ul li p span{
+	display: block;
+	font-size:12pt;
+	text-align: right;
+	font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+}
+.charges_special_offer2  p{
+	text-align: center;
+}
+#charges_other_support a{
+	display: block;
+	color:white;
+	background-color:#6D3F76;
+	width:360px;
+	text-align: center;
+	height: 0;
+	line-height: 0;
+	border-radius: 3px;
+	padding:16px 0 30px;
+	margin:100px auto 70px;
+}
+#charges_other_support a span{
+	font-size:10pt;
+	margin-right: 5px;
+}
+#charges_other_support a:hover{
+	background-color:#B07DBA;
+}
+.charges_contactus{
+	background:url(../img/charges_contactus_bg1.png) 0 5px repeat-x,url(../img/charges_contactus_bg2.png) 0 calc( 100% - 5px ) repeat-x,linear-gradient(to right,#ffdf70 0%,#fdc132 100%);
+	padding:20px 0;
+	width:550px;
+	margin:0 auto;
+	box-shadow: 3px 3px 12px #999999;
+	text-align: center;
+}
+.charges_contactus div{
+	background-color:white;
+	padding:20px 0;
+}
+.charges_contactus p{
+	font-size:14pt;
+	margin-bottom: 25px;
+}
+.charges_contactus h4{
+	display: inline;
+	font-size:13pt;
+	margin-right: 20px;
+	vertical-align: middle;
+}
+.charges_contactus address{
+	display: inline;
+	font-style:normal;
+	vertical-align: middle;
+	font-size:25pt;
+}
+.charges_contactus address span{
+	color:white;
+	font-size:12pt;
+	line-height: 0;
+	padding:5px 8px;
+	margin-right: 15px;
+	vertical-align: middle;
+	border-radius: 50%;
+	background-color:#FAC600;
+}
+/* 2018 06 25  Modified*/
+#charges_support_tariff ul.floatables li{
+	width:240px;
+	position: relative;
+	float:left;
+	margin:25px 0;
+}
+#charges_support_tariff ul.floatables li img{
+	float:left;
+}
+#charges_support_tariff ul.floatables li p{
+	float:right;
+	font-size:10pt;
+	font-weight: bold;
+	color:#4D1A41;
+	width:180px;
+}
+#charges_support_tariff ul.floatables li p.row1{
+	padding-top:13px;
+	margin-bottom: -40px;
+}
+#charges_support_tariff ul.floatables li span{
+	position: absolute;
+	width:240px;
+	letter-spacing: -1px;
+	font-size:10pt;
+	left:0;
+	bottom:-29px;
+	padding:5px 0;
+	border-radius: 4px;
+	background-color:#700182;
+	text-align: center;
+	color:white;
+}
+#charges_support_tariff ul.floatables li span:before{
+	content:"";
+	position:absolute;
+	left:5px;
+	top:-15px;
+	background:url(../img/immigration_support_popup.png);
+	width:10px;
+	height:18px;
+}
+.charges_introducing_dokodemotv2{
+	display: table;
+	margin: 0 auto;
+}
+.charges_introducing_dokodemotv2 h4{
+	display: table-cell;
+	vertical-align: middle;
+}
+.charges_introducing_dokodemotv2 p{
+	display: table-cell;
+	padding-left: 50px;
+	vertical-align: middle;
+}
+.charges_introducing_dokodemotv2 p span{
+	font-size:16pt;
+	font-weight: bold;
+}
+.charges_24hrec{
+	background:white;
+	padding:5px 0;
+	width:600px;
+	text-align: left;
+	margin:30px auto 90px;
+}
+.charges_24hrec table{
+	border-top:1px solid #61395B;
+	border-bottom: 1px solid #61395b;
+	width:99%;
+	padding:0 30px;
+	line-height: 20pt;
+	background:url(../img/charges_24hr_allch1.png) left center no-repeat,url(../img/charges_24hr_allch2.png) right center no-repeat;
+	margin:0 auto;
+}
+
+.charges_24hrec th{
+	width:70px;
+	padding:8px 0;
+	vertical-align: middle;
+}
+
+/* * * * * * * * * * * * * * * * * * *
+ Tour Page
+* * * * * * * * * * * * * * * * * * */
+#tour_introduction{
+	padding: 0;
+	position:relative;
+}
+#tour_introduction .contents{
+	width:555px;
+	position: relative;
+	z-index:100;
+	text-align: center;
+	background:url(../img/tour_introduction_orn1.png) left repeat-y,url(../img/tour_introduction_orn2.png) right repeat-y,url(../img/tour_introduction_bg.jpg),#EFD592;
+	padding:60px 0;
+}
+#tour_introduction .contents p{
+	font-size:11pt;
+	margin-bottom: 20px;
+}
+#tour_introduction .contents a{
+	margin:0 auto;
+}
+#tour_introduction .backgrounds{
+	position:absolute;
+	z-index: 99;
+	width:100%;
+	background:url(../img/tour_movingbg.jpg) repeat-x, black;
+	height:100%;
+	top:0;
+	left:0;
+	-webkit-animation:moving_bg1 infinite linear 60s;
+	animation:moving_bg1 infinite linear 60s;
+}
+@keyframes moving_bg1{
+	0%{
+		background-position:4004px center;
+	}
+	100%{
+		background-position:0px center;
+	}
+}
+#tour_example{
+	background:-webkit-linear-gradient(to bottom, rgba(255,255,255,1) 50px,rgba(255,255,255,0) 330px),url(../img/tour_example_bg.png) center bottom no-repeat;
+	background:-ms-linear-gradient(to bottom, rgba(255,255,255,1) 50px,rgba(255,255,255,0) 330px),url(../img/tour_example_bg.png) center bottom no-repeat;
+	background:-o-linear-gradient(to bottom, rgba(255,255,255,1) 50px,rgba(255,255,255,0) 330px),url(../img/tour_example_bg.png) center bottom no-repeat;
+	background:-moz-linear-gradient(to bottom, rgba(255,255,255,1) 50px,rgba(255,255,255,0) 330px),url(../img/tour_example_bg.png) center bottom no-repeat;
+	background:linear-gradient(to bottom, rgba(255,255,255,1) 50px,rgba(255,255,255,0) 330px),url(../img/tour_example_bg.png) center bottom no-repeat;
+	padding-bottom:220px;
+	position: relative;
+	z-index:51;
+}
+#tour_example .top_heading{
+	width:750px;
+	padding:100px 70px;
+	margin:0 auto;
+	text-align: center;
+	background:url(../img/tour_topheading_bg.png) center no-repeat;
+}
+#tour_example .top_heading p{
+	text-align: left;
+	background:white;
+	width:460px;
+	font-size:11pt;
+	margin:30px auto 0;
+	padding:10px 10px;
+}
+.tour_charges{
+	width:444px;
+	padding:25px 18px;
+	margin:50px auto 0;
+	background:white;
+	box-shadow:4px 4px 12px #606060;
+	text-align: center;
+}
+.tour_charges h4{
+	display: inline;
+	font-size:12pt;
+	margin-right: 20px;
+	background-color:#6D3F76;
+	padding:2px 5px;
+	vertical-align: middle;
+	color:white;
+}
+.tour_charges p{
+	display: inline;
+	vertical-align: middle;
+	font-size:15pt;
+}
+.tour_charges p strong{
+	font-size:22pt;
+}
+.tour_charges span{
+	margin-top:10px;
+	display: block;
+}
+.tour_charges h5{
+	font-size:12pt;
+	line-height: 0;
+	text-align: left;
+	height:0;
+	margin:20px 0 10px;
+	background:url(../img/charge_support_ext1.png) left 5px no-repeat;
+	border-bottom: 2px solid #6d3f76;
+	padding:11px 30px 13px;
+}
+.tour_charges li{
+	display: inline;
+	text-align: left;
+	vertical-align: middle;
+	font-size:10.5pt;
+	font-weight: bold;
+	margin:0 10px;
+}
+.tour_charges li img{
+	margin-right: 5px;
+	vertical-align: middle;
+}
+.tour_charges small{
+	display: block;
+	text-align: left;
+	font-size:10pt;
+	line-height: 17pt;
+	margin-top:18px;
+}
+#tour_itinerary{
+	position: relative;
+	z-index:50;
+	margin-top:-120px;
+	padding-top:150px;
+	background:url(../img/tour_initerary_bg1.jpg);
+}
+#tour_itinerary ol{
+	width:960px;
+	margin:0 auto;
+}
+#tour_itinerary ol li{
+	position:relative;
+	padding:80px 0;
+}
+#tour_itinerary ol li > img{
+	position:absolute;
+	top:0;
+	left:20px;
+}
+#tour_itinerary ol li div{
+	background:white;
+	width:340px;
+	padding:10px 10px;
+	border:1px solid #E0CEE8;
+	box-shadow:0 0 0 5px white,0 0 0 6px #E0CEE8, 5px 5px 6px #666666;
+	margin:30px 0;
+	margin-left: 420px;
+}
+#tour_itinerary ol li h4{
+	text-align: center;
+	position: relative;
+	width:100%;
+	background:url(../img/charges_spoffer_h4.png) center bottom no-repeat;
+	font-size:14pt;
+	padding:30px 0 25px;
+}
+#tour_itinerary ol li h4 span{
+	position: absolute;
+	width:100%;
+	left:0;
+	top:-43px;
+	color:white;
+	height: 0;
+	line-height: 0;
+	padding:30px 0;
+	background: url(../img/tour_itinerary_daybg.png) center no-repeat;
+}
+#tour_itinerary ol li p{
+	font-size:11pt;
+	margin:15px 5px;
+}
+#tour_itinerary ol li:nth-child(even) > img{
+	left:640px;
+}
+#tour_itinerary ol li:nth-child(even) div{
+	margin-left: 155px; 
+}
+#tour_itinerary > p{
+	text-align: center;
+	margin: 80px 0 80px;
+	font-size:15pt
+}
+.tour_sightseeing{
+	width:866px;
+	background:url(../img/tour_sightseeing_bg2.png),#F8DC8A;
+	box-shadow: 3px 3px 10px #999999;
+	padding:20px 22px;
+	margin: 0 auto;
+	position: relative;
+}
+.tour_sightseeing h4{
+	top:-17px;
+	left:22px;
+	position:absolute;
+}
+.tour_sightseeing > p{
+	margin-left:230px;
+	margin-bottom: 80px;
+	font-size:11.6pt;
+}
+.tour_sightseeing .tour_spots article{
+	background:url(../img/tour_sightseeing_spots_bg2.png) center 0 repeat-x,url(../img/tour_sightseeing_spots_bg2.png) center bottom repeat-x,url(../img/tour_sightseeing_spots_bg1.jpg),#996E2E;
+	display: block;
+	float: left;
+}
+.tour_sightseeing article ul li{
+	float: left;
+	margin: 0 20px;
+}
+.tour_sightseeing article:first-child{
+	margin-right: 16px;
+}
+.tour_sightseeing article ul li p{
+	text-align: center;
+	font-size:11pt;
+	color: white;
+	margin-bottom: 25px;
+}
+.tour_sightseeing .tour_spots h5{
+	position:relative;
+	margin-top:10px;
+	margin-left: -10px;
+	margin-bottom: 10px;
+}
+.tour_sightseeing .tour_spots h5:before{
+	content:"";
+	position:absolute;
+
+	top:28px;
+	left:4px;
+	border:7px solid transparent;
+	border-left-color:#2B1A31;
+	
+	-webkit-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+}
+.tour_sightseeing .tour_spots > p{
+	clear: left;
+	font-size:15pt;
+	padding-top:15px;
+	text-align: right;
+}
+.tour_sightseeing .optional h5{
+	background-color:#4E2F56;
+	font-size:12pt;
+	color:white;
+	text-align: center;
+	width:150px;
+	padding:5px 0;
+	margin:40px auto;
+}
+.tour_sightseeing .optional article{
+	float: left;
+	width:433px;
+}
+.tour_sightseeing .optional article figure{
+	float: left;
+	position:relative;
+	z-index:44;
+}
+.tour_sightseeing .optional article figure:after{
+	content:"";
+	position:absolute;
+	width:25px;
+	height:40px;
+	background-color:#461059;
+	top:20px;
+}
+.tour_sightseeing .optional article h6{
+	margin-left: 210px;
+	position:relative;
+	z-index: 44;
+}
+.tour_sightseeing .optional article h6:before{
+	content:"";
+	position:absolute;
+
+	top:31px;
+	left:4px;
+	border:12px solid transparent;
+	border-left-color:#2B1A31;
+	
+	-webkit-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+}
+.tour_sightseeing .optional article p{
+	margin-left: 210px;
+	margin-right: 20px;
+	margin-top:30px;
+	font-size:10.7pt;
+}
+.tour_sightseeing > h5{
+	text-align: center;
+	font-size: 13pt;
+	margin:40px;
+}
+.tour_sightseeing .goInquiry{
+	margin-left: auto;
+	margin-right: auto;
+}
+/* * * * * * * * * * * * * * * * * * *
+ Stay Page
+* * * * * * * * * * * * * * * * * * */
+.stay_candidates .swiper-container {
+    width: 944px;
+    height: 287px;
+	margin-bottom: 60px;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	border:4px solid #450056;
+}
+.stay_candidates .swiper-pagination .swiper-pagination-bullet{
+	background-color:#650086;
+}
+.stay_candidates{
+	padding:100px 0;
+	background-color:#333333;
+}
+
+.stay_candidates .contents{
+	width:900px;
+	padding:100px 30px 30px;
+	background:white;
+	box-shadow: 2px 2px 10px #777777;
+	position: relative;
+}
+.stay_candidates h3{
+	position:absolute;
+	filter:drop-shadow(10px 7px 3px #999999);
+	left:-15px;
+	top:17px;
+}
+.stay_candidates h3:before{
+	content:"";
+	position:absolute;
+	-webkit-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+	border:10px solid transparent;
+	border-left-color:#2B1A31;
+	bottom:-7px;
+	left: 5px;
+}
+.stay_candidates.chiangmai{
+	background:linear-gradient(to bottom,rgba(255,255,255,1) 0,rgba(255,255,255,0) 640px),url(../img/stay_chiangmai_bg.jpg) center fixed,#430001;
+	background-size:cover;
+}
+.stay_candidates.chiangmai .contents{
+	background:url(../img/stay_candidates_recommended.png) right top no-repeat,white;
+	
+}
+.stay_candidates.bangkok{
+	background:url(../img/stay_bangkok_bg.jpg) center fixed,#430001;
+	background-size:cover;
+}
+.stay_candidates.pattaya{
+	background:url(../img/stay_pattaya_bg.jpg) center fixed,#430001;
+	background-size:cover;
+}
+.stay_candidates main{
+	width:635px;
+	margin-bottom: 30px;
+	float: left;
+}
+.stay_candidates main p{
+	margin-bottom: 30px;
+}
+.stay_candidates aside{
+	width:212px;
+	margin-bottom:5px;
+	float: right;
+}
+.stay_candidates aside figcaption{
+	font-size:10pt;
+	margin:5px 0 25px;
+}
+.stay_candidates h4{
+	clear: both;
+}
+.stay_candidates p.smaller{
+	margin:10px 20px 30px;
+	font-size:11pt;
+}
+.stay_candidates table{
+	margin: 30px auto 30px;
+}
+.stay_candidates table th{
+	background-color:#450056;
+	color:white;
+	font-size:11pt;
+	padding: 10px 0;
+	border:1px solid #222222;
+	font-weight: normal;
+	text-align: center;
+	width:238px;
+}
+.stay_candidates table td{
+	background-color:#FFFFFF;
+	color:#222222;
+	font-size:11pt;
+	width:238px;
+	border:1px solid #222222;
+	text-align: center;
+}
+.stay_candidates_other h3{
+	margin-top:0;
+}
+.stay_candidates_other h4{
+	float: left;
+	margin:0 40px;
+}
+.stay_candidates_other p{
+	margin-bottom: 20px;
+	margin-right: 40px;
+}
+/* * * * * *  * * * * *  * * * * *  * * * * * */
+#stay_education_whythai p{
+	margin:0 20px;
+}
+#stay_education_whythai .emphasis{
+	text-align: center;
+	font-size:13pt;
+	margin:40px 0 60px;
+}
+#stay_education_whythai .emphasis strong{
+	font-size:110%;
+}
+#stay_education_whythai h4{
+	text-align: center;
+	font-size:14pt;
+	font-weight: normal;
+}
+#stay_education_whythai ul{
+	width:840px;
+	margin:50px auto;
+}
+#stay_education_whythai li{
+	width:340px;
+	float:left;
+	text-align: center;
+	margin:0 40px;
+}
+#stay_education_whythai li h5{
+	width:270px;
+	background-color:#43014B;
+	font-size:13pt;
+	color:white;
+	text-align: center;
+	margin:10px auto;
+	padding:10px 0;
+}
+#stay_education_whythai li h5 small{
+	margin-right: 5px;
+}
+#stay_education_whythai li p{
+	font-size:12pt;
+	margin-bottom: 10px;
+}
+#stay_education_whythai li p big{
+	font-size:20pt;
+	margin:0px 5px;
+}
+#stay_education_whythai li span{
+	display: block;
+	margin-top:5px;
+	font-size:10pt;
+	text-align: right;
+}
+/* * * * * *  * * * * *  * * * * *  * * * * * */
+#stay_thailand_cost {
+	width:810px;
+	margin:0 auto 40px;
+}
+#stay_thailand_cost h4{
+	text-align: center;
+	font-weight: normal;
+	font-size:13.6pt;
+	margin-bottom: 25px;
+}
+#stay_thailand_cost p{
+	font-size:0;
+}
+#stay_thailand_cost li{
+	font-size:11.6pt;
+	margin:5px 0;
+}
+#stay_about_thaieducation{
+	margin:0 25px;
+}
+
+#stay_about_thaieducation p{
+	margin:0 0 30px;
+}
+#stay_about_thaieducation > img{
+	float: right;
+	margin-left: 20px;
+}
+#stay_about_thaieducation h4{
+	clear: both;
+	text-align: center;
+	font-weight: normal;
+	font-size:15pt;
+	margin-top:73px;
+}
+#stay_about_thaieducation a{
+	margin:44px auto 3px;
+}
+/* * * * * *  * * * * *  * * * * *  * * * * * */
+#stay_actual_living{
+	text-align:center;
+}
+#stay_actual_living a{
+	transition:0.4s;
+}
+#stay_actual_living a:hover{
+	opacity:0.7;
+}
+/* * * * * * Actual Life Page * * * * * */
+#actual_life_listed_index{
+	width:100%;
+	position:relative;
+	z-index:90000;
+	padding:20px 0;
+	background:url('../img/actual_life_part03.jpg'),#202020;
+}
+
+#actual_life_listed_index.fixing{
+	position:fixed;
+	top:0;
+	left:0;
+}
+#actual_life_listed_index ul{
+	width:960px;
+	margin:auto;
+}
+#actual_life_listed_index ul li{
+	width:220px;
+	margin-right:25px;
+	float:left;
+}
+#actual_life_listed_index li:nth-child(4){
+	margin-right:0px;
+}
+#actual_life_listed_index ul li a{
+	transition:0.4s;
+	color:#FFFFFF;
+	display:block;
+	border-bottom:1px dashed #FFFFFF;
+	padding-bottom:3px;
+}
+#actual_life_listed_index ul li a:hover{
+	opacity:0.5;
+}
+#actual_life_listed_index ul li a svg{
+	font-size:90%;
+	margin-right:3px;
+}
+
+.actual_life_interviewee h2{
+border:none;
+position:relative;
+background:url(../img/stay_living_h3.png) right center no-repeat;
+width:440px;
+margin:10px auto 23px;
+line-height: 0;
+height:0;
+padding:18px 0px 20px 120px;
+font-size:14pt;
+text-align: center;
+}
+.actual_life_interviewee h2 span{
+	position:absolute;
+	left:-12px;
+	top:-5px;
+	background:url(../img/stay_living_h3span.png) center no-repeat;
+	color:white;
+	padding:25px 0;
+	text-align: center;
+	width:210px;
+	line-height: 0; 
+	height: 0;
+}
+.actual_life_interviewee .introduction{
+	margin:60px 0;
+}
+.actual_life_interviewee .introduction img{
+	display:block;
+	float:left;
+}
+.actual_life_interviewee .introduction p{
+	float:right;
+	line-height:1.8;
+	width:800px;
+}
+.actual_life_interviewee .commonH2{
+margin:30px  0 30px;
+font-weight:bold;
+}
+.actual_life_interviewee{
+background:#303030;
+}
+#interviewee_01,#interviewee_02{
+background:url('../img/actual_life_bg1.jpg') center;
+background-size:cover;
+background-attachment:fixed;
+}
+#interviewee_02{
+border-top:1px solid #a2a2a2;
+}
+#interviewee_03{
+background:url('../img/actual_life_bg2.jpg') center;
+background-size:cover;
+background-attachment:fixed;
+}
+#interviewee_04{
+background:url('../img/actual_life_bg3.jpg') center;
+background-size:cover;
+background-attachment:fixed;
+}
+
+.actual_life_interviewee .price_list{
+	margin-bottom:20px;
+}
+.actual_life_interviewee .price_list:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.actual_life_interviewee .price_list .IContainer{
+	float:left;
+	width:80px;
+	padding:10px 0;
+	margin-top:8px;
+	background:url(../img/stay_living_iconbg.png) center no-repeat;
+}
+.actual_life_interviewee .price_list .IContainer img{
+	display: block;
+	float: none;
+	margin:0 auto;
+}
+.actual_life_interviewee .price_list h4{
+	float:left;
+	background:#480055;
+	padding:4px;
+	margin:22px 0 0 15px;
+	font-size:12pt;
+	text-align: left;
+	color:white;
+}
+.actual_life_interviewee .price_list h4 span{
+	display:block;
+	background:url('../img/actual_life_part01.png') left center no-repeat;
+	border-top:3px solid #FFFFFF;
+	border-bottom:3px solid #FFFFFF;
+	padding:17px 0 17px 20px;
+	width:326px;
+	height: 0;
+	line-height: 0;
+}
+
+.actual_life_interviewee .price_list .price_container{
+float:right;
+background-color:#FFFFFF;
+font-size:15pt;
+padding:8px 8px;
+margin-top:19px;
+text-align:right;
+width:450px;
+font-weight:bold;
+}
+
+.actual_life_interviewee .price_list .price_container .price_container_price{
+margin-right:8px;
+font-size:120%;
+}
+
+.actual_life_interviewee .price_list .price_container .description{
+vertical-align:middle;
+	font-size:80%;
+	font-weight:lighter;
+}
+
+.price_examples{
+}
+.price_examples div{
+	background-color:#F5F1FF;
+	border:1px solid #450056;
+	box-shadow: 2px 2px 0 #450056;
+	width:99%;
+	padding:22px 10px 15px;
+	margin:-10px auto 30px;
+}
+.price_examples h5{
+	position:relative;
+	background:#450056;
+	color:#FFFFFF;
+	padding:5px;
+	margin:20px 10px 0;
+	font-size:12pt;
+	font-weight:bold;
+	width:120px;
+}
+.price_examples h5:before{
+content:"";
+position:absolute;
+border:10px solid transparent;
+border-bottom-color:#450056;
+top:-20px;
+left:18px;
+}
+
+.price_examples h6{
+	padding:6px 0 ;
+	font-size:12pt;
+	font-weight:bold;
+	line-height:1.5;
+}
+.price_examples p{
+	padding:4px 0;
+	font-size:12pt;
+	font-weight:normal;
+	line-height:1.8;
+}
+
+.price_examples .division,
+.price_examples .division td,
+.price_examples .division th{
+	border-bottom: 1px dashed #404040;
+}
+.price_examples table{
+	width:100%;
+}
+.price_examples table th{
+	padding:4px 0;
+	text-align: left;
+	font-size:12pt;
+}
+.price_examples table td{
+	padding:4px 0;
+	text-align: right;
+	font-size:12pt;
+}
+.price_exclusions h4{
+	display: inline;
+	font-size:12pt;
+	background:#450056;
+	color:#ffffff;
+	padding:2px 5px;
+	margin-right: 20px;
+}
+.price_exclusions p{
+	display: inline;
+	font-size:12.5pt;
+}
+.price_exclusions p span{
+	font-size:125%;
+}
+.actual_life_interviewee .total{
+	text-align: center;
+	border-bottom: 2px solid #450056;
+	background:url(../img/stay_living_totalbg.png) center no-repeat;
+	width:550px;
+	margin: 60px auto 40px;
+}
+.actual_life_interviewee .total h4{
+	display: inline;
+	color:#450056;
+	font-size:12pt;
+}
+.actual_life_interviewee .total p{
+	display: inline;
+	margin-left: 20px;
+	font-size:15pt;
+}
+.actual_life_interviewee .total p span:nth-child(1){
+	font-family: 'Quicksand', sans-serif;
+	font-size:23pt;
+	margin-right:6px;
+}
+.actual_life_interviewee .total p span:nth-child(2){
+	font-size:90%;
+	margin-left:11px;
+}
+/* * * * * * * * * * * * * * * * * * *
+ FAQ Page
+* * * * * * * * * * * * * * * * * * */
+#faq{
+	padding: 1px 0;
+}
+.faq_contents{
+	width:960px;
+	margin:60px auto;
+	position:relative;
+}
+.faq_contents h2{
+	position:absolute;
+	background:url(../img/faq_q_bg.png) left top no-repeat;
+	width:850px;
+	color:white;
+	line-height: 0;
+	height:0;
+	left:0;
+	top:-1px;
+	padding:21px 0 59px 110px;
+	margin:0;
+	text-align:left;
+	border:none;
+	font-size:14pt;
+	z-index:15;
+}
+.faq_contents > div{
+	z-index:14;
+	position:relative;
+	margin-left:140px;
+	width:820px;
+	min-height: 170px;
+	background-color:white;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	border:1px solid #aaaaaa;
+	padding:70px 22px 30px;
+}
+.faq_contents > div:before{
+	content:"";
+	position:absolute;
+	width:140px;
+	height:160px;
+	left:-140px;
+	top:11px;
+	background:url(../img/faq_a_bg.png) 38px 0 no-repeat;
+}
+.faq_contents > div:after{
+	content:"";
+	display: block;
+	clear: both;
+}
+.faq_contents div > img{
+	float: left;
+}
+.faq_contents article{
+	float: right;
+	width:477px;
+}
+.faq_contents article p{
+	font-size:11.8pt;
+	margin-bottom:15px;
+}
+.faq_contents article a{
+	margin-left:auto;
+	margin-right: auto;
+	margin-top:20px;
+}
+/* * * * * * * * * * * * * * * * * * *
+ Contact us Page
+* * * * * * * * * * * * * * * * * * */
+#contact_forms > p{
+	text-align: center;
+	font-size:15pt;
+}
+#contact_forms .notice{
+	font-size:11pt;
+	max-width: 900px;
+	padding: 3px 0;
+	margin:60px auto 30px;
+	border-top:1px solid #444444;
+	border-bottom:1px solid #444444;
+}
+#contact_forms .notice span{
+	font-size:130%;
+	margin-right: 15px;
+}
+#contact_forms form{
+	width:100%;
+	max-width:560px;
+	margin:0 auto;
+}
+#contact_forms form > p{
+	margin-bottom: 40px;
+	font-size:11.5pt;
+}
+#contact_forms form > div:after{
+	content:"";
+	display:block;
+	clear: both;
+	margin-bottom: 30px;
+}
+#contact_forms form label{
+	font-size:13.5pt;
+	width:160px;
+	display: block;
+	float:left;
+}
+#contact_forms form .mandatory label:before{
+	content:"*";
+	color:red;
+	font-weight: bold;
+}
+#contact_forms form input[type="text"],
+#contact_forms form input[type="tel"],
+#contact_forms form input[type="email"]{
+	border:1px solid #AAAAAA;
+	outline:none;
+	padding:7px 6px;
+	width:386px;
+	font-size:12pt;
+	margin:0;
+	border-radius: 3px;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+texture:focus {
+    box-shadow: 0 0 7px #3498db;
+    border: 1px solid #3498db;
+}
+#contact_forms form input.age{
+	width:56px;
+	text-align: left !important;
+}
+#contact_forms form ul{
+	float: left;
+	width:400px;
+}
+#contact_forms form li{
+	float: left;
+	margin-bottom: 10px;
+	width:33.33%;
+}
+#contact_forms form input[type="radio"]{
+	margin-right: 5px;
+}
+#contact_forms form textarea{
+	border:1px solid #AAAAAA;
+	outline:none;
+	padding:8px 6px;
+	min-width: 386px;
+	font-size:12pt;
+	margin:0;
+	border-radius: 3px;
+	min-height: 100px;
+}
+#contact_forms form button{
+	border:none;
+	width:250px;
+	line-height: 0;
+	height: 0;
+	padding:30px 0;
+	color:white;
+	font-weight: bold;
+	border-radius:3px;
+	background-color:#A0A0A0;
+	margin-right: -4px;
+	margin-left: 21px;
+	margin-top:40px;
+	cursor: pointer;
+	transition:0.4s;
+}
+#contact_forms form button[type="submit"]{
+	margin-right: 0;
+	margin-left: 15px;
+	background-color:#73006F;
+}
+#contact_forms form button:hover{
+	opacity:0.6;
+}
+#thanks{
+	
+}
+#thanks p{
+	margin:0 200px;
+}
+#thanks ul{
+	margin:40px 200px;
+}
+#thanks li{
+	list-style-type:disc;
+	margin:10px 0;
+	list-style-position: inside;
+}
+#thanks a{
+	margin-left: auto;
+	margin-right: auto;
+}

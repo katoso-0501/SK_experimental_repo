@@ -1,0 +1,76 @@
+@charset "utf-8";
+/* CSS Document */
+
+#lite_index1{
+	padding: 0 0 6px;
+	background:url(../img/index_prlx2-1.png) center 320px repeat-x,url(../img/index_prlx3-1.png) 0 bottom no-repeat,white;
+	background-size:55%,100%;
+}
+#lite_index1 h1{
+	background: url(../img/../img/index_prlx_bg1.png) center bottom repeat-x;
+	background-size:600px;
+	padding:100px 0;
+	text-align: center;
+}
+#lite_index1 h1 span{
+	display: block;
+	background-color:#5E2E6A;
+	color:white;
+	width:220px;
+	padding:5px 0;
+	font-size:15pt;
+	margin:20px auto;
+}
+#lite_index1 li{
+	position:relative;
+}
+#lite_index1 li > div{
+	position:absolute;
+	top:-100px;
+	width:960px;
+	left:calc((100% - 960px)/2);
+	text-align: right;
+}
+#lite_index1 li:nth-child(even) > div{
+	text-align: left;
+}
+#lite_index1 p{
+	background:url(../img/index_lite_paragraphbg.jpg);
+	color: white;
+	margin: 0px 0 300px;
+	padding:5px 0;
+}
+#lite_index1 p span{
+	display: block;
+	text-align: center;
+	width:480px;
+	padding-right:480px;
+	margin:0 auto;
+	font-size:16pt;
+	text-shadow: 2px 2px 3px #333333;
+	font-weight: bold;
+}
+#lite_index1 li:nth-child(even) p span{
+	padding:0 0 0 480px;
+}
+#lite_index1 .ptp_link{
+	position:absolute;
+	left:60%;
+	top:70px;
+}
+
+#index_about_ddthailand {
+	padding-top:60px;
+}
+#index_about_ddthailand > p{
+	margin-bottom: 20px;
+}
+#index_about_ddthailand div{
+	text-align: center;
+	width:600px;
+	margin:50px auto 0;
+}
+#index_about_ddthailand div p{
+	margin-top:30px;
+	text-align: left;
+}
