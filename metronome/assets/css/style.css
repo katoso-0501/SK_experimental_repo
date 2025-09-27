@@ -345,7 +345,7 @@ input[type="tel"] {
 }
 
 .marchingPerformance .animated_parent {
-    width: calc(25% - 48px);
+    width: calc(18.5% - 48px);
     height: 180px;
 }
 
@@ -718,9 +718,21 @@ Keyframes
 /*
     Responsive Design
 */
+@media (max-width: 1024px) {
+    
+
+.marchingPerformance .animated_parent {
+    width: calc(25% - 48px);
+    height: 180px;
+}
+}
 @media (max-width: 768px) {
     body {
         overflow-x: hidden;
+    }
+    
+    .marchingPerformance .image_wrapper {
+        justify-content: flex-start;
     }
     
     .marchingPerformance .animated_parent {
@@ -788,11 +800,11 @@ Keyframes
         cursor: pointer;
         transition: transform 0.1s ease-out, filter 0.4s ease-out;
     }
+
     .general-stop-button button:active {
         transform: scale(0.89);
         filter: brightness(2);
     }
-
 
     .beat_changers button {
         width: 18%;

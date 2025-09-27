@@ -50,20 +50,15 @@ document.querySelector('.button_update').addEventListener('click', ()=>{
         document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
     }
 
-
-    document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
-        let a = millisec + "ms";
-        f.style.animation = null;
-        f.style.animationDuration = a;
-        f.style.animationIterationCount = "infinite";
-    });
-
-    clearInterval(interv);
     
+    clearInterval(interv);
     currentBeat = 0;
     updateBeat();
+
+    updateAnimatingPictures(millisec);
+
     interv = setInterval(updateBeat,millisec);
-    document.querySelector('.beat_lamp_child').style.display="block";
+    document.querySelector('.beat_lamp_child').style.display = "block";
 });
 
 document.querySelector('.bpm_minus10').addEventListener('click', ()=>{
@@ -120,6 +115,7 @@ document.querySelectorAll(".behavior_changer").forEach(function(d,g){
 
         // Remove Animation Classes
         document.querySelector('body').classList.remove("whenDazzlingBeating");
+        document.querySelector('body').classList.remove("marchingPerformance");
         const iw = document.querySelector('.image_wrapper');
         for(let d = 0; d < names.length; d++){
             iw.classList.remove(names[d][0]);
@@ -128,37 +124,18 @@ document.querySelectorAll(".behavior_changer").forEach(function(d,g){
         // Add Selected Animation
         iw.classList.add(names[index][0]);
         document.querySelector('.behavior_indication span').textContent = names[index][1];
-        document.querySelectorAll('.animated_parent').forEach(f=>{f.classList.remove('oddEvenInverted')});
-
+        
         if(names[index][0] === "dazzling"){
             document.querySelector('body').classList.add("whenDazzlingBeating");
         }
         
-        if(names[index][0] === "marchingPerformance"){
-            let oddEvenFlip = 1;
-            for (let f = 0 ; f<document.querySelectorAll('.animated_parent').length; f++){
-                if(f % 2 === 0) {
-                    oddEvenFlip *= -1;
-                }
-                if(oddEvenFlip <= -1) {
-                    document.querySelectorAll('.animated_parent')[f].classList.add('oddEvenInverted');
-                }
+        if(currentBeat>0) {
+            if(names[index][0] === "marchingPerformance"){
+                updateAnimatingPictures (millisec * 2);
+                document.querySelector('body').classList.add("marchingPerformance");
+            }else{
+                updateAnimatingPictures (millisec);
             }
-
-            document.querySelectorAll(".animated_parent, .animated_image").forEach(f=>{
-                const a = (millisec * 2) + "ms";
-            
-                f.style.animation = null;
-                f.style.animationDuration = a;
-                f.style.animationIterationCount = "infinite";
-            });
-        }else{
-            document.querySelectorAll(".animated_parent, .animated_image").forEach(f=>{
-                const a = (millisec ) + "ms";
-                f.style.animation = null;
-                f.style.animationDuration = a;
-                f.style.animationIterationCount = "infinite";
-            });
         }
     });
 });
@@ -260,31 +237,8 @@ function changeTempoByBPM () {
         document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
         document.querySelector('.millisec').value = c;
     }
-    if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
-        document.querySelectorAll(".animated_parent , .animated_image").forEach(f=>{
-            let a = millisec + "ms";
-            f.style.animation = null;
-            f.style.animationDuration = a;
-            f.style.animationIterationCount = "infinite";
-        });
-        document.querySelectorAll(".beat_lamp_child").forEach(f=>{
-            let a = (millisec / 2) + "ms";
-            f.style.animation = null;
-            f.style.animationDuration = a;
-            f.style.animationIterationCount = "infinite";
-        });
+    updateAnimatingPictures(millisec);
 
-    } else {
-
-        document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
-            let a = millisec + "ms";
-            f.style.animation = null;
-            f.style.animationDuration = a;
-            f.style.animationIterationCount = "infinite";
-        });
-    }
-
-    
     clearInterval(interv);
     currentBeat = 0;
     updateBeat();
@@ -405,3 +359,28 @@ window.addEventListener('scroll', ()=>{
         bpmIndi.classList.remove('expanded');
     }
 });
+
+function updateAnimatingPictures (dur) {
+    
+    if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
+        document.querySelectorAll(".animated_parent , .animated_image").forEach(f=>{
+            let a = dur + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
+        document.querySelectorAll(".beat_lamp_child").forEach(f=>{
+            let a = (dur / 2) + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
+    } else {
+        document.querySelectorAll(".animated_parent, .animated_image, .beat_lamp_child").forEach(f=>{
+            let a = dur + "ms";
+            f.style.animation = null;
+            f.style.animationDuration = a;
+            f.style.animationIterationCount = "infinite";
+        });
+    }
+}
