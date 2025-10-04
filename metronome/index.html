@@ -8,7 +8,12 @@
 </head>
 <body>
 <div class="sticky_bpm_indicator">
-    BPM: <span>150</span>
+    <div class="sticky_bpm_indicator__bpm">
+        BPM: <span>150</span>
+    </div>
+    <div class="sticky_bpm_indicator__beats">
+        Beats: <span>10 / 10</span>
+    </div>
 </div>
 <div class="modal">
     <p class="modal_message"></p>
@@ -32,12 +37,12 @@
     </p>
     <p class="general-millisec-settings">
         <label>
-            <input type="tel" name="milsec" class="millisec" value="400"> milli seconds
+            <input type="tel" name="milsec" class="millisec" value="400" maxlength="6"> milli seconds
         </label><button class="button_update">Update</button>
     </p>
     <p class="general-bpm-settings">
         <label>
-            BPM <input type="tel" name="bpm" class="bpm" value="150">
+            BPM <input type="tel" name="bpm" class="bpm" value="150" maxlength="5">
         </label>
         <button class="bpm_button_update">Update</button>
         <button class="bpm_minus10">-10</button>

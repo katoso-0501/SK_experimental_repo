@@ -24,6 +24,7 @@ function updateBeat (){
     }else{
         document.querySelector('.beat_indication').textContent = "Beats: "+ currentBeat + " / " + maximumBeat;
     }
+    document.querySelector('.sticky_bpm_indicator__beats span').textContent =  currentBeat + " / " + maximumBeat;
     const formattedBeat = String(currentBeat).padStart(2,"0");
 
     img.src = "./assets/images/beat"+formattedBeat+".jpg"
@@ -47,7 +48,7 @@ document.querySelector('.button_update').addEventListener('click', ()=>{
         console.log(Number(input.value));
         millisec = input.value;
         document.querySelector('.bpm').value = Math.floor((60 / input.value) * 1000);
-        document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
+        document.querySelector('.sticky_bpm_indicator__bpm span').textContent = document.querySelector('.bpm').value;
     }
 
     
@@ -131,7 +132,7 @@ document.querySelectorAll(".behavior_changer").forEach(function(d,g){
         
         if(currentBeat>0) {
             if(names[index][0] === "marchingPerformance"){
-                updateAnimatingPictures (millisec * 2);
+                updateAnimatingPictures (millisec);
                 document.querySelector('body').classList.add("marchingPerformance");
             }else{
                 updateAnimatingPictures (millisec);
@@ -229,12 +230,12 @@ function changeTempoByBPM () {
         const c = Math.floor((60 / Number(input.value)) * 1000);
 
         if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
-            millisec = c * 2;
+            millisec = c * 1;
         } else {
             millisec = c;
         }
         
-        document.querySelector('.sticky_bpm_indicator span').textContent = document.querySelector('.bpm').value;
+        document.querySelector('.sticky_bpm_indicator__bpm span').textContent = document.querySelector('.bpm').value;
         document.querySelector('.millisec').value = c;
     }
     updateAnimatingPictures(millisec);
@@ -244,7 +245,7 @@ function changeTempoByBPM () {
     updateBeat();
     
     if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
-        interv = setInterval(updateBeat,(millisec / 2));
+        interv = setInterval(updateBeat,(millisec / 1));
     } else {
         interv = setInterval(updateBeat,millisec);
     }
@@ -361,8 +362,8 @@ window.addEventListener('scroll', ()=>{
 });
 
 function updateAnimatingPictures (dur) {
-    
     if(document.querySelector('.image_wrapper').classList.contains('marchingPerformance')) {
+        dur *= 2;
         document.querySelectorAll(".animated_parent , .animated_image").forEach(f=>{
             let a = dur + "ms";
             f.style.animation = null;
