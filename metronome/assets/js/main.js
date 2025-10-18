@@ -62,30 +62,42 @@ document.querySelector('.button_update').addEventListener('click', ()=>{
     document.querySelector('.beat_lamp_child').style.display = "block";
 });
 
-document.querySelector('.bpm_minus10').addEventListener('click', ()=>{
-    const input = document.querySelector('.bpm');
-    const a = Number(input.value) - 10;
-    input.value = a;
-    changeTempoByBPM();
+document.querySelectorAll('.bpm_minus10').forEach(f=>{
+    f.addEventListener('click', (f)=>{
+        f.preventDefault();
+        const input = document.querySelector('.bpm');
+        const a = Number(input.value) - 10;
+        input.value = a;
+        changeTempoByBPM();
+    });
 });
-document.querySelector('.bpm_minus1').addEventListener('click', ()=>{
-    const input = document.querySelector('.bpm');
-    const a = Number(input.value) - 1;
-    input.value = a;
-    changeTempoByBPM();
+document.querySelectorAll('.bpm_minus1').forEach(f=>{
+    f.addEventListener('click', (f)=>{
+        f.preventDefault();
+        const input = document.querySelector('.bpm');
+        const a = Number(input.value) - 1;
+        input.value = a;
+        changeTempoByBPM();
+    });
 });
-document.querySelector('.bpm_plus1').addEventListener('click', ()=>{
-    const input = document.querySelector('.bpm');
-    const a = Number(input.value) + 1;
-    input.value = a;
-    changeTempoByBPM();
+document.querySelectorAll('.bpm_plus1').forEach(f=>{
+    f.addEventListener('click', (f)=>{
+        f.preventDefault();
+        const input = document.querySelector('.bpm');
+        const a = Number(input.value) + 1;
+        input.value = a;
+        changeTempoByBPM();
+    });
 });
 
-document.querySelector('.bpm_plus10').addEventListener('click', ()=>{
-    const input = document.querySelector('.bpm');
-    const a = Number(input.value) + 10;
-    input.value = a;
-    changeTempoByBPM();
+document.querySelectorAll('.bpm_plus10').forEach(f=>{
+    f.addEventListener('click', (f)=>{
+        f.preventDefault();
+        const input = document.querySelector('.bpm');
+        const a = Number(input.value) + 10;
+        input.value = a;
+        changeTempoByBPM();
+    });
 });
 
 document.querySelector('.bpm_button_update').addEventListener('click', changeTempoByBPM);
@@ -358,6 +370,20 @@ window.addEventListener('scroll', ()=>{
         bpmIndi.classList.add('expanded');
     }else{
         bpmIndi.classList.remove('expanded');
+    }
+});
+
+document.querySelector('.sticky_instant_changer__btn').addEventListener('click', (s)=>{
+    s.preventDefault();
+    document.querySelector('.sticky_instant_changer').classList.toggle('expanded');
+});
+
+document.querySelector('.sticky_instant_changer_toggle').addEventListener('click', f=>{
+    f.preventDefault();
+    if(currentBeat>0) {
+        stopBeats();
+    }else{
+        changeTempoByBPM();
     }
 });
 
