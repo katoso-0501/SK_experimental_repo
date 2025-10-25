@@ -121,8 +121,7 @@ document.querySelectorAll(".behavior_changer").forEach(function(d,g){
         ["dazzling", "Dazzling"],
         ["marchingPerformance", "Marching Performance"],
         ["doNothing", "Do Nothing!"],
-    ] 
-    ;
+    ];
     d.addEventListener('click',function(){
         animationBehavior = index;
 
@@ -220,6 +219,7 @@ function stopBeats () {
     
     clearInterval(interv);
     currentBeat = 0;
+    document.querySelector('.sticky_instant_changer_toggle').classList.remove('expanded');
     document.querySelector('.beat_indication').textContent = "Beats: ---";
     document.querySelector('.beat_lamp_child').style.display="none";
 }
@@ -262,6 +262,7 @@ function changeTempoByBPM () {
         interv = setInterval(updateBeat,millisec);
     }
     document.querySelector('.beat_lamp_child').style.display="block";
+    document.querySelector('.sticky_instant_changer_toggle').classList.add('expanded');
 }
 
 // When picture is uploaded, create an element and place it to the bottom of page
@@ -287,9 +288,15 @@ document.querySelector('#imageFile').addEventListener('change', function(e) {
             const img = document.createElement('img');
             img.src = e.target.result;
             img.classList.add('animated_image');
-            
             imgParent.appendChild(img);
             document.querySelector('.image_wrapper').appendChild(imgParent);
+
+            const iw = document.querySelector('.image_wrapper').classList[1];
+            document.querySelector('.image_wrapper').classList.remove(iw);
+            setTimeout(()=>{
+                document.querySelector('.image_wrapper').classList.add(iw);
+            },35);
+            
         } catch (error) {
             popupModal("Oops! Something went wrong and failed to upload the image.");
             console.error(error);
@@ -321,7 +328,6 @@ document.querySelector('.general-remove-default-pics').addEventListener('click',
     document.querySelectorAll('.defaultPic').forEach(f=>{
         f.remove();
     });
-
     document.querySelector('.general-remove-default-pics').setAttribute("disabled", "disabled");
 });
 
@@ -347,7 +353,6 @@ window.addEventListener("resize", ()=>{
 });
 
 function preventUpwardSwipeRefreshing () {
-
     if(window.innerWidth <= 768) {
         document.querySelector('body').classList.add('upwardSwipePrevention');
         upwardSwipePrevention = true;
@@ -363,13 +368,15 @@ function preventUpwardSwipeRefreshing () {
     }
 }
 
-const bpmIndi = document.querySelector('.sticky_bpm_indicator');
+const bpmIndis = document.querySelectorAll('.sticky_bpm_indicator, .sticky_instant_changer');
 window.addEventListener('scroll', ()=>{
     const a = upwardSwipePrevention ? 640 : 60;
     if(window.scrollY > a){
-        bpmIndi.classList.add('expanded');
+        document.querySelector('.sticky_bpm_indicator').classList.add('expanded');
     }else{
-        bpmIndi.classList.remove('expanded');
+        bpmIndis.forEach(f=>{
+            f.classList.remove('expanded');
+        });
     }
 });
 
