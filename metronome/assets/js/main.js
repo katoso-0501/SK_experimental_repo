@@ -221,6 +221,7 @@ function stopBeats () {
     currentBeat = 0;
     document.querySelector('.sticky_instant_changer_toggle').classList.remove('expanded');
     document.querySelector('.beat_indication').textContent = "Beats: ---";
+    document.querySelector('.sticky_bpm_indicator__beats span').textContent =  "-----";
     document.querySelector('.beat_lamp_child').style.display="none";
 }
 
