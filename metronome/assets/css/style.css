@@ -102,6 +102,11 @@ body::-webkit-scrollbar-thumb:hover {
     width: auto;
 }
 
+
+.sticky_bpm_indicator__beats.toBeChanged {
+    color: #ed8743;
+}
+
 .sticky_instant_changer {
     position: absolute;
     right: 0;
@@ -122,13 +127,18 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .sticky_instant_changer > div {
-    padding: 0 10px 0 40px;
+    padding: 0 16px 0 16px;
     height: 100%;
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 8px;
+
+    @media (width <= 768px) {
+    padding: 8px 16px 0 16px;
+        justify-content: center;
+    }
 }
 
 .sticky_instant_changer__btn {
@@ -136,13 +146,15 @@ body::-webkit-scrollbar-thumb:hover {
     z-index: 18;
     right: 0px;
     top: 0px;
-    width: 40%;
+    width: 100%;
+    max-width: 400px;
     height: 40px;
     /* background: pink; */
-    /* background-color: #fafafa;
-    border: 1px solid  #A0A0A0;
-    border-radius: 50%; */
     cursor: pointer;
+    
+    @media (width <= 768px) {
+    height: 56px;
+    }
 }
 
 .sticky_instant_changer__btn:before {
@@ -150,7 +162,7 @@ body::-webkit-scrollbar-thumb:hover {
     position: absolute;
     width: 4px;
     height: 4px;
-    top: calc(50% - 3px);
+    top: calc(16px + 0px);
     right: 32px;
     border-bottom: 2px solid #404040;
     border-left: 2px solid #404040;
@@ -248,9 +260,22 @@ body::-webkit-scrollbar-thumb:hover {
     top: calc(50% - 6px);
 }
 
+.beat_lamp_root.fixing {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    pointer-events: none;
+}
+
 .beat_lamp_child {
     position: absolute;
-    background: radial-gradient(#FF8000 0, #FF2000 6px, #FF200000 16px) center no-repeat;
+    background: radial-gradient(
+        #FF8000 0,
+        #FF2000 6px,
+        #FF200000 16px
+    )
+    center no-repeat;
     width: 48px;
     height: 48px;
     left: -18px;
@@ -288,7 +313,7 @@ input[type="tel"] {
 }
 
 .behavior_options label input:checked + span {
-    color: #ed8743
+    color: #ed8743;
 }
 
 .behavior_options label input  {

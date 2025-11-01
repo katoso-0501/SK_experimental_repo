@@ -21,8 +21,10 @@ function updateBeat (){
     if(promisedBeat>0){
         document.querySelector('.beat_indication').innerHTML = "Beats: "+ currentBeat + " / " + maximumBeat +
          "<small>Beats will be changed at the end of current measure</small>";
+        document.querySelector('.sticky_bpm_indicator__beats').classList.add('toBeChanged');
     }else{
         document.querySelector('.beat_indication').textContent = "Beats: "+ currentBeat + " / " + maximumBeat;
+        document.querySelector('.sticky_bpm_indicator__beats').classList.remove('toBeChanged');
     }
     document.querySelector('.sticky_bpm_indicator__beats span').textContent =  currentBeat + " / " + maximumBeat;
     const formattedBeat = String(currentBeat).padStart(2,"0");
@@ -157,6 +159,7 @@ for(let i = 2; i <= 10; i++) {
     document.querySelectorAll(ind).forEach(f=>{
         f.addEventListener('click',s=>{
             promisedBeat = i;
+        document.querySelector('.sticky_bpm_indicator__beats').classList.add('toBeChanged');
             s.preventDefault();
         });
     });
@@ -182,6 +185,7 @@ window.addEventListener("keydown", (j)=>{
             }
             if(!a){
                 promisedBeat = f;
+                document.querySelector('.sticky_bpm_indicator__beats').classList.add('toBeChanged');
             }
         }
     }
@@ -374,10 +378,12 @@ window.addEventListener('scroll', ()=>{
     const a = upwardSwipePrevention ? 640 : 60;
     if(window.scrollY > a){
         document.querySelector('.sticky_bpm_indicator').classList.add('expanded');
+        document.querySelector('.beat_lamp_root').classList.add('fixing');
     }else{
         bpmIndis.forEach(f=>{
             f.classList.remove('expanded');
         });
+        document.querySelector('.beat_lamp_root').classList.remove('fixing');
     }
 });
 
