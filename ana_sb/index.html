@@ -33,13 +33,82 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background-color: #000;
-            color: #fff;
+            background-color: #ffffff;
+            font-size: 0;
+            border: 2px solid #202020;
             display: flex;
             justify-content: center;
             align-items: center;
             text-decoration: none;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .lock_button.locked {
+            background-color: #202020;
+        }
+        
+        .lock_button span {
+            position: absolute;
+            background-color: #FFFFFF;
+            left: 0;
+            top: 7px;
+            bottom: 0px;
+            right: 0;
+            margin: auto;
+            width: 3px;
+            height: 8px;
+            border-radius: 12px;
+        }
+
+        .lock_button:before {
+            content: "";
+            position: absolute;
+            top: 18px;
+            left: 12px;
+            width: 24px;
+            height: 19px;
+            background: #202020;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .lock_button.locked:before {
+            background: #ffffff;
+        }
+
+        .lock_button:after {
+            content: "";
+            display: block;
+            width: 12px;
+            height: 20px;
+            position: absolute;
+            border: 2px solid #202020;
+            border-bottom:0px solid transparent;
+            border-right: 0px solid transparent;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            top: 8px;
+            left: 17px;
+        }
+        
+        .lock_button.locked:after {
+            border: 2px solid #FFFFFF;
+            border-bottom:0px solid transparent;
+        }
+
+
+
+        .lock_button.locked span {
+            background-color: #202020;
+        }
+
+
+        .lock_remaining {
+            position: fixed;
+            bottom: 24px;
+            right: 10px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -48,9 +117,14 @@
         <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/SAolvci7SeA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     </div>
 
-    <a href="#" class="lock_button">Lock</a>
+    <a href="#" class="lock_button">
+        <span>Lock</span>
+    </a>
+    <span class="lock_remaining">&nbsp;</span>
     <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/SAolvci7SeA?si=e623fxZ7XepdoEo_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     <script>
+        let lockState = 0;
+        let unlockPushRemaining = 3;
         const video = document.createElement('iframe');
         video.setAttribute('width', '100%');
         video.setAttribute('height', '315');
@@ -66,7 +140,28 @@
 
         const lockButton = document.querySelector('.lock_button');
         lockButton.addEventListener('click', () => {
-            embedBody.classList.toggle('locked');
+            let t = "";
+            for (let i = 1; i < unlockPushRemaining; i++) {
+                t += ".";
+            }
+            if (lockState == 0) {
+                embedBody.classList.add('locked');
+                lockButton.classList.add('locked');
+                lockState = 1;
+                unlockPushRemaining = 3;
+                document.querySelector('.lock_remaining').textContent = "...";
+            } else {
+                if(unlockPushRemaining>0) {
+                    unlockPushRemaining--;
+                }
+                document.querySelector('.lock_remaining').textContent = t;
+                if(unlockPushRemaining===0) {
+                    embedBody.classList.remove('locked');
+                    lockButton.classList.remove('locked');
+                    lockState = 0;
+                    document.querySelector('.lock_remaining').textContent = '';
+                }
+            }
         });
     </script>
 </body>
