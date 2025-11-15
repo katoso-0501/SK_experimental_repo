@@ -13,17 +13,81 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            
+            @media (width <= 768px) {
+                height: auto;
+                overflow-y: scroll;
+            }
+        }
+        
+        .swipeRefreshPreventer {
+            @media (width <= 768px) {
+                height: 1200px;
+                width: 100%;
+            }
         }
 
         .embed_body {
             height: 70%;
-            width: 100%;
+            width: 90%;
             position: fixed;
             overflow-y: auto;
+            top: 24px;
+            left: 5%;
         }
+        
         .embed_body.locked {
             overflow: hidden;
             pointer-events: none;
+        }
+
+        .video_container {
+            position: relative;
+            border:2px solid #20af30;
+            border-radius: 8px;
+            padding: 30px 3.5% 3.5%;
+        }
+
+        .video_container.shrinked {
+            transform: scale(0.02);
+            transform-origin: center center;
+            transition: 1s;
+        }
+
+        .video_container .close_btn {
+            position: absolute;
+            content: "";
+            display: block;
+            right: 0;
+            top: 0;
+            width: 48px;
+            height: 24px;
+            background-color: #ff0909;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 3;
+        }
+        
+        .video_container .close_btn:before {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 18px;
+            top: 12px;
+            width: 16px;
+            border-top: 2px solid #FFFFFF;
+            transform: rotate(45deg);
+        }
+        
+        .video_container .close_btn:after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 18px;
+            top: 12px;
+            width: 16px;
+            border-top: 2px solid #FFFFFF;
+            transform: rotate(-45deg);
         }
 
         .lock_button {
@@ -97,8 +161,6 @@
             border-bottom:0px solid transparent;
         }
 
-
-
         .lock_button.locked span {
             background-color: #202020;
         }
@@ -110,9 +172,11 @@
             right: 10px;
             font-size: 12px;
         }
+
     </style>
 </head>
 <body>
+    <div class="swipeRefreshPreventer"></div>
     <div class="embed_body">
         <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/SAolvci7SeA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     </div>
@@ -125,19 +189,11 @@
     <script>
         let lockState = 0;
         let unlockPushRemaining = 3;
-        const video = document.createElement('iframe');
-        video.setAttribute('width', '100%');
-        video.setAttribute('height', '315');
-        video.setAttribute('src', 'https://www.youtube.com/embed/SAolvci7SeA');
-        video.setAttribute('title', 'YouTube video player');
-        video.setAttribute('frameborder', '0');
-        video.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-        video.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        video.setAttribute('allowfullscreen', '');
+        const videoContainer = document.createElement('div');
+        videoContainer.classList.add('video_container');
 
-        const embedBody = document.querySelector('.embed_body');
-        embedBody.appendChild(video);
-
+        createMovieEmbed('https://www.youtube.com/embed/SAolvci7SeA');
+        
         const lockButton = document.querySelector('.lock_button');
         lockButton.addEventListener('click', () => {
             let t = "";
@@ -163,6 +219,46 @@
                 }
             }
         });
+
+        window.addEventListener('scroll', ()=>{
+            if(window.innerWidth < 768) {
+                window.scrollTo(0,600);   
+            }
+        });
+
+        window.addEventListener('load', ()=>{
+            if(window.innerWidth < 768) {
+                window.scrollTo(0,600);   
+            }
+        });
+        
+        function createMovieEmbed(url) {
+            const video = document.createElement('iframe');
+            video.setAttribute('width', '100%');
+            video.setAttribute('height', '315');
+            video.setAttribute('src', url);
+            video.setAttribute('title', 'YouTube video player');
+            video.setAttribute('frameborder', '0');
+            video.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            video.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            video.setAttribute('allowfullscreen', '');
+
+            videoContainer.appendChild(video);
+
+            const closeBtn = document.createElement('div');
+            closeBtn.classList.add('close_btn');
+
+            closeBtn.addEventListener('click', f=>{
+                videoContainer.classList.add('shrinked');
+                setTimeout(()=>{
+                    videoContainer.remove();
+                }, 1000);
+            })
+            videoContainer.appendChild(closeBtn);
+
+            const embedBody = document.querySelector('.embed_body');
+            embedBody.appendChild(videoContainer);
+        }
     </script>
 </body>
 </html>
