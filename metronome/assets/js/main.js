@@ -5,6 +5,7 @@ let promisedBeat = 0;
 let millisec = 400;
 let animationBehavior = 0;
 let imageSrc = "./assets/images/beat01.jpg";
+let stickyMenuTimeout;
 
 function updateBeat (){
     currentBeat++;
@@ -67,6 +68,8 @@ document.querySelector('.button_update').addEventListener('click', ()=>{
 document.querySelectorAll('.bpm_minus10').forEach(f=>{
     f.addEventListener('click', (f)=>{
         f.preventDefault();
+        clearTimeout(stickyMenuTimeout);
+        stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
         const input = document.querySelector('.bpm');
         const a = Number(input.value) - 10;
         input.value = a;
@@ -76,6 +79,8 @@ document.querySelectorAll('.bpm_minus10').forEach(f=>{
 document.querySelectorAll('.bpm_minus1').forEach(f=>{
     f.addEventListener('click', (f)=>{
         f.preventDefault();
+        clearTimeout(stickyMenuTimeout);
+        stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
         const input = document.querySelector('.bpm');
         const a = Number(input.value) - 1;
         input.value = a;
@@ -85,6 +90,8 @@ document.querySelectorAll('.bpm_minus1').forEach(f=>{
 document.querySelectorAll('.bpm_plus1').forEach(f=>{
     f.addEventListener('click', (f)=>{
         f.preventDefault();
+        clearTimeout(stickyMenuTimeout);
+        stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
         const input = document.querySelector('.bpm');
         const a = Number(input.value) + 1;
         input.value = a;
@@ -95,6 +102,8 @@ document.querySelectorAll('.bpm_plus1').forEach(f=>{
 document.querySelectorAll('.bpm_plus10').forEach(f=>{
     f.addEventListener('click', (f)=>{
         f.preventDefault();
+        clearTimeout(stickyMenuTimeout);
+        stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
         const input = document.querySelector('.bpm');
         const a = Number(input.value) + 10;
         input.value = a;
@@ -390,15 +399,18 @@ window.addEventListener('scroll', ()=>{
 document.querySelector('.sticky_instant_changer__btn').addEventListener('click', (s)=>{
     s.preventDefault();
     document.querySelector('.sticky_instant_changer').classList.toggle('expanded');
+    stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
 });
 
 document.querySelector('.sticky_instant_changer_toggle').addEventListener('click', f=>{
     f.preventDefault();
+    clearTimeout(stickyMenuTimeout);
     if(currentBeat>0) {
         stopBeats();
     }else{
         changeTempoByBPM();
     }
+    stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
 });
 
 function updateAnimatingPictures (dur) {
@@ -424,4 +436,10 @@ function updateAnimatingPictures (dur) {
             f.style.animationIterationCount = "infinite";
         });
     }
+}
+
+// stickyMenuTimeout
+function shrinkInstantChanger () {
+    document.querySelector('.sticky_instant_changer').classList.remove('expanded');
+
 }
