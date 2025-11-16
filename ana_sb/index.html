@@ -196,6 +196,7 @@
         
         const lockButton = document.querySelector('.lock_button');
         lockButton.addEventListener('click', () => {
+            const embedBody = document.querySelector('.embed_body');
             let t = "";
             for (let i = 1; i < unlockPushRemaining; i++) {
                 t += ".";
