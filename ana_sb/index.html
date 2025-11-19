@@ -46,6 +46,13 @@
             border:2px solid #20af30;
             border-radius: 8px;
             padding: 30px 3.5% 3.5%;
+            height: 315px;
+            overflow: hidden;
+        }
+
+        .video_container iframe {
+            transform-origin: left top;
+            transform: scale(0.5);
         }
 
         .video_container.shrinked {
@@ -235,8 +242,8 @@
         
         function createMovieEmbed(url) {
             const video = document.createElement('iframe');
-            video.setAttribute('width', '100%');
-            video.setAttribute('height', '315');
+            video.setAttribute('width', '200%');
+            video.setAttribute('height', '630');
             video.setAttribute('src', url);
             video.setAttribute('title', 'YouTube video player');
             video.setAttribute('frameborder', '0');
