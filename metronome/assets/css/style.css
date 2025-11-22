@@ -324,6 +324,16 @@ button:active {
     filter: brightness(2);
 }
 
+button[disabled] {
+    background-color: #D0D0D0;
+    cursor:default;
+}
+
+button[disabled]:active {
+    transform: scale(1);
+    filter: none;
+}
+
 input[type="tel"] {
     width: 80px;
     text-align: right;
