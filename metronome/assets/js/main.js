@@ -389,6 +389,7 @@ window.addEventListener('scroll', ()=>{
         document.querySelector('.sticky_bpm_indicator').classList.add('expanded');
         document.querySelector('.beat_lamp_root').classList.add('fixing');
     }else{
+        clearTimeout(stickyMenuTimeout);
         bpmIndis.forEach(f=>{
             f.classList.remove('expanded');
         });
@@ -399,7 +400,7 @@ window.addEventListener('scroll', ()=>{
 document.querySelector('.sticky_instant_changer__btn').addEventListener('click', (s)=>{
     s.preventDefault();
     document.querySelector('.sticky_instant_changer').classList.toggle('expanded');
-    stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
+    checkTimeoutExists ();
 });
 
 document.querySelector('.sticky_instant_changer_toggle').addEventListener('click', f=>{
@@ -441,5 +442,13 @@ function updateAnimatingPictures (dur) {
 // stickyMenuTimeout
 function shrinkInstantChanger () {
     document.querySelector('.sticky_instant_changer').classList.remove('expanded');
+}
 
+//stickyMenuTimeout 
+function checkTimeoutExists () {
+    if(!document.querySelector('.sticky_instant_changer').classList.contains('expanded')) {
+        clearTimeout(stickyMenuTimeout);
+    } else {
+        stickyMenuTimeout = setTimeout(shrinkInstantChanger, 5000);
+    }
 }

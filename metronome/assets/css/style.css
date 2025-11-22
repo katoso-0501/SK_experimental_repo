@@ -69,17 +69,25 @@ body::-webkit-scrollbar-thumb:hover {
 .sticky_bpm_indicator {
     position: fixed;
     top: -50px;
-    left: 0;
+    left: 4px;
     z-index: 9;
     transition: 0.4s;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
-    width: 100lvw;
+    border-radius: 0 0 16px 16px;
+    padding: 0 0;
+    width: calc(100lvw - 16px);
     gap: 16px;
+    /* background: red; */
     background: #F8F8F8;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+    @media (width <= 768px) {
+        left:4px;
+        width: calc(100lvw - 8px);
+    }
 }
 
 .whenDazzlingBeating .sticky_bpm_indicator,
@@ -102,32 +110,40 @@ body::-webkit-scrollbar-thumb:hover {
     width: auto;
 }
 
-
 .sticky_bpm_indicator__beats.toBeChanged {
     color: #ed8743;
 }
 
 .sticky_instant_changer {
     position: absolute;
-    right: 0;
+    right: 4px;
     top: 40px;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 8px);
+    max-width: max-content;
+    /* max-width: 320px; */
     transform: translateY(-22px);
     transition: 0.4s;
     pointer-events: none;
     z-index: 10;
     opacity: 0;
+    
+    @media (width <= 768px) {
+       right: 4px;
+       max-width: none;
+    }
 }
 
 .sticky_instant_changer.expanded {
-    transform: translateY(0%);
+    transform: translateY(6px);
     opacity: 1;
-    pointer-events: all;;
+    pointer-events: all;
 }
 
 .sticky_instant_changer > div {
     padding: 0 16px 0 16px;
+    border-radius: 32px;
+    box-shadow: 0 3px 12px #20202040;
     height: 100%;
     background-color: #FFFFFF;
     display: flex;
@@ -136,7 +152,7 @@ body::-webkit-scrollbar-thumb:hover {
     gap: 8px;
 
     @media (width <= 768px) {
-        padding: 12px 16px 0 16px;
+        padding: 0;
         justify-content: center;
     }
 }
@@ -262,7 +278,7 @@ body::-webkit-scrollbar-thumb:hover {
 .beat_lamp_root.fixing {
     position: fixed;
     top: 15px;
-    left: 15px;
+    left: 24px;
     z-index: 10;
     pointer-events: none;
 }
@@ -280,6 +296,32 @@ body::-webkit-scrollbar-thumb:hover {
     left: -18px;
     top: -18px;
     animation: blinker 0.40s infinite linear;
+}
+
+
+.general-bpm-settings > button.bpm_button_update{
+    width: 100px
+}
+
+.general-bpm-settings > button:not(.bpm_button_update) {
+    width: 42px;
+}
+
+/* .general-bpm-settings >  */
+button{
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background-color: #2e4bb3;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.1s ease-out, filter 0.4s ease-out;
+}
+
+button:active {
+    transform: scale(0.89);
+    filter: brightness(2);
 }
 
 input[type="tel"] {
