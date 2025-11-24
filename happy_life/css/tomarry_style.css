@@ -1,0 +1,71 @@
+@charset "utf-8";
+/* CSS Document */
+.header-image{background:url(../img/header-image/to-marriage.jpg) center 70% no-repeat;}
+
+#dialogue{background:url(../img/section_bg/tomarriage-dialog-section.jpg) center no-repeat,#B1D2E9;background-size:1920px;position:relative;}
+#f-contact{background:url('../img/section_bg/tomarriage-f-contact-section.jpg') center 30% no-repeat,#E9B1C4; background-size:150%;position:relative;}
+#return-home{background:url('../img/section_bg/tomarriage-marry-section.jpg') center no-repeat fixed,#F0D0B1;position:relative;}
+
+.for-m-dialogue{
+	padding: 30px 0;
+}
+.for-m-dialogue li{
+	position:relative;display:inline-block;width:415px;background:rgba(250,250,250,0.6);padding:20px 20px;margin:10px 10px 10px;vertical-align:top;
+	box-shadow:1px 1px 2px #777777;
+}
+
+/*
+#dialogue .for-m-dialogue:nth-child(2) li{height:170px;}
+#f-contact .for-m-dialogue li{height:210px;}
+#return-home .for-m-dialogue li{height:250px;}
+*/
+
+.for-m-dialogue.one-row li{width:905px;display:block;margin-left:auto;margin-right:auto;}
+.for-m-dialogue li h3{position:absolute;font-size:24pt;bottom:0px;right:15px;display:block;color:rgba(0,0,0,0.6);padding:0;text-align:right;font-family:'Ubuntu',sans-serif;}
+.for-m-dialogue li h4{font-size:15pt;margin:0 0 15px;}
+.for-m-dialogue li p small{display:block;}
+.for-m-dialogue li p{margin:15px 0;}
+.for-m-dialogue li p img{display:block;margin:0 auto;}
+
+#dialogue .advice{font-size:12pt;margin:5px 15px 30px;}
+#dialogue .advice li{margin:10px 0;}
+
+section h2{}
+
+@media only screen and (max-width:768px){
+	.header-image{background-position:80% 70%;background-size:250%;}
+	
+	#dialogue{background-size:450%;}
+	
+	.for-m-dialogue{padding: 1px 0;}
+	.for-m-dialogue li{display:block;width:90%;padding:20px;margin:20px auto;vertical-align:top;}
+	.for-m-dialogue.one-row li{width:90%;margin:20px auto;}
+	#dialogue .for-m-dialogue:nth-child(2) li,#f-contact .for-m-dialogue li,#return-home .for-m-dialogue li
+	{height:inherit;}
+	
+	.for-m-dialogue li h4{font-size:12pt;}
+	
+	#dialogue .advice{font-size:10pt;text-align:left;margin:5px auto 20px; width:90%;}
+	
+	#f-contact{background:url('../img/section_bg/tomarriage-f-contact-section.jpg') center 30% no-repeat,#E9B1C4; background-size:350%;position:relative;}
+	#return-home{background:url('../img/section_bg/tomarriage-marry-section.jpg') center no-repeat fixed,#F0D0B1;position:relative;}
+}
+@media only screen and (max-width:512px){
+	.header-image{background-position:90% 100%;background-size:300%;}
+	
+	#dialogue{background:#FFEBEC;}
+	
+	.for-m-dialogue li{display:block;width:80%;padding:1% 5% 5%;margin:20px auto;}
+	.for-m-dialogue li p{font-size:10pt;}
+	.for-m-dialogue.one-row li{width:80%;margin:20px auto;}
+	#dialogue .advice{font-size:9pt;text-align:left;margin:0px auto; width:90%;}
+	#dialogue .advice li{margin:30px 0;}
+	
+	.for-m-dialogue li h3{position:absolute;font-size:24pt;bottom:0px;right:15px;display:block;color:rgba(0,0,0,0.6);padding:0;text-align:right;font-family:'Ubuntu',sans-serif;}
+	.for-m-dialogue li h4{font-size:11pt;margin:15px 0;text-align:center;}
+	.for-m-dialogue li p{margin:15px 0;}
+	.for-m-dialogue li p img{display:block;margin:0 auto;}
+	
+	#f-contact{background:url('../img/section_bg/tomarriage-f-contact-section.jpg') center 30% no-repeat,#EDF3FA; background-size:250%;position:relative;}
+	#return-home{background:url('../img/section_bg/tomarriage-marry-section.jpg') center no-repeat,#FDFFFE;position:relative;}
+}

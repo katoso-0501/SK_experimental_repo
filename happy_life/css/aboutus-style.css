@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+.header-image{background:url(../img/header-image/aboutus.jpg) bottom center no-repeat;}
+
+#aboutus{background:url('../img/section_bg/aboutus_bg.jpg');padding-bottom:80px;}
+#aboutus h2{margin-bottom:40px;}
+
+.aboutus-table,#branches{width:640px; margin:0 auto;}
+.aboutus-table h3{display:inline-block;width:180px;font-size:13pt;padding:24px 0;vertical-align:bottom;border-bottom:1px #000 dashed;}
+.aboutus-table p{display:inline-block;width:460px;padding:20px 0;border-bottom:1px #000 dashed;line-height:34px;}
+#branches{border-bottom:1px #000 dashed;}
+#branches h3{font-size:13pt;margin-top:20px;}
+#branches article{width:290px;display:inline-block; padding:0 5px; margin: 20px 10px;}
+#branches article h4{font-size:13pt;margin-bottom:15px;text-align:center;background:#333;color:white;}#branches article h5{font-size:11pt;margin-bottom:5px;margin-left:10px;}#branches article p{margin:5px 25px 15px;}
+.aboutus-table a{color:#444;}.aboutus-table a:hover{color:#900;}
+
+@media only screen and (max-width:768px){
+	.aboutus-table,#branches{width:95%; margin:0 auto;}
+	.aboutus-table h3{width:40%;padding:14px 0;vertical-align:bottom;}
+	.aboutus-table p{width:60%;padding:15px 0;}
+	
+	#branches h3{font-size:13pt;margin-top:20px;}
+	#branches article{width:44.5%;padding:0 0.25%;margin: 20px 2.5%;vertical-align:top;}
+	#branches article h4{
+		font-size:13pt;margin-bottom:15px;text-align:center;background:#333;color:white;
+	}
+	#branches article h5{font-size:11pt;margin-bottom:5px;margin-left:10px;
+	}
+	#branches article p{
+		margin:5px 25px 15px;
+	}
+}
+@media only screen and (max-width:512px){
+	.header-image{background-position:80% bottom;}
+	
+	h3{font-size:12pt;}
+	.aboutus-table h3{display:block;border:none;padding:0;margin:20px 0 0;font-size:11pt;}
+	.aboutus-table p{display:block;width:96%;padding:10px 0;padding-left:4%;margin:0 auto;border-bottom:1px #000 dashed;line-height:2em;font-size:10pt;}
+	
+	#branches article{display:block;width:100%;padding:0;margin:20px 0;}
+	#branches article h4{background:none;color:#222;margin:60px 0 10px;padding-bottom:5px;border-bottom:1.5px dotted #444;}
+	#branches article h5{font-size:11pt;margin:15px 0 10px;text-align:center;}
+	#branches article p{margin:5px 0px 15px;text-align:center;}
+}

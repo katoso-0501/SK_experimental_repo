@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* CSS Document */
+
+#about-party {
+	background: url('../img/about-party-bg.jpg');
+	padding: 60px 0;
+}
+#about-party h2 {
+	font-size:17pt;
+	text-align: center;
+	background: url(../img/about-party-h2.png) center bottom no-repeat;
+	padding-bottom: 15px;
+	margin-bottom: 30px;
+}
+#about-party h3 {
+	font-family:"游ゴシック","Yu Gothic","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	border-left: 6px solid #F3B300;
+	font-size: 14pt;
+	padding-left: 6px;
+	margin-bottom: 20px;
+}
+#about-party article {
+	background:none;
+}
+#about-party article p {
+	margin:0 10px;
+	font-size: 12pt;
+	line-height: 32px;
+}
+.link-to-brochure {margin:20px 60px 40px;}
+.link-to-brochure h4 {
+	float:left;
+	font-family:"游ゴシック","Yu Gothic","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	font-weight: normal;
+	width:50%;
+	padding-bottom:4px;
+	margin-bottom:14px;
+	border-bottom:1px solid #888888;
+	font-size: 15pt;
+}
+.link-to-brochure a{float:right;border:none;width:400px;padding:0;margin:20px 0;}
+.link-to-brochure a img{width:400px;display:block;}
+.link-to-brochure span{
+	display: block;
+	text-align: left;
+	font-size: 10pt;
+	width: 50%;
+	margin:0;
+}
+.inquire {
+	width: 818px;
+	margin: 0 auto;
+	border: 1px solid #A2A2A2;
+}
+.inquire div {
+	display: block;
+	width: 758px;
+	margin: 10px auto;
+	padding: 20px 20px;
+	border: 1px solid #a2a2a2;
+}
+.inquire div:after {
+	display: block;
+	content: "";
+	clear: both;
+}
+.inquire address {
+	width: 340px;
+	line-height: 0;
+	margin: 22px 0;
+	float: left;
+	text-align: left;
+}
+.inquire a {
+	width: 320px;
+	text-align: center;
+	height: 49px;
+	padding: 23px 0 0;
+	font-size: 16pt;
+	font-weight: bold;
+	line-height: 0;
+	color: white;
+	float: right;
+	background: url(../img/about-party-inquiry-a.png) center 0 no-repeat;
+	text-shadow: 2px 2px 5px #606060;
+}
+.inquire a:hover {
+	background-position: center bottom !important;
+}
+.inquire a small {
+	color: white;
+	font-size: 11pt;
+	margin-top: 25px;
+	display: block;
+	font-weight: normal;
+}
+@media only screen and (max-width:768px){
+	#about-party h2{font-size:15pt;margin-bottom:60px;}
+	#about-party h3{
+		font-size:12pt;
+		border-left-width:5px;
+		margin-left:2.5%;
+	}
+	#about-party article{
+		padding:0;
+		background-position:center bottom;
+		background-size:180px;
+		width:100%;
+		margin-bottom:60px;
+	}
+	#about-party article p{
+		font-size:10pt;
+		margin:0 5%;
+	}
+	.link-to-brochure{
+		width:90%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.link-to-brochure h4{
+		float:none;
+		text-align:center !important;
+		width:100%;
+		font-size:11pt;
+	}
+	.link-to-brochure a{float:none;width:95%;max-width:480px;margin:20px auto;}
+	.link-to-brochure a img{margin:0 auto;width:100%;}
+	.link-to-brochure span{font-size:80%;width:100%;}
+	.inquire{width:90%;}
+	.inquire div{
+		width:calc(90% - 30px);
+	}
+	.inquire address{width:40%;}
+	.inquire address img{width:95%;max-width:320px;}
+	.inquire a{margin:0 auto;width:240px;background-size:240px;font-size: 11pt;padding:16px 0 0.2px;line-height: 0;height:inherit;}
+	.inquire a small{font-size:8pt;margin:18px;}
+}
+@media only screen and (max-width:512px){
+	.inquire address{width:100%;float:none;text-align:center;}
+	.inquire a{float:none;}
+}

@@ -1,0 +1,110 @@
+@charset "utf-8";
+/* CSS Document */
+.header-image{background:url(../img/header-image/gettingstarted.jpg) bottom center no-repeat;}
+
+h2{margin-bottom:20px;}
+
+#hl_system{background:linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 10%,rgba(255,255,255,1) 90%, rgba(255,255,255,0)  100%),url(../img/section_bg/getstart_hl_left.jpg) left repeat-y,url(../img/section_bg/getstart_hl_right.jpg) right repeat-y;background-size:100%,160px,160px;}
+
+#hl_system p{text-align:center; margin:10px 0;}
+#hl_system a{transition:0.4s;display:block;text-align:center;width:236px; margin:20px auto 50px;  background:#FFA035;border:2px #FFBE6D solid;font-size:14pt;padding:10px 0;box-shadow:2px 2px #666;}
+#hl_system a:hover{background:#FFD68A;}
+
+#what-the-difference{background:url(../img/section_bg/what-the-difference/what-the-difference-bg2.png) left no-repeat,url(../img/section_bg/what-the-difference/what-the-difference-bg3.png) right no-repeat,url(../img/section_bg/what-the-difference/what-difference-bg1.png), radial-gradient(ellipse at center, #ffeadb 0%,#fff9fd 99%),#F4FFCE;}
+#what-the-difference ul{width:960px;text-align:center;}
+#what-the-difference li{width:300px;padding:0 10px;margin:20px 0;display:inline-block;vertical-align:top;text-align:center;}
+#what-the-difference h3{margin:20px 0;font-size:14pt;padding:10px 0 40px;background:url(../img/what-difference/what-difference-h3_ornaments.png) bottom no-repeat;}
+#what-the-difference p{margin:0 20px;font-size:11pt;}
+
+#preparation{padding-top:1px;}
+
+#preparation ul{margin:-30px 0 70px;}
+#preparation li{padding:25px 0 25px 0;}
+#preparation li h4{margin:15px 0 30px;font-size:16pt;}
+#preparation li p{width:480px;margin:15px 0;}
+#preparation li:nth-child(1){background:#E9A748;
+background:linear-gradient(to right, rgba(255,197,231,1) 0%,rgba(255,197,231,1) 60%,rgba(255,197,231,0) 70%,rgba(255,197,231,0) 100%),url(../img/preparation/culture.jpg) right no-repeat;background-size:100%,40%;}
+#preparation li:nth-child(2){background:#C73EFB;
+background:linear-gradient(to right, rgba(255,169,219,1) 0%,rgba(255,169,219,1) 60%,rgba(255,169,219,0) 70%,rgba(255,169,219,0) 100%),url(../img/preparation/document.jpg) right no-repeat;background-size:100%,40%;}
+#preparation li:nth-child(3){background:linear-gradient(to right, rgba(255,147,210,1) 0%,rgba(255,147,210,1) 60%,rgba(255,147,210,0) 70%,rgba(255,147,210,0) 100%),url(../img/preparation/reputation.jpg) right no-repeat;background-size:100%,40%;}
+#preparation li:nth-child(4){background:linear-gradient(to right, rgba(255,131,203,1) 0%,rgba(255,131,203,1) 60%,rgba(255,131,203,0) 70%,rgba(255,131,203,0) 100%),url(../img/preparation/solitude.jpg) right no-repeat;background-size:100%,40%;}
+#preparation li:nth-child(3) *,#preparation li:nth-child(4) *{}
+
+#marriage-is-not-easy{
+	clear:both;
+	background:url(../img/marriage-not-easy-ornaments.gif) no-repeat top center, url(../img/marriage-not-easy-ornaments2.gif) bottom center no-repeat;background-size:100%,500px;
+	width:800px;margin:60px auto;padding:60px 30px 40px;
+}
+#marriage-is-not-easy p{text-align:center; margin:20px 0;font-weight:bold;}
+
+@media only screen and (max-width:960px){
+	#hl_system{padding:60px 0;background:linear-gradient(to right,rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7)  100%),url(../img/section_bg/getstart_hl_left.jpg) 0% 0% repeat-y,url(../img/section_bg/getstart_hl_right.jpg) right 0% repeat-y;background-size:100%,50%,50%;}
+	#what-the-difference{background:url(../img/section_bg/what-the-difference/what-difference-bg1.png), radial-gradient(ellipse at center, #ffeadb 0%,#fff9fd 99%),#F4FFCE;}
+	
+	#preparation li:nth-child(1){background:#E9A748;
+background:linear-gradient(to right, rgba(255,197,231,1) 0%,rgba(255,197,231,1) 60%,rgba(255,197,231,0) 70%,rgba(255,197,231,0) 100%),url(../img/preparation/culture.jpg) right no-repeat;background-size:100%,70%;}
+	#preparation li:nth-child(2){background:#C73EFB;
+background:linear-gradient(to right, rgba(255,169,219,1) 0%,rgba(255,169,219,1) 60%,rgba(255,169,219,0) 70%,rgba(255,169,219,0) 100%),url(../img/preparation/document.jpg) right no-repeat;background-size:100%,70%;}
+	#preparation li:nth-child(3){background:linear-gradient(to right, rgba(255,147,210,1) 0%,rgba(255,147,210,1) 60%,rgba(255,147,210,0) 70%,rgba(255,147,210,0) 100%),url(../img/preparation/reputation.jpg) right no-repeat;background-size:100%,70%;}
+	#preparation li:nth-child(4){background:linear-gradient(to right, rgba(255,131,203,1) 0%,rgba(255,131,203,1) 60%,rgba(255,131,203,0) 70%,rgba(255,131,203,0) 100%),url(../img/preparation/solitude.jpg) 160% center no-repeat;background-size:100%,70%;}
+	
+}
+@media only screen and (max-width:768px){
+	.header-image{background:url(../img/header-image/gettingstarted.jpg) 0% bottom no-repeat;}
+	
+	#hl_system p{text-align:center; margin:20px 10%;}
+	#hl_system a{text-align:center;width:236px; margin:30px auto;font-size:12pt;padding:10px 0;box-shadow:2px 2px #666;}
+	
+	#what-the-difference ul{width:98%;margin:0 auto;}
+	#what-the-difference li{width:30%;padding:0 10px;margin:20px 0;display:inline-block;vertical-align:top;text-align:center;}
+	#what-the-difference h3{margin:10px 0;font-size:12pt;padding:10px 0 40px;background-size:95%;}
+	#what-the-difference p{font-size:10pt;}
+	
+	#preparation ul{margin:-40px 0 70px;}
+	#preparation li{padding:25px 55% 25px 2%;}
+	#preparation li h4{margin:15px 0 30px;font-size:12pt;}
+	#preparation li p{width:100%;margin:10px 0;}
+	#preparation li:nth-child(1){background:#E9A748;
+background:linear-gradient(to right, rgba(255,197,231,1) 0%,rgba(255,197,231,1) 50%,rgba(255,197,231,0) 55%,rgba(255,197,231,0) 100%),url(../img/preparation/culture.jpg) right no-repeat;background-size:100%,960px;}
+	#preparation li:nth-child(2){background:#C73EFB;
+background:linear-gradient(to right, rgba(255,169,219,1) 0%,rgba(255,169,219,1) 50%,rgba(255,169,219,0) 55%,rgba(255,169,219,0) 100%),url(../img/preparation/document.jpg) right no-repeat;background-size:100%,960px;}
+	#preparation li:nth-child(3){background:linear-gradient(to right, rgba(255,147,210,1) 0%,rgba(255,147,210,1) 50%,rgba(255,147,210,0) 55%,rgba(255,147,210,0) 100%),url(../img/preparation/reputation.jpg) center bottom no-repeat;background-size:100%,960px;}
+	#preparation li:nth-child(4){background:linear-gradient(to right, rgba(255,131,203,1) 0%,rgba(255,131,203,1) 50%,rgba(255,131,203,0) 55%,rgba(255,131,203,0) 100%),url(../img/preparation/solitude.jpg) -70% 80% no-repeat;background-size:100%,960px;}
+	
+	#marriage-is-not-easy{
+	background:url(../img/marriage-not-easy-ornaments.gif) no-repeat top center, url(../img/marriage-not-easy-ornaments2.gif) bottom center no-repeat;background-size:100%;
+	width:100%;margin:60px auto;padding:60px 0;
+	}
+	#marriage-is-not-easy p{margin:20px 10%;font-weight:normal;}
+}
+@media only screen and (max-width:512px){
+	.header-image{background:url(../img/header-image/gettingstarted.jpg) 50% bottom no-repeat;background-size:375%;}
+	
+	#hl_system p{margin:20px 5%;font-size:10pt;}
+	#hl_system a{width:70%;font-size:10pt;}
+	
+	#what-the-difference ul{width:98%;margin:0 auto;}
+	#what-the-difference li{width:90%;padding:0px 10px;margin:0px auto 60px;display:block;text-align:center;clear:both;position:relative;}
+	#what-the-difference li:after{content:"";clear:both;}
+	#what-the-difference li img{/*float:left;*/position:absolute;width:80px;margin:0;padding:0;left:10px;top:15%;}
+	#what-the-difference h3{margin:5px 0 15px 100px;font-size:11pt;padding:0;background:none;}
+	#what-the-difference p{font-size:10pt;margin:5px 0 15px 100px;text-align:left;}
+	
+	#preparation ul{margin:-35px 0 70px;}
+	#preparation li{padding:25px 5%;}
+	#preparation li h4{margin:15px 0 30px;font-size:12pt;}
+	#preparation li p{width:100%;margin:10px 0;font-size:10pt;}
+	#preparation li:nth-child(1){background:#E9A748;
+background:linear-gradient(to right, rgba(255,197,231,0.7) 0%,rgba(255,197,231,0.6) 100%),url(../img/preparation/culture.jpg) right no-repeat;background-size:100%,960px;}
+	#preparation li:nth-child(2){background:linear-gradient(to right, rgba(255,169,219,0.7) 0%,rgba(255,169,219,0.6) 100%),url(../img/preparation/document.jpg) right no-repeat;background-size:100%,640px;}
+	#preparation li:nth-child(3){background:linear-gradient(to right, rgba(255,147,210,0.7) 0%,rgba(255,147,210,0.6) 100%),url(../img/preparation/reputation.jpg) center bottom no-repeat;background-size:100%,960px;}
+	#preparation li:nth-child(4){background:linear-gradient(to right, rgba(255,131,203,0.7) 0%,rgba(255,131,203,0.6) 100%),url(../img/preparation/solitude.jpg) center center no-repeat;background-size:100%,720px;}
+	
+	#preparation li *{}
+	
+	#marriage-is-not-easy{
+	background:url(../img/marriage-not-easy-ornaments.gif) no-repeat top center, url(../img/marriage-not-easy-ornaments2.gif) bottom center no-repeat;background-size:100%;
+	width:100%;margin:60px auto;padding:60px 0;
+	}
+	#marriage-is-not-easy p{margin:20px 10%;font-size:10pt;font-weight:normal;}
+}

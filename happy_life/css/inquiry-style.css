@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* CSS Document */
+#loo{color:inherit;}
+
+.header-image{background:url(../img/header-image/inquiry.jpg) center 0% no-repeat;}
+.header-image *{color:white;}
+
+.row-reset-forpc{clear:both;}
+
+.inquiry{background:url(../img/section_bg/inquiry.jpg) center no-repeat;background-size:1920px;}
+h3{text-align:center;font-size:13pt;margin-bottom:70px;}
+
+label{display:block;margin:0 0 5px;}
+.input-text{width:300px;margin:0 10px;margin-bottom:40px !important;float:left;}
+.input-text input{width:278px; padding:7px 5px;border:1px solid #999;border-radius:3px;}
+.input-text select{width:290px; padding:7px 5px;border-radius:3px;border:1px solid #999;}
+
+.how-contact{width:300px;float:left;margin:0 10px;text-align:left;}
+.how-contact label{text-align:left;}
+.how-contact input{margin:10px 10px 0 40px;}
+
+.input-email{width:460px;margin:0 10px 40px;float:left;}
+.input-email input{width:438px; padding:7px 5px;border:1px solid #999;border-radius:3px;}
+
+#textarea{width:940px;margin:0 auto; clear:both;}
+textarea{padding:7px 5px;width:920px !important;font-size:11pt;height:150px !important;border-radius:3px;border:1px solid #999;}
+
+.RQRD{color:red; font-weight:bold;}
+
+#submit-button-container {text-align:center;}
+button{width:240px;font-size:15pt;padding:15px 0;border-radius:5px 0 5px;margin:50px 30px 30px;box-shadow:2px 2px #222222;cursor:pointer;}
+button[type="reset"]{border:none;background:#555;color:white;}
+button[type="reset"]:hover{background:#777;}
+button[type="submit"]{
+	width:234px;
+	border:3px solid #FFCFAF;
+	background: #ffa771;
+background: -moz-linear-gradient(top, #ffa771 0%, #eaa862 46%, #ffbc6b 55%, #f99e35 100%);
+background: -webkit-linear-gradient(top, #ffa771 0%,#eaa862 46%,#ffbc6b 55%,#f99e35 100%);
+background: linear-gradient(to bottom, #ffa771 0%,#eaa862 46%,#ffbc6b 55%,#f99e35 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa771', endColorstr='#f99e35',GradientType=0 );
+}
+
+button[type="submit"]:hover{
+	background: #ffc7a5;
+background: -moz-linear-gradient(top,  #ffc7a5 0%, #f2c79a 46%, #ffd5a1 55%, #fbc07d 100%);
+background: -webkit-linear-gradient(top,  #ffc7a5 0%,#f2c79a 46%,#ffd5a1 55%,#fbc07d 100%);
+background: linear-gradient(to bottom,  #ffc7a5 0%,#f2c79a 46%,#ffd5a1 55%,#fbc07d 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc7a5', endColorstr='#fbc07d',GradientType=0 );
+
+}
+button:active{box-shadow:none;left:2px;top:2px}
+
+@media only screen and (max-width:768px){
+	h3{text-align:center;font-size:13pt;margin-bottom:30px;}
+	.row-reset-forpc{clear:none;}
+
+	label{margin:0 0 8px;}
+	.input-text{width:45%;margin:0 2.5% 40px;float:left;}
+	.input-text input{width:95%; padding:7px 5px;border:1px solid #999;border-radius:3px;}
+	.input-text select{width:99%; padding:7px 5px;border-radius:3px;}
+
+	.input-email{width:45%;margin:0 2.5% 40px;float:left;}
+	.input-email input{width:95%; padding:7px 5px;border:1px solid #999;border-radius:3px;}
+
+	.how-contact{width:45%;float:left;margin:0 2.5% 40px;text-align:left;}
+	.how-contact label{text-align:left;}
+	.how-contact input{margin:10px 10px 0 40px;}
+
+	#textarea{width:95%;margin:0 auto; clear:both;}
+	textarea{padding:7px 5px;width:97.5% !important;font-size:11pt;height:150px !important;border-radius:3px;}
+	
+	#submit-button-container {text-align:center;margin:35px auto;}
+	button{font-size:11pt;padding:15px 0;margin:15px 30px;}
+	button[type="reset"]{width:220px;}
+	button[type="submit"]{width:216px;border:3px solid #FFCFAF;}
+}
+
+@media only screen and (max-width:512px){
+	h3{text-align:center;font-size:10pt;margin-bottom:30px;}
+
+	label{margin:0 0 8px;font-size:10pt}
+	.input-text{width:95%;margin:0 2.5% 20px;float:none;}
+	.input-text input{width:95%;margin:0 auto;padding:10px 5px;font-size:10pt;}
+	.input-text select{width:97.5%;}
+
+	.how-contact{width:95%;float:none;margin:0 2.5% 40px;text-align:left;font-size:10pt}
+	.how-contact input{margin-left:20%;margin-bottom:0;}
+	
+	.input-email{width:95%;margin:0 2.5% 20px;float:none;}
+	.input-email input{width:95%;padding:10px 5px;font-size:10pt;}
+
+	#textarea{width:95%;margin:0 auto; clear:both;}
+	textarea{padding:7px 5px;width:97.5% !important;font-size:10pt;height:150px !important;border-radius:3px;}
+	
+	#submit-button-container{margin:40px auto;}
+	button{font-size:10pt;margin:30px auto;display:block;}
+	button[type="reset"]{width:230px;padding:12px 0;}
+	button[type="submit"]{width:230px;border:3px solid #FFCFAF;padding:9px 0;}
+}

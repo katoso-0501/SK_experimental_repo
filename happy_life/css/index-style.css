@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* CSS Document */
+
+#index-image{
+	background:url('../img/happylife_index_image.jpg') center center no-repeat;width:100%;height:540px;font-size:12pt;z-index:1;
+}
+#index-image .contents{
+	padding-top:350px;text-align:right;
+}
+#index-image p{letter-spacing:10px;margin-right:30px;font-weight:bold;color:#EB5C36}
+
+#index-introduction,#index-introduction-for-smp{
+	text-align:center;
+	padding:50px 0;
+	line-height:2.5em;
+	background: url('../img/index_intro4.png') left center no-repeat,url('../img/index_intro4.png') right center no-repeat,url('../img/index_intro_bg.jpg') center center no-repeat;
+}
+#index-introduction-for-smp{
+	display:none;
+}
+.top-contents{}
+.top-contents a{display:block;width:90%;padding:120px 0px 120px 10%;position:relative;font-size:22pt;font-weight:bold;transition:0.4s ease-out;}
+.top-contents img{height:40px;}
+.top-contents a:after{position:absolute;content:"";width:50%;height:100%;left:50%;top:0; transition:0.4s ease-out;}
+
+#first-content a{background:#F4AC64;background-size:50%;}#first-content a:hover{background:#F8C38E;}
+#first-content a:after{background:url(../img/top_getting.jpg) 40% 60% no-repeat;background-size:1024px;}
+#first-content a:hover:after{width:45%;left:55%;background-size:1280px !important;background-position:40% center !important;}
+
+#second-content a{background:#F49D46;background-size:50%;}#second-content a:hover{background:#F8C38E;}
+#second-content a:after{background:url(../img/top_tomarriage.jpg) 40% 30% no-repeat;background-size:1024px;}
+#second-content a:hover:after{width:45%;left:55%;background-size:1280px !important;background-position:60% 30% !important;}
+
+#third-content a{background:#FF8813;background-size:50%;}#third-content a:hover{background:#F8C38E;}
+#third-content a:after{background:url(../img/top_inquiry.jpg) 100% 66% no-repeat;background-size:1024px;}
+#third-content a:hover:after{width:45%;left:55%;background-size:1280px !important;background-position:90% 66% !important;}
+
+@media only screen and (max-width:768px){
+	#index-image{
+		background:linear-gradient(rgba(255,255,255,0.4) 0%,rgba(255,255,255,0.4) 100%),url('../img/happylife_index_image.jpg') center center no-repeat;
+	}
+	#index-image .contents{} #index-image p{}
+	#index-introduction{line-height:1.88em;}
+	#index-introduction img{width:99%;}
+	
+	.top-contents{}
+	.top-contents a{width:99%;padding:120px 0px 120px 1%;transition:0.4s ease-out;}
+	.top-contents img{height:25px;}
+	.top-contents a:after{position:absolute;content:"";width:60%;height:100%;left:40%;top:0; transition:0.4s ease-out;}
+
+	#first-content a{background:#F4AC64;background-size:50%;}
+	#first-content a:after{background:url(../img/top_getting.jpg) 40% 60% no-repeat;background-size:600px;}
+	#first-content a:hover:after{width:55%;left:45%;background-size:1280px !important;background-position:40% center !important;}
+
+	#second-content a{background:#F49D46;background-size:50%;}
+	#second-content a:after{background:url(../img/top_tomarriage.jpg) 80% 20% no-repeat;background-size:600px;}
+	#second-content a:hover:after{width:55%;left:45%;background-size:1280px !important;background-position:60% 30% !important;}
+
+	#third-content a{background:#FF8813;background-size:50%;}
+	#third-content a:after{background:url(../img/top_inquiry.jpg) 100% 66% no-repeat;background-size:540px;}
+	#third-content a:hover:after{width:55%;left:45%;background-size:1280px !important;background-position:90% 66% !important;}
+}
+@media only screen and (max-width:512px){
+	#index-image{
+		background:linear-gradient(rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 100%),url('../img/happylife_index_image.jpg') 37% center no-repeat;background-size:550%;height:inherit;
+	}
+	#index-image .contents{padding:43% 0;}
+	#index-image img{width:99%;display:block;margin:0 auto;}
+	#index-image p{font-size:9pt;}
+	
+	#index-introduction{display:none;}
+	#index-introduction-for-smp{
+		line-height:1.6em;
+		background-position:left 100%,right 100%,center;
+		background-size:10%,10%,500%;
+		padding:30px 5%;
+		display:block;
+	}
+	#index-introduction-for-smp p{
+		font-size:11pt;
+		padding:15px 0;
+	}
+	
+	.top-contents{}
+	.top-contents a{width:99%;padding:60px 0px 60px 1%;transition:0.4s ease-out;z-index:23;}
+	.top-contents img{height:18px;padding-left:10px;}
+	.top-contents a:after{position:absolute;content:"";width:100% !important;height:100%;left:0% !important;top:0;opacity:0.35; transition:0.4s ease-out;z-index:1;}
+
+	#first-content a{background:#F49D46;background-size:50%;}
+	#first-content a:after{background:url(../img/top_getting.jpg) 0% 60% no-repeat;background-size:520px;}
+	#first-content a:hover:after{background-size:640px !important;background-position:00% center !important;}
+
+	#second-content a{background:#F49D46;background-size:50%;}
+	#second-content a:after{background:url(../img/top_tomarriage.jpg) 80% 20% no-repeat;background-size:520px;}
+	#second-content a:hover:after{background-size:640px !important;background-position:60% 30% !important;}
+
+	#third-content a{background:#FF8813;background-size:50%;}
+	#third-content a:after{background:url(../img/top_inquiry.jpg) 100% 66% no-repeat;background-size:520px;}
+	#third-content a:hover:after{background-size:640px !important;background-position:90% 66% !important;}	
+}

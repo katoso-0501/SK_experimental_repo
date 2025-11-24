@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* Thankyou Page */
+#thanks_movie h2,#thanks_movie h3,#mfp_thanks *{font-family:"游ゴシック", Yu Gothic,"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; }
+#thanks_movie{width:100%;margin:0;padding:20px 0;text-align:center;background:orange;position:relative;font-family:"游ゴシック", Yu Gothic,"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; }
+#thanks_movie h2{font-size:16pt;margin:30px auto;}
+#mfp_thanks{text-align:center;font-size:14pt;}#mfp_thanks strong{font-family:'Ubuntu',sans-serif;}
+#thanks_movie h3{margin:30px auto;}
+
+/* Movie Console*/
+#movie-console{display:none;background:rgba(239,239,239,1.00);width:100%;height:100%;position:absolute;top:0;left:0;}
+#inst1{
+	display:block;opacity:1;background:url('../img/thanks-movie/letter_1.png') no-repeat;
+	animation:fuwafuwa 1s infinite linear alternate;
+	width:100%;height:100px;z-index:5;
+}
+#inst3{
+	display:block;opacity:1;background:url('../img/thanks-movie/letter_2.png') center no-repeat;position:absolute;width:100%;height:100px;z-index:4;top:60%;padding-bottom:0%;animation:fuwafuwa2 1s infinite linear alternate;
+}
+#inst2{
+	font-family:'Ubuntu',sans-serif;font-size:42pt;color:#FFA511;font-weight:bold;padding-top:5%;margin-top:70px;/*text-shadow:0 0 4px;*/
+}
+
+#thankyou p{font-size:14pt;margin:20px 0;}
+.mfp_caution{width:696px;padding:5px 10px;border:2px #FF53B3 solid;margin:0 auto;}
+.mfp_caution li{
+	color:#FF53B3;font-weight:bold;
+	font-size:12pt;
+	margin:15px 0;
+}
+.mfp_caution li:before{
+	content:"";border:6px transparent solid;border-left-color:#FF53B3;display:inline-block;vertical-align:middle;margin-right:4px;
+}
+
+#gotoTop{
+	display:block;width:356px;background:#FFA035;text-align:center;font-size:14pt;padding:12px 0;margin:60px auto 30px;border:2px solid #FFBE6D;box-shadow:2px 2px #666;
+}
+#gotoTop:hover{background:#FFD68A;}
+
+@media only screen and (max-width:768px){
+	#thanks_movie{}#thanks_movie h2{}#mfp_thanks{font-size:14pt;}
+	#mfp_thanks strong{font-family:'Ubuntu',sans-serif;}
+	#thanks_movie h3{margin:30px auto;}
+
+	#inst1{}
+
+	#thankyou p{font-size:13pt;margin:20px 0;text-align:center;}
+	.mfp_caution{width:80%;}
+	.mfp_caution li{
+		margin:22px 0;
+	}
+	#gotoTop{
+		width:376px;padding:12px 0;
+	}
+}
+@media only screen and (max-width:512px){
+	#thanks_movie{}
+	#thanks_movie h2{font-size:16pt;margin:30px auto;}
+	#mfp_thanks{text-align:center;font-size:10pt;}
+	#mfp_thanks strong{font-family:'Ubuntu',sans-serif;font-size:14pt;display:block;}
+	#thanks_movie h3{margin:30px auto;}
+	#inst1{background-size:120px;}
+	#inst2{font-size:26pt;}
+	#inst3{animation:fuwafuwa2-smp 1s infinite alternate;}
+
+	#thankyou p{font-size:10pt;margin:20px 5%;text-align:center;}
+	.mfp_caution li{
+		margin:15px 0;font-size:10pt;
+	}
+	#gotoTop{
+		margin:40px auto;width:60%;padding:10px 0;font-size:10pt;
+	}
+}
+@keyframes fuwafuwa{
+	0%{background-position:50% 0%;}
+	100%{background-position:50% 100%;}
+}
+@keyframes fuwafuwa2{
+	0%{background-size:180px 40px;}
+	100%{background-size:200px 50px;}
+}
+@keyframes fuwafuwa2-smp{
+	0%{background-size:60px 15px;}
+	100%{background-size:120px 35px;}
+}

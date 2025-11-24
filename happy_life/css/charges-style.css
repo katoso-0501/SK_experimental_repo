@@ -1,0 +1,342 @@
+@charset "utf-8";
+
+/* CSS Document */
+.header-image{background:url(../img/header-image/charges.jpg) bottom center no-repeat;}
+.header-image *{color:white}
+
+.price{font-family:'Ubuntu',sans-serif;}
+h3{text-align:center;}
+
+#guarantee_charge{text-align:center;padding:25px 0;background:url('../img/guarantee_charge_ornament1.png') left bottom no-repeat,url('../img/guarantee_charge_ornament2.png'),url('../img/guarantee_charge_ornament3.png') right top no-repeat,linear-gradient(to right, rgba(255,218,132,1) 0%,rgba(255,195,142,1) 100%),#FFC38E;border:5px solid #FFC38E;margin:20px auto;width:860px;}
+#guarantee_charge li{display:inline-block;vertical-align:middle;}
+#guarantee_charge h2{font-size:16pt;padding:5px 0;color:#222;}
+#guarantee_charge h3 .price{font-size:30pt; font-weight:bold;}
+#guarantee_charge p{margin:0px 100px 0 0px;}
+
+#wage_charge{text-align:center;padding:0;margin:60px 0 30px;}
+#wage_charge li:nth-child(1){position:relative;font-size:16pt;padding:35px 0;width:180px;background:#FF9FE3;display:inline-block;border-radius:3px;}
+#wage_charge li:nth-child(1):after{position:absolute;content:"";border:75px transparent solid;border-left-color:#FF9FE3;top:0%;right:-150px;}
+#wage_charge li:nth-child(1) h2{font-weight:normal;color:white;text-align:right;font-size:20pt;}
+
+#wage_charge li:nth-child(2){position:relative;font-size:16pt;padding:5px 0;width:280px;display:inline-block;vertical-align:middle;margin-left:100px;}
+#wage_charge p{margin:15px 0;}
+#wage_charge .price{font-size:30pt; font-weight:bold;}
+
+#supports{background:url('../img/section_bg/charges_supports.jpg') center center,#FAE9FF;}
+
+#tour-summary{width:860px;margin:0 auto 30px;padding:30px 0;text-align:center;}
+#tour-summary h3,#tour-summary p{display:inline-block;vertical-align:central;}
+#tour-summary h3{font-size:18pt;margin-right:90px;font-weight:normal;}
+#tour-summary p{font-size:16pt;padding-left:89px;border-left:1px #999 dotted;}#tour-summary p .price{font-size:32pt;margin:0 5px;font-weight:bold;}
+
+#supported_contents li{
+	width:455px;height:90px;
+	padding:0 5px 0 0;margin:10px 10px;
+	float:left;
+	background-repeat:no-repeat !important;background-position:5% center !important;
+}
+
+#supported_contents li:nth-child(1){background:url(../img/supported/ap.png);}
+#supported_contents li:nth-child(2){background:url(../img/supported/fares.png);}
+#supported_contents li:nth-child(3){background:url(../img/supported/hotel.png);}
+#supported_contents li:nth-child(4){background:url(../img/supported/meeting.png);}
+#supported_contents li:nth-child(5){background:url(../img/supported/homeland.png);}
+#supported_contents li:nth-child(6){background:url(../img/supported/date.png);}
+#supported_contents li:nth-child(7){background:url(../img/supported/interpreter.png);}
+
+#supported_contents h4{text-align:left;font-size:15pt;margin-left:100px;}
+#supported_contents p{margin-left:100px;}
+#supported_contents .supported_notice{height:inherit;}
+#supported_contents .supported_notice p{margin:15px 0;border-left:3px solid #1E2832;padding-left:10px;}
+
+ul.supported_notice {clear:both;margin:600px 0 60px;}
+ul.supported_notice li{margin:10px 0;}
+
+#skype-chat{width:480px;border-top:1px #999 dashed;padding-top:10px;margin:9px auto 20px;}
+#skype-chat h4{background:url(../img/skype_logo.gif) center top no-repeat;width:180px;text-align:center;padding-top:140px;margin-right:20px;float:left;}
+#skype-chat p{font-size:14pt;padding:5px 0;margin-left:40%;text-align:center;}#skype-chat p strong{font-weight:bold;font-size:22pt;}
+#skype-chat p .price{font-weight:bold;}
+
+#tours{background:#FFFCFC;}
+
+#tours h3{text-align:center;font-size:15pt;padding-bottom:9px;border-bottom:1px #999 dashed;}
+
+#tours-feature{width:960px;margin:20px 0 60px;}
+#tours-feature li{background:#1E2832;padding:10px 5px;width:400px;margin:10px 10px 10px 55px;display:inline-block;position:relative;border-radius:10px;}
+#tours-feature li:before{position:absolute;content:"";border:38px transparent solid;border-right-color:#1E2832;top:0;left:-70px;border-radius:10px;}
+#tours-feature li:after{position:absolute;content:"";width:15px;height:15px;background:white;top:40%;left:-20px;border-radius:10px;}
+#tours-feature figure img{width:40px;}
+#tours-feature figure{background:white;display:inline-block;border-radius:100%;text-align:center;padding:3px 5px;vertical-align:middle;}
+#tours-feature li p{color:white;width:320px;display:inline-block;vertical-align:middle;margin-left:15px;}
+
+#tours-ceremony-costs{width:960px;}
+#tours-ceremony-costs li{width:220px;float:left;margin:20px 0px;padding:190px 10px 30px;text-align:center;background-position:center top !important;background-size:240px !important;}
+#tours-ceremony-costs li h4{font-size:15pt;}
+#tours-ceremony-costs li h5{margin:9px 0;}
+#tours-ceremony-costs li *{
+	color:white;
+	text-shadow:0 0 6px;
+}
+#tours-ceremony-costs li p{margin:0;}
+#tours-ceremony-costs li .price{font-size:24pt;}
+
+#tours-ceremony-costs li:nth-child(1){background:linear-gradient(180deg, rgba(252,172,243,0) 50%,rgba(252,172,243,1) 50%,rgba(233,141,205,1) 100%),url(../img/c-cost-bg1.jpg);}
+#tours-ceremony-costs li:nth-child(2){background:linear-gradient(180deg, rgba(221,103,185,0) 50%,rgba(221,103,185,1) 50%,rgba(221,103,185,1.00) 100%),url(../img/c-cost-bg2.jpg);}
+#tours-ceremony-costs li:nth-child(3){background:linear-gradient(180deg, rgba(221,87,180,0) 50%,rgba(221,87,180,1.00) 50%,rgba(221,87,180,1) 100%),url(../img/c-cost-bg3.jpg);}
+#tours-ceremony-costs li:nth-child(4){background:linear-gradient(180deg, rgba(221,87,180,0) 50%,rgba(219,51,167,1) 50%,rgba(219,51,167,1) 100%),url(../img/c-cost-bg4.jpg);}
+
+#tours p{margin:10px 10px;}
+
+#here-not-included{
+	border-radius:4px;
+	position:relative;
+	width:720px;margin:60px auto 30px;padding:6px 10px;
+}
+#here-not-included:before{
+	border:4px #20CF39 double;content:"";position:absolute;
+	width:100.5%;height:101%;top:-1.5%;left:-0.75%;border-radius:4px;
+}
+#here-not-included:after{
+	background:url(../img/here-not-included.gif) left top,url(../img/here-not-included.gif) right top,url(../img/here-not-included.gif) left bottom,url(../img/here-not-included.gif) right bottom;background-repeat: no-repeat;
+	content:"";position:absolute;
+	width:104%;height:106%;top:-3%;left:-2%;border-radius:4px;
+}
+#here-not-included h3{text-align:center;margin:10px 0;border:none;}
+#here-not-included table{border-collapse:collapse;margin:0 auto;}
+
+#here-not-included tr{border-bottom:1px dashed #999;}
+#here-not-included tr:last-child{border:none;}
+#here-not-included th{width:280px;padding:10px 20px;}
+#here-not-included td{padding:10px;}
+
+@media only screen and (max-width:768px){
+	.header-image{background:url(../img/header-image/charges.jpg) 30% bottom no-repeat;}
+	.header-image *{color:#111;}
+	
+	#guarantee_charge{
+		padding:10px 0;
+		background:url('../img/guarantee_charge_ornament1.png') left bottom no-repeat,url('../img/guarantee_charge_ornament2.png'),url('../img/guarantee_charge_ornament3.png') right top no-repeat,linear-gradient(to right, rgba(255,218,132,1) 0%,rgba(255,195,142,1) 100%),#A0FF8D;
+		margin:20px auto;
+		width:95%;
+	}
+	#guarantee_charge li{display:block;}
+	#guarantee_charge h2{
+		font-size:16pt;
+		padding:5px;
+		width:inherit;
+		display:inline-block;
+	}
+	#guarantee_charge h3{padding:5px;width:inherit;display:inline-block;}
+	#guarantee_charge h3 .price{font-size:30pt; font-weight:bold;}
+	#guarantee_charge p{margin:5px auto;}
+	
+	#wage_charge{margin:60px auto 30px;width:95%;}
+	#wage_charge li:nth-child(1){position:relative;padding:0;margin:0 auto;width:360px;background:#FF9FE3;display:block;border-radius:3px;}
+	#wage_charge li:nth-child(1) h2{font-size:16pt;text-align:center;padding:10px 0;}
+	#wage_charge li:nth-child(1):after{position:absolute;content:"";border:12px transparent solid;border-top-color:#FF9FE3;top:100%;right:45%;}
+
+	#wage_charge li:nth-child(2){position:relative;font-size:13pt;padding:5px 0;width:100%;display:inline-block;margin:0;}
+	#wage_charge p{margin:20px 5px 0;display:inline-block;}
+	#wage_charge .price{font-size:30pt; font-weight:bold;}
+	
+	#supports{background-size:450%;}
+	
+	#tour-summary{width:95%;margin:0 auto 30px;padding:30px 0;text-align:center;}
+	#tour-summary h3,#tour-summary p{display:inline-block;vertical-align:central;}
+	#tour-summary h3{font-size:13pt;margin-right:5%;font-weight:normal;}#tour-summary h3 br{display:none;}
+	#tour-summary p{font-size:12pt;padding-left:5%;border-left:1px #999 dotted;}#tour-summary p .price{font-size:24pt;margin:0 5px;font-weight:bold;}
+	
+	#supported_contents li{width:45%;height:150px;padding:0;margin:10px 2.5%; float:left; background-repeat:no-repeat !important;background-position:center 1% !important;}
+
+	#supported_contents h4{text-align:center;font-size:14pt;margin:70px 0 0}
+	#supported_contents p{margin:0;text-align:center;font-size:10pt;}
+	#supported_contents .supported_notice{float:none;clear:both;height:inherit;width:95%;}
+	#supported_contents .supported_notice p{margin:15px 0;text-align:left;font-size:12pt;padding-left:10px;}
+	
+	ul.supported_notice {clear:both;margin:60px auto; width:90%;}
+	ul.supported_notice li{margin:5px 0;}
+	
+	#skype-chat{}	#skype-chat h4{}	#skype-chat p{}	#skype-chat p .price{}
+	
+	#tours h3{text-align:center;font-size:15pt;width:70%;margin:20px auto;padding-bottom:9px;border-bottom:1px #999 dashed;}
+
+	#tours-feature{width:80%;margin:30px auto 60px;}
+	#tours-feature li{padding:10px 5px;width:400px;margin:30px auto;display:block;}
+	#tours-feature figure{background:white;display:inline-block;border-radius:100%;text-align:center;padding:3px 5px;vertical-align:middle;}
+	#tours-feature li p{color:white;width:320px;display:inline-block;vertical-align:middle;margin:0 0 0 15px;}
+	
+	#tours-ceremony-costs{width:100%;margin:0;padding:0 0 370px;}
+	#tours-ceremony-costs li{width:25%;float:left;margin:0;padding:40px 0 40px 25%;text-align:center;background-position:center,left top !important;background-size:100%,240px !important;}
+	#tours-ceremony-costs li *{}
+	#tours-ceremony-costs li h4{font-size:12pt;}
+	#tours-ceremony-costs li h5{margin:9px 0;font-size:10pt;}
+	#tours-ceremony-costs li p{margin:0;font-size:10pt;}
+	#tours-ceremony-costs li .price{font-size:20pt;}
+
+	#tours-ceremony-costs li:nth-child(1){background:linear-gradient(90deg, rgba(252,172,243,0) 50%,rgba(252,172,243,1) 50%,rgba(233,141,205,1) 100%),url(../img/c-cost-bg1.jpg);}
+	#tours-ceremony-costs li:nth-child(2){background:linear-gradient(90deg, rgba(226,111,191,0) 50%,rgba(226,111,191,1) 50%,rgba(226,111,191,1) 100%),url(../img/c-cost-bg2.jpg);}
+	#tours-ceremony-costs li:nth-child(3){background:linear-gradient(90deg, rgba(226,111,191,0) 50%,rgba(226,111,191,1) 50%,rgba(226,111,191,1) 100%),url(../img/c-cost-bg3.jpg);}
+	#tours-ceremony-costs li:nth-child(4){background:linear-gradient(90deg, rgba(252,172,243,0) 50%,rgba(252,172,243,1) 50%,rgba(233,141,205,1) 100%),url(../img/c-cost-bg4.jpg);}
+
+	#tours p{margin:10px 10px; clear:both;}
+	
+	#here-not-included{
+		width:88%;margin:60px auto;padding:6px 10px;
+	}
+	#here-not-included:before{
+		border:4px #20CF39 double;content:"";position:absolute;
+		width:100.5%;height:101%;top:-1.5%;left:-0.75%;border-radius:4px;
+	}
+
+	#here-not-included h3{text-align:center;margin:10px auto;width:99%;border:none;}
+	#here-not-included table{border-collapse:collapse;margin:0 auto;}
+
+	#here-not-included tr{border-bottom:1px dashed #999;}
+	#here-not-included tr:last-child{border:none;}
+	#here-not-included th{width:40%;padding:10px 2.5%;}
+	#here-not-included td{padding:10px 2.5%;}
+}
+@media only screen and (max-width:512px){
+	#guarantee_charge{
+		text-align:center;padding:0;
+		border-width:2px;
+		margin:20px auto;
+		width:90%;
+	}
+	#guarantee_charge li{display:block;margin:15px 0;}
+	#guarantee_charge h2{font-size:10pt;padding:0;width:inherit;display:block;}
+	#guarantee_charge h3{padding:5px;width:inherit;display:block;}
+	#guarantee_charge h3 .price{font-size:24pt; font-weight:bold;}
+	#guarantee_charge p{margin:5px auto;text-align:left;font-size:10pt;width:90%;}
+	
+	#wage_charge{margin:40px auto 20px;}
+	#wage_charge li:nth-child(1){
+		position:relative;
+		padding:0;
+		margin:0 auto;
+		width:180px;
+		display:block;
+		border-radius:3px;
+	}
+	#wage_charge li:nth-child(1):after{
+		border-width:7px;
+		right:83px;
+	}
+	#wage_charge li:nth-child(1) h2{
+		font-size:10pt;
+		text-align:center;
+		padding:8px 0;
+	}
+	#wage_charge li:nth-child(2){
+		position:relative;
+		font-size:11pt;
+		padding:30px 0 0;
+		width:100%;
+		display:inline-block;
+		margin:0;
+	}
+	#wage_charge p{
+		margin:0px 0 5px;
+		display:block;
+	}
+	#wage_charge .price{
+		font-size:24pt;
+		font-weight:bold;
+	}
+	
+	#supports{background-size:750%;}
+	
+	#tour-summary{width:100%;margin:30px auto;padding:0px 0;text-align:center;}
+	#tour-summary h3,#tour-summary p{display:block;}
+	#tour-summary h3{font-size:13pt;margin:0 auto;width:90%;padding:0 0 5px 0;border-bottom:1px #999 dotted;}
+	#tour-summary p{font-size:12pt;margin:0 auto;padding:5px 0 0 0;}#tour-summary p .price{font-size:24pt;margin:0 5px;font-weight:bold;}
+	
+	#supported_contents li{width:95%;height:inherit;padding:15px 0;margin:10px auto; float:none;background-position:1% center !important;background-size:40px !important;}
+
+	#supported_contents h4{text-align:left;font-size:12pt;margin:0 0 5px 80px;}
+	#supported_contents p{margin:0 0 0 80px;text-align:left;}
+	#supported_contents .supported_notice{width:95%;}
+	#supported_contents .supported_notice p{margin:0 auto 15px;font-size:10pt;padding-left:10px;}
+	
+	ul.supported_notice {margin:0px auto 60px; width:90%;}
+	ul.supported_notice li p{margin:18px 0;font-size:10pt;}
+	
+	#skype-chat{width:95%;border-top:1px #999 dashed;padding-top:20px;margin:9px auto 20px;}
+	#skype-chat h4{background:url(../img/skype_logo.gif) center top no-repeat;background-size:80px;width:90%;text-align:center;padding-top:100px;margin:0 auto 10px;float:none;}
+	#skype-chat p{font-size:10pt;padding:4px 0;text-align:center;margin:0;}
+	
+	#tours h3{text-align:center;font-size:11pt;padding-bottom:9px;border-bottom:1px #999 dashed;}
+
+	#tours-feature{width:100%;margin:0px 0 50px;}
+	#tours-feature li{padding:10px 0;width:95%;margin:10px auto;background:none;}
+	#tours-feature li:before,#tours-feature li:after{display:none;}
+	#tours-feature figure{background:white;display:inline-block;border-radius:100%;text-align:center;padding:3px 5px;vertical-align:middle;}
+	#tours-feature li p{color:#1E2933;width:70%;display:inline-block;vertical-align:middle;margin-left:30px;font-size:12pt;}
+	
+	#tours-ceremony-costs{
+		width:100%;
+		margin:0;padding:0 0 25px;
+	}
+	#tours-ceremony-costs li{
+		width:100%;
+		float:none;
+		margin:0;
+		padding:40px 0 40px;
+		text-align:center;
+		background-position:center !important;
+		background-size:100%,100% !important;
+		background-repeat:no-repeat !important;
+	}
+	#tours-ceremony-costs li *{
+		-moz-transform:rotate(0deg);
+		-o-transform:rotate(0deg);
+		-webkit-transform:rotate(0deg);
+		-ms-transform:rotate(0deg);
+		transform:rotate(0deg);
+	}
+	#tours-ceremony-costs li h4{
+		font-size:12pt;
+	}
+	#tours-ceremony-costs li h5{
+		margin:9px 0;
+		font-size:10pt;
+	}
+	#tours-ceremony-costs li p{
+		margin:0;
+		font-size:10pt;
+	}
+	#tours-ceremony-costs li .price{
+		font-size:20pt;
+	}
+
+	#tours-ceremony-costs li:nth-child(1){
+		background:linear-gradient(85deg, rgba(252,172,243,0.7) 0%,rgba(233,141,205,1) 100%),url(../img/c-cost-bg1.jpg);
+	}
+	#tours-ceremony-costs li:nth-child(2){
+		background:linear-gradient(85deg, rgba(250,128,236,0.7) 0%,rgba(226,108,191,1) 100%),url(../img/c-cost-bg2.jpg);
+	}
+	#tours-ceremony-costs li:nth-child(3){
+		background:linear-gradient(85deg, rgba(249,91,230,0.7) 0%,rgba(220,80,178,1) 100%),url(../img/c-cost-bg3.jpg);
+	}
+	#tours-ceremony-costs li:nth-child(4){
+		background:linear-gradient(85deg, rgba(225,81,209,0.7) 0%,rgba(196,74,159,1) 100%),url(../img/c-cost-bg4.jpg);
+	}
+	
+	#tours p{margin:10px 5%; clear:both;}
+	
+	#here-not-included{
+		width:88%;
+		margin:60px auto;
+		padding:6px 10px;
+	}
+	#here-not-included:before,#here-not-included:after{display:none;}
+	#here-not-included h3{text-align:center;margin:10px 0;border:none;font-size:12pt;}
+	
+	#here-not-included table{border-collapse:collapse;margin:0 auto;}
+
+	#here-not-included tr{border-bottom:1px dashed #999;}
+	#here-not-included tr:last-child{border:none;}
+	#here-not-included th{display:block;width:100%;padding:10px 0;font-size:10pt;}
+	#here-not-included td{display:block;padding:10px 0 20px;font-size:10pt;line-height:1.9em;}
+	#here-not-included .price{font-size:12pt;font-weight:bold;}
+}
