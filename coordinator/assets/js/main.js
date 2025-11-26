@@ -66,7 +66,6 @@ class Jonny {
             }else{
                 controllerDiv[1][1].append(paragraph);
             }
-            // controllerMaster.append(paragraph);
         });
         
         this.jonnyBody.append(this.img,tops,trouser);
@@ -100,6 +99,17 @@ class Jonny {
 
     HSLupdate (tgt, h, s, l) {
         tgt.style.background = `hsl(${h},${s}%,${l}%)`;
+    }
+
+    createControls () {
+        const controllerMaster = document.createElement('div');
+        controllerMaster.classList.add('char__controller');
+        
+        const controlParts = [
+            ['Hue',document.createElement('input')],
+            ['Saturation',document.createElement('input')],
+            ['Brightness',document.createElement('input')],
+        ];
     }
 
     deleteCharacter () {
