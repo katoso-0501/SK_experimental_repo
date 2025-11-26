@@ -1,3 +1,34 @@
+"use strict";
+class Jonny {
+    constructor() {
+        this.jonnyMain = document.createElement('div');
+        this.jonnyMain.classList.add('jonny');
+        
+        this.jonnyBody = document.createElement('div');
+        this.jonnyBody.classList.add('jonny__body');
+
+        const img = document.createElement('img');
+        img.src = "assets/images/jonny_original.webp";
+
+        const tops = document.createElement('div'); 
+        tops.classList.add('jonny__tops');
+        const trouser = document.createElement('div');
+        trouser.classList.add('jonny__trouser');
+        
+        this.jonnyBody.append(img,tops,trouser);
+        this.jonnyMain.append(this.jonnyBody);
+
+        document.querySelector('body').append(this.jonnyMain);
+    }
+}
+
+class Jimmy extends Jonny {
+    constructor() {
+        super();
+    }
+}
+
+const characters = [new Jonny()];
 
 const tops = document.querySelector('.jonny__tops');
 const trouser = document.querySelector('.jonny__trouser');
