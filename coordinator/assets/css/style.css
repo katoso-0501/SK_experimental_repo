@@ -83,3 +83,30 @@ html,body,h1,h2,h3,h4,h5,h6,p,i,input,button,img,picture {
     left: 30px;
     width: 400px;
 }
+
+.jonny__controller {
+    display: flex;
+    gap: 24px;
+    margin: 16px;
+    
+    @media (width <= 768px) {
+        flex-direction: column;
+    }
+}
+
+.jonny__controller > div {
+    flex: 1;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #CCCCCC;
+
+    @media (width <= 768px) {
+        flex: auto
+    }
+}
+
+
+.jonny__controller > div > p {
+    display: flex;
+    justify-content: space-between;
+}
