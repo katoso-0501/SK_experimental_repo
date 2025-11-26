@@ -52,7 +52,7 @@ html,body,h1,h2,h3,h4,h5,h6,p,i,input,button,img,picture {
 .jonny__tops::before {
     content:" - Tops";
     position: absolute;
-    top: 0.0px;
+    top: 0;
     left: 30px;
     width: 400px;
 }
