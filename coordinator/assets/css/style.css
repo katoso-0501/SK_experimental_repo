@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+html,body,h1,h2,h3,h4,h5,h6,p,i,input,button,img,picture {
+    padding: 0;
+    margin: 0;
+}
+
+.jonny {
+    position: relative;
+    width: 100%;
+    max-width: 854px;
+    margin: auto;
+}
+
+.jonny img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jonny__tops {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-image: url(../images/jonny_tops.svg);
+    -webkit-mask-position: center center;
+    -webkit-mask-size: 100%;
+    mask-image: url(../images/asset_01.svg);
+    mask-position: center;
+    mask-size: 854px;
+    mask-repeat: repeat;
+    background: pink;
+}
+.jonny__trouser {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    mask-image: url(../images/jonny_trouser.svg);
+    mask-position: center;
+    mask-size: 854px;
+    mask-repeat: repeat;
+    background: pink;
+}
