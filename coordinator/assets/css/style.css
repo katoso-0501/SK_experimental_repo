@@ -39,6 +39,10 @@ body {
     width: 48%;
     margin: auto;
     overflow: hidden;
+
+    @media (width<=768px) {
+        width: 98%;
+    }
 }
 
 .char__body {
