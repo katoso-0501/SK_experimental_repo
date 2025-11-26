@@ -19,12 +19,13 @@ class Jonny {
         controllerMaster.classList.add('jonny__controller');
 
         const controllerDiv = [
-            ["tops",document.createElement('div')],
-            ["trouser",document.createElement('div')],
+            ["Tops",document.createElement('div')],
+            ["Trouser",document.createElement('div')],
         ]
 
         controllerDiv.forEach(div=>{
             div[1].classList.add(div[0]);
+            div[1].innerHTML = "<span>" + div[0] + "</span>";
             controllerMaster.append(div[1]);
         })
 
@@ -52,7 +53,12 @@ class Jonny {
 
             part[1].setAttribute('type', 'range');
             part[1].setAttribute('min', '0');
-            part[1].setAttribute('max', '100');
+            if(i === 0 || i ===  3) {
+                part[1].setAttribute('max', '360');
+            }else{
+
+                part[1].setAttribute('max', '100');
+            }
             
             paragraph.append(part[0],part[1]);
             if(i < 3){
