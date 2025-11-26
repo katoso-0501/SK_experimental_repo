@@ -47,3 +47,8 @@ window.addEventListener('load', ()=>{
     changeHSL(tops,jonny_tops_hsl[0],jonny_tops_hsl[1],jonny_tops_hsl[2]);
     changeHSL(trouser,jonny_trouser_hsl[0],jonny_trouser_hsl[1],jonny_trouser_hsl[2]);
 });
+
+
+document.querySelector('.printBtn').addEventListener('click', ()=>{
+    window.print();
+});

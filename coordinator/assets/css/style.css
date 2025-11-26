@@ -5,14 +5,14 @@ html,body,h1,h2,h3,h4,h5,h6,p,i,input,button,img,picture {
     margin: 0;
 }
 
-.jonny {
+.jonny__body {
     position: relative;
     width: 100%;
     max-width: 854px;
     margin: auto;
 }
 
-.jonny img {
+.jonny__body img {
     width: 100%;
     height: 100%;
     object-fit: cover;
