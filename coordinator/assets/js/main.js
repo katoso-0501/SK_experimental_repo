@@ -5,18 +5,18 @@ class Jonny {
         this.jonnyMain.classList.add('jonny');
         
         this.jonnyBody = document.createElement('div');
-        this.jonnyBody.classList.add('jonny__body');
+        this.jonnyBody.classList.add('char__body');
 
         this.img = document.createElement('img');
         this.img.src = "assets/images/jonny_original.webp";
 
         const tops = document.createElement('div'); 
-        tops.classList.add('jonny__tops');
+        tops.classList.add('char__tops');
         const trouser = document.createElement('div');
-        trouser.classList.add('jonny__trouser');
+        trouser.classList.add('char__trouser');
 
         const controllerMaster = document.createElement('div');
-        controllerMaster.classList.add('jonny__controller');
+        controllerMaster.classList.add('char__controller');
 
         const controllerDiv = [
             ["Tops",document.createElement('div')],
@@ -41,12 +41,12 @@ class Jonny {
             ['Brightness',document.createElement('input')],
         ]
         
-        controllerParts[0][1].classList.add('jonny__tops_hue');
-        controllerParts[1][1].classList.add('jonny__tops_saturation');
-        controllerParts[2][1].classList.add('jonny__tops_brightness');
-        controllerParts[3][1].classList.add('jonny__trouser_hue');
-        controllerParts[4][1].classList.add('jonny__trouser_saturation');
-        controllerParts[5][1].classList.add('jonny__trouser_brightness');
+        controllerParts[0][1].classList.add('char__tops_hue');
+        controllerParts[1][1].classList.add('char__tops_saturation');
+        controllerParts[2][1].classList.add('char__tops_brightness');
+        controllerParts[3][1].classList.add('char__trouser_hue');
+        controllerParts[4][1].classList.add('char__trouser_saturation');
+        controllerParts[5][1].classList.add('char__trouser_brightness');
 
         controllerParts.forEach((part, i) => {
             const paragraph = document.createElement('p');
@@ -75,43 +75,35 @@ class Jonny {
 
         
         controllerParts[0][1].addEventListener('change', m=>{
-            const hue = m.target.value;
-            jonny_tops_hsl[0] = hue;
-            this.HSLupdate(tops,jonny_tops_hsl[0],jonny_tops_hsl[1],jonny_tops_hsl[2]);
+            this.HSLupdate(tops,controllerParts[0][1].value,controllerParts[1][1].value,controllerParts[2][1].value);
         });
         controllerParts[1][1].addEventListener('change', m=>{
-            const saturation = m.target.value;
-            jonny_tops_hsl[1] = saturation;
-            this.HSLupdate(tops,jonny_tops_hsl[0],jonny_tops_hsl[1],jonny_tops_hsl[2]);
+            this.HSLupdate(tops,controllerParts[0][1].value,controllerParts[1][1].value,controllerParts[2][1].value);
         });
         controllerParts[2][1].addEventListener('change', m=>{
-            const brightness = m.target.value;
-            jonny_tops_hsl[2] = brightness;
-            this.HSLupdate(tops,jonny_tops_hsl[0],jonny_tops_hsl[1],jonny_tops_hsl[2]);
+            this.HSLupdate(tops,controllerParts[0][1].value,controllerParts[1][1].value,controllerParts[2][1].value);
         });
 
 
         controllerParts[3][1].addEventListener('change', m=>{
-            const hue = m.target.value;
-            jonny_trouser_hsl[0] = hue;
-            this.HSLupdate(trouser,jonny_trouser_hsl[0],jonny_trouser_hsl[1],jonny_trouser_hsl[2]);
+            this.HSLupdate(trouser,controllerParts[3][1].value,controllerParts[4][1].value,controllerParts[5][1].value);
         });
         controllerParts[4][1].addEventListener('change', m=>{
-            const saturation = m.target.value;
-            jonny_trouser_hsl[1] = saturation;
-            this.HSLupdate(trouser,jonny_trouser_hsl[0],jonny_trouser_hsl[1],jonny_trouser_hsl[2]);
+            this.HSLupdate(trouser,controllerParts[3][1].value,controllerParts[4][1].value,controllerParts[5][1].value);
         });
         controllerParts[5][1].addEventListener('change', m=>{
-            const brightness = m.target.value;
-            jonny_trouser_hsl[2] = brightness;
-            this.HSLupdate(trouser,jonny_trouser_hsl[0],jonny_trouser_hsl[1],jonny_trouser_hsl[2]);
+            this.HSLupdate(trouser,controllerParts[3][1].value,controllerParts[4][1].value,controllerParts[5][1].value);
         });
 
-        document.querySelector('body').append(this.jonnyMain);
+        document.querySelector('.character_wrapper').append(this.jonnyMain);
     }
 
     HSLupdate (tgt, h, s, l) {
         tgt.style.background = `hsl(${h},${s}%,${l}%)`;
+    }
+
+    deleteCharacter () {
+        this.jonnyMain.remove();
     }
 }
 
