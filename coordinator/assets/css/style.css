@@ -77,11 +77,11 @@ body {
     top: 0;
     width: 100%;
     height: calc(99% - 4px);
-    -webkit-mask-image: url(../images/jonny_tops.svg);
+    -webkit-mask-image: url(../images/jonny_tops.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
     -webkit-mask-repeat: no-repeat;
-    mask-image: url(../images/jonny_tops.svg);
+    mask-image: url(../images/jonny_tops.png);
     mask-position: center;
     mask-size: cover;
     mask-repeat: no-repeat;
@@ -107,7 +107,7 @@ body {
     background: rgb(41, 197, 121);
 
     /* If uploading to Github, Uncomment those items below */
-    left: 0;
+    /* left: 0;
     top: -3px;
     width: 100%;
     height: calc(99% - 4px);
@@ -118,7 +118,7 @@ body {
     mask-image: url(../images/jonny_trouser.svg);
     mask-position: center;
     mask-size: cover;
-    mask-repeat: no-repeat;
+    mask-repeat: no-repeat; */
 }
 
 .char__trouser::before {

@@ -9,11 +9,11 @@ class Jonny {
 
         this.img = document.createElement('img');
         this.img.src = "assets/images/jonny_original.webp";
+        this.jonnyBody.append(this.img);
 
         this.controllerMaster = document.createElement('div');
         this.controllerMaster.classList.add('char__controller');
         
-        this.jonnyBody.append(this.img);
         this.jonnyMain.append(this.jonnyBody);
         this.jonnyMain.append(this.controllerMaster);
         
