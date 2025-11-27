@@ -29,6 +29,7 @@ class Jonny {
     loadIndependentParts () {
         this.createControls('Tops','char__tops');
         this.createControls('Trouser','char__trouser');
+        this.createControls('Skin','char__skin');
     }
 
     createControls (tgtname,tgt) {
