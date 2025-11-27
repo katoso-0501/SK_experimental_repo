@@ -33,11 +33,15 @@ body {
 .character_wrapper {
     display: flex;
     flex-flow: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2%;
+    min-height: 900px;
 }
 
 .jonny {
     width: 48%;
-    margin: auto;
+    margin: 0;
     overflow: hidden;
 
     @media (width <= 768px) {
