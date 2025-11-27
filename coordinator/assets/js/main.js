@@ -37,9 +37,14 @@ class Jonny {
         targetPart.classList.add(tgt);
         
         const controllerPanel = document.createElement('div');
-        controllerPanel.innerHTML = "<span>" + tgtname + "</span>";
+        const controllerLabel = document.createElement('span');
+        controllerLabel.textContent = tgtname;
+        controllerPanel.append(controllerLabel);
         controllerPanel.classList.add(tgtname);
 
+        controllerLabel.addEventListener('click', ()=>{
+            controllerPanel.classList.toggle('expanded');
+        })
 
         const controlParts = [
             ['Hue',document.createElement('input')],
@@ -74,6 +79,7 @@ class Jonny {
         
         this.controllerMaster.append(controllerPanel);
         this.jonnyBody.append(targetPart);
+        
     }
 
     deleteCharacter () {

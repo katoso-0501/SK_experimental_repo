@@ -43,14 +43,80 @@ body {
 .char__controller {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: minmax(30px, 1fr);
+    align-items: start;
     gap: 24px;
     margin: 16px;
     
     @media (width <= 768px) {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-flow: column;
     }
 }
+
+.char__controller > div {
+    position: relative;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #CCCCCC;
+
+    @media (width <= 768px) {
+        width: calc(100% - 34px);
+    }
+}
+
+.char__controller > div:before {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 24px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #303030;
+    border-bottom: 2px solid #303030;
+    transform: rotate(45deg);
+    transition: 0.4s;;
+}
+
+.char__controller > div.expanded:before {
+    transform: rotate(-135deg);
+}
+
+.char__controller > div > span {
+    display: block;
+    font-weight: bold;
+    transition: 0.4s;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.char__controller > div.expanded > span {
+    margin-bottom: 16px;
+}
+
+.char__controller > div > p {
+    transform-origin: center top;
+    transform: scaleY(0.01);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+    height: 1px;
+}
+
+.char__controller > div.expanded > p {
+    display: flex;
+    justify-content: space-between;
+    height: 32px;
+    opacity: 1;
+    transform: scaleY(1);
+    pointer-events: all;
+}
+
+
+.char__controller > div > p > [type="range"] {
+    width: calc(100% - 120px);
+}
+
 
 @media print {
     .char__controller,
@@ -61,31 +127,4 @@ body {
     .character_wrapper {
         min-height: none;
     }
-}
-
-.char__controller > div {
-    flex: 1;
-    padding: 16px;
-    border-radius: 8px;
-    border: 1px solid #CCCCCC;
-
-    @media (width <= 768px) {
-        flex: auto;
-    }
-}
-
-.char__controller > div > span {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 16px;
-}
-
-.char__controller > div > p {
-    display: flex;
-    justify-content: space-between;
-}
-
-
-.char__controller > div > p > [type="range"] {
-    width: calc(100% - 120px);
 }
