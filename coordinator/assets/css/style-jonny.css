@@ -1,8 +1,12 @@
 
 .jonny {
-    width: 48%;
+    width: 23%;
     margin: 0;
     overflow: hidden;
+
+    @media (width <= 1400px) {
+        width: 48%;
+    }
 
     @media (width <= 768px) {
         width: 98%;
