@@ -17,14 +17,18 @@ class Jonny {
         this.jonnyMain.append(this.jonnyBody);
         this.jonnyMain.append(this.controllerMaster);
         
-        this.createControls('Tops','char__tops');
-        this.createControls('Trouser','char__trouser');
+        this.loadIndependentParts();
 
         document.querySelector('.character_wrapper').append(this.jonnyMain);
     }
 
     HSLupdate (tgt, h, s, l) {
         tgt.style.background = `hsl(${h},${s}%,${l}%)`;
+    }
+
+    loadIndependentParts () {
+        this.createControls('Tops','char__tops');
+        this.createControls('Trouser','char__trouser');
     }
 
     createControls (tgtname,tgt) {
@@ -80,6 +84,12 @@ class Jimmy extends Jonny {
     constructor() {
         super();
         this.img.src = "assets/images/jimmy_original.webp";
+    }
+    
+    loadIndependentParts () {
+        this.createControls('Tops','char__tops');
+        this.createControls('Trouser','char__trouser');
+        this.createControls('Skin','char__skin');
     }
 }
 

@@ -130,12 +130,25 @@ body {
 }
 
 .char__controller {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
     gap: 24px;
     margin: 16px;
     
     @media (width <= 768px) {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .char__controller,
+    .printBtn {
+        display: none;
+    }
+
+    .character_wrapper {
+        min-height: none;
     }
 }
 
