@@ -140,3 +140,7 @@ document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
 document.querySelector('.printBtn').addEventListener('click', ()=>{
     window.print();
 });
+
+document.querySelector('.theatreBtn').addEventListener('click', ()=>{
+    document.querySelector('body').classList.toggle('theatreMode');
+});
