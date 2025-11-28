@@ -110,7 +110,7 @@ class Jimmy extends Jonny {
     loadIndependentParts () {
         this.createControls('Tops','char__tops');
         this.createControls('Trouser','char__trouser');
-        this.createControls('Skin','char__skin');
+        this.createControls('TeethRetainer','char__retainer');
     }
 }
 
