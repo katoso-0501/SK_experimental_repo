@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media only screen and (min-width:769px){
+/* * * * * Systems * * * * */
+article h3 {
+	background: url('../img/h3_listitem.png') left center no-repeat;
+	
+	font-size: 18pt;
+
+	border-bottom: 1px dashed;
+
+	letter-spacing:2px;
+}
+article li {
+	font-size: 13pt;
+	
+	list-style-type: disc;
+	list-style-position: inside;
+}
+article p {
+	font-size: 13pt;
+	
+	line-height: 2em;
+}
+article p small{
+	font-size:10pt;
+	
+	line-height:1.8em;
+}
+.photo-container {
+	box-shadow: 2px 2px 12px #909090;
+}
+
+/* * * * * Counselings * * * * */
+#counselings p{
+	font-size:14pt;
+	font-weight:bold;
+	
+	text-align:center;
+}
+#counselings dl{
+	border:3px solid;
+}
+#counselings dl:before{
+	background:url('../img/counseling-window/counseling-window-ornament1.png'),url('../img/counseling-window/counseling-window-ornament2.png');
+	background-position:left top,right top;
+	background-repeat:no-repeat;
+}
+#counselings dl:after{
+	background:url('../img/counseling-window/counseling-window-ornament3.png'),url('../img/counseling-window/counseling-window-ornament4.png');
+	background-position:left bottom,right bottom;
+	background-repeat:no-repeat;
+}
+#counselings dt{
+	font-size:16pt;
+	font-weight:bold;
+	
+	border-bottom:1px dashed;
+}
+
+#counselings dd{
+	font-size:12pt;
+	line-height:2em;
+}
+	}

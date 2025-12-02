@@ -1,0 +1,209 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media only screen and (min-width:769px){
+	#price-details aside{
+		width:658px;
+		margin:0 auto;
+		text-align:center;
+		margin-top:60px;
+	}
+	#price-details aside:after{
+		clear:both;
+		content:"";
+		display: block;
+	}
+#price-details aside a{
+	font-size:0;
+	width:329px;
+	height:45px;
+	
+	display:block;
+	float:left;
+	vertical-align:bottom;
+}
+	#price-details aside a em{
+		font-size: 0;
+	}
+
+#price-details #main{
+	width:1034px;
+
+	margin:0 auto;
+	padding:40px 0;
+}
+#price-details article{
+	display:none;
+}
+#price-details article.selected{
+	display:block;
+}
+#price-details ul{
+	margin:50px 0;
+	text-align:center;
+}
+#price-details li{
+	text-align:center;
+	vertical-align:top;
+	display:inline-block;
+	width:248px;
+	margin-left:-4px;
+}
+#price-details li h3{
+	margin:28px 0;
+}
+#price-details li p{
+	line-height:1.7em;
+	min-height:120px;
+}
+
+#price-details li p.price{
+	width:248px;
+	height:80px;
+	min-height:0;
+	
+	padding-bottom:20px;
+	
+	display:table-cell;
+	vertical-align:middle;
+}
+
+#price-details aside{
+	color:white;
+}
+#price-details aside a{
+	background-position:0 45px !important;
+}
+#price-details aside a.selected{
+	background-position:0 0 !important;
+}
+#price-details aside .included-things{
+	background:url('../img/breakdown_tab/breakdown-tab-included.png');
+}
+#price-details aside .excluded-things{
+	background:url('../img/breakdown_tab/breakdown-tab-excluded.png');
+}
+#price-details #main{
+	background:url('../img/breakdown_tab/breakdown-tab-ornament1.png') left top,url('../img/breakdown_tab/breakdown-tab-ornament2.png') right top,url('../img/breakdown_tab/breakdown-tab-ornament3.png') left bottom,url('../img/breakdown_tab/breakdown-tab-ornament4.png') right bottom;
+	background-repeat:no-repeat;
+	background-color:white;
+	
+	border:3px solid #30468A;
+}
+#price-details li{
+	border-right:1px solid #aaaaaa;
+}
+	#price-details li:last-child{
+		border:none;
+	}
+	#price-details li h3{
+		font-weight:bold;
+		font-size:14pt;
+		letter-spacing:2px;
+	}
+	#price-details li p{
+		line-height:1.7em;
+	}
+	
+	#price-details i{display:none;}
+	#price-details li small{
+		font-size:10.5pt;
+		margin:0 5px;
+	}
+	#price-details li p.price{font-size:14pt;	font-weight:bold;}
+}
+@media only screen and (max-width:768px){
+	#price-details h2{
+		margin-bottom:60px;
+	}
+	#price-details aside,#price-details #main{
+		width: calc(95% - 4px);
+		margin:0 auto;
+		border:2px solid #30468A;
+	}
+	#price-details *{
+		animation: none;
+	}
+	#price-details #main{
+		background-color:white;
+		border-top:none;
+		position:relative;
+		z-index:20;
+	}
+	#price-details aside{
+		position:relative;
+		z-index:21;
+		border-bottom:none;
+	}
+	#price-details aside:after{
+		display:block;content:"";clear:both;
+	}
+	#price-details aside *{
+		text-align:center;
+	}
+	#price-details aside a{
+		display: block;
+		float:left;
+		width:50%;
+		font-size:9pt;
+		padding:5px 0;
+		background-color:#ADADAD;
+		color:white;
+		transition:0.4s;
+	}
+	#price-details aside a.selected{
+		background-color:#30468A;
+	}
+	#price-details aside a em{
+		display: block;
+		margin-top:4px;
+	}
+	#price-details article{
+	display:none;
+}
+#price-details article.selected{
+	display:block;
+	padding:30px 0;
+}
+	#price-details li {
+		clear: both;
+		margin:20px 2%;
+	}
+	#price-details li img{
+		float:left;
+		width:40px;
+		margin:10px 0;
+		margin-left:2%;
+	}
+	#price-details li h3{
+		font-weight:bold;
+		font-size:12pt;
+		margin-left: calc(2% + 60px);
+	}
+	#price-details li p{
+		font-size:10pt;
+		margin:5px 0;
+		margin-left: calc(2% + 60px);
+	}
+	#price-details li p small{
+		font-size:8pt;
+	}
+	#price-details li p.price br,#price-details li h3 br{
+		display: none;
+	}
+	#price-details br.for-smp{display:block !important;}
+	#price-details .blue-curtain{
+		position:absolute;
+		width:100%;
+		line-height: 0;
+		font-size:18pt;
+		color:white;
+		padding-top:80px;
+		height:calc(100% - 80px);
+		left:0;
+		top:0;
+		z-index: 21;
+		text-align:center;
+		background-color:#30468A;
+	}
+}

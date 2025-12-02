@@ -1,0 +1,319 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#party-intro, #about-charges, #matchmaking_flow, #price-details {
+	padding: 100px 0;
+}
+#party-intro article {
+	text-align: center;
+	width: 690px;
+	padding: 101px 119px;
+	border: 3px solid #404040;
+	margin: 0 auto;
+	position: relative;
+	z-index: 7;
+}
+#party-intro article:before {
+	width: 981px;
+	height: 220px;
+	top: -27px;
+	left: -26px;
+	content: "";
+	position: absolute;
+	z-index: 5;
+}
+#party-intro article:after {
+	width: 981px;
+	height: 220px;
+	bottom: -27px;
+	left: -26px;
+	content: "";
+	position: absolute;
+	z-index: 5;
+}
+#party-intro p {
+	margin: 30px 0 60px;
+}
+p#situations {
+	padding-bottom: 100px;
+	margin: -50px auto 50px;
+}
+#party-intro h3 {
+	padding-bottom: 50px;
+	margin-bottom: 30px;
+}
+#party-intro a {
+	display: block;
+	width: 450px;
+	letter-spacing: 2px;
+	margin: 0 auto;
+	padding: 12px 0;
+	position: relative;
+	z-index: 1000;
+}
+#about-charges h3 {
+	width: 870px;
+	margin: 0 auto;
+	padding: 25px 0 2px 20px;
+}
+#about-charges ul {
+	margin: 0 auto;
+	width: 900px;
+}
+#about-charges li {
+	width: 270px;
+	margin: 40px 15px;
+	text-align: center;
+	float: left;
+	padding-top: 200px;
+}
+#about-charges .contents {
+	margin: 100px auto 80px;
+}
+#about-charges .contents h3 {
+	width: 560px;
+	margin-right: 380px;
+}
+#about-charges .contents img {
+	margin-right: 85px;
+	float: right;
+}
+#about-charges .contents p {
+	margin: 10px 100px;
+}
+#about-charges li h4 {
+	padding: 5px 0;
+	margin: 20px 0 10px;
+}
+#about-charges li p {
+	margin-bottom: 50px;
+}
+#matchmaking_flow {
+	clear: both;
+}
+#matchmaking_flow table {
+	margin: 50px auto;
+	width: 854px;
+	position: relative;
+	z-index: 100;
+}
+#matchmaking_flow table:after {
+	content: "";
+	position: absolute;
+	width: 20px;
+	height: 540px;
+	top: 39px;
+	left: 40px;
+	z-index: 12;
+}
+#matchmaking_flow th, #matchmaking_flow td {
+	padding: 30px 0;
+	vertical-align: top;
+	position: relative;
+	z-index: 100;
+}
+#matchmaking_flow th {
+	width: 320px;
+	text-align: left;
+}
+#matchmaking_flow th strong {
+	padding: 2px 18px;
+	margin-right: 10px;
+}
+#matchmaking_flow li {
+	margin: 10px 0;
+}
+#party-intro article {
+	background: white;
+	border: 3px solid #404040;
+}
+#party-intro article:before {
+	background: url('../img/counseling-window/counseling-window-ornament1.png'), url('../img/counseling-window/counseling-window-ornament2.png');
+	background-position: left top, right top;
+	background-repeat: no-repeat;
+}
+#party-intro article:after {
+	background: url('../img/counseling-window/counseling-window-ornament3.png'), url('../img/counseling-window/counseling-window-ornament4.png');
+	background-position: left bottom, right bottom;
+	background-repeat: no-repeat;
+}
+#party-intro p {
+	line-height: 2.3em;
+}
+p#situations {
+	font-size: 14pt;
+	line-height: 4em;
+	background: url('../img/longbow.png') no-repeat center bottom;
+}
+#party-intro h3 {
+	font-size: 17pt;
+	font-weight: bold;
+	line-height: 2em;
+	letter-spacing: 3px;
+	background: url('../img/party/party_intro/h3_border.png') center bottom no-repeat;
+}
+#party-intro a {
+	letter-spacing: 2px;
+}
+#about-charges h3 {
+	font-size: 16pt;
+	font-weight: bold;
+	letter-spacing: 2px;
+	background: url('../img/party/party_intro/h3_ornament.png') left top no-repeat;
+	border-bottom: 1px dotted #444;
+}
+#about-charges li {
+	background-repeat: no-repeat;
+}
+#nation_vt {
+	background: url('../img/party/vietnam.jpg');
+}
+#nation_vt h4 {
+	background: #7DC4FA;
+}
+#nation_th {
+	background: url('../img/party/thailand.jpg');
+}
+#nation_th h4 {
+	background: #92CF88;
+}
+#nation_zh {
+	background: url('../img/party/china.jpg');
+}
+#nation_zh h4 {
+	background: #E0AC35;
+}
+#about-charges .contents p {
+	line-height: 2.4em;
+}
+#about-charges .contents .price {
+	font-size: 26pt;
+	font-weight: bold;
+}
+#about-charges li h4 {
+	border-radius: 4px;
+	font-size: 13.5pt;
+	letter-spacing: 2px;
+	color: white;
+}
+#about-charges li p {
+	font-size: 26pt;
+	font-weight: bold;
+}
+#matchmaking_flow table {
+	border: dotted #444;
+	border-width: 1px 0;
+}
+#matchmaking_flow table:after {
+	background-image: url('../img/party/flowchart-ornament.png');
+	background-repeat: repeat-y;
+}
+#matchmaking_flow th {
+	font-size: 16pt;
+	font-weight: bold;
+	letter-spacing: 4px;
+}
+#matchmaking_flow th strong {
+	background-color: #7FC4F9;
+	color: white;
+	font-size: 11pt;
+	letter-spacing: 4px;
+}
+#matchmaking_flow li {
+	list-style-type: disc;
+}
+@media only screen and (max-width:768px){
+	#party-intro article{
+		border:none;
+		background:none;
+		width:100%;
+		margin:0;
+		padding:0;
+	}
+	#party-intro article:before,#party-intro article:after{
+		display: none;
+	}
+	#party-intro #situations{
+		font-size:11pt;
+	}
+	#party-intro h3{
+		font-size:13pt;
+		letter-spacing: 0;
+	}
+	#party-intro p{
+		font-size:10pt;
+	}
+	#party-intro i{display: block;font-size: 0;}
+	#about-charges img{display:none;}
+	#about-charges h3 {
+		width: 85% !important;
+		margin: 0 auto !important;
+		font-size:12pt;
+		background-position:0 66%;
+		background-size:30pt;
+	}
+	#about-charges .contents .price{
+		font-size:20pt;
+	}
+	#about-charges .contents p {
+		line-height: 1.8em;
+		margin: 0 10%;
+		font-size:10pt;
+	}
+	#about-charges ul{
+		width:100%;
+	}
+	#about-charges ul li{
+		float:none;
+		margin:0 auto;
+		
+		width: calc(90% - 110px);
+		padding:10px 0 10px 110px;
+		text-align: left;
+		background-position: left center;
+		background-size:100px;
+	}
+	#about-charges li h4{
+		line-height: 0;
+		font-size:11pt;
+		margin:4px 0 0 0;
+		padding:15px 5px;
+	}
+	#about-charges li p{
+		font-size:18pt;
+		margin:10px 0 0 0;
+	}
+	#matchmaking_flow table {
+		margin: 50px auto;
+		padding:40px 0 0;
+		width: 90%;
+	
+	}
+	#matchmaking_flow table:after{
+		display: none;
+	}
+	#matchmaking_flow th {
+		padding:0;
+		font-size: 13pt;
+		letter-spacing: 2px;
+		display:block;
+		width: 100%;
+	}
+	#matchmaking_flow th strong{
+		background-color: #7FC4F9;
+		color: white;
+		font-size: 9pt;
+		letter-spacing: 2px;
+	}
+	#matchmaking_flow td{
+		padding:10px 0 40px 0;
+		width: 100%;
+		display:block;
+	}
+	#matchmaking_flow li {
+		font-size:10pt;
+		list-style-position: inside;
+		list-style-type: disc;
+	}
+}

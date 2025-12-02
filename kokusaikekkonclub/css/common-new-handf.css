@@ -1,0 +1,292 @@
+@charset "utf-8";
+/* CSS Document */
+@media only screen and (min-width:769px){
+	
+	header{
+		padding:30px 0;
+		background:white;
+	}
+	header .for-smp{display:none;}
+	header .gotoTop img{padding:4px 0;}
+	
+	header .contents div{float:right;width:280px;}
+	header .contents div a{display:block;float: left;width:135px;font-size:0;height:30px;background-position:center !important;background-repeat:no-repeat !important;}
+	header .contents div .goInquiry{background:url(../img/header-inq.png),#BCA86A;margin-right:10px;}
+	header .contents div .goInquiry:hover{background-color:#D4C7A0;}
+	header .contents div .goMember{background:url(../img/header-mem.png),linear-gradient(to bottom,#ffc000 0%,#ffcb2d 100%);}
+	header .contents div .goMember:hover{background:url(../img/header-mem.png),linear-gradient(to bottom,#ffd900 0%,#fff759 100%);}
+	/* Navigation Menu */
+	nav{
+		text-align:center;
+	}
+	nav a{
+		width:260px;
+		padding:20px 0;
+		
+		display:block;
+		float:left;
+		
+		color:white;
+		letter-spacing:2px;
+		font-size:14pt;
+		
+		transition:0.3s;	
+	}
+	nav a:hover{
+		background:#407AB8;
+	}
+	nav .smaller{
+		color:inherit;
+		font-size:11pt;
+		margin:0 2px;
+	}
+	nav a small{
+		margin-top:1px;
+		display:block;
+		font-size:6pt;
+	}
+	/* Footer Starting */
+	footer .goInquiry{
+	background-color:#BCA86A !important;
+	color:white;
+}
+footer .goInquiry:hover{
+	background-color:#D6CAA5 !important;
+}
+	#sitemaps *{color:white;}
+	#sitemaps a:hover{
+		color:#55C7FF;
+		text-shadow:0 0 6px;
+	}
+	#sitemaps h2{
+		width:720px;
+		
+		margin:0 auto 20px;
+		padding:0 0 19px 0;
+		
+		background:none;
+		border-bottom:1px solid #203475;
+	}
+	#sitemaps h2 a{
+		width:350px;
+		height:70px;
+		
+		margin:0 auto;
+		
+		display:block;
+		
+		background:url('../img/gotoTopButton4footer.png') no-repeat;
+		background-position:center top;
+	}
+	#sitemaps h2 a:hover{
+		background-position: center bottom;
+	}
+	#sitemaps p{
+		line-height:36px;
+	}
+	#sitemaps p span{
+		color:inherit;
+		font-size:9pt;
+		margin:0 4px;
+	}
+	#sitemaps .golden{
+		color:#ffff00 !important;font-weight:bold;
+	}
+	/* * * * * * *
+	Contact Here
+	* * * * * * */
+	#contact_here address{
+		background:url('../img/tel-to.png') left center no-repeat;
+		font-size:28pt;
+	}
+	#contact_here p{
+		font-size:12pt;
+	}
+	#contact_here p strong{
+		font-size:10pt;
+		font-weight:bold;
+	}
+	#contact_here .goInquiry{
+		width:400px;
+		
+		margin:20px 0;
+		margin-left:80px;
+		padding:15px 0;
+		
+		display:block;
+		
+		text-align:center;
+		
+		letter-spacing:2px;
+	}
+	#contact_here .goInquiry img{
+		margin-right:5px;
+	}
+	#copyrights{
+		font-size:11pt;
+		letter-spacing:1.47px;
+		text-align:center;
+	}
+	.smp-menu{
+		display:none !important;
+	}
+}
+@media only screen and (max-width:768px){
+	header{
+		padding:40px 0 0;
+		background:white;
+	}
+	header .for-smp{
+		background:#ffffff;
+		box-shadow:0 3px 3px #909090;
+		padding:5px 0;
+		width: 100%;
+		left:0;
+		top:0;
+		position:fixed;
+		display:block;
+		text-align:center;
+		z-index: 10000;
+	}
+	header .for-smp .menu-trigger{
+		display:block;
+		width:40px;
+		height:40px;
+		left:5px;
+		background:url(../img/smp_menu_btn.png) center no-repeat;
+		position: absolute;
+		cursor:pointer;
+	}
+	header .for-pc,nav.for-pc{display:none;}
+	header .gotoTop img{width:190px;}
+	#sitemaps {padding:20px 0;}
+	#sitemaps *{font-size:0;}
+	#sitemaps h2{
+		padding:0;
+		background:none;
+	}
+	#sitemaps h2 a{
+		width:220px;
+		height:44px;
+		margin:0 auto;
+		
+		display:block;
+		
+		background:url('../img/gotoTopButton4footer.png') no-repeat;
+		background-size:220px;
+		background-position:center top;
+	}
+	#sitemaps h2 a:hover{
+		background-position: center bottom;
+	}
+	#contact_here{
+		padding:20px 0;
+	}
+	#contact_here address{
+		display: block;
+		width:260px;
+		background:url('../img/tel-to.png') left center no-repeat;
+		background-size:100px;
+		padding:10px 0;
+		text-align: right;
+		font-size:15pt;
+		margin:0 auto 15px;
+	}
+	#contact_here p{
+		text-align: center;
+		font-size:8pt;
+	}
+	#contact_here p strong{
+		font-size:8pt;
+		padding:1px 5px;
+	}
+
+	#contact_here .goInquiry{
+		font-size:10pt;		
+		background-color:#BCA86A !important;
+		color:white;		
+		width:240px;
+		margin:15px auto 0;
+		padding:7px 0;
+		display:block;
+		text-align:center;
+	}
+	#contact_here .goInquiry img{
+		width:15px;
+		margin-right:5px;
+	}
+	#copyrights{
+		font-size:8pt;
+		padding:5% 2.5% 5%;
+		text-align:center;
+	}
+	.smp-menu{
+	/*	font-family:sans-serif;*/
+		display:none;
+		position:fixed;
+		z-index:10001;
+		top:0;
+		left:0;
+		background:rgba(0,0,0,0.7);
+		width:100%;
+		height:100%;
+	}
+	.smp-menu .menu-container{
+		width:70%;
+		padding:2% 0;
+		height:100%;
+		background:#30468A;
+		float: left;
+	}
+	.smp-menu .menu-container a{
+		display:block;
+		margin:0;
+		font-size:10pt;
+		padding:7px 5%;
+		color:white;
+		transition:0.4s;
+	}
+	.smp-menu .menu-container a:hover{
+		background:#5DABFF;
+	}
+	.smp-menu .menu-container a small{
+		display:block;
+		margin-top:2px;
+		font-size:8pt;
+	}
+	.smp-menu .menu-container address{
+		color:white;
+		background:url(../img/tel-icon4header.png) left center no-repeat;
+		background-size:20px;
+		text-indent:25px;
+		margin:0 5%;
+	}
+	.smp-menu a.goInquiry{
+		background:url(../img/header-inq.png) no-repeat 40% center,#BBA769;
+		height:30px;
+		width:140px;
+		padding:0;
+		margin:10px 0 5px 5% !important;
+		font-size:0 !important;
+	}
+	.smp-menu a.goInquiry:hover{
+		background:url(../img/header-inq.png) no-repeat 40% center,#DAD0AE !important;
+	}
+	.smp-menu a.goMember{
+		background:url(../img/header-mem.png) no-repeat 40%  center,#FDE71A;
+		height:30px;
+		width:140px;
+		padding:0;
+		margin-right:0;
+		margin-left:5% !important;
+		font-size:0 !important;
+	}
+	.smp-menu a.goMember:hover{
+		background:url(../img/header-mem.png) no-repeat 40%  center,#FEF5A8 !important;
+	}
+	.smp-menu .menu-trigger{
+		width:30%;
+		height:100%;
+		float:left;
+	}
+}

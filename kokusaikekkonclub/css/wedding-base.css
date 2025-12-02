@@ -1,0 +1,82 @@
+@charset "utf-8";
+/* CSS Document */
+
+#payments, #price-details {padding: 60px 0;}
+#payments ul {
+	width: 960px;
+	margin: 60px auto;
+}
+#payments li {
+	width: 199px;
+	padding: 20px;
+	margin-bottom: 70px;
+	float: left;
+	text-align: center;
+	
+	border-right: 1px #aaaaaa solid;
+}
+#payments li:last-child {
+	border: none;
+}
+#payments li:last-child {width: 200px;}
+#payments h3 {
+	padding: 4px 0;
+	background: #7DC4FA;
+	color: white;
+	border-radius: 3px;
+	font-weight: bold;
+	font-size: 13pt;
+}
+#payments h4 {
+	margin: 10px 0 20px;
+	font-size: 10pt;	
+}
+#payments p {
+	height: 60px;
+	font-size: 18pt;
+	line-height: 1.3em;
+	font-weight: bold;
+}
+#price-details {clear: both;}
+@media only screen and (max-width:768px){
+
+	#payments ul{
+		width:80%;
+		padding:0;
+		margin:60px auto 0;
+	}
+	#payments li{
+		float:none;
+		width:100% !important;
+		padding:0;
+		margin:0 0 50px 0;
+		border-bottom:1px solid #808080;
+		border-right:none;
+	}
+	#payments li:after{
+		display: block;
+		clear:both;
+		content:"";
+	}
+	#payments img{
+		float:left;
+		width:30%;
+	}
+	#payments h3{
+		font-size:11pt;
+	}
+	#payments h4{
+		font-size:8pt;
+		margin-top:10px !important;
+	}
+	#payments p{
+		margin-top:10px !important;
+		font-size:13pt;
+		height:70px;
+	}
+	#payments h3,#payments h4,#payments p{
+		margin:0;
+		width:55%;
+		margin-left: 37.5%;
+	}
+}

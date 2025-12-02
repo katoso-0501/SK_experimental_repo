@@ -1,0 +1,217 @@
+@charset "utf-8";
+/* CSS Document */
+@media only screen and (min-width:769px){
+ol .odd-sec{
+	background:#F8F9FB;
+	position:relative;
+	z-index:100;
+}
+ol .odd-sec:after{
+	width:100%;
+	height:102%;
+		
+	top:-1%;
+	left:0;
+	
+	content:"";
+	position:absolute;
+	z-index:8;
+}
+ol li:first-child{
+	padding-top:50px;
+}
+ol li:last-child{
+	padding-bottom:50px;
+}
+ol .contents{
+	width: 920px;
+	padding: 60px 120px 60px 0;
+}
+ol .odd-sec .contents{
+	padding-left:60px;
+}
+
+ol h3{
+	font-weight: bold;
+	font-size: 14.5pt;
+	letter-spacing:2px;
+	padding: 10px 0 10px 310px;
+}
+ol h3 strong{
+	font-family:Lato,sans-serif;
+	margin-right: 15px;
+	padding: 2px 16px;
+	font-weight: bold;
+	font-size: 13pt;
+	letter-spacing:0.7px;
+}
+ol p{
+	height: 100px;
+	
+	margin: 10px 0 20px 310px;
+}
+ol p .alert{
+	padding:15px 10px;
+	margin:20px 0;
+	
+	display:block;
+}
+ol .image-container{
+	width: 266px;
+	height: 177px;
+	
+	float: left;
+}
+ol dl{
+	margin-left: 310px;
+	padding-top:30px;
+}
+ol dt{
+	margin-bottom: 6px;
+	padding:0 0 10px 35px;
+}
+ol dd{
+	margin:0 0 20px 20px;
+}
+
+ol .odd-sec{
+
+}
+ol .odd-sec:after{
+	background:url('../img/flow-pictures/content-border.png'),url('../img/flow-pictures/content-border.png');
+	background-position: top,bottom;
+	background-repeat:no-repeat;
+}
+ol .odd-sec:last-child:after{
+	background-position: top,1000%;
+}
+ol p{
+	font-size: 13pt;
+	line-height:2em;
+}
+ol p .alert{
+	background:#E6EAF9;
+	font-size:10.5pt;
+	line-height:1.5em;
+}
+ol dt{
+	font-size: 13.5pt;
+	border-bottom: 1px dotted;
+	border-bottom-color: #404040;
+	font-weight:bold;
+	background:url('../img/h3_listitem.png') left top no-repeat;
+}
+	ol dd{
+	line-height:32px;
+	}
+}
+@media only screen and (max-width:768px){
+	ol{
+		font-family:"sans-serif";
+	}
+	ol li{
+		padding:70px 0;
+	}
+	ol .image-container{
+		display:none;
+	}
+	ol h3{
+		font-weight:bold;
+		text-align:center;
+		margin-bottom:30px;
+		letter-spacing: 2px;
+	}
+	ol h3 strong{
+		display: block;
+		width:90px;
+		padding:2px 0;
+		margin:0 auto 80px;
+		text-align:center;
+		font-family:Lato,sans-serif;
+		letter-spacing: 0;
+	}
+	ol p{
+		text-align: center;
+		font-size:9.5pt;
+		line-height: 17pt;
+	}
+	ol p i{
+		display:block;
+		font-size:0;
+	}
+	ol .alert{
+		display: block;
+		background:rgba(65,145,255,0.74);
+		text-align: left;
+		margin:20px 5% 0;
+		padding:10px 10px;
+		border-radius:8px;
+		font-size:9pt;
+	}
+	ol dl{
+		margin:0 5%;
+	}
+	ol dt{
+		font-size:11pt;
+		background:url(../img/h3_listitem.png) left top no-repeat;
+		background-size:20px;
+		font-weight:bold;
+		line-height: 0;
+		padding: 10px 0 15px 25px;
+		border-bottom:1px dotted #990000;
+		margin-bottom:9px;
+	}
+	ol dd{
+		font-size:9pt;
+		margin-bottom: 20px;
+		line-height: 15pt;
+	}
+	#step-1{
+		background-image:url(../img/flow-pictures/smp_bg_step1.jpg);
+		background-size:140%;
+	}
+	#step-2{
+		background-image:url(../img/flow-pictures/smp_bg_step2.jpg);
+		background-size:140%;
+	}
+	#step-3{
+		background-image:url(../img/flow-pictures/smp_bg_step3.jpg);
+		background-size:140%;
+	}
+	#step-4{
+		background-image:url(../img/flow-pictures/smp_bg_step4.jpg);
+		background-size:140%;
+	}
+	#step-5{
+		background-image:url(../img/flow-pictures/smp_bg_step5.jpg);
+		background-size:180%;
+	}
+	#step-6{
+		background-image:url(../img/flow-pictures/smp_bg_step6.jpg);
+		background-size:240%;
+	}
+	#step-7{
+		background-image:url(../img/flow-pictures/smp_bg_step7.jpg);
+		background-size:250%;
+	}
+	#step-8{
+		background-image:url(../img/flow-pictures/smp_bg_step8.jpg);
+		background-size:250%;
+	}
+	ol li{
+		background-position: center center;
+		background-repeat:no-repeat;
+	}
+	#step-1 h3{background-image:url(../img/flow-pictures/smp_icon_step1.png);}
+	#step-2 h3{background-image:url(../img/flow-pictures/smp_icon_step2.png);}
+	#step-3 h3{background-image:url(../img/flow-pictures/smp_icon_step3.png);}
+	#step-4 h3{background-image:url(../img/flow-pictures/smp_icon_step4.png);}
+	#step-5 h3{background-image:url(../img/flow-pictures/smp_icon_step5.png);}
+	#step-6 h3{background-image:url(../img/flow-pictures/smp_icon_step6.png);}
+	#step-7 h3{background-image:url(../img/flow-pictures/smp_icon_step7.png);}
+	#step-8 h3{background-image:url(../img/flow-pictures/smp_icon_step8.png);}
+	ol li h3{
+		background-repeat:no-repeat;
+		background-position:center 45px;
+	}
+}

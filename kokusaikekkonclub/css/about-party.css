@@ -1,0 +1,177 @@
+@charset "utf-8";
+/* CSS Document */
+#about-party h2{margin:0;padding:0;}
+
+#about-party {
+	background: url('../img/about-party/about-party-bg.jpg');
+	padding: 60px 0;
+}
+#about-party .contents{
+	background:url(../img/about-party/party-ornament1.png) center 1% no-repeat,url(../img/about-party/party-ornament2.png) no-repeat  center 99%,white;
+	width:958px !important;
+	padding:60px 40px;
+	border:1px solid #E0E0E0;
+	box-shadow: 4px 4px 5px #808080;
+}
+#about-party h2 {
+	text-align: center;
+	background: url(../img/about-party/about-party-h2.png) center bottom no-repeat;
+	padding-bottom: 20px;
+	margin-bottom: 40px;
+}
+#about-party h2 small {
+	display: block;
+	font-size: 9pt;
+	font-weight: normal;
+	letter-spacing: 1px;
+	font-family:Georgia, "Times New Roman", Times, "serif";
+}
+#about-party h3 {
+	font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	border-left: 6px solid #2A6DD3;
+	font-weight: bold;
+	font-size: 16pt;
+	padding-left: 6px;
+	margin-bottom: 30px;
+}
+#about-party article {
+	width: 660px;
+	margin:0;
+	padding: 0 300px 80px 0;
+	background: url('../img/about-party/about-party-ornament-01.png') right top no-repeat;
+	background-size:180px;
+}
+#about-party article p {
+	margin:0 0 0 10px;
+	font-size: 12pt;
+	line-height: 32px;
+}
+.link-to-brochure {
+	text-align: center;
+	margin-bottom:40px;
+}
+.link-to-brochure h4 {
+	font-weight: normal;
+	margin:0 0 20px 0;
+	font-size: 17pt;
+}
+.link-to-brochure a{
+	display: inline !important;
+	border:none;
+}
+.link-to-brochure span{
+	display: block;
+	text-align: left;
+	font-size: 10pt;
+	width: 52%;
+	margin: 0 auto;
+}
+.inquire {
+	width: 818px;
+	margin: 0 auto;
+	border: 1px solid #A2A2A2;
+}
+.inquire div {
+	display: block;
+	width: 758px;
+	margin: 10px auto;
+	padding: 20px 20px;
+	border: 1px solid #a2a2a2;
+}
+.inquire div:after {
+	display: block;
+	content: "";
+	clear: both;
+}
+.inquire address {
+	width: 340px;
+	line-height: 0;
+	margin: 22px 0;
+	float: left;
+	text-align: left;
+}
+.inquire a {
+	width: 320px;
+	text-align: center;
+	height: 49px;
+	padding: 23px 0 0;
+	font-size: 16pt;
+	font-weight: bold;
+	line-height: 0;
+	color: white;
+	float: right;
+	background: url(../img/about-party/about-party-inquiry-a.png) center 0 no-repeat;
+	text-shadow: 2px 2px 5px #606060;
+}
+.inquire a:hover{background-position: center bottom !important;}
+.inquire a small {
+	color: white;
+	font-size: 11pt;
+	margin-top: 25px !important;
+	display: block;
+	font-weight: normal;
+}
+@media only screen and (max-width:768px){
+	#about-party{
+		padding:0;
+		background:none !important;
+	}
+	#about-party .contents{
+		box-shadow: none;
+		background:url('../img/about-party/about-party-bg.jpg');
+		background-color:#E2F1FF;
+		width:90% !important;
+		padding:60px 5%;
+		border:none;
+		margin:0 !important;
+	}
+	#about-party h2{
+		font-size:15pt;margin-bottom:30px;
+	}
+	#about-party h3{
+		font-size:12pt;
+		margin-bottom:10px;
+		border-left-width:5px;
+		margin-left:2.5%;
+	}
+	#about-party article{
+		padding:0;
+		background:none;
+		width:100%;
+		margin-bottom:60px;
+	}
+	#about-party article p{
+		font-size:10pt;
+		margin:0 5%;
+	}
+	.link-to-brochure{
+		width:90%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.link-to-brochure h4{
+		float:none;
+		text-align:center !important;
+		width:100%;
+		font-size:10pt;
+	}
+	.link-to-brochure a{float:none;width:95%;max-width:480px;margin:20px auto;}
+	.link-to-brochure a img{margin:0 auto;width:100%;}
+	.link-to-brochure span{width:100%;font-size:8pt;}
+	.inquire{width:90%;}
+	.inquire div{
+		width:calc(90% - 30px);
+	}
+	.inquire address{width:40%;}
+	.inquire address img{width:95%;max-width:320px;}
+	.inquire a{margin:0 auto;width:240px;background-size:240px;font-size: 11pt;padding:16px 0 0.2px;line-height: 0;height:inherit;}
+	.inquire a small{font-size:8pt;margin:18px !important;}
+}
+@media only screen and (max-width:512px){
+	.inquire address{float:none;text-align: center;width:70%;margin:0 auto;}
+	.inquire a{
+		margin-top:20px;
+		float:none;
+		display: block;
+	}
+}
