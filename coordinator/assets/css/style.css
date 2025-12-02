@@ -9,12 +9,22 @@ html,body,header,div,span,h1,h2,h3,h4,h5,h6,p,i,input,button,img,picture,ul,li,o
 
 header {
     background-color: #202020;
-    color: white;
+    color: #FFFFFF;
     padding: 24px 16px;
     display: flex;
     flex-flow: column;
     align-items: flex-end;
     transition: 0.4s;
+}
+
+header nav {
+    display: flex;
+    gap: 8px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #FFFFFF;
 }
 
 .theatreMode header {
@@ -45,14 +55,15 @@ body {
     justify-content: center;
     align-items: flex-start;
     gap: 8px 2%;
-    padding: 32px 0;
+    padding: 32px 0 96px;
     min-height: 900px;
     transition: all 0.4s;
 }
 
 
 .theatreMode .character_wrapper {
-    background: linear-gradient(41deg, rgb(255 209 115) 0%, #ffc0c0 100%);
+    
+    padding: 32px 0;
 }
 
 .char__controller {
@@ -133,17 +144,6 @@ body {
     display: none;
 }
 
-@media print {
-    .char__controller,
-    .printBtn {
-        display: none;
-    }
-
-    .character_wrapper {
-        min-height: none;
-    }
-}
-
 .character_adder {
     position: fixed;
     bottom: 0;
@@ -158,10 +158,7 @@ body {
     transition: 0.4s;;
 }
 
-.theatreMode 
-
-.character_adder {
-
+.theatreMode .character_adder {
     transform: translateY(100%);
 }
 
@@ -181,4 +178,107 @@ body {
     width: 64px;
     height: 64px;
     object-fit: contain;
+}
+
+/* Background Setter */
+.theatre_background_setter {
+    position: fixed;
+    left: 0;
+    bottom: 100px;
+    transform: translateX(calc(-100% - 12px));
+    transition: 0.4s;
+}
+
+.theatre_background_setter a {
+    position: absolute;
+    right: -12.0px;
+    width: 12px;
+    height: 0;
+    line-height:0;
+    padding: 15px 0;
+    display: block;
+    background-color: #C0C0C0;
+    border-radius: 0 8px 8px 0;
+    font-size: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    color: #202020;
+}
+
+.theatreMode
+.theatre_background_setter {
+    display: block;
+    transform: translateX(calc(-100% - 0px));
+}
+
+.theatreMode
+.theatre_background_setter.expanded {
+    transform: translateX(0px);
+}
+
+.theatre_background_setter__inner {
+    display: flex;
+    flex-flow: column;
+    padding: 16px 12px;
+    background-color: #C0C0C0;
+}
+
+.theatre_background_setter__inner label {
+    display: block;
+}
+
+.background_01,
+.background_02 {
+    opacity: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    transition: opacity 0.4s;
+}
+
+.background_01 {
+    background: linear-gradient(41deg, rgb(255 209 115) 0%, #ffc0c0 100%);
+}
+
+.background_02 {
+    background: linear-gradient(41deg, #e6fdff 0%, #c4e9ff 100%);
+}
+
+.jonny.snowCoated,
+.jimmy.snowCoated {
+    -webkit-mix-blend-mode: hard-light;
+    mix-blend-mode: hard-light;
+}
+
+.theatreMode .background_01.expanded,
+.theatreMode .background_02.expanded {
+    opacity: 1;
+}
+
+.snowDrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(#FFFFFF 0%, #FFFFFF00 100%);
+}
+
+/* Some properties are not shown in Theatre Mode */
+@media print {
+    .char__controller,
+    .printBtn,
+    .character_adder,
+    .theatre_background_setter {
+        display: none;
+    }
+
+    .character_wrapper {
+        min-height: none;
+    }
 }

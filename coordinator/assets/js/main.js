@@ -144,3 +144,78 @@ document.querySelector('.printBtn').addEventListener('click', ()=>{
 document.querySelector('.theatreBtn').addEventListener('click', ()=>{
     document.querySelector('body').classList.toggle('theatreMode');
 });
+
+document.querySelector('.theatre_background_setter a').addEventListener('click', ()=>{
+    document.querySelector('.theatre_background_setter').classList.toggle('expanded');
+});
+
+const backgroundParts = [
+    '.background_01',
+    '.background_02'
+]
+
+document.getElementById('theatre_background_default').addEventListener('click',function(){
+    backgroundParts.forEach(bgs=>{
+        console.log(bgs);
+        document.querySelector(bgs).classList.remove('expanded');
+    });
+    wipeAllSnowdrops ();
+    document.querySelector(backgroundParts[0]).classList.add('expanded') 
+});
+
+
+document.getElementById('theatre_background_snowfall').addEventListener('click',function(){
+    backgroundParts.forEach(bgs=>{
+        console.log(bgs);
+        document.querySelector(bgs).classList.remove('expanded');
+    });
+     wipeAllSnowdrops ();
+    initiateSnowdrop();
+    document.querySelector(backgroundParts[1]).classList.add('expanded') 
+});
+
+let snowDropStats = [];
+function initiateSnowdrop () {
+    document.querySelectorAll('.jonny,.jimmy').forEach(chars=>{chars.classList.add('snowCoated')});
+    for(let i = 0; i < 50; i++) {
+        const snowDrop = document.createElement('div');
+        snowDrop.classList.add('snowDrop');
+        snowDrop.style.left = (Math.random() * (window.innerWidth) ) + "px";
+        snowDrop.style.top = (Math.random() * (window.innerHeight)) + "px";
+        snowDropStats.push({
+            velocityX: Math.random() * 5,
+            velocityY: Math.random() * 4
+        });
+       document.querySelector('.background_02').append(snowDrop);
+    }
+    moveSnowdrop();
+}
+
+function moveSnowdrop () {
+    snowDropStats.forEach((stat, i)=>{
+        const snowDrop = document.querySelectorAll('.snowDrop')[i];
+        snowDrop.style.left = (parseFloat(snowDrop.style.left) + stat.velocityX) + "px";
+        snowDrop.style.top = (parseFloat(snowDrop.style.top) + stat.velocityY) + "px";
+
+        if(snowDrop.offsetLeft> window.innerWidth + 50) {
+            snowDrop.style.left = 0;
+            stat.velocityX = Math.random() * 5;
+            stat.velocityY = Math.random() * 4;
+        }
+        if(snowDrop.offsetTop> window.innerHeight + 50) {
+            snowDrop.style.top = 0;
+
+            snowDropStats[i].velocityX = Math.random() * 5;
+            snowDropStats[i].velocityY = Math.random() * 4;
+        }
+    });
+    if(snowDropStats.length > 0) {
+        setTimeout(moveSnowdrop,20);
+    }
+}
+
+function wipeAllSnowdrops () {
+    document.querySelectorAll('.jonny,.jimmy').forEach(chars=>{chars.classList.remove('snowCoated')});
+    document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
+    snowDropStats = [];
+}
