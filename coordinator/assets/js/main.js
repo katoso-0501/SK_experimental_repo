@@ -125,6 +125,7 @@ class Rolf extends Jonny {
     loadIndependentParts () {
         this.createControls('Tops','char__tops');
         this.createControls('Trouser','char__trouser');
+        this.createControls('Hair','char__hair');
         this.createControls('Socks','char__socks');
         this.createControls('Shoes','char__shoes');
         this.createControls('Grass','char__grass');

@@ -93,6 +93,39 @@
     width: 400px;
 }
 
+.rolf .char__hair {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 50px;
+    background: rgb(41, 197, 121);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: -3px;
+    width: 100%;
+    height: calc(100% - 7px);
+    -webkit-mask-image: url(../images/rolf_hair.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/rolf_hair.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .rolf .char__hair::before {
+    content:" - Hair";
+    position: absolute;
+    top: 0.0px;
+    left: 30px;
+    width: 400px;
+}
+
 .rolf .char__shoes  {
     position: absolute;
     
@@ -194,6 +227,7 @@
 
 .testingPurpose .rolf .char__tops,
 .testingPurpose .rolf .char__trouser,
+.testingPurpose .rolf .char__hair,
 .testingPurpose .rolf .char__shoes,
 .testingPurpose .rolf .char__socks,
 .testingPurpose .rolf .char__grass  {
@@ -209,12 +243,15 @@
 .testingPurpose .rolf .char__trouser {
     top: 30px;
 }
-.testingPurpose .rolf .char__shoes {
+.testingPurpose .rolf .char__hair {
     top: 60px;
 }
-.testingPurpose .rolf .char__socks {
+.testingPurpose .rolf .char__shoes {
     top: 90px;
 }
-.testingPurpose .rolf .char__grass {
+.testingPurpose .rolf .char__socks {
     top: 120px;
+}
+.testingPurpose .rolf .char__grass {
+    top: 150px;
 }
