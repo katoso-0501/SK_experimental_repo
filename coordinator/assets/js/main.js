@@ -1,5 +1,7 @@
 "use strict";
 let characterID = 0;
+//  __________________
+// Character classes start
 class Jonny {
     constructor() {
         characterID++;
@@ -101,9 +103,7 @@ class Jimmy extends Jonny {
     constructor() {
         super();
         this.img.src = "assets/images/jimmy_original.webp";
-
         this.jonnyMain.classList.remove('jonny');
-
         this.jonnyMain.classList.add('jimmy');
     }
     
@@ -114,6 +114,23 @@ class Jimmy extends Jonny {
     }
 }
 
+class Rolf extends Jonny {
+    constructor() {
+        super();
+        this.img.src = "assets/images/rolf_original.webp";
+        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.add('rolf');
+    }
+    
+    loadIndependentParts () {
+        this.createControls('Tops','char__tops');
+        this.createControls('Trouser','char__trouser');
+        this.createControls('TeethRetainer','char__retainer');
+    }
+}
+
+//  ______________________
+// Character classes end
 
 const characters = [];
 
@@ -137,16 +154,23 @@ document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
     characters.push(new Jimmy());
 })
 
-document.querySelector('.printBtn').addEventListener('click', ()=>{
-    window.print();
-});
+document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
+    b.preventDefault();
+    characters.push(new Rolf());
+})
 
+// Print button
+document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
+
+// Theatre mode button
 document.querySelector('.theatreBtn').addEventListener('click', b=>{
     b.preventDefault();
     document.querySelector('body').classList.toggle('theatreMode');
 });
 
-document.querySelector('.theatre_background_setter a').addEventListener('click', ()=>{
+// background setting button
+document.querySelector('.theatre_background_setter a').addEventListener('click', b=>{
+    b.preventDefault();
     document.querySelector('.theatre_background_setter').classList.toggle('expanded');
 });
 
@@ -156,45 +180,35 @@ const backgroundParts = [
     '.background_03',
 ]
 
-document.getElementById('theatre_background_default').addEventListener('click',function(){
-    backgroundParts.forEach(bgs=>{
-        console.log(bgs);
-        document.querySelector(bgs).classList.remove('expanded');
+document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
+    radio.addEventListener('click', (item)=>{
+        console.log(item.target.id);
+        document.querySelector('.theatre_background_setter').classList.remove('expanded');
+        
+        wipeAllSnowdrops ();
+        wipeAllColorballs ();
+            
+        backgroundParts.forEach(bgs=>{
+            document.querySelector(bgs).classList.remove('expanded');
+        });
+    
+        console.log(document.querySelector(backgroundParts[index]));
+        document.querySelector(backgroundParts[index]).classList.add('expanded');
     });
-    wipeAllSnowdrops ();
-    wipeAllColorballs ();
-    document.querySelector(backgroundParts[0]).classList.add('expanded');
 });
 
 document.getElementById('theatre_background_snowfall').addEventListener('click',function(){
-    backgroundParts.forEach(bgs=>{
-        console.log(bgs);
-        document.querySelector(bgs).classList.remove('expanded');
-    });
-    wipeAllSnowdrops ();
-    wipeAllColorballs ();
     initiateSnowdrop();
-    document.querySelector(backgroundParts[1]).classList.add('expanded');
 });
-
 
 document.getElementById('theatre_background_spotlight').addEventListener('click',function(){
-    backgroundParts.forEach(bgs=>{
-        console.log(bgs);
-        document.querySelector(bgs).classList.remove('expanded');
-    });
-    wipeAllSnowdrops ();
-    wipeAllColorballs ();
     initiateColorball();
-    document.querySelector(backgroundParts[2]).classList.add('expanded'); 
 });
-
-
 
 /* Snowdrop-Related */
 let snowDropStats = [];
 function initiateSnowdrop () {
-    document.querySelectorAll('.jonny,.jimmy').forEach(chars=>{chars.classList.add('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('snowCoated')});
     for(let i = 0; i < 50; i++) {
         const snowDrop = document.createElement('div');
         snowDrop.classList.add('snowDrop');
@@ -234,17 +248,15 @@ function moveSnowdrop () {
 }
 
 function wipeAllSnowdrops () {
-    document.querySelectorAll('.jonny,.jimmy').forEach(chars=>{chars.classList.remove('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.remove('snowCoated')});
     document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
     snowDropStats = [];
 }
 
-
-
 /* Colorball-Related */
 let colorballStats = [];
 function initiateColorball() {
-    document.querySelectorAll('.jonny,.jimmy').forEach(chars=>{chars.classList.add('withSpotlight')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('withSpotlight')});
     for(let i = 0; i < 15; i++) {
         const colorBall = document.createElement('div');
         colorBall.classList.add('colorBall');
@@ -286,7 +298,7 @@ function moveColorball () {
 }
 
 function wipeAllColorballs () {
-    document.querySelectorAll('.jonny, .jimmy').forEach(chars=>{chars.classList.remove('withSpotlight')});
+    document.querySelectorAll('.jonny, .jimmy,.rolf').forEach(chars=>{chars.classList.remove('withSpotlight')});
     document.querySelectorAll('.colorBall').forEach(f=>f.remove());
     colorballStats = [];
 }

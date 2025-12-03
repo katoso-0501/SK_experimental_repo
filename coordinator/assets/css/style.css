@@ -185,30 +185,48 @@ body {
     position: fixed;
     left: 0;
     bottom: 100px;
-    transform: translateX(calc(-100% - 12px));
+    transform: translateX(calc(-100% - 24px));
     transition: 0.4s;
+    
+    width: max-content;
+    max-width: 496px;
 }
 
 .theatre_background_setter a {
     position: absolute;
-    right: -12.0px;
-    width: 12px;
+    right: -24.0px;
+    width: 24px;
     height: 0;
     line-height:0;
-    padding: 15px 0;
+    padding: 30px 0;
     display: block;
-    background-color: #C0C0C0;
+    background: #202020;
     border-radius: 0 8px 8px 0;
-    font-size: 10px;
+    font-size: 0;
+    text-align: center;
     text-decoration: none;
     font-weight: 700;
     color: #202020;
 }
 
+.theatre_background_setter a:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 6px;
+    width: 5px;
+    height: 5px;
+    border-top: 2px solid #FFFFFF;
+    border-right: 2px solid #FFFFFF;
+    transform: rotate(45deg);
+}
+
+
 .theatreMode
 .theatre_background_setter {
     display: block;
-    transform: translateX(calc(-100% - 0px));
+    transform: translateX(calc(-100% - 1px));
 }
 
 .theatreMode
@@ -220,13 +238,32 @@ body {
     display: flex;
     flex-flow: column;
     padding: 16px 12px;
-    background-color: #C0C0C0;
+    background-color: #202020;
 }
 
 .theatre_background_setter__inner label {
-    display: block;
+    display: flex;
 }
 
+.theatre_background_setter__inner label input {
+    appearance: none;
+}
+
+.theatre_background_setter__inner label input + span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color:#FFFFFF;
+    border:2px solid transparent;
+    padding: 4px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+.theatre_background_setter__inner label input:checked + span {
+    color: #12d3f1;
+    border: 2px solid #12d3f1;
+}
 .background_01,
 .background_02,
 .background_03 {
@@ -254,13 +291,15 @@ body {
 }
 
 .theatreMode .jonny.snowCoated,
-.theatreMode .jimmy.snowCoated {
+.theatreMode .jimmy.snowCoated,
+.theatreMode .rolf.snowCoated {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
 
 .theatreMode .jonny.withSpotlight,
-.theatreMode .jimmy.withSpotlight {
+.theatreMode .jimmy.withSpotlight,
+.theatreMode .rolf.withSpotlight {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }
