@@ -40,7 +40,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(100% - 7px);
     -webkit-mask-image: url(../images/rolf_tops.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -74,7 +74,7 @@
     left: 0;
     top: -3px;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(100% - 2px);
     -webkit-mask-image: url(../images/rolf_trouser.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -107,7 +107,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(100% - 6px);
     -webkit-mask-image: url(../images/rolf_shoes.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -140,7 +140,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(100% - 6px);
     -webkit-mask-image: url(../images/rolf_socks.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -173,7 +173,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(100% - 6px);
     -webkit-mask-image: url(../images/rolf_grass.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
