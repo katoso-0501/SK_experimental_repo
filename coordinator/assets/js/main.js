@@ -131,9 +131,237 @@ class Rolf extends Jonny {
         this.createControls('Grass','char__grass');
     }
 }
-
 //  ______________________
 // Character classes end
+//=============================
+// Color Managements
+//  ______________________
+class ColorChip {
+    constructor(initialColor, colorMode, mat, controllerMaster) {
+        this.layer = document.createElement('div');
+        this.layer.classList.add('colorChip');
+        this.layer.style.backgroundColor = initialColor;
+        this.layer.style.width = "100%";
+        this.layer.style.height = "100%";
+        this.layer.style.position = "absolute";
+        this.layer.style.top = "0";
+        this.layer.style.left = "0";
+        this.controllerMaster = controllerMaster;
+
+        if(colorMode === "simple") {
+            this.createSimpleColorControls('ColorChip',"layer");
+        }else if(colorMode === "pattern") {
+        }
+        // document.querySelector('.character_wrapper').append(tgt);
+
+    }
+    
+    HSLupdate (tgt, h, s, l) {
+        tgt.style.background = `hsl(${h},${s}%,${l}%)`;
+    }
+
+    createSimpleColorControls (tgtname, tgt) {
+        const targetPart = document.createElement('div');
+        targetPart.classList.add(tgt);
+
+        const controlGroup = document.createElement('div');
+        controlGroup.classList.add('colorGroup');
+
+        const controlGroupInner = document.createElement('div');
+        controlGroupInner.classList.add('controlGroupInner');
+        
+        const controllerPanel = document.createElement('div');
+        const controllerLabel = document.createElement('span');
+
+        const thumbnail = document.createElement('span');
+        thumbnail.classList.add('thumbnail');
+
+        thumbnail.addEventListener('click', ()=>{
+            controlGroupInner.classList.toggle('expanded');
+        })
+        
+        controllerLabel.textContent = tgtname;
+        controllerPanel.append(controllerLabel);
+        controllerPanel.append(thumbnail);
+        controllerPanel.classList.add(tgtname);
+
+        controllerLabel.addEventListener('click', ()=>{
+            controllerPanel.classList.toggle('expanded');
+        });
+
+        const controlParts = [
+            ['Hue',document.createElement('input')],
+            ['Saturation',document.createElement('input')],
+            ['Brightness',document.createElement('input')],
+            ['Opacity',document.createElement('input')],
+            ['Blend Mode',document.createElement('select')],
+        ];
+
+        controlParts[0][1].addEventListener('change', m=>{
+            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        });
+        controlParts[1][1].addEventListener('change', m=>{
+            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        });
+        controlParts[2][1].addEventListener('change', m=>{
+            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        });
+        controlParts[3][1].addEventListener('change', m=>{
+            this.layer.style.opacity = controlParts[3][1].value / 100;
+            thumbnail.style.opacity = controlParts[3][1].value / 100;
+        });
+        
+        controlParts.forEach((part, i) => {
+            const paragraph = document.createElement('p');
+
+            part[1].setAttribute('type', 'range');
+            part[1].setAttribute('min', '0');
+            if(i === 0) {
+                part[1].setAttribute('max', '360');
+                part[1].setAttribute('value', Math.floor(Math.random() * 360));
+            }else{
+                part[1].setAttribute('max', '100');
+                part[1].setAttribute('value', Math.floor(Math.random() * 100));
+            }
+            
+            paragraph.append(part[0],part[1]);
+            controllerPanel.append(paragraph); 
+        });
+
+        /* Define blend modes */
+        const blendMode = [
+            "Normal",
+            "Multiply",
+            "Screen",
+            "Overlay",
+            "Darken",
+            "Lighten",
+            "Color Dodge",
+            "Color Burn",
+            "Hard Light",
+            "Soft Light",
+            "Difference",
+            "Exclusion",
+            "Hue",
+            "Saturation",
+            "Color",
+            "Luminosity"
+        ];
+        blendMode.forEach(mode=>{
+            const option = document.createElement('option');
+            option.value = mode;
+            option.textContent = mode;
+            controlParts[4][1].append(option);
+        });
+
+        controlParts[4][1].addEventListener('change', m=>{
+            this.layer.style.mixBlendMode = controlParts[4][1].value;
+        });
+
+        controlGroup.innerHTML = '<p>Simple color</p>';
+        controlGroup.append(thumbnail);
+        controlGroupInner.append(controllerPanel);
+        controlGroup.append(controlGroupInner);
+
+        this.controllerMaster.append(controlGroup);
+        // this.controllerMaster.append(targetPart);
+        this.HSLupdate(
+            thumbnail,
+            controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
+        );
+        this.HSLupdate(
+            this.layer,
+            controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
+        );
+    }
+
+    createPatternControls(tgtname, tgt) {
+        console.log('Ooh sorry, this content is under construction...');
+        return;
+
+        const targetPart = document.createElement('div');
+        targetPart.classList.add(tgt);
+        
+        const controllerPanel = document.createElement('div');
+        const controllerLabel = document.createElement('span');
+        controllerLabel.textContent = tgtname;
+        controllerPanel.append(controllerLabel);
+        controllerPanel.classList.add(tgtname);
+
+        controllerLabel.addEventListener('click', ()=>{
+            controllerPanel.classList.toggle('expanded');
+        });
+
+        const pattern = document.createElement('img');
+        pattern.src = "assets/images/pattern.png";
+
+        const patterns = [
+            ["Polka Dot", "polka-dot"],
+            ["Stripes", "stripes"],
+            ["Grid", "grid"],
+            ["Crosshatch", "crosshatch"],
+            ["Dots", "dots"],
+            ["Hatch", "hatch"],
+            ["Oil", "oil"],
+            ["Sphere", "sphere"],
+            ["Tile", "tile"],
+            ["Trellis", "trellis"],
+            ["Zigzag", "zigzag"]
+        ];
+    }
+}
+
+class ColorMat {
+    constructor (addTo,controllerMaster) {
+        this.matMain = document.createElement('div');   
+        this.matMain.classList.add('mat_main');
+
+        this.mat = document.createElement('div');   
+        this.mat.classList.add('mat');
+        this.mat.style.width = "200px";
+        this.mat.style.height = "200px";
+        this.mat.style.position = "relative";
+        
+        this.controllerMaster = controllerMaster;
+
+        this.layerID = 0;
+        this.layers = [];
+        
+        this.matMain.append(this.mat);
+        this.matMain.append(this.controllerMaster);
+        this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
+
+        this.simpleColorAddBtn = document.createElement('div');
+        this.simpleColorAddBtn.classList.add('plusBtn');
+
+        this.simpleColorAddBtn.addEventListener('click', ()=>{
+        this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
+        })
+
+        controllerMaster.append(this.simpleColorAddBtn);
+
+        addTo.append(this.matMain);
+    }
+    
+    addColorLayer (color = "#FFFFFF", mode = "simple") {
+        this.layerID++;
+        this.layers.push(new ColorChip(color, mode, this.mat, this.controllerMaster));
+
+        this.reRender();
+    }
+    
+    reRender () {
+        this.mat.innerHTML = "";
+        this.layers.forEach(l=>{
+            this.mat.append(l.layer);
+        });
+    }
+}
+// Color Managements end
+//  ______________________
 
 const characters = [];
 
@@ -155,12 +383,28 @@ document.querySelector('.character_adder__jonny').addEventListener('click', b=>{
 document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
     b.preventDefault();
     characters.push(new Jimmy());
-})
+});
 
 document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
     b.preventDefault();
     characters.push(new Rolf());
-})
+});
+document.querySelector('.character_adder__colorChipTest').addEventListener('click', b=>{
+    b.preventDefault();
+    const cw = document.querySelector('.character_wrapper');
+    const testMatMain = document.createElement('div');
+    const testMat = document.createElement('div');
+    const controllerMaster = document.createElement('div');
+    controllerMaster.classList.add('char__controller');
+
+    const colorMat = new ColorMat(testMat, controllerMaster);
+
+    testMatMain.append(testMat);
+    testMatMain.append(controllerMaster);
+
+    cw.append(testMatMain);
+    // characters.push(new ColorMat(document.querySelector('.character_wrapper'), document.querySelector('.character_adder')));
+});
 
 // Print button
 document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
@@ -305,3 +549,6 @@ function wipeAllColorballs () {
     document.querySelectorAll('.colorBall').forEach(f=>f.remove());
     colorballStats = [];
 }
+
+
+

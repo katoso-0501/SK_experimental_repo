@@ -60,13 +60,12 @@ body {
     transition: all 0.4s;
 }
 
-
 .theatreMode .character_wrapper {
-    
     padding: 32px 0;
 }
 
 .char__controller {
+    position: relative;
     display: flex;
     flex-flow: column;
     align-items: start;
@@ -79,13 +78,71 @@ body {
     }
 }
 
+.thumbnail {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.controlGroupInner {
+    position: absolute;
+    z-index: 9;
+    top: 40px;
+    left: 0;
+    transform: scaleY(0.001);
+    opacity: 0;
+    transform-origin: center top;
+    pointer-events: none;
+    transition: 0.4s;
+    background-color: #FFFFFF;
+    min-width: 220px;
+    border: 1px solid #E0E0E0;
+    padding: 16px;
+    border-radius: 8px;;
+    height: 0.1px;
+}
+
+.controlGroupInner.expanded {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: all;
+    height: auto;
+}
+
+.char__controller .char__colorTips {
+    position: relative;
+}
+
+.char__controller .plusBtn{
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    bottom :-48px;
+    left : calc(50% - 8px);
+    z-index: 8;
+    cursor: pointer;
+}
+
+.char__controller div.plusBtn:before {
+    content: "+";
+    font-size:16px;
+    color: #202020;
+    width: 0;
+    height: 0;
+    top: 7px;
+    left: 4px;
+    transform: none !important;
+}
+
 .char__controller > div {
     position: relative;
     width: calc(100% - 34px);
     padding: 4px 16px;
     border-radius: 8px;
     border: 1px solid #CCCCCC;
-
 }
 
 .char__controller > div:before {
@@ -140,6 +197,17 @@ body {
     width: calc(100% - 120px);
 }
 
+.char__controller > div.colorGroup {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+}
+
+.char__controller > div.colorGroup:before {
+    display: none;
+}
+
 .theatreMode .char__controller {
     display: none;
 }
@@ -147,15 +215,23 @@ body {
 .character_adder {
     position: fixed;
     bottom: 0;
+    z-index: 16;
     left: 0;
-    width: 100%;
+    padding: 16px 5%;
+    width: 90%;
     background-color: #dcdcdc;
+    transition: 0.4s;
+    overflow-x: auto;
+}
+
+
+.character_adder__inner {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    padding: 3px 0;
-    transition: 0.4s;;
+    width: max-content;
+    /* padding: 16px 5%; */
 }
 
 .theatreMode .character_adder {
@@ -163,10 +239,9 @@ body {
 }
 
 .character_adder a {
-    display: block;
+    display: flex;
     width: 72px;
     height: 72px;
-    display: flex;
     justify-content: center;
     align-items: center;
     border:3px solid #AAAAAA;
