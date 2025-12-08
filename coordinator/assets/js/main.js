@@ -160,7 +160,7 @@ class Rolf extends Jonny {
 class ColorChip {
     constructor(initialColor, colorMode, mat, controllerMaster) {
         this.layer = document.createElement('div');
-        this.layer.classList.add('colorChip');
+        // this.layer.classList.add('colorChip');
         this.layer.style.backgroundColor = initialColor;
         this.layer.style.width = "100%";
         this.layer.style.height = "100%";
@@ -170,8 +170,9 @@ class ColorChip {
         this.controllerMaster = controllerMaster;
 
         if(colorMode === "simple") {
-            this.createSimpleColorControls('ColorChip',"layer");
-        }else if(colorMode === "pattern") {
+            this.createSimpleColorControls();
+        } else if(colorMode === "pattern") {
+            this.createPatternControls("layer");
         }
     }
     
@@ -179,10 +180,16 @@ class ColorChip {
         tgt.style.background = `hsl(${h},${s}%,${l}%)`;
     }
 
-    createSimpleColorControls (tgtname, tgt) {
-        const targetPart = document.createElement('div');
-        targetPart.classList.add(tgt);
+    patternUpdate (tgt, pattern, scale, opacity, blendmode) {
 
+        console.log(`The pattern will shown as follows: ${tgt}, ${pattern}, ${scale}px, ${opacity}, ${blendmode}`);
+        tgt.style.background = "url(./assets/images/pattern-" + pattern + ".png)";    
+        tgt.style.backgroundSize = scale + "px";
+        tgt.style.opacity = opacity / 100;
+        tgt.style.backgroundBlendMode = blendmode;
+    }
+
+    createSimpleColorControls () {
         const controlGroup = document.createElement('div');
         controlGroup.classList.add('colorGroup');
 
@@ -192,17 +199,14 @@ class ColorChip {
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
 
-        const thumbnail = document.createElement('span');
+        const thumbnail = document.createElement('div');
         thumbnail.classList.add('thumbnail');
 
         thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
         })
         
-        controllerLabel.textContent = tgtname;
-        // controllerPanel.append(controllerLabel);
         controllerPanel.append(thumbnail);
-        controllerPanel.classList.add(tgtname);
 
         controllerLabel.addEventListener('click', ()=>{
             controllerPanel.classList.toggle('expanded');
@@ -216,18 +220,25 @@ class ColorChip {
             ['Blend Mode',document.createElement('select')],
         ];
 
-        controlParts[0][1].addEventListener('change', m=>{
-            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
-        controlParts[1][1].addEventListener('change', m=>{
-            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
-        controlParts[2][1].addEventListener('change', m=>{
-            this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-            this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
+        for (let i = 0;i < 2; i++){
+            controlParts[i][1].addEventListener('change', ()=>{
+                this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+                this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+            });
+        }
+
+        // controlParts[0][1].addEventListener('change', m=>{
+        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        // });
+        // controlParts[1][1].addEventListener('change', m=>{
+        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        // });
+        // controlParts[2][1].addEventListener('change', m=>{
+        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+        // });
         controlParts[3][1].addEventListener('change', m=>{
             this.layer.style.opacity = controlParts[3][1].value / 100;
             thumbnail.style.opacity = controlParts[3][1].value / 100;
@@ -286,7 +297,6 @@ class ColorChip {
         controlGroup.append(controlGroupInner);
 
         this.controllerMaster.append(controlGroup);
-        // this.controllerMaster.append(targetPart);
         this.HSLupdate(
             thumbnail,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
@@ -297,39 +307,117 @@ class ColorChip {
         );
     }
 
-    createPatternControls(tgtname, tgt) {
-        console.log('Ooh sorry, this content is under construction...');
-        return;
+    createPatternControls(tgt) {
+        tgt = this.layer;
+        console.log('pattern' + tgt);
 
-        const targetPart = document.createElement('div');
-        targetPart.classList.add(tgt);
+        const controlGroup = document.createElement('div');
+        controlGroup.classList.add('colorGroup');
+
+        const controlGroupInner = document.createElement('div');
+        controlGroupInner.classList.add('controlGroupInner');
         
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
-        controllerLabel.textContent = tgtname;
-        controllerPanel.append(controllerLabel);
-        controllerPanel.classList.add(tgtname);
 
+        const thumbnail = document.createElement('div');
+        thumbnail.classList.add('thumbnail');
+
+        controllerPanel.append(thumbnail);
+
+        thumbnail.addEventListener('click', ()=>{
+            controlGroupInner.classList.toggle('expanded');
+        });
+        
         controllerLabel.addEventListener('click', ()=>{
             controllerPanel.classList.toggle('expanded');
         });
 
-        const pattern = document.createElement('img');
-        pattern.src = "assets/images/pattern.png";
-
+        /* Define Patterns */
         const patterns = [
             ["Polka Dot", "polka-dot"],
-            ["Stripes", "stripes"],
-            ["Grid", "grid"],
-            ["Crosshatch", "crosshatch"],
-            ["Dots", "dots"],
-            ["Hatch", "hatch"],
-            ["Oil", "oil"],
-            ["Sphere", "sphere"],
-            ["Tile", "tile"],
-            ["Trellis", "trellis"],
-            ["Zigzag", "zigzag"]
+            // ["Stripes", "stripes"],
+            // ["Grid", "grid"],
+            // ["Crosshatch", "crosshatch"],
+            // ["Dots", "dots"],
+            // ["Hatch", "hatch"],
+            // ["Oil", "oil"],
+            // ["Sphere", "sphere"],
+            // ["Tile", "tile"],
+            // ["Trellis", "trellis"],
+            // ["Zigzag", "zigzag"]
         ];
+
+        const patternController = document.createElement('div');
+        patterns.forEach(pattern => {
+            const anchor = document.createElement('a');
+            const img = document.createElement('img');
+            anchor.href = '#';
+            anchor.style.background = "#000000";
+            anchor.style.margin="0 2px 0 0";
+            anchor.style.height="0";
+            anchor.style.lineHeight="0";
+            img.style.width = "32px";
+            img.style.height = "32px";
+            img.src =  "./assets/images/pattern-" + pattern[1] + ".png";
+            anchor.append(img);
+
+            anchor.addEventListener('click', m => {
+                m.preventDefault();
+                this.patternUpdate(this.layer, pattern[1], 16, 100, blendSelector.value);
+            });
+            // img.addEventListener('load', ()=>{
+                patternController.append(anchor);
+        });
+        controllerPanel.append(patternController); 
+
+        const blendSelector = document.createElement('select');
+        
+        /* Define blend modes */
+        const blendMode = [
+            "Normal",
+            "Multiply",
+            "Screen",
+            "Overlay",
+            "Darken",
+            "Lighten",
+            "Color Dodge",
+            "Color Burn",
+            "Hard Light",
+            "Soft Light",
+            "Difference",
+            "Exclusion",
+            "Hue",
+            "Saturation",
+            "Color",
+            "Luminosity"
+        ];
+
+        blendMode.forEach(mode=>{
+            const option = document.createElement('option');
+            option.value = mode;
+            option.textContent = mode;
+            blendSelector.append(option);
+        });
+
+        blendSelector.addEventListener('change', m=>{
+            console.log(m.target.value);
+            this.layer.style.mixBlendMode = m.target.value;
+        });
+
+        controlGroup.innerHTML = '';
+        controlGroup.append(thumbnail);
+        controlGroupInner.append(controllerPanel);
+        controlGroup.append(controlGroupInner);
+        controlGroupInner.append(blendSelector);
+        
+        thumbnail.style.background = "url(./assets/images/pattern-polka-dot.png), #000000";    
+        thumbnail.style.backgroundSize = "16px";
+
+        this.layer.style.background = "url(./assets/images/pattern-polka-dot.png)";    
+        this.layer.style.backgroundSize = "16px";
+
+        this.controllerMaster.append(controlGroup);
     }
 }
 
@@ -357,13 +445,22 @@ class ColorMat {
         this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
 
         this.simpleColorAddBtn = document.createElement('div');
+        this.simpleColorAddBtn.textContent = " Color";
         this.simpleColorAddBtn.classList.add('plusBtn');
-
         this.simpleColorAddBtn.addEventListener('click', ()=>{
         this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
         });
+        
+        this.patternAddBtn = document.createElement('div');
+        this.patternAddBtn.textContent = " Pattern";
+        this.patternAddBtn.classList.add('plusBtn');
+        this.patternAddBtn.style.top = "40px";
+        this.patternAddBtn.addEventListener('click', ()=>{
+        this.addPattern();
+        });
 
         this.palette.append(this.simpleColorAddBtn);
+        this.palette.append(this.patternAddBtn);
         controllerMaster.append(this.palette);
 
         addTo.append(this.matMain);
@@ -372,6 +469,12 @@ class ColorMat {
     addColorLayer (color = "#FFFFFF", mode = "simple") {
         this.layerID++;
         this.layers.push(new ColorChip(color, mode, this.mat, this.palette));
+        this.reRender();
+    }
+
+    addPattern () {
+        this.layerID++;
+        this.layers.push(new ColorChip("#000000", "pattern", this.mat, this.palette));
         this.reRender();
     }
     
