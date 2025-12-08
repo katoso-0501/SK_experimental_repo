@@ -172,7 +172,7 @@ class ColorChip {
             // this.layer.style.backgroundColor = initialColor;
             this.createSimpleColorControls();
         } else if(colorMode === "pattern") {
-            this.createPatternControls("layer");
+            this.createPatternControls();
         }
     }
     
@@ -219,7 +219,7 @@ class ColorChip {
             ['Blend Mode',document.createElement('select')],
         ];
 
-        for (let i = 0;i < 2; i++){
+        for (let i = 0;i <= 2; i++){
             controlParts[i][1].addEventListener('change', ()=>{
                 this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
                 this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
@@ -293,10 +293,7 @@ class ColorChip {
         );
     }
 
-    createPatternControls(tgt) {
-        tgt = this.layer;
-        console.log('pattern' + tgt);
-
+    createPatternControls() {
         const controlGroup = document.createElement('div');
         controlGroup.classList.add('colorGroup');
 
@@ -307,6 +304,7 @@ class ColorChip {
         const controllerLabel = document.createElement('span');
 
         const thumbnail = document.createElement('div');
+        thumbnail.style.backgroundColor = "#000";
         thumbnail.classList.add('thumbnail');
 
         controllerPanel.append(thumbnail);
@@ -322,6 +320,7 @@ class ColorChip {
         /* Define Patterns */
         const patterns = [
             ["Polka Dot", "polka-dot"],
+            ["Checkboard", "checkboard"],
             // ["Stripes", "stripes"],
             // ["Grid", "grid"],
             // ["Crosshatch", "crosshatch"],
@@ -337,25 +336,23 @@ class ColorChip {
         const patternController = document.createElement('div');
         patterns.forEach(pattern => {
             const anchor = document.createElement('a');
-            const img = document.createElement('img');
             anchor.href = '#';
-            anchor.style.backgroundColor = "#000000";
+            anchor.style.background = "url(./assets/images/pattern-" + pattern[1] + ".png), #000000";
+            anchor.style.display ="inline-block";
+            anchor.style.width = "32px";
+            anchor.style.height = "32px";
             anchor.style.margin="0 2px 0 0";
-            anchor.style.height="0";
             anchor.style.lineHeight="0";
-            img.style.width = "32px";
-            img.style.height = "32px";
-            img.src =  "./assets/images/pattern-" + pattern[1] + ".png";
-            anchor.append(img);
+            anchor.style.backgroundSize = "24px";
             this.layer.dataset.patternName = pattern[1];
 
             anchor.addEventListener('click', m => {
                 m.preventDefault();
-                this.patternUpdate(this.layer, pattern[1], 16, 100, controlParts[2][1].value);
+                this.layer.dataset.patternName = pattern[1];
+                this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none");
+                this.patternUpdate(this.layer, this.layer.dataset.patternName, 16, 100, controlParts[2][1].value);
             });
-            img.addEventListener('load', ()=>{
-                patternController.append(anchor);
-            });
+            patternController.append(anchor);
         });
         controllerPanel.append(patternController); 
 
@@ -379,8 +376,8 @@ class ColorChip {
         controlParts[0][1].max= "128";
         controlParts[0][1].value= "32";
         controlParts[0][1].addEventListener('change', m=>{
-        this.patternUpdate(thumbnail, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
-        this.patternUpdate(this.layer, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
+        this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value,  "none");
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
         });
 
         // Opacity Controls
@@ -389,8 +386,8 @@ class ColorChip {
         controlParts[1][1].max= "100";
         controlParts[1][1].value= "100";
         controlParts[1][1].addEventListener('change', m=>{
-        this.patternUpdate(thumbnail, "polka-dot",  controlParts[0][1].value , controlParts[1][1].value, controlParts[2][1].value);
-        this.patternUpdate(this.layer, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value);
+        this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none");
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value);
         });
         
         /* Define blend modes */
