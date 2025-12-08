@@ -161,7 +161,6 @@ class ColorChip {
     constructor(initialColor, colorMode, mat, controllerMaster) {
         this.layer = document.createElement('div');
         // this.layer.classList.add('colorChip');
-        this.layer.style.backgroundColor = initialColor;
         this.layer.style.width = "100%";
         this.layer.style.height = "100%";
         this.layer.style.position = "absolute";
@@ -170,6 +169,7 @@ class ColorChip {
         this.controllerMaster = controllerMaster;
 
         if(colorMode === "simple") {
+            // this.layer.style.backgroundColor = initialColor;
             this.createSimpleColorControls();
         } else if(colorMode === "pattern") {
             this.createPatternControls("layer");
@@ -181,9 +181,8 @@ class ColorChip {
     }
 
     patternUpdate (tgt, pattern, scale, opacity, blendmode) {
-
         console.log(`The pattern will shown as follows: ${tgt}, ${pattern}, ${scale}px, ${opacity}, ${blendmode}`);
-        tgt.style.background = "url(./assets/images/pattern-" + pattern + ".png)";    
+        tgt.style.backgroundImage = "url(./assets/images/pattern-" + pattern + ".png)";    
         tgt.style.backgroundSize = scale + "px";
         tgt.style.opacity = opacity / 100;
         tgt.style.backgroundBlendMode = blendmode;
@@ -226,19 +225,6 @@ class ColorChip {
                 this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
             });
         }
-
-        // controlParts[0][1].addEventListener('change', m=>{
-        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        // });
-        // controlParts[1][1].addEventListener('change', m=>{
-        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        // });
-        // controlParts[2][1].addEventListener('change', m=>{
-        //     this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        //     this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        // });
         controlParts[3][1].addEventListener('change', m=>{
             this.layer.style.opacity = controlParts[3][1].value / 100;
             thumbnail.style.opacity = controlParts[3][1].value / 100;
@@ -353,7 +339,7 @@ class ColorChip {
             const anchor = document.createElement('a');
             const img = document.createElement('img');
             anchor.href = '#';
-            anchor.style.background = "#000000";
+            anchor.style.backgroundColor = "#000000";
             anchor.style.margin="0 2px 0 0";
             anchor.style.height="0";
             anchor.style.lineHeight="0";
@@ -361,17 +347,51 @@ class ColorChip {
             img.style.height = "32px";
             img.src =  "./assets/images/pattern-" + pattern[1] + ".png";
             anchor.append(img);
+            this.layer.dataset.patternName = pattern[1];
 
             anchor.addEventListener('click', m => {
                 m.preventDefault();
-                this.patternUpdate(this.layer, pattern[1], 16, 100, blendSelector.value);
+                this.patternUpdate(this.layer, pattern[1], 16, 100, controlParts[2][1].value);
             });
-            // img.addEventListener('load', ()=>{
+            img.addEventListener('load', ()=>{
                 patternController.append(anchor);
+            });
         });
         controllerPanel.append(patternController); 
 
-        const blendSelector = document.createElement('select');
+        
+        const controlParts = [
+            ["Scale",document.createElement('input')],
+            ["Opacity", document.createElement('input')],
+            ["Blend Mode", document.createElement('select')],
+        ];
+
+        controlParts.forEach((part, i) => {
+            const paragraph = document.createElement('p');
+            
+            paragraph.append(part[0],part[1]);
+            controllerPanel.append(paragraph); 
+        });
+        
+        // Scale Controls
+        controlParts[0][1].type= "range";
+        controlParts[0][1].min= "1";
+        controlParts[0][1].max= "128";
+        controlParts[0][1].value= "32";
+        controlParts[0][1].addEventListener('change', m=>{
+        this.patternUpdate(thumbnail, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
+        this.patternUpdate(this.layer, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
+        });
+
+        // Opacity Controls
+        controlParts[1][1].type= "range";
+        controlParts[1][1].min= "0";
+        controlParts[1][1].max= "100";
+        controlParts[1][1].value= "100";
+        controlParts[1][1].addEventListener('change', m=>{
+        this.patternUpdate(thumbnail, "polka-dot",  controlParts[0][1].value , controlParts[1][1].value, controlParts[2][1].value);
+        this.patternUpdate(this.layer, "polka-dot",  controlParts[0][1].value, controlParts[1][1].value);
+        });
         
         /* Define blend modes */
         const blendMode = [
@@ -397,10 +417,10 @@ class ColorChip {
             const option = document.createElement('option');
             option.value = mode;
             option.textContent = mode;
-            blendSelector.append(option);
+            controlParts[2][1].append(option);
         });
 
-        blendSelector.addEventListener('change', m=>{
+        controlParts[2][1].addEventListener('change', m=>{
             console.log(m.target.value);
             this.layer.style.mixBlendMode = m.target.value;
         });
@@ -409,13 +429,10 @@ class ColorChip {
         controlGroup.append(thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
-        controlGroupInner.append(blendSelector);
+        controlGroupInner.append(controlParts[2][1]);
         
-        thumbnail.style.background = "url(./assets/images/pattern-polka-dot.png), #000000";    
-        thumbnail.style.backgroundSize = "16px";
-
-        this.layer.style.background = "url(./assets/images/pattern-polka-dot.png)";    
-        this.layer.style.backgroundSize = "16px";
+        this.patternUpdate(thumbnail, "polka-dot", 16, 100, controlParts[2][1].value);
+        this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value);
 
         this.controllerMaster.append(controlGroup);
     }
