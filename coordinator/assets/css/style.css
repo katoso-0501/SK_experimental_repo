@@ -113,15 +113,16 @@ body {
     position: relative;
 }
 
-.char__controller .plusBtn{
+.char__controller .plusBtn {
     position: absolute;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     padding: 0;
     margin: 0;
-    bottom :-48px;
-    left : calc(50% - 8px);
+    bottom :-0;
+    right: 0;
+    background-color: #909090;
     z-index: 8;
     cursor: pointer;
 }
@@ -183,6 +184,11 @@ body {
     height: 1px;
 }
 
+.mat_main {
+    width: 100%;
+    height: 100%;
+}
+
 .char__controller > div.expanded > p {
     display: flex;
     justify-content: space-between;
@@ -197,7 +203,16 @@ body {
     width: calc(100% - 120px);
 }
 
-.char__controller > div.colorGroup {
+.char__controller div.mat_palette {
+    display: flex;
+    gap: 4px;
+    flex-flow: wrap;
+    border: #dd4b4b 1px solid;
+    border-radius: 8px;
+}
+
+.char__controller div.colorGroup {
+    position: relative;
     padding: 0;
     border: 0;
     margin: 0;

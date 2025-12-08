@@ -32,9 +32,29 @@ class Jonny {
     }
 
     loadIndependentParts () {
-        this.createControls('Tops','char__tops');
+        this.createColormat('Tops','char__tops');
         this.createControls('Trouser','char__trouser');
         this.createControls('Skin','char__skin');
+    }
+
+    createColormat (tgtname, tgt) {
+        const targetPart = document.createElement('div');
+        targetPart.classList.add(tgt);
+        
+        const controllerPanel = document.createElement('div');
+        const controllerLabel = document.createElement('span');
+        controllerPanel.classList.add(tgtname);
+        controllerPanel.append(controllerLabel);
+        controllerLabel.textContent = tgtname;
+
+        controllerLabel.addEventListener('click', ()=>{
+            controllerPanel.classList.toggle('expanded');
+        });
+
+        const mat = new ColorMat (targetPart, controllerPanel);
+        
+        this.controllerMaster.append(controllerPanel);
+        this.jonnyBody.append(targetPart);
     }
 
     createControls (tgtname, tgt) {
@@ -133,7 +153,8 @@ class Rolf extends Jonny {
 }
 //  ______________________
 // Character classes end
-//=============================
+//￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
+
 // Color Managements
 //  ______________________
 class ColorChip {
@@ -152,8 +173,6 @@ class ColorChip {
             this.createSimpleColorControls('ColorChip',"layer");
         }else if(colorMode === "pattern") {
         }
-        // document.querySelector('.character_wrapper').append(tgt);
-
     }
     
     HSLupdate (tgt, h, s, l) {
@@ -261,7 +280,7 @@ class ColorChip {
             this.layer.style.mixBlendMode = controlParts[4][1].value;
         });
 
-        controlGroup.innerHTML = '<p>Simple color</p>';
+        controlGroup.innerHTML = '';
         controlGroup.append(thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
@@ -321,11 +340,14 @@ class ColorMat {
 
         this.mat = document.createElement('div');   
         this.mat.classList.add('mat');
-        this.mat.style.width = "200px";
-        this.mat.style.height = "200px";
+        this.mat.style.width = "100%";
+        this.mat.style.height = "100%";
         this.mat.style.position = "relative";
         
         this.controllerMaster = controllerMaster;
+
+        this.palette = document.createElement('div');
+        this.palette.classList.add('mat_palette');
 
         this.layerID = 0;
         this.layers = [];
@@ -339,17 +361,17 @@ class ColorMat {
 
         this.simpleColorAddBtn.addEventListener('click', ()=>{
         this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
-        })
+        });
 
-        controllerMaster.append(this.simpleColorAddBtn);
+        this.palette.append(this.simpleColorAddBtn);
+        controllerMaster.append(this.palette);
 
         addTo.append(this.matMain);
     }
     
     addColorLayer (color = "#FFFFFF", mode = "simple") {
         this.layerID++;
-        this.layers.push(new ColorChip(color, mode, this.mat, this.controllerMaster));
-
+        this.layers.push(new ColorChip(color, mode, this.mat, this.palette));
         this.reRender();
     }
     
