@@ -33,8 +33,8 @@ class Jonny {
 
     loadIndependentParts () {
         this.createColormat('Tops','char__tops');
-        this.createControls('Trouser','char__trouser');
-        this.createControls('Skin','char__skin');
+        this.createColormat('Trouser','char__trouser');
+        this.createColormat('Skin','char__skin');
     }
 
     createColormat (tgtname, tgt) {
@@ -128,9 +128,9 @@ class Jimmy extends Jonny {
     }
     
     loadIndependentParts () {
-        this.createControls('Tops','char__tops');
-        this.createControls('Trouser','char__trouser');
-        this.createControls('TeethRetainer','char__retainer');
+        this.createColormat('Tops','char__tops');
+        this.createColormat('Trouser','char__trouser');
+        this.createColormat('TeethRetainer','char__retainer');
     }
 }
 
@@ -143,12 +143,12 @@ class Rolf extends Jonny {
     }
     
     loadIndependentParts () {
-        this.createControls('Tops','char__tops');
-        this.createControls('Trouser','char__trouser');
-        this.createControls('Hair','char__hair');
-        this.createControls('Socks','char__socks');
-        this.createControls('Shoes','char__shoes');
-        this.createControls('Grass','char__grass');
+        this.createColormat('Tops','char__tops');
+        this.createColormat('Trouser','char__trouser');
+        this.createColormat('Hair','char__hair');
+        this.createColormat('Socks','char__socks');
+        this.createColormat('Shoes','char__shoes');
+        this.createColormat('Grass','char__grass');
     }
 }
 //  ______________________
@@ -200,7 +200,7 @@ class ColorChip {
         })
         
         controllerLabel.textContent = tgtname;
-        controllerPanel.append(controllerLabel);
+        // controllerPanel.append(controllerLabel);
         controllerPanel.append(thumbnail);
         controllerPanel.classList.add(tgtname);
 
@@ -410,22 +410,6 @@ document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
 document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
     b.preventDefault();
     characters.push(new Rolf());
-});
-document.querySelector('.character_adder__colorChipTest').addEventListener('click', b=>{
-    b.preventDefault();
-    const cw = document.querySelector('.character_wrapper');
-    const testMatMain = document.createElement('div');
-    const testMat = document.createElement('div');
-    const controllerMaster = document.createElement('div');
-    controllerMaster.classList.add('char__controller');
-
-    const colorMat = new ColorMat(testMat, controllerMaster);
-
-    testMatMain.append(testMat);
-    testMatMain.append(controllerMaster);
-
-    cw.append(testMatMain);
-    // characters.push(new ColorMat(document.querySelector('.character_wrapper'), document.querySelector('.character_adder')));
 });
 
 // Print button

@@ -70,7 +70,7 @@ body {
     flex-flow: column;
     align-items: start;
     gap: 8px;
-    margin: 16px;
+    margin: 16px 16px 150px;
     
     @media (width <= 768px) {
         display: flex;
@@ -80,8 +80,35 @@ body {
 
 .thumbnail {
     display: inline-block;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.char__controller div.mat_palette {
+    display: flex;
+    gap: 4px;
+    flex-flow: wrap;
+    border: #dd4b4b 1px solid;
+    border-radius: 8px;
+    padding: 8px 24px 8px 8px;
+    width: calc(100% - 32px);
+    height: 0.1px;
+    transform: scaleY(0.01); 
+    pointer-events: none;
+    transform-origin: center top;
+    opacity: 0;
+    transition: 0.4s;;
+
+}
+
+.char__controller .expanded  div.mat_palette {
+    height: auto;
+    transform: scaleY(1); 
+    pointer-events: all;
+    opacity: 1;
 }
 
 .controlGroupInner {
@@ -116,13 +143,15 @@ body {
 .char__controller .plusBtn {
     position: absolute;
     width: 32px;
-    height: 32px;
+    height: 0;
+    line-height: 0;
     border-radius: 50%;
-    padding: 0;
+    padding: 16px 0;
     margin: 0;
-    bottom :-0;
-    right: 0;
-    background-color: #909090;
+    bottom :8px;
+    right: 24px;
+    background-color: #f3f3f3;
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
     z-index: 8;
     cursor: pointer;
 }
@@ -144,6 +173,10 @@ body {
     padding: 4px 16px;
     border-radius: 8px;
     border: 1px solid #CCCCCC;
+}
+
+.char__controller > div.expanded {
+    z-index: 10;
 }
 
 .char__controller > div:before {
@@ -203,13 +236,11 @@ body {
     width: calc(100% - 120px);
 }
 
-.char__controller div.mat_palette {
+.controlGroupInner p {
     display: flex;
-    gap: 4px;
-    flex-flow: wrap;
-    border: #dd4b4b 1px solid;
-    border-radius: 8px;
+    justify-content: space-between;
 }
+
 
 .char__controller div.colorGroup {
     position: relative;
@@ -238,7 +269,6 @@ body {
     transition: 0.4s;
     overflow-x: auto;
 }
-
 
 .character_adder__inner {
     display: flex;
