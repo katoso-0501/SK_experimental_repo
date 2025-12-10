@@ -132,7 +132,7 @@
     mask: none !important;
     width: 20px !important;
     height: 20px !important;
-    left: 0;
+    left: 8px !important;
 }
 
 .testingPurpose .jimmy .char__tops {

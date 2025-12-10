@@ -162,19 +162,23 @@ class ColorChip {
         this.chipID = chipID;
         this.layer = document.createElement('div');
         // this.layer.classList.add('colorChip');
-        this.layer.style.width = "110%";
-        this.layer.style.height = "110%";
+        this.layer.style.width = "200%";
+        this.layer.style.height = "200%";
         this.layer.style.position = "absolute";
-        this.layer.style.top = "-5%";
-        this.layer.style.left = "-5%";
+        this.layer.style.top = "-50%";
+        this.layer.style.left = "-50%";
         this.controllerMaster = controllerMaster;
-
-        this.deleteBtn = document.createElement('div');
-        this.deleteBtn.textContent="DELETE";
         
         this.thumbnail = document.createElement('div');
         this.thumbnail.style.backgroundColor = "#000";
         this.thumbnail.classList.add('thumbnail');
+
+        this.thumbnailInner = document.createElement('div');
+        this.thumbnailInner.style.backgroundColor = "#000";
+        this.thumbnailInner.classList.add('thumbnail__inner');
+
+        this.thumbnail.append(this.thumbnailInner);
+
         this.controller = undefined;
         this.controllerInner = undefined;
 
@@ -230,12 +234,12 @@ class ColorChip {
         for (let i = 0;i <= 2; i++){
             controlParts[i][1].addEventListener('change', ()=>{
                 this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-                this.HSLupdate(this.thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+                this.HSLupdate(this.thumbnailInner,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
             });
         }
         controlParts[3][1].addEventListener('change', m=>{
             this.layer.style.opacity = controlParts[3][1].value / 100;
-            this.thumbnail.style.opacity = controlParts[3][1].value / 100;
+            this.thumbnailInner.style.opacity = controlParts[3][1].value / 100;
         });
         
         controlParts.forEach((part, i) => {
@@ -292,7 +296,7 @@ class ColorChip {
 
         this.controllerMaster.append(controlGroup);
         this.HSLupdate(
-            this.thumbnail,
+            this.thumbnailInner,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
         );
         this.HSLupdate(
@@ -329,6 +333,8 @@ class ColorChip {
             ["Checkboard", "checkboard"],
             ["Sprite", "sprite"],
             ["Heart", "heart"],
+            ["Star", "star"],
+            ["Jungle", "jungle"],
         ];
 
         const patternController = document.createElement('div');
@@ -347,7 +353,7 @@ class ColorChip {
             anchor.addEventListener('click', m => {
                 m.preventDefault();
                 this.layer.dataset.patternName = pattern[1];
-        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
         this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
             });
             patternController.append(anchor);
@@ -375,7 +381,7 @@ class ColorChip {
         controlParts[0][1].max= "128";
         controlParts[0][1].value= "32";
         controlParts[0][1].addEventListener('change', m=>{
-        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
         this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
 
@@ -385,7 +391,7 @@ class ColorChip {
         controlParts[1][1].max= "100";
         controlParts[1][1].value= "100";
         controlParts[1][1].addEventListener('change', m=>{
-        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
         this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
 
@@ -395,7 +401,7 @@ class ColorChip {
         controlParts[3][1].max= "360";
         controlParts[3][1].value= "0";
         controlParts[3][1].addEventListener('change', m=>{
-        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
         this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
         
@@ -437,7 +443,7 @@ class ColorChip {
         controlGroup.append(controlGroupInner);
         // controlGroupInner.append(controlParts[2][1]);
         
-        this.patternUpdate(this.thumbnail, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
+        this.patternUpdate(this.thumbnailInner, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
         this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
 
         this.controllerMaster.append(controlGroup);
@@ -448,20 +454,19 @@ class ColorChip {
         this.layer.remove();
         this.controller.remove();
     }
+
     updateThisChipPos (deletedPos, array) {
         if(this.chipID > deletedPos) {
             this.chipID--;
         }
     }
 
-    identifyWhatYourColor () {
-        return "I'm a color chip, " + " with ID No." + this.chipID +".";
-    }
-
     addDeleteTrigger(array) {
-        array.forEach(f=>{console.log(f.identifyWhatYourColor());});
-        this.controllerInner.append(this.deleteBtn);
-        this.deleteBtn.addEventListener('click', ()=>{
+        const deleteBtn = document.createElement('div');
+        deleteBtn.classList.add('deteleBtn');
+        deleteBtn.textContent="DELETE";
+        this.controllerInner.append(deleteBtn);
+        deleteBtn.addEventListener('click', ()=>{
             this.deleteColorChip();
             array.splice(this.chipID, 1);
             array.forEach(f=>{f.updateThisChipPos(this.chipID, array);});
@@ -478,6 +483,7 @@ class ColorMat {
         this.mat.classList.add('mat');
         this.mat.style.width = "100%";
         this.mat.style.height = "100%";
+        this.mat.style.overflow = "hidden";
         this.mat.style.position = "relative";
         
         this.controllerMaster = controllerMaster;
