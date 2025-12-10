@@ -158,18 +158,27 @@ class Rolf extends Jonny {
 // Color Managements
 //  ______________________
 class ColorChip {
-    constructor(initialColor, colorMode, mat, controllerMaster) {
+    constructor(initialColor, colorMode, mat, controllerMaster, chipID) {
+        this.chipID = chipID;
         this.layer = document.createElement('div');
         // this.layer.classList.add('colorChip');
-        this.layer.style.width = "100%";
-        this.layer.style.height = "100%";
+        this.layer.style.width = "110%";
+        this.layer.style.height = "110%";
         this.layer.style.position = "absolute";
-        this.layer.style.top = "0";
-        this.layer.style.left = "0";
+        this.layer.style.top = "-5%";
+        this.layer.style.left = "-5%";
         this.controllerMaster = controllerMaster;
 
+        this.deleteBtn = document.createElement('div');
+        this.deleteBtn.textContent="DELETE";
+        
+        this.thumbnail = document.createElement('div');
+        this.thumbnail.style.backgroundColor = "#000";
+        this.thumbnail.classList.add('thumbnail');
+        this.controller = undefined;
+        this.controllerInner = undefined;
+
         if(colorMode === "simple") {
-            // this.layer.style.backgroundColor = initialColor;
             this.createSimpleColorControls();
         } else if(colorMode === "pattern") {
             this.createPatternControls();
@@ -180,32 +189,31 @@ class ColorChip {
         tgt.style.background = `hsl(${h},${s}%,${l}%)`;
     }
 
-    patternUpdate (tgt, pattern, scale, opacity, blendmode) {
-        console.log(`The pattern will shown as follows: ${tgt}, ${pattern}, ${scale}px, ${opacity}, ${blendmode}`);
+    patternUpdate (tgt, pattern, scale, opacity, blendmode, rotation = 0) {
         tgt.style.backgroundImage = "url(./assets/images/pattern-" + pattern + ".png)";    
         tgt.style.backgroundSize = scale + "px";
         tgt.style.opacity = opacity / 100;
+        tgt.style.transform = "rotate(" + rotation + "deg)";
         tgt.style.backgroundBlendMode = blendmode;
     }
 
     createSimpleColorControls () {
         const controlGroup = document.createElement('div');
         controlGroup.classList.add('colorGroup');
+        this.controller = controlGroup;
 
         const controlGroupInner = document.createElement('div');
         controlGroupInner.classList.add('controlGroupInner');
+        this.controllerInner = controlGroupInner;
         
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
 
-        const thumbnail = document.createElement('div');
-        thumbnail.classList.add('thumbnail');
-
-        thumbnail.addEventListener('click', ()=>{
+        this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
         })
         
-        controllerPanel.append(thumbnail);
+        controllerPanel.append(this.thumbnail);
 
         controllerLabel.addEventListener('click', ()=>{
             controllerPanel.classList.toggle('expanded');
@@ -222,12 +230,12 @@ class ColorChip {
         for (let i = 0;i <= 2; i++){
             controlParts[i][1].addEventListener('change', ()=>{
                 this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-                this.HSLupdate(thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+                this.HSLupdate(this.thumbnail,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
             });
         }
         controlParts[3][1].addEventListener('change', m=>{
             this.layer.style.opacity = controlParts[3][1].value / 100;
-            thumbnail.style.opacity = controlParts[3][1].value / 100;
+            this.thumbnail.style.opacity = controlParts[3][1].value / 100;
         });
         
         controlParts.forEach((part, i) => {
@@ -278,13 +286,13 @@ class ColorChip {
         });
 
         controlGroup.innerHTML = '';
-        controlGroup.append(thumbnail);
+        controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
 
         this.controllerMaster.append(controlGroup);
         this.HSLupdate(
-            thumbnail,
+            this.thumbnail,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
         );
         this.HSLupdate(
@@ -296,20 +304,18 @@ class ColorChip {
     createPatternControls() {
         const controlGroup = document.createElement('div');
         controlGroup.classList.add('colorGroup');
+        this.controller = controlGroup;
 
         const controlGroupInner = document.createElement('div');
         controlGroupInner.classList.add('controlGroupInner');
+        this.controllerInner = controlGroupInner;
         
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
 
-        const thumbnail = document.createElement('div');
-        thumbnail.style.backgroundColor = "#000";
-        thumbnail.classList.add('thumbnail');
+        controllerPanel.append(this.thumbnail);
 
-        controllerPanel.append(thumbnail);
-
-        thumbnail.addEventListener('click', ()=>{
+        this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
         });
         
@@ -321,16 +327,8 @@ class ColorChip {
         const patterns = [
             ["Polka Dot", "polka-dot"],
             ["Checkboard", "checkboard"],
-            // ["Stripes", "stripes"],
-            // ["Grid", "grid"],
-            // ["Crosshatch", "crosshatch"],
-            // ["Dots", "dots"],
-            // ["Hatch", "hatch"],
-            // ["Oil", "oil"],
-            // ["Sphere", "sphere"],
-            // ["Tile", "tile"],
-            // ["Trellis", "trellis"],
-            // ["Zigzag", "zigzag"]
+            ["Sprite", "sprite"],
+            ["Heart", "heart"],
         ];
 
         const patternController = document.createElement('div');
@@ -349,8 +347,8 @@ class ColorChip {
             anchor.addEventListener('click', m => {
                 m.preventDefault();
                 this.layer.dataset.patternName = pattern[1];
-                this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none");
-                this.patternUpdate(this.layer, this.layer.dataset.patternName, 16, 100, controlParts[2][1].value);
+        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
             });
             patternController.append(anchor);
         });
@@ -361,6 +359,7 @@ class ColorChip {
             ["Scale",document.createElement('input')],
             ["Opacity", document.createElement('input')],
             ["Blend Mode", document.createElement('select')],
+            ["Rotation", document.createElement('input')],
         ];
 
         controlParts.forEach((part, i) => {
@@ -376,8 +375,8 @@ class ColorChip {
         controlParts[0][1].max= "128";
         controlParts[0][1].value= "32";
         controlParts[0][1].addEventListener('change', m=>{
-        this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value,  "none");
-        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value);
+        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
 
         // Opacity Controls
@@ -386,8 +385,18 @@ class ColorChip {
         controlParts[1][1].max= "100";
         controlParts[1][1].value= "100";
         controlParts[1][1].addEventListener('change', m=>{
-        this.patternUpdate(thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none");
-        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value);
+        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
+        });
+
+        // Rotation Controls
+        controlParts[3][1].type= "range";
+        controlParts[3][1].min= "0";
+        controlParts[3][1].max= "360";
+        controlParts[3][1].value= "0";
+        controlParts[3][1].addEventListener('change', m=>{
+        this.patternUpdate(this.thumbnail,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
         
         /* Define blend modes */
@@ -423,15 +432,40 @@ class ColorChip {
         });
 
         controlGroup.innerHTML = '';
-        controlGroup.append(thumbnail);
+        controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
-        controlGroupInner.append(controlParts[2][1]);
+        // controlGroupInner.append(controlParts[2][1]);
         
-        this.patternUpdate(thumbnail, "polka-dot", 16, 100, controlParts[2][1].value);
-        this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value);
+        this.patternUpdate(this.thumbnail, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
+        this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
 
         this.controllerMaster.append(controlGroup);
+    }
+
+    deleteColorChip () {
+        this.thumbnail.remove();
+        this.layer.remove();
+        this.controller.remove();
+    }
+    updateThisChipPos (deletedPos, array) {
+        if(this.chipID > deletedPos) {
+            this.chipID--;
+        }
+    }
+
+    identifyWhatYourColor () {
+        return "I'm a color chip, " + " with ID No." + this.chipID +".";
+    }
+
+    addDeleteTrigger(array) {
+        array.forEach(f=>{console.log(f.identifyWhatYourColor());});
+        this.controllerInner.append(this.deleteBtn);
+        this.deleteBtn.addEventListener('click', ()=>{
+            this.deleteColorChip();
+            array.splice(this.chipID, 1);
+            array.forEach(f=>{f.updateThisChipPos(this.chipID, array);});
+        });
     }
 }
 
@@ -480,15 +514,17 @@ class ColorMat {
         addTo.append(this.matMain);
     }
     
-    addColorLayer (color = "#FFFFFF", mode = "simple") {
+    addColorLayer (color = "#FFFFFF") {
+        this.layers.push(new ColorChip(color, "simple", this.mat, this.palette, this.layers.length));
+        this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
-        this.layers.push(new ColorChip(color, mode, this.mat, this.palette));
         this.reRender();
     }
 
     addPattern () {
+        this.layers.push(new ColorChip("#000000", "pattern", this.mat, this.palette, this.layers.length));
+        this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
-        this.layers.push(new ColorChip("#000000", "pattern", this.mat, this.palette));
         this.reRender();
     }
     
