@@ -196,6 +196,7 @@ class ColorChip {
     patternUpdate (tgt, pattern, scale, opacity, blendmode, rotation = 0) {
         tgt.style.backgroundImage = "url(./assets/images/pattern-" + pattern + ".png)";    
         tgt.style.backgroundSize = scale + "px";
+        tgt.style.backgroundPosition = "center";
         tgt.style.opacity = opacity / 100;
         tgt.style.transform = "rotate(" + rotation + "deg)";
         tgt.style.backgroundBlendMode = blendmode;
@@ -335,13 +336,14 @@ class ColorChip {
             ["Heart", "heart"],
             ["Star", "star"],
             ["Jungle", "jungle"],
+            ["Crosshair", "crosshair"],
         ];
 
         const patternController = document.createElement('div');
         patterns.forEach(pattern => {
             const anchor = document.createElement('a');
             anchor.href = '#';
-            anchor.style.background = "url(./assets/images/pattern-" + pattern[1] + ".png), #000000";
+            anchor.style.background = "url(./assets/images/pattern-" + pattern[1] + ".png) center center, #000000";
             anchor.style.display ="inline-block";
             anchor.style.width = "32px";
             anchor.style.height = "32px";
