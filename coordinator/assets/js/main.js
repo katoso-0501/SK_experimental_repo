@@ -216,7 +216,17 @@ class ColorChip {
 
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
-        })
+
+            /* Adjust controller's position when it is on the bottom of screen */
+            const top = controlGroupInner.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
+
+            if(top > (screenHeight - 240)){
+                controlGroupInner.classList.add('onBottom');
+            }else {
+                controlGroupInner.classList.remove('onBottom');
+            }
+        });
         
         controllerPanel.append(this.thumbnail);
 
@@ -322,6 +332,16 @@ class ColorChip {
 
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
+            
+            /* Adjust controller's position when it is on the bottom of screen */
+            const top = controlGroupInner.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
+
+            if(top > (screenHeight - 240)){
+                controlGroupInner.classList.add('onBottom');
+            }else {
+                controlGroupInner.classList.remove('onBottom');
+            }
         });
         
         controllerLabel.addEventListener('click', ()=>{
@@ -355,8 +375,8 @@ class ColorChip {
             anchor.addEventListener('click', m => {
                 m.preventDefault();
                 this.layer.dataset.patternName = pattern[1];
-        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
-        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
+                this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+                this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
             });
             patternController.append(anchor);
         });
@@ -372,7 +392,6 @@ class ColorChip {
 
         controlParts.forEach((part, i) => {
             const paragraph = document.createElement('p');
-            
             paragraph.append(part[0],part[1]);
             controllerPanel.append(paragraph); 
         });

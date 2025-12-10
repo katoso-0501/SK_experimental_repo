@@ -138,6 +138,12 @@ body {
     height: 0.1px;
 }
 
+
+.controlGroupInner.onBottom {
+    top:initial;
+    bottom: 40px;
+}
+
 .controlGroupInner.expanded {
     transform: scaleY(1);
     opacity: 1;
