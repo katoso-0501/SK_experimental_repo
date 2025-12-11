@@ -140,7 +140,8 @@ body {
 
 .controlGroupInner.onBottom {
     top:initial;
-    bottom: 40px;
+    transform-origin: center bottom;
+    bottom: 60px;
 }
 
 .controlGroupInner.expanded {

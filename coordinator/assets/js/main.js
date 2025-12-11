@@ -221,7 +221,7 @@ class ColorChip {
             const top = controlGroupInner.getBoundingClientRect().top;
             const screenHeight = window.innerHeight;
 
-            if(top > (screenHeight - 240)){
+            if(top > (screenHeight - 350)){
                 controlGroupInner.classList.add('onBottom');
             }else {
                 controlGroupInner.classList.remove('onBottom');
@@ -337,7 +337,7 @@ class ColorChip {
             const top = controlGroupInner.getBoundingClientRect().top;
             const screenHeight = window.innerHeight;
 
-            if(top > (screenHeight - 240)){
+            if(top > (screenHeight - 350)){
                 controlGroupInner.classList.add('onBottom');
             }else {
                 controlGroupInner.classList.remove('onBottom');
@@ -357,6 +357,9 @@ class ColorChip {
             ["Star", "star"],
             ["Jungle", "jungle"],
             ["Crosshair", "crosshair"],
+            ["Traditional A", "traditional-a"],
+            ["Hotei Pseudo", "hotei"],
+            ["Geometry", "geometry"],
         ];
 
         const patternController = document.createElement('div');
