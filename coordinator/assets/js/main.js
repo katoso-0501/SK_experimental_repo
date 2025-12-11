@@ -595,6 +595,9 @@ document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
 // Print button
 document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
 
+/* ________________________
+Theatre Mode
+_________________________*/
 // Theatre mode button
 document.querySelector('.theatreBtn').addEventListener('click', b=>{
     b.preventDefault();
@@ -607,10 +610,12 @@ document.querySelector('.theatre_background_setter a').addEventListener('click',
     document.querySelector('.theatre_background_setter').classList.toggle('expanded');
 });
 
+
 const backgroundParts = [
     '.background_01',
     '.background_02',
     '.background_03',
+    '.background_04',
 ]
 
 document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
@@ -620,6 +625,7 @@ document.querySelectorAll('.theatre_background_setter input').forEach((radio, in
         
         wipeAllSnowdrops ();
         wipeAllColorballs ();
+        wipeAllHeartPop ();
             
         backgroundParts.forEach(bgs=>{
             document.querySelector(bgs).classList.remove('expanded');
@@ -636,6 +642,10 @@ document.getElementById('theatre_background_snowfall').addEventListener('click',
 
 document.getElementById('theatre_background_spotlight').addEventListener('click',function(){
     initiateColorball();
+});
+
+document.getElementById('theatre_background_heartfullyheart').addEventListener('click',function(){
+    initiateHeartPop();
 });
 
 /* Snowdrop-Related */
@@ -737,4 +747,59 @@ function wipeAllColorballs () {
 }
 
 
+/* HeartRipples-Related */
+let heartPopStats = [];
+function initiateHeartPop () {
+    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('heartSurrounded')});
+    for(let i = 0; i < 12; i++) {
+        const heartItem = document.createElement('div');
+        heartItem.classList.add('heartItem');
+        const heartItemInner = document.createElement('div');
+        heartItemInner.classList.add('heartItemInner');
+        heartItem.append(heartItemInner);
+        heartItem.style.left = (Math.random() * (window.innerWidth) ) + "px";
+        heartItem.style.top = Math.random() * 600 + (window.innerHeight / 2) + "px";
+        heartItem.style.opacity = 0.01;
+        heartItem.style.scale = Math.random()*1.5 + 0.1;
+        heartPopStats.push({
+            velocityY: Math.random() * 2 + 0.2,
+            // opacity: Math.random() + 0.65,
+            opacity: 0.01,
+            opacityVel: 0.05,
+        });
+       document.querySelector('.background_04').append(heartItem);
+    }
+    moveHeartPop();
+}
 
+function moveHeartPop () {
+    heartPopStats.forEach((stat, i)=>{
+        const heartItem = document.querySelectorAll('.heartItem')[i];
+        heartItem.style.top = (parseFloat(heartItem.style.top) - stat.velocityY) + "px";
+        stat.opacity += stat.opacityVel;
+        heartItem.style.opacity = stat.opacity;
+
+        if(stat.opacity>=1){
+            stat.opacityVel = ( Math.random()*0.01 + 0.001) * -1;
+        }
+        
+        if(heartItem.offsetTop < -30 || stat.opacity <= 0) {
+            heartItem.style.top = Math.random() * 600 + (window.innerHeight / 2) + "px";
+            heartItem.style.left = (Math.random() * (window.innerWidth) ) + "px";
+            stat.velocityY = Math.random() * 2 + 0.2;
+            stat.opacity = 0.01;
+            stat.opacityVel = 0.05;
+            heartItem.style.scale = Math.random()*1.5 + 0.1;
+        }
+    });
+
+    if(heartPopStats.length > 0 && document.visibilityState === 'visible') {
+        setTimeout(moveHeartPop,20);
+    }
+}
+
+function wipeAllHeartPop () {
+    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.remove('heartSurrounded')});
+    document.querySelectorAll('.heartItem').forEach(f=>f.remove());
+    heartPopStats = [];
+}
