@@ -537,6 +537,16 @@ body {
 }
 
 
+.heartItem.whiteHeart .heartItemInner{
+    border-top-color: #FFEDEF;
+}
+
+.heartItem.whiteHeart .heartItemInner:before, 
+.heartItem.whiteHeart .heartItemInner:after {
+    background: #FFEDEF;
+}
+
+
 /* Some properties are not shown in Theatre Mode */
 @media print {
     .char__controller,

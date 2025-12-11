@@ -751,7 +751,7 @@ function wipeAllColorballs () {
 let heartPopStats = [];
 function initiateHeartPop () {
     document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('heartSurrounded')});
-    for(let i = 0; i < 12; i++) {
+    for(let i = 0; i < 20; i++) {
         const heartItem = document.createElement('div');
         heartItem.classList.add('heartItem');
         const heartItemInner = document.createElement('div');
@@ -760,8 +760,13 @@ function initiateHeartPop () {
         heartItem.style.left = (Math.random() * (window.innerWidth) ) + "px";
         heartItem.style.top = Math.random() * 600 + (window.innerHeight / 2) + "px";
         heartItem.style.opacity = 0.01;
-        heartItem.style.scale = Math.random()*1.5 + 0.1;
+        heartItem.style.scale = Math.random()*2 + 0.1;
         heartPopStats.push({
+            skewX : 0,
+            skewY : 0,
+            skewXVelocity : 0,
+            skewYVelocity : 0,
+            velocityX: 0,
             velocityY: Math.random() * 2 + 0.2,
             // opacity: Math.random() + 0.65,
             opacity: 0.01,
@@ -769,27 +774,62 @@ function initiateHeartPop () {
         });
        document.querySelector('.background_04').append(heartItem);
     }
+    heartPopStats.forEach((stat,i)=>{
+        const heartItem = document.querySelectorAll('.heartItem')[i];
+        if(Math.random()*10 <= 1) {
+            heartItem.classList.add('whiteHeart');
+            heartItem.style.scale = Math.random()*0.7 + 0.1;
+            heartItem.style.left = (Math.random()*2 <= 1 ? 0 : window.innerWidth ) + "px";
+            stat.velocityX += Math.random()*12.5;
+            stat.velocityY = Math.random()*20 + 5;
+            stat.opacityVel *= 2;
+            stat.skewXVelocity = Math.random()*1 - 1;
+            stat.skewYVelocity = Math.random()*1 - 1;
+        }
+    });
     moveHeartPop();
 }
 
 function moveHeartPop () {
     heartPopStats.forEach((stat, i)=>{
         const heartItem = document.querySelectorAll('.heartItem')[i];
+        heartItem.style.left = (parseFloat(heartItem.style.left) + stat.velocityX) + "px";
         heartItem.style.top = (parseFloat(heartItem.style.top) - stat.velocityY) + "px";
         stat.opacity += stat.opacityVel;
         heartItem.style.opacity = stat.opacity;
+        
+        stat.skewX += stat.skewXVelocity;
+        stat.skewY += stat.skewYVelocity;
+        heartItem.style.transform = "skew(" + stat.skewX + "deg, " + stat.skewY + "deg)";
 
         if(stat.opacity>=1){
             stat.opacityVel = ( Math.random()*0.01 + 0.001) * -1;
         }
         
         if(heartItem.offsetTop < -30 || stat.opacity <= 0) {
+            heartItem.classList.remove('whiteHeart');
             heartItem.style.top = Math.random() * 600 + (window.innerHeight / 2) + "px";
             heartItem.style.left = (Math.random() * (window.innerWidth) ) + "px";
+            stat.skewX = 0;
+            stat.skewY = 0;
+            stat.skewXVelocity = 0;
+            stat.skewYVelocity = 0;
+            stat.velocityX = 0;
             stat.velocityY = Math.random() * 2 + 0.2;
             stat.opacity = 0.01;
             stat.opacityVel = 0.05;
-            heartItem.style.scale = Math.random()*1.5 + 0.1;
+            heartItem.style.scale = Math.random()*2 + 0.1;
+            
+            if(Math.random()*10 <= 1) {
+            heartItem.classList.add('whiteHeart');
+            heartItem.style.scale = Math.random()*0.7 + 0.1;
+            heartItem.style.left = (Math.random()*2 <= 1 ? 0 : window.innerWidth ) + "px";
+            stat.velocityX += Math.random()*12.5;
+            stat.velocityY = Math.random()*20 + 5;
+            stat.opacityVel *= 2;
+            stat.skewXVelocity = Math.random()*1 - 1;
+            stat.skewYVelocity = Math.random()*1 - 1;
+            }
         }
     });
 
