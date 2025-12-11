@@ -360,6 +360,9 @@ class ColorChip {
             ["Traditional A", "traditional-a"],
             ["Hotei Pseudo", "hotei"],
             ["Geometry", "geometry"],
+            ["Butterfly", "butterfly"],
+            ["Cheetah", "cheetah"],
+            ["Pictgram A", "pictgram-a"],
         ];
 
         const patternController = document.createElement('div');
