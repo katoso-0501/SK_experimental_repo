@@ -151,6 +151,22 @@ class Rolf extends Jonny {
         this.createColormat('Grass','char__grass');
     }
 }
+
+class Kevin extends Jonny {
+    constructor() {
+        super();
+        this.img.src = "assets/images/kevin_original.webp";
+        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.add('kevin');
+    }
+    
+    loadIndependentParts () {
+        this.createColormat('Tops','char__tops');
+        this.createColormat('Trouser','char__trouser');
+        this.createColormat('Cap','char__cap');
+    }
+}
+
 //  ______________________
 // Character classes end
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -596,6 +612,10 @@ document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
 document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
     b.preventDefault();
     characters.push(new Rolf());
+});
+document.querySelector('.character_adder__kevin').addEventListener('click', b=>{
+    b.preventDefault();
+    characters.push(new Kevin());
 });
 
 // Print button
