@@ -677,7 +677,7 @@ document.getElementById('theatre_background_heartfullyheart').addEventListener('
 /* Snowdrop-Related */
 let snowDropStats = [];
 function initiateSnowdrop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('snowCoated')});
     for(let i = 0; i < 50; i++) {
         const snowDrop = document.createElement('div');
         snowDrop.classList.add('snowDrop');
@@ -717,7 +717,7 @@ function moveSnowdrop () {
 }
 
 function wipeAllSnowdrops () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.remove('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('snowCoated')});
     document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
     snowDropStats = [];
 }
@@ -725,7 +725,7 @@ function wipeAllSnowdrops () {
 /* Colorball-Related */
 let colorballStats = [];
 function initiateColorball() {
-    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('withSpotlight')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('withSpotlight')});
     for(let i = 0; i < 15; i++) {
         const colorBall = document.createElement('div');
         colorBall.classList.add('colorBall');
@@ -767,7 +767,7 @@ function moveColorball () {
 }
 
 function wipeAllColorballs () {
-    document.querySelectorAll('.jonny, .jimmy,.rolf').forEach(chars=>{chars.classList.remove('withSpotlight')});
+    document.querySelectorAll('.jonny, .jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('withSpotlight')});
     document.querySelectorAll('.colorBall').forEach(f=>f.remove());
     colorballStats = [];
 }
@@ -865,7 +865,7 @@ function moveHeartPop () {
 }
 
 function wipeAllHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.remove('heartSurrounded')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('heartSurrounded')});
     document.querySelectorAll('.heartItem').forEach(f=>f.remove());
     heartPopStats = [];
 }
