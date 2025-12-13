@@ -205,8 +205,8 @@
     <div class="embed_body">
         <div class="movie_adder">
             <a href="#" class="add_movie" data-ytid="SAolvci7SeA">ANA</a>
-            <a href="#" class="add_movie" data-ytid="SAolvci7SeA">TG</a>
-            <a href="#" class="add_movie" data-ytid="SAolvci7SeA">PAN AM</a>
+            <a href="#" class="add_movie" data-ytid="23bIBuPYyxA">TG</a>
+            <a href="#" class="add_movie" data-ytid="m3zj-oUm7vc">PAN AM</a>
         </div>
     </div>
 
@@ -224,7 +224,7 @@
         document.querySelectorAll('.add_movie').forEach(adder=>{
             adder.addEventListener('click',x=>{
                 x.preventDefault();
-               createMovieEmbed( adder.dataset.ytid);
+               createMovieEmbed(adder.dataset.ytid);
             });
         });
     
