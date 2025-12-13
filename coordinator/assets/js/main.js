@@ -776,7 +776,7 @@ function wipeAllColorballs () {
 /* HeartRipples-Related */
 let heartPopStats = [];
 function initiateHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf').forEach(chars=>{chars.classList.add('heartSurrounded')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('heartSurrounded')});
     for(let i = 0; i < 20; i++) {
         const heartItem = document.createElement('div');
         heartItem.classList.add('heartItem');

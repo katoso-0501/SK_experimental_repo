@@ -172,12 +172,30 @@
             background-color: #202020;
         }
 
-
         .lock_remaining {
             position: fixed;
-            bottom: 24px;
-            right: 10px;
+            bottom: 120px;
+            display: flex;
+            
+            left: 0;
+            width: 100%;
+            justify-content: center;
+            gap: 15px;
+            letter-spacing: 20px;
             font-size: 12px;
+        }
+        
+        .lock_potch {
+            display: inline-flex;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #2008FF;
+            background-color: #ffffff;
+        }
+        
+        .lock_potch.active {
+            background-color: #2008FF;;
         }
 
     </style>
@@ -185,45 +203,61 @@
 <body>
     <div class="swipeRefreshPreventer"></div>
     <div class="embed_body">
-        <!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/SAolvci7SeA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+        <div class="movie_adder">
+            <a href="#" class="add_movie" data-ytid="SAolvci7SeA">ANA</a>
+            <a href="#" class="add_movie" data-ytid="SAolvci7SeA">TG</a>
+            <a href="#" class="add_movie" data-ytid="SAolvci7SeA">PAN AM</a>
+        </div>
     </div>
+
 
     <a href="#" class="lock_button">
         <span>Lock</span>
     </a>
     <span class="lock_remaining">&nbsp;</span>
-    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/SAolvci7SeA?si=e623fxZ7XepdoEo_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
     <script>
         let lockState = 0;
         let unlockPushRemaining = 3;
-        const videoContainer = document.createElement('div');
-        videoContainer.classList.add('video_container');
 
-        createMovieEmbed('https://www.youtube.com/embed/SAolvci7SeA');
-        
+        // createMovieEmbed('SAolvci7SeA');
+
+        document.querySelectorAll('.add_movie').forEach(adder=>{
+            adder.addEventListener('click',x=>{
+                x.preventDefault();
+               createMovieEmbed( adder.dataset.ytid);
+            });
+        });
+    
+        let timeoutID;
         const lockButton = document.querySelector('.lock_button');
         lockButton.addEventListener('click', () => {
+            const lockRemaining = document.querySelector('.lock_remaining');
             const embedBody = document.querySelector('.embed_body');
-            let t = "";
-            for (let i = 1; i < unlockPushRemaining; i++) {
-                t += ".";
-            }
+            lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
             if (lockState == 0) {
                 embedBody.classList.add('locked');
                 lockButton.classList.add('locked');
                 lockState = 1;
                 unlockPushRemaining = 3;
-                document.querySelector('.lock_remaining').textContent = "...";
+                lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
             } else {
                 if(unlockPushRemaining>0) {
+                    clearTimeout(timeoutID);
+                    timeoutID=setTimeout(()=>{
+                        unlockPushRemaining=3;
+                lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
+                    },4000);
                     unlockPushRemaining--;
+                    for (let i = 0; i <= (2 - unlockPushRemaining); i++) {
+                        document.querySelectorAll('.lock_potch')[i].classList.add('active');
+                    }
                 }
-                document.querySelector('.lock_remaining').textContent = t;
                 if(unlockPushRemaining===0) {
+                    clearTimeout(timeoutID);
                     embedBody.classList.remove('locked');
                     lockButton.classList.remove('locked');
                     lockState = 0;
-                    document.querySelector('.lock_remaining').textContent = '';
+                    lockRemaining.innerHTML = "";
                 }
             }
         });
@@ -240,11 +274,14 @@
             }
         });
         
-        function createMovieEmbed(url) {
+        function createMovieEmbed(movieID) {
+        const videoContainer = document.createElement('div');
+        videoContainer.classList.add('video_container');    
+            const fullURL = "https://www.youtube.com/embed/"+movieID+"?enablejsapi=1";
             const video = document.createElement('iframe');
             video.setAttribute('width', '200%');
             video.setAttribute('height', '630');
-            video.setAttribute('src', url);
+            video.setAttribute('src', fullURL);
             video.setAttribute('title', 'YouTube video player');
             video.setAttribute('frameborder', '0');
             video.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
@@ -252,6 +289,17 @@
             video.setAttribute('allowfullscreen', '');
 
             videoContainer.appendChild(video);
+
+            const stopBtn = document.createElement('div');
+            stopBtn.textContent="Stop";
+            stopBtn.style.position="absolute";
+            stopBtn.style.left="0";
+            stopBtn.style.top="0";
+
+
+            stopBtn.addEventListener('click', ()=>{
+                video.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*');
+            });
 
             const closeBtn = document.createElement('div');
             closeBtn.classList.add('close_btn');
@@ -263,6 +311,7 @@
                 }, 1000);
             })
             videoContainer.appendChild(closeBtn);
+            videoContainer.appendChild(stopBtn);
 
             const embedBody = document.querySelector('.embed_body');
             embedBody.appendChild(videoContainer);
