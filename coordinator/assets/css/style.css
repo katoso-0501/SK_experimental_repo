@@ -456,7 +456,8 @@ body {
 .theatreMode .jonny.snowCoated,
 .theatreMode .jimmy.snowCoated,
 .theatreMode .rolf.snowCoated,
-.theatreMode .kevin.snowCoated  {
+.theatreMode .kevin.snowCoated,
+.theatreMode .ed.snowCoated  {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
@@ -465,10 +466,12 @@ body {
 .theatreMode .jimmy.withSpotlight,
 .theatreMode .rolf.withSpotlight,
 .theatreMode .kevin.withSpotlight,
+.theatreMode .ed.withSpotlight,
 .theatreMode .jonny.heartSurrounded,
 .theatreMode .jimmy.heartSurrounded,
 .theatreMode .rolf.heartSurrounded, 
-.theatreMode .kevin.heartSurrounded {
+.theatreMode .kevin.heartSurrounded, 
+.theatreMode .ed.heartSurrounded {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }

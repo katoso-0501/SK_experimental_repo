@@ -167,6 +167,23 @@ class Kevin extends Jonny {
     }
 }
 
+class Ed extends Jonny {
+    constructor() {
+        super();
+        this.img.src = "assets/images/ed_original.webp";
+        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.add('ed');
+    }
+    
+    loadIndependentParts () {
+        this.createColormat('OuterShirt','char__outer_shirt');
+        this.createColormat('InnerShirt','char__inner_shirt');
+        this.createColormat('Trouser','char__trouser');
+        this.createColormat('Socks','char__socks');
+        this.createColormat('Shoes','char__shoes');
+    }
+}
+
 //  ______________________
 // Character classes end
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -617,6 +634,10 @@ document.querySelector('.character_adder__kevin').addEventListener('click', b=>{
     b.preventDefault();
     characters.push(new Kevin());
 });
+document.querySelector('.character_adder__ed').addEventListener('click', b=>{
+    b.preventDefault();
+    characters.push(new Ed());
+});
 
 // Print button
 document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
@@ -677,7 +698,7 @@ document.getElementById('theatre_background_heartfullyheart').addEventListener('
 /* Snowdrop-Related */
 let snowDropStats = [];
 function initiateSnowdrop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('snowCoated')});
     for(let i = 0; i < 50; i++) {
         const snowDrop = document.createElement('div');
         snowDrop.classList.add('snowDrop');
@@ -717,7 +738,7 @@ function moveSnowdrop () {
 }
 
 function wipeAllSnowdrops () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('snowCoated')});
     document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
     snowDropStats = [];
 }
@@ -725,7 +746,7 @@ function wipeAllSnowdrops () {
 /* Colorball-Related */
 let colorballStats = [];
 function initiateColorball() {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('withSpotlight')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('withSpotlight')});
     for(let i = 0; i < 15; i++) {
         const colorBall = document.createElement('div');
         colorBall.classList.add('colorBall');
@@ -776,7 +797,7 @@ function wipeAllColorballs () {
 /* HeartRipples-Related */
 let heartPopStats = [];
 function initiateHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.add('heartSurrounded')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('heartSurrounded')});
     for(let i = 0; i < 20; i++) {
         const heartItem = document.createElement('div');
         heartItem.classList.add('heartItem');
@@ -865,7 +886,7 @@ function moveHeartPop () {
 }
 
 function wipeAllHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('heartSurrounded')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('heartSurrounded')});
     document.querySelectorAll('.heartItem').forEach(f=>f.remove());
     heartPopStats = [];
 }
