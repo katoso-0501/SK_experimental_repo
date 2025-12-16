@@ -106,7 +106,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(100% - 0px);
+    height: calc(100% - 7px);
     -webkit-mask-image: url(../images/ed_trouser.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
