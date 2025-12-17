@@ -425,7 +425,8 @@ body {
 .background_01,
 .background_02,
 .background_03,
-.background_04 {
+.background_04,
+.background_05 {
     opacity: 0;
     position: fixed;
     left: 0;
@@ -453,6 +454,10 @@ body {
     background: radial-gradient(#fff1ec 0%, #f9cbcb 100%);
 }
 
+.background_05 {
+    background: linear-gradient(0deg, #530909 0%, #330202 100%);
+}
+
 .theatreMode .jonny.snowCoated,
 .theatreMode .jimmy.snowCoated,
 .theatreMode .rolf.snowCoated,
@@ -476,13 +481,24 @@ body {
     mix-blend-mode: multiply;
 }
 
+.theatreMode .jonny.fireOverlaying,
+.theatreMode .jimmy.fireOverlaying,
+.theatreMode .rolf.fireOverlaying,
+.theatreMode .kevin.fireOverlaying,
+.theatreMode .ed.fireOverlaying {
+    -webkit-mix-blend-mode: overlay;
+    mix-blend-mode: overlay;
+}
+
 .theatreMode .background_01.expanded,
 .theatreMode .background_02.expanded,
 .theatreMode .background_03.expanded,
-.theatreMode .background_04.expanded {
+.theatreMode .background_04.expanded,
+.theatreMode .background_05.expanded {
     opacity: 1;
 }
 
+/* Snow Drop */
 .snowDrop {
     position: absolute;
     left: 0;
@@ -493,6 +509,7 @@ body {
     background: radial-gradient(#FFFFFF 0%, #FFFFFF00 100%);
 }
 
+/* Spotlights */
 .colorBall {
     position: absolute;
     left: 0;
@@ -506,6 +523,7 @@ body {
     /* background: radial-gradient(#FFFFFF 0%, #FFFFFF00 100%); */
 }
 
+/* Heart */
 .heartItem {
     position: absolute;
     left: 0;
@@ -553,7 +571,74 @@ body {
     background: #FFEDEF;
 }
 
+/* Frame Particles */
+.background_05.expanded {
+}
+.flameParticle {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    
+    /* font-size: 0;
+    color: #FFFFFF; */
+    filter: blur(20px);
+}
 
+.flameParticle__phase01 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #120506;
+    /* filter: blur(6px); */
+}
+
+.flameParticle__phase02 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: #c80000;
+    /* filter: blur(10px); */
+}
+
+
+.flameParticle__phase03 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: #ffae22;
+    /* filter: blur(10px); */
+}
+
+.flameParticle__phase04 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #fff8eb;
+}
 /* Some properties are not shown in Theatre Mode */
 @media print {
     .char__controller,

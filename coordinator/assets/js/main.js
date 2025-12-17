@@ -1,4 +1,6 @@
 "use strict";
+{
+
 let characterID = 0;
 //  __________________
 // Character classes start
@@ -604,43 +606,44 @@ class ColorMat {
 // Color Managements end
 //  ______________________
 
-const characters = [];
-
-window.addEventListener('load', ()=>{
-    characters.push(new Jonny());
+    const characters = [];
     
-    if(window.innerWidth > 768) {
-        document.querySelectorAll('.char__controller > div').forEach(controller=>{
-            controller.classList.add('expanded');
-        })
-    }
-});
-
-document.querySelector('.character_adder__jonny').addEventListener('click', b=>{
-    b.preventDefault();
-    characters.push(new Jonny());
-});
-
-document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
-    b.preventDefault();
-    characters.push(new Jimmy());
-});
-
-document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
-    b.preventDefault();
-    characters.push(new Rolf());
-});
-document.querySelector('.character_adder__kevin').addEventListener('click', b=>{
-    b.preventDefault();
-    characters.push(new Kevin());
-});
-document.querySelector('.character_adder__ed').addEventListener('click', b=>{
-    b.preventDefault();
-    characters.push(new Ed());
-});
-
-// Print button
-document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
+    window.addEventListener('load', ()=>{
+        characters.push(new Jonny());
+        
+        if(window.innerWidth > 768) {
+            document.querySelectorAll('.char__controller > div').forEach(controller=>{
+                controller.classList.add('expanded');
+            })
+        }
+    });
+    
+    document.querySelector('.character_adder__jonny').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new Jonny());
+    });
+    
+    document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new Jimmy());
+    });
+    
+    document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new Rolf());
+    });
+    document.querySelector('.character_adder__kevin').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new Kevin());
+    });
+    document.querySelector('.character_adder__ed').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new Ed());
+    });
+    
+    // Print button
+    document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
+}
 
 /* ________________________
 Theatre Mode
@@ -651,18 +654,20 @@ document.querySelector('.theatreBtn').addEventListener('click', b=>{
     document.querySelector('body').classList.toggle('theatreMode');
 });
 
-// background setting button
+// ___________________
+//background settings
+//____________________
 document.querySelector('.theatre_background_setter a').addEventListener('click', b=>{
     b.preventDefault();
     document.querySelector('.theatre_background_setter').classList.toggle('expanded');
 });
-
 
 const backgroundParts = [
     '.background_01',
     '.background_02',
     '.background_03',
     '.background_04',
+    '.background_05',
 ]
 
 document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
@@ -673,6 +678,7 @@ document.querySelectorAll('.theatre_background_setter input').forEach((radio, in
         wipeAllSnowdrops ();
         wipeAllColorballs ();
         wipeAllHeartPop ();
+        wipeAllFlames ();
             
         backgroundParts.forEach(bgs=>{
             document.querySelector(bgs).classList.remove('expanded');
@@ -694,6 +700,11 @@ document.getElementById('theatre_background_spotlight').addEventListener('click'
 document.getElementById('theatre_background_heartfullyheart').addEventListener('click',function(){
     initiateHeartPop();
 });
+
+document.getElementById('theatre_background_burstfullyflame').addEventListener('click',function(){
+    initiateFlames();
+});
+
 
 /* Snowdrop-Related */
 let snowDropStats = [];
@@ -889,4 +900,90 @@ function wipeAllHeartPop () {
     document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('heartSurrounded')});
     document.querySelectorAll('.heartItem').forEach(f=>f.remove());
     heartPopStats = [];
+}
+
+
+/* Flame-Related */
+let flameParticleStats = [];
+function initiateFlames () {
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('fireOverlaying')});
+    for(let i = 0; i < 50; i++) {
+        const flameParticle = document.createElement('div');
+        const flamePalette =
+        [
+            "flameParticle__phase01",
+            "flameParticle__phase02",
+            "flameParticle__phase03",
+            "flameParticle__phase04",
+        ];
+        flamePalette.forEach(tip=>{
+            const flameTip = document.createElement('div');
+            flameTip.classList.add(tip);
+            flameTip.classList.add(tip + "--" + i);
+            flameParticle.append(flameTip);
+        });
+        flameParticle.classList.add('flameParticle');
+        flameParticle.style.left = (Math.random() * (window.innerWidth) ) + "px";
+        flameParticle.style.top =  (window.innerHeight - 70) + "px";
+
+        flameParticleStats.push({
+            flameTemp: Math.random()* 2000 - 1000,
+            velocityX: Math.random() * 1 - 1,
+            velocityY: (Math.random() * 2 + 0.2) * -1,
+            scale: Math.random()*1 + 0.5,
+        });
+       document.querySelector('.background_05').append(flameParticle);
+    }
+    moveFlames();
+}
+
+function moveFlames () {
+    flameParticleStats.forEach((stat, i)=>{
+        const flameParticle = document.querySelectorAll('.flameParticle')[i];
+
+        flameParticleStats[i].flameTemp -= Math.random()* 75 + 5;
+        const insideParticles = [
+            ".flameParticle__phase01--" + i,
+            ".flameParticle__phase02--" + i,
+            ".flameParticle__phase03--" + i,
+            ".flameParticle__phase04--" + i
+        ];
+
+        document.querySelector(insideParticles[1]).style.opacity =  (30000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
+        document.querySelector(insideParticles[2]).style.opacity =  (24000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
+        // document.querySelector(insideParticles[3]).style.opacity = -500 + (flameParticleStats[i].flameTemp) / 100;
+        document.querySelector(insideParticles[3]).style.opacity = 0
+
+
+        flameParticleStats[i].velocityY -= 0.03;
+
+        flameParticle.style.left = (parseFloat(flameParticle.style.left) + stat.velocityX) + "px";
+        flameParticle.style.top = (parseFloat(flameParticle.style.top) + stat.velocityY) + "px";
+        flameParticle.style.transform = "scale("+stat.scale+")";
+
+        // if(flameParticle.offsetLeft> window.innerWidth + 50) {
+        //     flameParticle.style.left = 0;
+        //     stat.velocityX = Math.random() * 5;
+        //     stat.velocityY = (Math.random() * 4) * -1;
+        // }
+        if(flameParticle.offsetTop < -50 || flameParticleStats[i].flameTemp < -5000) {
+             flameParticle.style.top =  (window.innerHeight - 70) + "px";
+             flameParticle.style.left = (Math.random() * (window.innerWidth) ) + "px";
+            
+            flameParticleStats[i].flameTemp = Math.random()* 600 + 350;
+            flameParticleStats[i].velocityX = Math.random() *  1 - 1,
+            flameParticleStats[i].velocityY =(Math.random() * 2 + 0.2) * -1;
+            flameParticleStats[i].scale= Math.random()*1 + 0.5;
+        }
+    });
+
+    if(flameParticleStats.length > 0 && document.visibilityState === 'visible') {
+        setTimeout(moveFlames,20);
+    }
+}
+
+function wipeAllFlames () {
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('fireOverlaying')});
+    document.querySelectorAll('.flameParticle').forEach(f=>f.remove());
+    flameParticleStats = [];
 }
