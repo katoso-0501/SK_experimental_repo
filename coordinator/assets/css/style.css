@@ -458,34 +458,29 @@ body {
     background: linear-gradient(0deg, #530909 0%, #330202 100%);
 }
 
-.theatreMode .jonny.snowCoated,
-.theatreMode .jimmy.snowCoated,
-.theatreMode .rolf.snowCoated,
-.theatreMode .kevin.snowCoated,
-.theatreMode .ed.snowCoated  {
+.theatreMode .jonny.filterHardlight,
+.theatreMode .jimmy.filterHardlight,
+.theatreMode .rolf.filterHardlight,
+.theatreMode .kevin.filterHardlight,
+.theatreMode .ed.filterHardlight  {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
 
-.theatreMode .jonny.withSpotlight,
-.theatreMode .jimmy.withSpotlight,
-.theatreMode .rolf.withSpotlight,
-.theatreMode .kevin.withSpotlight,
-.theatreMode .ed.withSpotlight,
-.theatreMode .jonny.heartSurrounded,
-.theatreMode .jimmy.heartSurrounded,
-.theatreMode .rolf.heartSurrounded, 
-.theatreMode .kevin.heartSurrounded, 
-.theatreMode .ed.heartSurrounded {
+.theatreMode .jonny.filterMultiply,
+.theatreMode .jimmy.filterMultiply,
+.theatreMode .rolf.filterMultiply,
+.theatreMode .kevin.filterMultiply,
+.theatreMode .ed.filterMultiply {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }
 
-.theatreMode .jonny.fireOverlaying,
-.theatreMode .jimmy.fireOverlaying,
-.theatreMode .rolf.fireOverlaying,
-.theatreMode .kevin.fireOverlaying,
-.theatreMode .ed.fireOverlaying {
+.theatreMode .jonny.filterOverlay,
+.theatreMode .jimmy.filterOverlay,
+.theatreMode .rolf.filterOverlay,
+.theatreMode .kevin.filterOverlay,
+.theatreMode .ed.filterOverlay {
     -webkit-mix-blend-mode: overlay;
     mix-blend-mode: overlay;
 }
@@ -573,15 +568,15 @@ body {
 
 /* Frame Particles */
 .background_05.expanded {
+    filter: blur(35px);
+    transform-origin: bottom center;
+    transform: scale(1.32) translateY(30px);
 }
+
 .flameParticle {
     position: absolute;
     width: 340px;
     height: 340px;
-    
-    /* font-size: 0;
-    color: #FFFFFF; */
-    filter: blur(20px);
 }
 
 .flameParticle__phase01 {

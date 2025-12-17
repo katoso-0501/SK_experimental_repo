@@ -706,10 +706,11 @@ document.getElementById('theatre_background_burstfullyflame').addEventListener('
 });
 
 
+const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed';
 /* Snowdrop-Related */
 let snowDropStats = [];
 function initiateSnowdrop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('snowCoated')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.add('filterHardlight')});
     for(let i = 0; i < 50; i++) {
         const snowDrop = document.createElement('div');
         snowDrop.classList.add('snowDrop');
@@ -749,7 +750,7 @@ function moveSnowdrop () {
 }
 
 function wipeAllSnowdrops () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('snowCoated')});
+    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('filterHardlight')});
     document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
     snowDropStats = [];
 }
@@ -757,7 +758,7 @@ function wipeAllSnowdrops () {
 /* Colorball-Related */
 let colorballStats = [];
 function initiateColorball() {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('withSpotlight')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.add('filterMultiply')});
     for(let i = 0; i < 15; i++) {
         const colorBall = document.createElement('div');
         colorBall.classList.add('colorBall');
@@ -799,7 +800,7 @@ function moveColorball () {
 }
 
 function wipeAllColorballs () {
-    document.querySelectorAll('.jonny, .jimmy,.rolf,.kevin').forEach(chars=>{chars.classList.remove('withSpotlight')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterMultiply')});
     document.querySelectorAll('.colorBall').forEach(f=>f.remove());
     colorballStats = [];
 }
@@ -808,7 +809,7 @@ function wipeAllColorballs () {
 /* HeartRipples-Related */
 let heartPopStats = [];
 function initiateHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('heartSurrounded')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.add('filterMultiply')});
     for(let i = 0; i < 20; i++) {
         const heartItem = document.createElement('div');
         heartItem.classList.add('heartItem');
@@ -896,8 +897,9 @@ function moveHeartPop () {
     }
 }
 
+
 function wipeAllHeartPop () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('heartSurrounded')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterMultiply')});
     document.querySelectorAll('.heartItem').forEach(f=>f.remove());
     heartPopStats = [];
 }
@@ -906,7 +908,7 @@ function wipeAllHeartPop () {
 /* Flame-Related */
 let flameParticleStats = [];
 function initiateFlames () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.add('fireOverlaying')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.add('filterOverlay')});
     for(let i = 0; i < 50; i++) {
         const flameParticle = document.createElement('div');
         const flamePalette =
@@ -940,7 +942,6 @@ function initiateFlames () {
 function moveFlames () {
     flameParticleStats.forEach((stat, i)=>{
         const flameParticle = document.querySelectorAll('.flameParticle')[i];
-
         flameParticleStats[i].flameTemp -= Math.random()* 75 + 5;
         const insideParticles = [
             ".flameParticle__phase01--" + i,
@@ -949,10 +950,10 @@ function moveFlames () {
             ".flameParticle__phase04--" + i
         ];
 
-        document.querySelector(insideParticles[1]).style.opacity =  (30000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
+        document.querySelector(insideParticles[1]).style.opacity =  (31000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
         document.querySelector(insideParticles[2]).style.opacity =  (24000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
-        // document.querySelector(insideParticles[3]).style.opacity = -500 + (flameParticleStats[i].flameTemp) / 100;
-        document.querySelector(insideParticles[3]).style.opacity = 0
+        document.querySelector(insideParticles[3]).style.opacity =  (10000 + (flameParticleStats[i].flameTemp * 6)) / 10000;
+        // document.querySelector(insideParticles[3]).style.opacity = 0
 
 
         flameParticleStats[i].velocityY -= 0.03;
@@ -983,7 +984,7 @@ function moveFlames () {
 }
 
 function wipeAllFlames () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('fireOverlaying')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterOverlay')});
     document.querySelectorAll('.flameParticle').forEach(f=>f.remove());
     flameParticleStats = [];
 }
