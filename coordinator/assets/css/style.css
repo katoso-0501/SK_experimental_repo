@@ -62,6 +62,8 @@ body {
 
 .theatreMode .character_wrapper {
     padding: 32px 0;
+    align-items: center;
+    min-height: 0;
 }
 
 .char__controller {
@@ -380,7 +382,6 @@ body {
     transform: rotate(45deg);
 }
 
-
 .theatreMode
 .theatre_background_setter {
     display: block;
@@ -462,7 +463,8 @@ body {
 .theatreMode .jimmy.filterHardlight,
 .theatreMode .rolf.filterHardlight,
 .theatreMode .kevin.filterHardlight,
-.theatreMode .ed.filterHardlight  {
+.theatreMode .ed.filterHardlight,
+.theatreMode .eddyA.filterHardlight  {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
@@ -471,7 +473,8 @@ body {
 .theatreMode .jimmy.filterMultiply,
 .theatreMode .rolf.filterMultiply,
 .theatreMode .kevin.filterMultiply,
-.theatreMode .ed.filterMultiply {
+.theatreMode .ed.filterMultiply,
+.theatreMode .eddyA.filterMultiply {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }
@@ -480,7 +483,8 @@ body {
 .theatreMode .jimmy.filterOverlay,
 .theatreMode .rolf.filterOverlay,
 .theatreMode .kevin.filterOverlay,
-.theatreMode .ed.filterOverlay {
+.theatreMode .ed.filterOverlay,
+.theatreMode .eddyA.filterOverlay{
     -webkit-mix-blend-mode: overlay;
     mix-blend-mode: overlay;
 }

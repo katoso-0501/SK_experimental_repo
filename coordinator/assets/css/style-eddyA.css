@@ -1,0 +1,145 @@
+
+.eddyA {
+    width: 23%;
+    margin: 0;
+
+    @media (width <= 1400px) {
+        width: 48%;
+    }
+
+    @media (width <= 768px) {
+        width: 98%;
+    }
+}
+
+.char__body {
+    position: relative;
+    width: 100%;
+    max-width: 854px;
+    margin: auto;
+}
+
+.char__body img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.eddyA .char__gown {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 20px;
+    background: rgb(251, 42, 73);
+    
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 7px);
+    -webkit-mask-image: url(../images/eddyA_gown.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/eddyA_gown.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+
+}
+
+.testingPurpose .eddyA .char__gown::before {
+    content:" - Gown";
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 400px;
+}
+
+.eddyA .char__skin {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 50px;
+    background: rgb(41, 197, 121);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 7px);
+    -webkit-mask-image: url(../images/eddyA_skin.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/eddyA_skin.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .eddyA .char__skin::before {
+    content:" - Skin";
+    position: absolute;
+    top: 0.0px;
+    left: 30px;
+    width: 400px;
+}
+
+.eddyA .char__tongue  {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 80px;
+    background: rgb(138, 49, 27);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 6px);
+    -webkit-mask-image: url(../images/eddyA_tongue.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/eddyA_tongue.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .eddyA .char__tongue::before {
+    content:" - tongue";
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    width: 400px;
+}
+
+.testingPurpose .eddyA .char__gown,
+.testingPurpose .eddyA .char__skin,
+.testingPurpose .eddyA .char__tongue {
+    mask: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    left: 8px !important;
+}
+
+.testingPurpose .eddyA .char__gown {
+    top: 0;
+}
+.testingPurpose .eddyA .char__skin {
+    top: 30px;
+}
+.testingPurpose .eddyA .char__tongue {
+    top: 60px;
+}

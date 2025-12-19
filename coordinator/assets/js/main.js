@@ -186,6 +186,21 @@ class Ed extends Jonny {
     }
 }
 
+class EddyA extends Jonny {
+    constructor() {
+        super();
+        this.img.src = "assets/images/eddyA_original.webp";
+        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.add('eddyA');
+    }
+    
+    loadIndependentParts () {
+        this.createColormat('Gown','char__gown');
+        this.createColormat('Skin','char__skin');
+        this.createColormat('Tongue','char__tongue');
+    }
+}
+
 //  ______________________
 // Character classes end
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -640,11 +655,17 @@ class ColorMat {
         b.preventDefault();
         characters.push(new Ed());
     });
+    document.querySelector('.character_adder__eddyA').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new EddyA());
+    });
     
     // Print button
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
 }
 
+
+const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed,.eddyA';
 /* ________________________
 Theatre Mode
 _________________________*/
@@ -705,8 +726,6 @@ document.getElementById('theatre_background_burstfullyflame').addEventListener('
     initiateFlames();
 });
 
-
-const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed';
 /* Snowdrop-Related */
 let snowDropStats = [];
 function initiateSnowdrop () {
