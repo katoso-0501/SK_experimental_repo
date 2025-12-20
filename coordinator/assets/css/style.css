@@ -594,6 +594,11 @@ body {
     height: 30px;
     border-radius: 50%;
     background: #120506;
+
+    @media (width <= 768px) {
+        height: 15px;
+        width: 15px;
+    }
     /* filter: blur(6px); */
 }
 
@@ -608,6 +613,11 @@ body {
     height: 160px;
     border-radius: 50%;
     background: #c80000;
+    
+    @media (width <= 768px) {
+        height: 80px;
+        width: 80px;
+    }
     /* filter: blur(10px); */
 }
 
@@ -623,6 +633,11 @@ body {
     height: 190px;
     border-radius: 50%;
     background: #ffae22;
+    
+    @media (width <= 768px) {
+        height: 95px;
+        width: 95px;
+    }
     /* filter: blur(10px); */
 }
 
@@ -637,6 +652,11 @@ body {
     height: 220px;
     border-radius: 50%;
     background: #fff8eb;
+    
+    @media (width <= 768px) {
+        height: 110px;
+        width: 110px;
+    }
 }
 /* Some properties are not shown in Theatre Mode */
 @media print {
