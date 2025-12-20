@@ -32,7 +32,7 @@
             width: 90%;
             position: fixed;
             overflow-y: auto;
-            top: 24px;
+            top: 8px;
             left: 5%;
         }
         
@@ -43,7 +43,8 @@
 
         .video_container {
             position: relative;
-            border:2px solid #20af30;
+            border: 2px solid #20af30;
+            margin-top: 32px;
             border-radius: 8px;
             padding: 30px 3.5% 3.5%;
             height: 315px;
@@ -198,12 +199,36 @@
             background-color: #2008FF;;
         }
 
+        .movie_adder a {
+            display: inline-flex;
+            padding: 2px 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #FFFFFF;
+            border-radius: 24px;
+            background-color: #fe6320;
+            user-select: none;
+            text-decoration: none
+        }
+
+        .movie_adder input[type="text"] 
+        {
+            border-radius: 12px;
+            border: 1px solid #d6d6d6;
+            padding: 3px 5px;
+            /* width: 100%; */
+
+        }
+
     </style>
 </head>
 <body>
     <div class="swipeRefreshPreventer"></div>
     <div class="embed_body">
         <div class="movie_adder">
+            <form class="extending_item">
+                <input type="text" class="extendingID" placeholder="Enter ID Here">
+            </form>
             <a href="#" class="add_movie" data-ytid="SAolvci7SeA">ANA</a>
             <a href="#" class="add_movie" data-ytid="23bIBuPYyxA">TG</a>
             <a href="#" class="add_movie" data-ytid="m3zj-oUm7vc">PAN AM</a>
@@ -316,6 +341,17 @@
             const embedBody = document.querySelector('.embed_body');
             embedBody.appendChild(videoContainer);
         }
+
+        document.querySelector('.extending_item').addEventListener('submit', f=>
+        {
+            f.preventDefault();
+            const j = document.querySelector('.extendingID').value;
+            if(j !== "") {
+                createMovieEmbed(j);
+                document.querySelector('.extendingID').value = "";
+            }
+        }
+        )
     </script>
 </body>
 </html>
