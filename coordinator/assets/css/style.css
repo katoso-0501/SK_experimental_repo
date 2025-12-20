@@ -575,6 +575,10 @@ body {
     filter: blur(35px);
     transform-origin: bottom center;
     transform: scale(1.32) translateY(30px);
+    
+    @media (width <= 768px) {
+        filter: blur(20px);
+    }
 }
 
 .flameParticle {
