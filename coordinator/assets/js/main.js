@@ -575,8 +575,8 @@ class ColorChip {
 
         const gradientStops = [
             //[hue,saturation,brightness,alpha,position]
-            [0, 50, 50, 100, 0],
-            [120, 50, 50, 100, 100],
+            [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 0],
+            [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100],
         ];
         let selectedStop = 0;
 
@@ -681,6 +681,54 @@ class ColorChip {
             }
         });
 
+        // Add color stop
+        const gradientAddBtn = document.createElement('div');
+        gradientAddBtn.textContent="+";
+        gradientAddBtn.classList.add('gradient_stopAdd');
+        gradientAddBtn.addEventListener('click', ()=>{
+            gradientStops.push([Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100]);
+            controlParts[7][1].max =  gradientStops.length - 1;
+            controlParts[7][1].value =  gradientStops.length - 1;
+            selectedStop = gradientStops.length - 1;
+            
+            controlParts[0][1].value = gradientStops[selectedStop][0];
+            controlParts[1][1].value = gradientStops[selectedStop][1];
+            controlParts[2][1].value = gradientStops[selectedStop][2];
+            controlParts[3][1].value = gradientStops[selectedStop][3];
+            controlParts[4][1].value = gradientStops[selectedStop][4];
+
+            
+           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+        });
+        controllerPanel.append(gradientAddBtn);
+
+        // Remove color stop
+        const gradientRemoveBtn = document.createElement('div');
+        gradientRemoveBtn.textContent="-";
+        gradientRemoveBtn.classList.add('gradient_stopRemove');
+        
+        gradientRemoveBtn.addEventListener('click', ()=>{
+            if(gradientStops.length<=2) return;
+            gradientStops.splice(selectedStop,1);
+            if(selectedStop>0) {
+                selectedStop--;
+            }
+            controlParts[7][1].max =  gradientStops.length - 1;
+            controlParts[7][1].value =  selectedStop;
+            
+            controlParts[0][1].value = gradientStops[selectedStop][0];
+            controlParts[1][1].value = gradientStops[selectedStop][1];
+            controlParts[2][1].value = gradientStops[selectedStop][2];
+            controlParts[3][1].value = gradientStops[selectedStop][3];
+            controlParts[4][1].value = gradientStops[selectedStop][4];
+            
+           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+        });
+        controllerPanel.append(gradientRemoveBtn);
+
+        // Append Controller on Controller Master
         controlGroup.innerHTML = '';
         controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);

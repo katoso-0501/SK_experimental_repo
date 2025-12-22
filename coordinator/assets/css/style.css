@@ -293,6 +293,37 @@ body {
     display: none;
 }
 
+.char__controller  div.gradient_stopAdd {
+    display: inline-block;
+    background-color: #de0101;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 24px;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 8px;
+    width: 16px;
+    margin-top: 8px;
+    margin-right: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.char__controller  div.gradient_stopRemove {
+    display: inline-block;
+    background-color: #2f0fff;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 24px;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 8px;
+    width: 16px;
+    margin-top: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
 .theatreMode .char__controller {
     display: none;
 }
