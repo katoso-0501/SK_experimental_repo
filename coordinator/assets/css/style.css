@@ -115,7 +115,7 @@ body {
 
 .char__controller .expanded  div.mat_palette {
     height: auto;
-    min-height: 61px;
+    min-height: 86px;
     transform: scaleY(1); 
     pointer-events: all;
     opacity: 1;

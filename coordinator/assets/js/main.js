@@ -236,6 +236,8 @@ class ColorChip {
             this.createSimpleColorControls();
         } else if(colorMode === "pattern") {
             this.createPatternControls();
+        } else if(colorMode === "gradient") {
+            this.createGradientControls();
         }
     }
     
@@ -250,6 +252,11 @@ class ColorChip {
         tgt.style.opacity = opacity / 100;
         tgt.style.transform = "rotate(" + rotation + "deg)";
         tgt.style.backgroundBlendMode = blendmode;
+    }
+    
+    gradientUpdate (tgt, gradientExpression, rotation = 0) {
+        tgt.style.backgroundImage = gradientExpression;
+        tgt.style.transform = "rotate(" + rotation + "deg)";
     }
 
     createSimpleColorControls () {
@@ -526,6 +533,162 @@ class ColorChip {
         this.controllerMaster.append(controlGroup);
     }
 
+    createGradientControls () {
+        const controlGroup = document.createElement('div');
+        controlGroup.classList.add('colorGroup');
+        this.controller = controlGroup;
+
+        const controlGroupInner = document.createElement('div');
+        controlGroupInner.classList.add('controlGroupInner');
+        this.controllerInner = controlGroupInner;
+        
+        const controllerPanel = document.createElement('div');
+        const controllerLabel = document.createElement('span');
+
+        this.thumbnail.addEventListener('click', ()=>{
+            controlGroupInner.classList.toggle('expanded');
+
+            /* Adjust controller's position when it is on the bottom of screen */
+            const top = controlGroupInner.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
+
+            if(top > (screenHeight - 350)){
+                controlGroupInner.classList.add('onBottom');
+            }else {
+                controlGroupInner.classList.remove('onBottom');
+            }
+        });
+        
+        controllerPanel.append(this.thumbnail);
+
+        controllerLabel.addEventListener('click', ()=>{
+            controllerPanel.classList.toggle('expanded');
+        });
+
+        const gradientStops = [
+            ["#FF0000", "0%"],
+            ["#00FF00", "100%"],
+        ];
+
+        let selectedStop = 0;
+
+        let gradientExpression = 
+        "linear-gradient(to right, #FF0000 0%, #00FF00 100%)";
+
+        const controlParts = [
+            ['Hue',document.createElement('input')],
+            ['Saturation',document.createElement('input')],
+            ['Brightness',document.createElement('input')],
+            ['Opacity',document.createElement('input')],
+            ['Blend Mode',document.createElement('select')],
+            ['Degree', document.createElement('input')],
+            ['Stop Selector', document.createElement('input')],
+        ];
+
+        for (let i = 0;i <= 2; i++){
+            controlParts[i][1].addEventListener('change', ()=>{
+                const stopExpression = "hsla(" + controlParts[0][1].value + "," + controlParts[1][1].value + "%," + controlParts[2][1].value + "%," + controlParts[3][1].value / 100 + ")";
+
+                gradientStops[selectedStop][0] = stopExpression;
+            
+                gradientExpression = 
+                "linear-gradient("+ controlParts[5][1].value +"deg,";
+                 gradientStops.forEach((stop, i)=>{
+                    const comma = i <= (gradientStops.length - 2) ? "," : "";
+                    gradientExpression += stop[0] + " " + stop[1] + comma;
+                });
+                gradientExpression += ")";
+
+                this.gradientUpdate(this.layer, gradientExpression);
+                this.gradientUpdate(this.thumbnailInner, gradientExpression);
+            });
+        }
+        controlParts[3][1].addEventListener('change', m=>{
+            this.layer.style.opacity = controlParts[3][1].value / 100;
+            this.thumbnailInner.style.opacity = controlParts[3][1].value / 100;
+        });
+        
+        controlParts.forEach((part, i) => {
+            const paragraph = document.createElement('p');
+
+            part[1].setAttribute('type', 'range');
+            part[1].setAttribute('min', '0');
+            if(i === 0 || i === 5) {
+                part[1].setAttribute('max', '360');
+                part[1].setAttribute('value', Math.floor(Math.random() * 360));
+            }else{
+                part[1].setAttribute('max', '100');
+                part[1].setAttribute('value', Math.floor(Math.random() * 100));
+            }
+            if(i === 6){
+                part[1].type = "number";
+                part[1].setAttribute('max', gradientStops.length);
+                part[1].setAttribute('min', 0);
+                part[1].setAttribute('value',0);
+            }
+            
+            paragraph.append(part[0],part[1]);
+            controllerPanel.append(paragraph); 
+        });
+
+        /* Define blend modes */
+        const blendMode = [
+            "Normal",
+            "Multiply",
+            "Screen",
+            "Overlay",
+            "Darken",
+            "Lighten",
+            "Color Dodge",
+            "Color Burn",
+            "Hard Light",
+            "Soft Light",
+            "Difference",
+            "Exclusion",
+            "Hue",
+            "Saturation",
+            "Color",
+            "Luminosity"
+        ];
+        blendMode.forEach(mode=>{
+            const option = document.createElement('option');
+            option.value = mode;
+            option.textContent = mode;
+            controlParts[4][1].append(option);
+        });
+
+        controlParts[4][1].addEventListener('change', m=>{
+            this.layer.style.mixBlendMode = controlParts[4][1].value;
+        });
+
+        // Gradient Rotation
+        controlParts[5][1].addEventListener('change', m=>{
+           gradientExpression = 
+           "linear-gradient("+ controlParts[5][1].value +"deg,";
+           gradientStops.forEach((stop, i)=>{
+            const comma = i <= (gradientStops.length - 2) ? "," : "";
+            gradientExpression += stop[0] + " " + stop[1] + comma;
+           });
+           gradientExpression += ")";
+           this.gradientUpdate(this.layer, gradientExpression);
+           this.gradientUpdate(this.thumbnailInner, gradientExpression);
+        });
+        
+        // Stop Selector
+        controlParts[6][1].addEventListener('change', m=>{
+            selectedStop = controlParts[6][1].value;
+        });
+
+        controlGroup.innerHTML = '';
+        controlGroup.append(this.thumbnail);
+        controlGroupInner.append(controllerPanel);
+        controlGroup.append(controlGroupInner);
+
+        this.controllerMaster.append(controlGroup);
+        this.gradientUpdate(this.thumbnailInner, gradientExpression);
+        this.gradientUpdate(this.layer, gradientExpression);
+    }
+
     deleteColorChip () {
         this.thumbnail.remove();
         this.layer.remove();
@@ -590,8 +753,17 @@ class ColorMat {
         this.addPattern();
         });
 
+        this.gradientAddBtn = document.createElement('div');
+        this.gradientAddBtn.textContent = " Gradient";
+        this.gradientAddBtn.classList.add('plusBtn');
+        this.gradientAddBtn.style.top = "72px";
+        this.gradientAddBtn.addEventListener('click', ()=>{
+        this.addGradient();
+        });
+
         this.palette.append(this.simpleColorAddBtn);
         this.palette.append(this.patternAddBtn);
+        this.palette.append(this.gradientAddBtn);
         controllerMaster.append(this.palette);
 
         addTo.append(this.matMain);
@@ -609,7 +781,15 @@ class ColorMat {
         this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
         this.reRender();
-    }
+    } 
+
+    addGradient () {
+        this.layers.push(new ColorChip("#000000", "gradient", this.mat, this.palette, this.layers.length));
+        this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+        this.layerID++;
+        this.reRender();
+    }  
+    
     
     reRender () {
         this.mat.innerHTML = "";
@@ -981,11 +1161,6 @@ function moveFlames () {
         flameParticle.style.top = (parseFloat(flameParticle.style.top) + stat.velocityY) + "px";
         flameParticle.style.transform = "scale("+stat.scale+")";
 
-        // if(flameParticle.offsetLeft> window.innerWidth + 50) {
-        //     flameParticle.style.left = 0;
-        //     stat.velocityX = Math.random() * 5;
-        //     stat.velocityY = (Math.random() * 4) * -1;
-        // }
         if(flameParticle.offsetTop < -50 || flameParticleStats[i].flameTemp < -5000) {
              flameParticle.style.top =  (window.innerHeight - 70) + "px";
              flameParticle.style.left = (Math.random() * (window.innerWidth) ) + "px";
