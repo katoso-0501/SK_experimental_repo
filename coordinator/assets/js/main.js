@@ -254,7 +254,15 @@ class ColorChip {
         tgt.style.backgroundBlendMode = blendmode;
     }
     
-    gradientUpdate (tgt, gradientExpression, rotation = 0) {
+    gradientUpdate (tgt, gradientStops, rotation = 0) {
+        let gradientExpression;
+        gradientExpression = "linear-gradient("+ rotation +"deg,";
+            gradientStops.forEach((stop, i)=>{
+            const comma = i <= (gradientStops.length - 2) ? "," : "";
+            gradientExpression += "hsla(" + stop[0] + "deg," + stop[1] +  "%," + stop[2] + "%," + (stop[3] /100) + ") " + stop[4] + "%" + comma;
+            });
+        gradientExpression += ")";
+        console.log(gradientExpression);
         tgt.style.backgroundImage = gradientExpression;
         tgt.style.transform = "rotate(" + rotation + "deg)";
     }
@@ -566,63 +574,51 @@ class ColorChip {
         });
 
         const gradientStops = [
-            ["#FF0000", "0%"],
-            ["#00FF00", "100%"],
+            //[hue,saturation,brightness,alpha,position]
+            [0, 50, 50, 100, 0],
+            [120, 50, 50, 100, 100],
         ];
-
         let selectedStop = 0;
-
-        let gradientExpression = 
-        "linear-gradient(to right, #FF0000 0%, #00FF00 100%)";
 
         const controlParts = [
             ['Hue',document.createElement('input')],
             ['Saturation',document.createElement('input')],
             ['Brightness',document.createElement('input')],
             ['Opacity',document.createElement('input')],
+            ['Stop Position',document.createElement('input')],
             ['Blend Mode',document.createElement('select')],
             ['Degree', document.createElement('input')],
             ['Stop Selector', document.createElement('input')],
         ];
 
-        for (let i = 0;i <= 2; i++){
+        for (let i = 0;i <= 4; i++){
             controlParts[i][1].addEventListener('change', ()=>{
-                const stopExpression = "hsla(" + controlParts[0][1].value + "," + controlParts[1][1].value + "%," + controlParts[2][1].value + "%," + controlParts[3][1].value / 100 + ")";
-
-                gradientStops[selectedStop][0] = stopExpression;
-            
-                gradientExpression = 
-                "linear-gradient("+ controlParts[5][1].value +"deg,";
-                 gradientStops.forEach((stop, i)=>{
-                    const comma = i <= (gradientStops.length - 2) ? "," : "";
-                    gradientExpression += stop[0] + " " + stop[1] + comma;
-                });
-                gradientExpression += ")";
-
-                this.gradientUpdate(this.layer, gradientExpression);
-                this.gradientUpdate(this.thumbnailInner, gradientExpression);
+                gradientStops[selectedStop][0] = controlParts[0][1].value;
+                gradientStops[selectedStop][1] = controlParts[1][1].value;
+                gradientStops[selectedStop][2] = controlParts[2][1].value;
+                gradientStops[selectedStop][3] = controlParts[3][1].value;
+                gradientStops[selectedStop][4] = controlParts[4][1].value;
+                
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
             });
         }
-        controlParts[3][1].addEventListener('change', m=>{
-            this.layer.style.opacity = controlParts[3][1].value / 100;
-            this.thumbnailInner.style.opacity = controlParts[3][1].value / 100;
-        });
         
         controlParts.forEach((part, i) => {
             const paragraph = document.createElement('p');
 
             part[1].setAttribute('type', 'range');
             part[1].setAttribute('min', '0');
-            if(i === 0 || i === 5) {
+            if(i === 0 || i === 6) {
                 part[1].setAttribute('max', '360');
                 part[1].setAttribute('value', Math.floor(Math.random() * 360));
             }else{
                 part[1].setAttribute('max', '100');
                 part[1].setAttribute('value', Math.floor(Math.random() * 100));
             }
-            if(i === 6){
+            if(i === 7){
                 part[1].type = "number";
-                part[1].setAttribute('max', gradientStops.length);
+                part[1].setAttribute('max', gradientStops.length - 1);
                 part[1].setAttribute('min', 0);
                 part[1].setAttribute('value',0);
             }
@@ -654,29 +650,35 @@ class ColorChip {
             const option = document.createElement('option');
             option.value = mode;
             option.textContent = mode;
-            controlParts[4][1].append(option);
+            controlParts[5][1].append(option);
         });
 
-        controlParts[4][1].addEventListener('change', m=>{
-            this.layer.style.mixBlendMode = controlParts[4][1].value;
+        controlParts[5][1].addEventListener('change', m=>{
+            this.layer.style.mixBlendMode = controlParts[5][1].value;
         });
 
         // Gradient Rotation
-        controlParts[5][1].addEventListener('change', m=>{
-           gradientExpression = 
-           "linear-gradient("+ controlParts[5][1].value +"deg,";
-           gradientStops.forEach((stop, i)=>{
-            const comma = i <= (gradientStops.length - 2) ? "," : "";
-            gradientExpression += stop[0] + " " + stop[1] + comma;
-           });
-           gradientExpression += ")";
-           this.gradientUpdate(this.layer, gradientExpression);
-           this.gradientUpdate(this.thumbnailInner, gradientExpression);
+        controlParts[6][1].addEventListener('change', m=>{
+           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
         });
         
         // Stop Selector
-        controlParts[6][1].addEventListener('change', m=>{
-            selectedStop = controlParts[6][1].value;
+        controlParts[7][1].addEventListener('change', m=>{
+            if(m.value <= gradientStops.length - 1) {
+                controlParts[7][1].value =  gradientStops.length - 1;
+            }
+            
+            try  {
+                selectedStop = controlParts[7][1].value;
+                controlParts[0][1].value = gradientStops[selectedStop][0];
+                controlParts[1][1].value = gradientStops[selectedStop][1];
+                controlParts[2][1].value = gradientStops[selectedStop][2];
+                controlParts[3][1].value = gradientStops[selectedStop][3];
+                controlParts[4][1].value = gradientStops[selectedStop][4];
+            } catch {
+                console.log("Hah! You should visit \"http://boysandmen.jp\"");
+            }
         });
 
         controlGroup.innerHTML = '';
@@ -685,8 +687,8 @@ class ColorChip {
         controlGroup.append(controlGroupInner);
 
         this.controllerMaster.append(controlGroup);
-        this.gradientUpdate(this.thumbnailInner, gradientExpression);
-        this.gradientUpdate(this.layer, gradientExpression);
+        this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+        this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
     }
 
     deleteColorChip () {
