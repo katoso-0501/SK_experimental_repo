@@ -607,6 +607,7 @@ class ColorChip {
             gradientPin.style.left = "calc("+ gradientStops[i][4] +"% - 0px)";            
             gradientPinInner.style.background = "hsla(" + gradientStops[i][0] + "," + gradientStops[i][1] + "%," + gradientStops[i][2] + "%," + gradientStops[i][3] / 100 + ")";
         });
+        pins[0].classList.add('selected');
 
         let dragMode = 0;
         let movingPin;
@@ -668,6 +669,7 @@ class ColorChip {
         });
         
         gradientSpecimen.addEventListener('touchmove', f=>{
+            f.preventDefault();
             if(dragMode===1) {
                 let pinPos =  (f.touches[0].clientX - specimensPos[0]);
                 if(pinPos<0) {
@@ -676,14 +678,25 @@ class ColorChip {
                 if(pinPos > (specimensPos[1] - specimensPos[0])) {
                     pinPos = specimensPos[1] - specimensPos[0];
                 }
-                // console.log(((f.touches[0].clientX - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100);
                 movingPin.style.left = pinPos + "px";
             }
         });
 
         gradientSpecimen.addEventListener('mouseup', f=>{
             let pinPos = ((f.clientX - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100;
+            console.log(pinPos);
+
+            
             if(dragMode === 0) {
+                let insertPos = gradientStops.length - 1;
+                gradientStops.forEach((stop,i)=>{
+                    if(pinPos <= stop[4])
+                        {
+                            insertPos--;
+                        } 
+                });
+                console.log("New pin is gonna be inserted to No." + insertPos);
+
                 // Add a new stop
                 gradientStops.push([Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, pinPos]);
                 controlParts[7][1].max =  gradientStops.length - 1;
@@ -712,10 +725,15 @@ class ColorChip {
                 gradientPin.style.left = "calc("+ gradientStops[gradientStops.length - 1][4] +"% - 0px)";            
                 gradientPinInner.style.background = "hsla(" + gradientStops[gradientStops.length - 1][0] + "," + gradientStops[gradientStops.length - 1][1] + "%," + gradientStops[gradientStops.length - 1][2] + "%," + gradientStops[gradientStops.length - 1][3] / 100 + ")";
                 
+                
+                document.querySelectorAll('.gradientPin').forEach(pin=>{
+                    pin.classList.remove('selected');
+                });
+                gradientPin.classList.add('selected');
+                
                 this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
                 this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
                 this.gradientUpdate(gradientSpecimen, gradientStops, 90);
-
             } else {
                 if(pinPos<0){
                     pinPos=0;
@@ -869,7 +887,7 @@ class ColorChip {
 
         // Remove color stop
         const gradientRemoveBtn = document.createElement('div');
-        gradientRemoveBtn.textContent="-";
+        gradientRemoveBtn.textContent="Remove Current Stop";
         gradientRemoveBtn.classList.add('gradient_stopRemove');
         
         gradientRemoveBtn.addEventListener('click', ()=>{
@@ -883,6 +901,8 @@ class ColorChip {
             if(selectedStop>0) {
                 selectedStop--;
             }
+            pins[selectedStop].classList.add('selected');
+
             controlParts[7][1].max =  gradientStops.length - 1;
             controlParts[7][1].value =  selectedStop;
             
