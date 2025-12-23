@@ -264,7 +264,6 @@ class ColorChip {
         gradientExpression += ")";
         console.log(gradientExpression);
         tgt.style.backgroundImage = gradientExpression;
-        tgt.style.transform = "rotate(" + rotation + "deg)";
     }
 
     createSimpleColorControls () {
@@ -549,13 +548,26 @@ class ColorChip {
         const controlGroupInner = document.createElement('div');
         controlGroupInner.classList.add('controlGroupInner');
         this.controllerInner = controlGroupInner;
+
         
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
 
+        const gradientSpecimen = document.createElement('div');
+        gradientSpecimen.classList.add('gradientSpecimen');
+        controllerPanel.append(gradientSpecimen);
+
+        const specimensPos = [
+            gradientSpecimen.getBoundingClientRect().left,
+            gradientSpecimen.getBoundingClientRect().right
+        ];
+        
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
 
+            specimensPos[0] = gradientSpecimen.getBoundingClientRect().left;
+            specimensPos[1] = gradientSpecimen.getBoundingClientRect().right;
+            console.log(specimensPos);
             /* Adjust controller's position when it is on the bottom of screen */
             const top = controlGroupInner.getBoundingClientRect().top;
             const screenHeight = window.innerHeight;
@@ -574,10 +586,139 @@ class ColorChip {
         });
 
         const gradientStops = [
-            //[hue,saturation,brightness,alpha,position]
             [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 0],
             [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100],
         ];
+
+        // Pins
+        const pins = [];
+        gradientStops.forEach((stop, i) =>{
+            const gradientPin = document.createElement('div');
+            const gradientPinInner = document.createElement('div');
+    
+            gradientPin.classList.add('gradientPin');
+            gradientPinInner.classList.add('gradientPinInner');
+            gradientPin.dataset.index = i;
+            pins.push(gradientPin);
+    
+            gradientPin.append(gradientPinInner);
+            gradientSpecimen.append(gradientPin);
+            
+            gradientPin.style.top = "12px";
+            gradientPin.style.left = "calc("+ gradientStops[i][4] +"% - 0px)";            
+            gradientPinInner.style.background = "hsla(" + gradientStops[i][0] + "," + gradientStops[i][1] + "%," + gradientStops[i][2] + "%," + gradientStops[i][3] / 100 + ")";
+
+            // gradientPin.addEventListener('click', ()=>{
+                // if(i <= gradientStops.length - 1) {
+                //     controlParts[7][1].value =  gradientStops.length - 1;
+                // }
+            // });
+        });
+
+        let dragMode = 0;
+        let movingPin;
+        gradientSpecimen.addEventListener('mousedown', f=>{
+            if(f.target.classList.contains("gradientPin")) {
+                movingPin = f.target;
+                selectedStop = f.target.dataset.index;
+                
+                try {
+                    // selectedStop = f.target.dataset.index;
+                    controlParts[0][1].value = gradientStops[selectedStop][0];
+                    controlParts[1][1].value = gradientStops[selectedStop][1];
+                    controlParts[2][1].value = gradientStops[selectedStop][2];
+                    controlParts[3][1].value = gradientStops[selectedStop][3];
+                    controlParts[4][1].value = gradientStops[selectedStop][4];
+                } catch {
+                    console.log("Hah! You should visit \"http://boysandmen.jp\"");
+                }
+                dragMode = 1;
+            }
+        });
+        
+        gradientSpecimen.addEventListener('mousemove', f=>{
+            if(dragMode===1) {
+                let pinPos =  (f.clientX - specimensPos[0]);
+                if(pinPos<0) {
+                    pinPos=0;
+                }
+                if(pinPos > (specimensPos[1] - specimensPos[0])) {
+                    pinPos = specimensPos[1] - specimensPos[0];
+                }
+                movingPin.style.left = pinPos + "px";
+            }
+        });
+
+        gradientSpecimen.addEventListener('mouseup', f=>{
+            let pinPos = ((f.clientX - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100;
+            if(dragMode === 0) {
+                // Add a new stop
+                gradientStops.push([Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, pinPos]);
+                controlParts[7][1].max =  gradientStops.length - 1;
+                controlParts[7][1].value =  gradientStops.length - 1;
+                selectedStop = gradientStops.length - 1;
+                
+                controlParts[0][1].value = gradientStops[selectedStop][0];
+                controlParts[1][1].value = gradientStops[selectedStop][1];
+                controlParts[2][1].value = gradientStops[selectedStop][2];
+                controlParts[3][1].value = gradientStops[selectedStop][3];
+                controlParts[4][1].value = gradientStops[selectedStop][4];
+
+                    
+                const gradientPin = document.createElement('div');
+                const gradientPinInner = document.createElement('div');
+        
+                gradientPin.classList.add('gradientPin');
+                gradientPinInner.classList.add('gradientPinInner');
+                gradientPin.dataset.index = gradientStops.length - 1;
+                pins.push(gradientPin);
+        
+                gradientPin.append(gradientPinInner);
+                gradientSpecimen.append(gradientPin);
+                
+                gradientPin.style.top = "12px";
+                gradientPin.style.left = "calc("+ gradientStops[gradientStops.length - 1][4] +"% - 0px)";            
+                gradientPinInner.style.background = "hsla(" + gradientStops[gradientStops.length - 1][0] + "," + gradientStops[gradientStops.length - 1][1] + "%," + gradientStops[gradientStops.length - 1][2] + "%," + gradientStops[gradientStops.length - 1][3] / 100 + ")";
+
+                // gradientPin.addEventListener('click', ()=>{
+                //     if(i <= gradientStops.length - 1) {
+                //         controlParts[7][1].value =  gradientStops.length - 1;
+                //     }
+                    
+                //     try  {
+                //         selectedStop = i;
+                //         controlParts[0][1].value = gradientStops[i][0];
+                //         controlParts[1][1].value = gradientStops[i][1];
+                //         controlParts[2][1].value = gradientStops[i][2];
+                //         controlParts[3][1].value = gradientStops[i][3];
+                //         controlParts[4][1].value = gradientStops[i][4];
+                //     } catch {
+                //         console.log("Hah! You should visit \"http://boysandmen.jp\"");
+                //     }
+                // });
+                
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+
+            } else {
+                // pinPos = ((f.clientX - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100;
+                if(pinPos<0){
+                    pinPos=0;
+                }
+                if(pinPos > 100){
+                    pinPos=100;
+                }
+                gradientStops[selectedStop][4] = pinPos;
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90);    
+                movingPin = "";
+            }
+            dragMode = 0;
+        });
+        
+        
         let selectedStop = 0;
 
         const controlParts = [
@@ -598,9 +739,13 @@ class ColorChip {
                 gradientStops[selectedStop][2] = controlParts[2][1].value;
                 gradientStops[selectedStop][3] = controlParts[3][1].value;
                 gradientStops[selectedStop][4] = controlParts[4][1].value;
+
+                pins[selectedStop].children[0].style.background = "hsla(" + controlParts[0][1].value + "," + controlParts[1][1].value + "%," + controlParts[2][1].value + "%," + controlParts[3][1].value / 100 + ")";
+                pins[selectedStop].style.left = controlParts[4][1].value + "%";
                 
                 this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
                 this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90);
             });
         }
         
@@ -623,8 +768,10 @@ class ColorChip {
                 part[1].setAttribute('value',0);
             }
             
-            paragraph.append(part[0],part[1]);
-            controllerPanel.append(paragraph); 
+            if(i !== 4 && i !== 7){
+                paragraph.append(part[0],part[1]);
+                controllerPanel.append(paragraph); 
+            }
         });
 
         /* Define blend modes */
@@ -661,6 +808,7 @@ class ColorChip {
         controlParts[6][1].addEventListener('change', m=>{
            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+           this.gradientUpdate(gradientSpecimen, gradientStops, 90);
         });
         
         // Stop Selector
@@ -681,28 +829,6 @@ class ColorChip {
             }
         });
 
-        // Add color stop
-        const gradientAddBtn = document.createElement('div');
-        gradientAddBtn.textContent="+";
-        gradientAddBtn.classList.add('gradient_stopAdd');
-        gradientAddBtn.addEventListener('click', ()=>{
-            gradientStops.push([Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100]);
-            controlParts[7][1].max =  gradientStops.length - 1;
-            controlParts[7][1].value =  gradientStops.length - 1;
-            selectedStop = gradientStops.length - 1;
-            
-            controlParts[0][1].value = gradientStops[selectedStop][0];
-            controlParts[1][1].value = gradientStops[selectedStop][1];
-            controlParts[2][1].value = gradientStops[selectedStop][2];
-            controlParts[3][1].value = gradientStops[selectedStop][3];
-            controlParts[4][1].value = gradientStops[selectedStop][4];
-
-            
-           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-        });
-        controllerPanel.append(gradientAddBtn);
-
         // Remove color stop
         const gradientRemoveBtn = document.createElement('div');
         gradientRemoveBtn.textContent="-";
@@ -710,6 +836,12 @@ class ColorChip {
         
         gradientRemoveBtn.addEventListener('click', ()=>{
             if(gradientStops.length<=2) return;
+
+            pins[selectedStop].remove();
+            pins.splice(selectedStop,1);
+
+            console.log(pins);
+
             gradientStops.splice(selectedStop,1);
             if(selectedStop>0) {
                 selectedStop--;
@@ -725,6 +857,7 @@ class ColorChip {
             
            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
+           this.gradientUpdate(gradientSpecimen, gradientStops, 90);
         });
         controllerPanel.append(gradientRemoveBtn);
 
@@ -737,6 +870,7 @@ class ColorChip {
         this.controllerMaster.append(controlGroup);
         this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
         this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
+        this.gradientUpdate(gradientSpecimen, gradientStops, 90);
     }
 
     deleteColorChip () {
