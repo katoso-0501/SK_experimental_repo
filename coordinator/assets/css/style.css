@@ -136,8 +136,14 @@ body {
     min-width: 220px;
     border: 1px solid #E0E0E0;
     padding: 16px;
-    border-radius: 8px;;
+    border-radius: 8px;
     height: 0.1px;
+
+    @media (width <= 768px) {
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
 }
 
 .controlGroupInner.onBottom {
@@ -328,9 +334,9 @@ body {
 
 .char__controller  div.gradientSpecimen {
     width: 100%;
-    height: 16px;
+    height: 42px;
     background-color: #AAAAAA;
-    margin: 0 0 56px;
+    margin: 0 0 14px;
     position: relative;
 }
 
@@ -343,6 +349,12 @@ body {
     filter: drop-shadow(0 0 4px #9d9b9b55);
     transform: translateX(-50%);
 }
+
+    .char__controller  div.gradientPin.selected{
+        background: #828282;
+}
+
+
 .char__controller  div.gradientPin:before {
     content: "";
     position: absolute;
@@ -354,9 +366,15 @@ body {
     background: #dadada;
 }
 
+.char__controller  div.gradientPin.selected:before{
+        background: #828282;
+}
+
 .char__controller  div.gradientPinInner {
-    width: 15px;
-    height: 23px;
+    width: 13px;
+    height: 19px;
+    border: 2px solid #000000;
+    border-radius: 4px;;
     background-color: #000000;
 }
 
