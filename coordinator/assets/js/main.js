@@ -201,6 +201,22 @@ class EddyA extends Jonny {
     }
 }
 
+class EddA extends Jonny {
+    constructor() {
+        super();
+        this.img.src = "assets/images/eddA_original.webp";
+        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.add('eddA');
+    }
+    
+    loadIndependentParts () {
+        this.createColormat('Jacket','char__jacket');
+        this.createColormat('Hat','char__hat');
+        this.createColormat('Dollar','char__dollar');
+        this.createColormat('Printer','char__printer');
+    }
+}
+
 //  ______________________
 // Character classes end
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -231,6 +247,7 @@ class ColorChip {
 
         this.controller = undefined;
         this.controllerInner = undefined;
+        this.gradientMode = "linear";
 
         if(colorMode === "simple") {
             this.createSimpleColorControls();
@@ -731,9 +748,9 @@ class ColorChip {
                 });
                 gradientPin.classList.add('selected');
                 
-                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
             } else {
                 if(pinPos<0){
                     pinPos=0;
@@ -743,9 +760,9 @@ class ColorChip {
                 }
                 gradientStops[selectedStop][4] = pinPos;
                 controlParts[4][1].value = pinPos;
-                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(gradientSpecimen, gradientStops, 90);    
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);    
                 movingPin = "";
             }
             dragMode = 0;
@@ -767,9 +784,9 @@ class ColorChip {
             }
             gradientStops[selectedStop][4] = pinPos;
             controlParts[4][1].value = pinPos;
-            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-            this.gradientUpdate(gradientSpecimen, gradientStops, 90);    
+            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+            this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);    
             movingPin = "";
             dragMode = 0;
         });
@@ -799,9 +816,9 @@ class ColorChip {
                 pins[selectedStop].children[0].style.background = "hsla(" + controlParts[0][1].value + "," + controlParts[1][1].value + "%," + controlParts[2][1].value + "%," + controlParts[3][1].value / 100 + ")";
                 pins[selectedStop].style.left = controlParts[4][1].value + "%";
                 
-                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-                this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
             });
         }
         
@@ -862,9 +879,9 @@ class ColorChip {
 
         // Gradient Rotation
         controlParts[6][1].addEventListener('change', m=>{
-           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-           this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+           this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
         });
         
         // Stop Selector
@@ -912,11 +929,37 @@ class ColorChip {
             controlParts[3][1].value = gradientStops[selectedStop][3];
             controlParts[4][1].value = gradientStops[selectedStop][4];
             
-           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-           this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+           this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+           this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+           this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
         });
         controllerPanel.append(gradientRemoveBtn);
+
+        // Gradient Mode Sel
+        controllerPanel.append(document.createElement("br"));
+        const gradientModeRadio = 
+        [
+            [document.createElement('input'),"Linear"],
+            [document.createElement('input'),"Radial"],
+        ]
+
+        gradientModeRadio.forEach((radio)=>{
+            const label = document.createElement('label');
+            radio[0].type = "radio";
+            radio[0].name = "gradientType" + this.chipID;
+            radio[0].value = String(radio[1]).toLowerCase();
+
+            label.addEventListener('click', (e)=>{
+                this.gradientMode = radio[0].value;
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
+            });
+
+            label.append(radio[0]);
+            label.innerHTML += radio[1];
+            controllerPanel.append(label);
+        })
 
         // Append Controller on Controller Master
         controlGroup.innerHTML = '';
@@ -925,9 +968,9 @@ class ColorChip {
         controlGroup.append(controlGroupInner);
 
         this.controllerMaster.append(controlGroup);
-        this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value);
-        this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value);
-        this.gradientUpdate(gradientSpecimen, gradientStops, 90);
+        this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+        this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+        this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
     }
 
     deleteColorChip () {
@@ -1080,13 +1123,17 @@ class ColorMat {
         b.preventDefault();
         characters.push(new EddyA());
     });
+    document.querySelector('.character_adder__eddA').addEventListener('click', b=>{
+        b.preventDefault();
+        characters.push(new EddA());
+    });
     
     // Print button
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
 }
 
 
-const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed,.eddyA';
+const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed,.eddyA,.eddA';
 /* ________________________
 Theatre Mode
 _________________________*/
@@ -1190,7 +1237,7 @@ function moveSnowdrop () {
 }
 
 function wipeAllSnowdrops () {
-    document.querySelectorAll('.jonny,.jimmy,.rolf,.kevin,.ed').forEach(chars=>{chars.classList.remove('filterHardlight')});
+    document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterHardlight')});
     document.querySelectorAll('.snowDrop').forEach(f=>f.remove());
     snowDropStats = [];
 }

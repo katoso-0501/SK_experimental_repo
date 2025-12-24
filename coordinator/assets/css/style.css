@@ -536,7 +536,8 @@ Theatre mode
 .theatreMode .rolf.filterHardlight,
 .theatreMode .kevin.filterHardlight,
 .theatreMode .ed.filterHardlight,
-.theatreMode .eddyA.filterHardlight  {
+.theatreMode .eddyA.filterHardlight,
+.theatreMode .eddA.filterHardlight {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
@@ -546,7 +547,8 @@ Theatre mode
 .theatreMode .rolf.filterMultiply,
 .theatreMode .kevin.filterMultiply,
 .theatreMode .ed.filterMultiply,
-.theatreMode .eddyA.filterMultiply {
+.theatreMode .eddyA.filterMultiply,
+.theatreMode .eddA.filterMultiply {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }
@@ -556,7 +558,8 @@ Theatre mode
 .theatreMode .rolf.filterOverlay,
 .theatreMode .kevin.filterOverlay,
 .theatreMode .ed.filterOverlay,
-.theatreMode .eddyA.filterOverlay{
+.theatreMode .eddyA.filterOverlay,
+.theatreMode .eddA.filterOverlay{
     -webkit-mix-blend-mode: overlay;
     mix-blend-mode: overlay;
 }

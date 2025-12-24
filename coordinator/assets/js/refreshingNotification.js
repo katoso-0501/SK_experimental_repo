@@ -5,4 +5,5 @@ function refreshingNotification () {
     setTimeout(()=>{notification.play();},300000);
     setTimeout(()=>{notification.play();},360000);
     setTimeout(()=>{notification.play();},420000);
+    setTimeout(()=>{window.location.reload()},480000);
 }
