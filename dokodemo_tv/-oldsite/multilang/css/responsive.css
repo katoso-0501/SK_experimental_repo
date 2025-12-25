@@ -1,0 +1,110 @@
+@charset "utf-8";
+/* SMP&Tablets */
+@media only screen and (max-width:768px){
+	section {padding:50px 0;width:100%;}
+	.containers{width:99%;margin:0 auto;}
+	p{width:80%;margin:0 auto;}
+	/*   Header  */
+	#header-menu{width:95%;padding:20px 0 40px;margin:0 2.5%;font-size:16pt;}
+	header h1{text-align:center;font-size:32px;padding:40% 0 8%;}
+	header{background-size:5px, 150%;}
+	
+	/*   Index   */
+	.index-popup *{font-size:12pt;}
+	.index-popup{height:70px;margin:0;padding:0px 0 50px;}
+	.index-popup:after{content:"";}
+	
+	.index-popup h3{width:30%;padding:1% 2.5%;}
+	.index-popup p{display:block;float:left;padding:0;width:60%;margin-left:5%;padding-top:2%;}
+	
+	/*  Services */
+	#service{background-size:5px, 180%;}
+
+	#service-todo{margin-bottom:5%;} #service-todo li{font-size:12pt;	width:45%;margin:2% 1%;padding:10px 1%;}
+	
+	#service-extra-things{width:93%;margin:30px auto;padding:10px 1%;}
+	#service-extra-things li{width:46%;margin:2% 1%;padding:0.1% 0.5%;border-left:#3F6184 3px solid;float:left;height:50px;}
+	#service-extra-things h3{width:120px;padding:5px 15px;margin:0 auto 10px;}
+	
+	#we-can-speak-them p{font-size:16pt;margin:30px auto 30px auto;width:70%;}
+	table.available_languages{width:80%;margin:auto;margin-top:-20px;margin-bottom:30px;}
+	table.available_languages td{font-size:16pt;font-weight:bold;padding:20px 0;}
+	
+	/* Consulting */
+	#consulting .consult-requests{border-radius:5px;font-size:12pt;background:#3F6184;color:white;width:30%;padding:20px 5%;margin:0 5%;margin-bottom:80px;float:left;position:relative;}
+	#consulting .consult-requests::after{position:absolute;display:block;content:"";background:url(../img/balloons.png) no-repeat center;top:105%;left:0%;width:100%;height:40px;}
+	#consult-creambread p{font-size:16pt;clear:both;}
+	
+	/* Charges */
+	.charges-content{width:40%;padding:0% 1%;margin:2% 4%;}
+	.charges-content h3{padding-bottom:5px;border-bottom:#999 solid 1px;height:50px;}
+	.charges-content .price:after{font-size:16pt;padding-right:0;}
+	
+	/* FAQ */
+	.faq-contents p{width:96%;}
+	
+	/* Contact */
+	form{width:100%;margin:0;}
+	form p{margin:50px 0;width:100%;}
+	form label{width:30%;display:inline-block;}
+	form input,form textarea{width:60%;}
+	form button{width:35%;padding:20px 2.5%;margin:0 5%;font-size:15pt;}
+	form textarea{height:120px;}
+	/* About Us */ #aboutus p{margin-left: auto;margin-right:auto;}
+	/* Footer ->*/footer a{color:#333;width:50%;padding:5px 0;margin:10px 0;}
+	/* Header Menu */
+	nav ul{margin:20% auto;width:100%;background:red;}
+	nav a{display:block;color:#48c3ff;font-weight:bold;text-decoration:none;width:25%;padding:20% 0 1% 0;text-align:center;font-size:10pt;border:#48C3FF 3px solid;margin:2% 3%;float:left;}
+}
+
+/* Smartphones */
+@media only screen and (max-width:512px){
+	section{padding:15% 0;}
+	
+	h2{margin-top:-2%;font-size:150%;}	p{font-size:12pt;margin:5% auto;}
+	
+	header h1{font-size:20px;padding:50% 0 9%;}
+	#header-menu a{height:20px;}
+	.menu-bar1,.menu-bar2,.menu-bar3{width:30px;height:3px;margin:6px 0;}
+	.change .menu-bar1 {-webkit-transform:rotate(-45deg) translate(-6px, 6px);transform:rotate(-45deg) translate(-6px, 6px);}.change .menu-bar2 {opacity:0;}.change .menu-bar3 {-webkit-transform:rotate(45deg) translate(-7px, -7px);transform:rotate(45deg) translate(-7px, -7px);}
+	
+	#index{margin-top:-10%;}
+	
+	.index-popup{height:inherit;margin:10px 0;padding:0;}
+	.index-popup h3{float:none;width:95%;margin-bottom:0;text-align:center;} .index-popup p{float:none;width:90%;}
+	.index-popup h3:after{content:"";position:absolute;border:10px solid transparent;border-top-color:#3F6184;top:100%;left:50%;}
+
+	#service-todo li{width:93%;padding:2% 2% 2%;	font-size:10pt;	float:none;transform:skewY(0);	}
+	#service-extra-things h3{font-size:10pt;padding:5px 2px;}
+	#service-extra-things li{width:90%;margin:5% auto;padding:0.1% 2% 0.1%;float:none;height:inherit;font-size:10pt;}
+	#we-can-speak-them p{font-size:12pt;margin:0px auto 30px auto;width:95%;}
+	table.available_languages{width:100%;}
+	table.available_languages td{padding:10px 0;font-size:14pt;}
+	
+	#consulting .consult-requests{color:white;width:92%;padding:2px 4%;margin:0 0;margin-bottom:60px;float:none;}
+	#consulting .consult-requests:after{background-size:30px;height:20px;}
+	
+	/* Charges */
+	.charges-content{width:95%;padding:0;margin:20px auto;float:none;}
+	.charges-content h3{font-size:15px;margin:0;padding:0 1%;border-bottom:none;height:inherit;width:57%;text-align:left;display:inline-block;}
+	.charges-content .price{display:inline-block;border-left:#999 solid 1px;width:40%;font-size:18pt;margin:0;padding:5% 0;}
+	.charges-content .price:after{font-size:12pt;}
+	
+	/* FAQ  */
+	.faq-contents{width:95%; margin:0 2.5% 5%;}
+	.faq-contents h3:before{}
+	.faq-contents h3{}
+	.faq-contents h3:after{border-width:10px;}
+	
+	
+	/* Contact */
+	form{width:100%;margin:0;}	form p{margin:20px 1%;width:98%;}
+	form label{width:100%;display:block;font-size:12pt;}
+	form input,form textarea{width:97%;padding:3% 1% 3%;margin:0;font-size:10pt;}
+	form textarea{height:70px;} form button{display:block;width:90%;padding:5px 0;margin:10% auto;font-size:12pt;}
+	
+	/* Footer */
+	footer a{float:none;width:90%;padding:2% 0;margin:5px auto;text-align:left;border-bottom:1px #777 dashed;padding-left:5%;}
+	nav a{width:40% !important;padding:25% 0 5% !important;font-size:8pt !important;border:#48C3FF 2px solid !important;margin:1% 4% !important;}
+
+}

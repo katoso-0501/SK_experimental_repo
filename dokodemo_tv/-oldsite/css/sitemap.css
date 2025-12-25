@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+#sitemap .contents{margin-top:-30px;}
+#sitemap h2{font-size:16pt;text-align:center;}
+
+#sitemap dl{margin:30px 240px 0px; font-size:14pt;}#sitemap dt,#sitemap dd{margin: 10px 0;}#sitemap dd{padding-left:25px;font-size:12pt;}
+#sitemap a{color:#333;text-decoration:none;display:block;border-bottom:1px #888 dashed;padding-bottom:6px;}
+
+@media only screen and (max-width:768px){
+	#sitemap h2{font-size:16pt;text-align:center;margin-top:20px;}
+	#sitemap dl{margin:30px 2.5% 0px;width:95%;font-size:14pt;}
+}
+@media only screen and (max-width:512px){
+	#sitemap dt{font-size:12pt;}
+}

@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* This defines the background for each section. */
+header{background:url("../img/dots.png"),url("../img/download.jpg") center repeat-y, #8DDDFF;}
+
+#service{background:url("../img/dots.png"), url("../img/svc_bg.jpg") center no-repeat,#FDFBEB;background-attachment:fixed;}
+
+#charges{color:#fff;background:#3F6184;}
+
+#faq,#aboutus{color:#fff;background:#3F6184;}
+
+#typhoon-direct-hit{background:url("../img/dots.png"),url("../img/typhoons.jpg") center no-repeat;background-attachment:fixed;background-size:1000%,100%;}
+
+/* * * * * * * * * * HEADER * * * * * * * * * */
+#header-menu{font-size:18pt;margin-top:6px;z-index:1020;position:fixed;transition:0.5s;width:50%;margin:0 25%;padding-top:20px;}
+#header-menu.change{color:white;}
+#header-menu a{display:block;margin:-40px 0 0 auto;color:#333333;text-decoration:none;width:35px;}
+
+.menu-bar1,.menu-bar2,.menu-bar3{width:35px;height:5px;background-color:#333; margin:6px 0;transition:0.5s;}
+/* Rotate 1st bar */		.change .menu-bar1{-webkit-transform:rotate(-45deg) translate(-9px, 6px);transform:rotate(-45deg) translate(-9px, 6px); background:white;}
+/* Fade out the 2nd bar */	.change .menu-bar2{opacity:0;}
+/* Rotate last bar */		.change .menu-bar3{-webkit-transform:rotate(45deg) translate(-8px, -8px);transform:rotate(45deg) translate(-8px, -8px); background:white;}

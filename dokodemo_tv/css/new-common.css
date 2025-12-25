@@ -1,0 +1,335 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body, h1, h2, h3, h4, h5, h6, p, blockquote, ul, ol, li, table, tbody, tr, td, th , nav, a, span, div, section, figure, figcaption, article, main {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background-color:#448ACA;
+	overflow-y: scroll;
+}
+body, input, textarea, select {
+	font-family:"Yu Gothic",'YuGothic',"游ゴシック","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	/*font-family: "sans-serif";*/
+}
+.floatables:after {
+	display: block;
+	clear: both;
+	content: "";
+}
+.contents {
+	width: 1040px;
+	margin-left: auto;
+	margin-right: auto;
+}
+header{padding-bottom:70px;}
+header .for-pc{
+	background-color:#353535;
+	color:white;
+	position:fixed;
+	width:100%;
+	box-shadow:0 1px 6px #222;
+	z-index:20000;
+}
+header .for-pc h1 a, header .for-pc nav a{
+	background:none;
+	transition:0.4s;
+}
+header .for-pc h1 a:hover,header .for-pc nav a:hover{
+	background-color:#585858; 
+}
+header .for-pc h1 a{line-height: 0;width:120px;padding:10px 0px;float: left;}
+header .for-pc h1 img{height:50px;}
+header .for-pc nav{
+	
+	float: right;
+	width:60%;
+	max-width:1000px;
+}
+header .for-pc nav a{line-height: 0;text-align: center;padding:20px 0;display: block;float: left;color:white;text-decoration:none;font-size:11pt;width:20%;}
+header .for-pc nav a img{line-height: 0;vertical-align: middle;margin-right: 10px;}
+header .for-pc div{width:325px;margin:10px 10px 10px 0;float: right;}
+header .for-pc div p{
+	float: left;line-height: 0;margin-right: 15px;
+}
+header .for-pc div img{
+	margin-top:8px;
+}
+header .for-pc div .goInquiry{
+	float: right;
+	display: block;
+	font-weight: bold;
+	background-color:#D4B73D;
+	color:white;
+	text-decoration: none;
+	width:130px;
+	line-height: 0;
+	padding:16px 0;
+	text-align: center;
+}
+header .for-pc div .goInquiry:hover{background-color:#E8DA9B;}
+header .for-pc a.for-smp, .smp-menu{display: none;}
+section{
+	background:white;
+}
+h2{
+	font-size:17pt;
+	text-align:center;
+	line-height: 20pt;
+	padding-bottom:30px;
+	margin-bottom:50px;
+	background:url(../img/h2_ornament.png) bottom no-repeat;
+}
+#index h2{
+	background:none;
+	margin:0;
+	padding:0;
+}
+#sitemaps {
+	background-color: #444444;
+	padding: 15px 0;
+}
+#sitemaps h2 {
+	background: url(../img/header_h1.png) left center no-repeat;
+	font-size: 0;
+	float: left;
+	padding:0 !important;
+	margin:0 !important;
+	width: 180px;
+	height: 60px;
+}
+#sitemaps .goInquiry {
+	display: block;
+	float: right;
+	margin-right: 20px;
+	text-align: center;
+	font-size: 11pt;
+	line-height: 0;
+	padding: 20px 0;
+	margin: 2px 0;
+	background-color: #D4B73D;
+	width: 220px;
+	color: white;
+	font-weight:bold;
+	text-decoration: none;
+	transition:0.4s;
+}
+#sitemaps .goInquiry:hover{
+	background-color:#E8DA9B;
+}
+#sitemaps nav{
+	float: left;
+	line-height: 0;
+	padding:30px 0;
+}
+#sitemaps nav a {
+	margin: 0 25px 0 0;
+	padding-left:20px;
+	font-size: 11pt;
+	text-decoration: none;
+	color: white;
+	background:url(../img/sitemaps_nav_icon.png) left no-repeat;
+	text-align:center;
+}
+#sitemaps nav a:hover{
+	text-shadow:0 0 3px white;
+}
+#copy {
+	line-height: 0;
+	padding: 30px 0;
+	background: #448aca;
+	text-align: center;
+	color: white;
+	font-size:12pt;
+}
+@media only screen and (max-width:1280px){
+	header{padding-bottom:120px;}
+	header .for-pc nav{
+		clear: both;
+		float:none;
+		width:100%;
+		max-width: none;
+		margin:0;
+		padding:0;
+	}
+	header .for-pc nav a{
+		padding:10px 0;
+		background:#626262;
+	}
+	header .for-pc nav a:hover{
+		background-color:#909090;
+	}
+	
+}
+@media only screen and (max-width:1040px){
+	
+	#sitemaps .contents{
+		width:95%;
+	}
+}
+@media only screen and (max-width:960px){
+	.contents {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	/*
+	body, input, textarea, select {
+		font-family: "sans-serif";
+	}*/
+	header{padding-bottom:103px;}
+	
+	h2{
+		font-size:14pt;
+		background-size:150px;
+	}
+	header .for-pc h1 a{
+		width:inherit;
+		padding:5px 5px;
+	}
+	header .for-pc h1 img{height:40px;}
+	header .for-pc nav a{line-height:0;font-size:8.5pt;padding:10px 0 15px;}
+	header .for-pc nav a img{
+		display:block;
+		width:24px;
+		margin:0 auto 5px;
+	}
+	header .for-pc div {width: 460px;}
+	header .for-pc div br{
+		display: none;
+	}
+	header .for-pc div p img{
+		margin-left: 15px;
+		height:12px;
+	}
+	header .for-pc div .goInquiry{
+		padding:8px 0;
+		font-size:10pt;
+	}
+	p nav a:hover{
+		background-color:#8A8A8A;
+	}
+	#sitemaps h2{display: none;}
+	#sitemaps nav{padding:21px 0;}
+	#sitemaps nav a{font-size:9.6pt;}
+	#sitemaps .goInquiry{padding:12px 0;}
+}
+@media only screen and (max-width:512px){
+	header{padding-bottom:60px;}
+	header .for-pc h1 a{
+		padding:10px 5px;
+	}
+	header .for-pc h1 a img{
+		height:40px;
+	}
+	header .for-pc nav,header .for-pc div{
+		display: none;
+	}
+	header .for-pc a.for-smp{
+		display: block;
+		float: right;
+		margin:0;
+		padding:29px 15px 30px;
+		font-size:0;
+	}
+	header .for-pc a span{
+		display: block;
+		width:30px;
+		height:1px;
+		background:white;
+		font-size:0;
+		position:relative;
+	}
+	header .for-pc a span:before{
+		content: "";
+		position: absolute;
+		border-top:1px solid white;border-bottom:1px solid white;
+		width:100%;height:20px;
+		top:-10px;
+		left:0;
+	}
+	header .for-smp .goto-top{
+		height:60px;
+		width:40%;
+		background:url(../img/header_h1.png) 0 center no-repeat;
+		background-size:130px;
+	}
+	
+	header .for-smp .goInquiry{
+		font-size:10pt;
+		padding:18px 0;
+		margin:11px 2% 11px 0;
+		width:40%;
+	}
+	.smp-menu{
+		background:rgba(0,0,0,0.7);
+		position: fixed;
+		width:100%;
+		height:100%;
+		top:0;
+		left:0;
+		z-index:70000;
+	}
+	.smp-menu > div.first{
+		float: left;
+		width:240px;
+		background:#202020;
+		height:100%;
+	}
+	.smp-menu .first a{
+		display: block;
+		color:white;
+		text-decoration: none;
+		font-size:10pt;
+		line-height: 0;
+		padding:5px 5px;
+	}
+	.smp-menu .first a img{vertical-align: middle; width:30px;}
+	.smp-menu .first p{margin:10px 10px 0;}
+	.smp-menu div.second{
+		float:right;
+		background:transparent;
+		height:100%;
+		width : calc(100% - 240px);
+	}
+	#sitemaps nav{float: none;text-align: center;padding:0 0 10px;}
+	#sitemaps nav a{font-size:9.6pt;}
+	#sitemaps nav a:last-child{margin:0;}
+	#sitemaps .goInquiry{
+		clear: both;
+		float: none;
+		margin:0 auto 30px;
+		padding:13px 0;
+	}
+	#copy{
+		font-size:10pt;
+		padding:20px 0;
+	}
+}
+@media only screen and (max-width:239px){
+	body{
+		overflow:hidden;
+	}
+	header .for-pc,header .for-smp,header .for-smp *{display: none;}
+	header{
+		background:#eeeeee;
+		position: fixed;
+		z-index:100000;
+		width:100%;
+		height:100%;
+		top:0;
+		left:0;
+		color:white;
+		content:"さすがにこれ以上は狭められません！画面サイズを広くしてもう一度お試しください。";
+	}
+	header:after{
+		display: block;
+		padding:35% 0 0;
+		color:black;
+		content:"さすがにこれ以上は狭められません！画面サイズを広くしてもう一度お試しください。";
+	}
+	header .for-smp .goInquiry{
+		display: none;
+	}
+}

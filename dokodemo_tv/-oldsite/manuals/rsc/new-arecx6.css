@@ -1,0 +1,291 @@
+@charset "utf-8";
+/* CSS Document */
+
+#arecx6-manual{
+	background:#FFE9D4;
+}
+
+#manual-title{
+	text-align:center;
+	font-size:24pt;
+	padding:20px 0;
+	margin:0 0 20px;
+	background:#FF8710;
+	color:white;
+}
+#manual-container{
+	width:960px;
+	position:relative;
+}
+#side-bar{
+	width:206px;
+	position:absolute;
+	left:0;top:0;
+	padding:5px 5px;
+	border:2px solid red;
+	background:white;
+}
+#side-bar dd{text-indent:10px;}
+#side-bar a{
+	display:block;
+	padding:5px 5px;
+	margin:2px 0;
+	color:#E63A01;
+	text-decoration:none;
+}
+#side-bar a:hover{
+	background:#E63A01;
+	color:white;
+}
+
+#side-bar dt a{font-size:11pt;font-weight:900;}
+#side-bar dd a{font-size:10pt;}
+
+#main-manual{
+	width:720px;
+	padding:0 0 10px;
+	margin-left:240px;
+	background:white;
+	box-shadow:0 0 6px;
+}
+#main-manual h2{
+	background:#E7010F;
+	width:680px;
+	color:white;
+	font-size:14pt;
+	padding:5px 10px;
+	position:relative;
+	margin:40px auto;
+}
+/*
+#main-manual h2:before{
+	 position:absolute;
+	 content:"";
+	 width:170%;height:100%;border-bottom:2px #E7010F solid;left:0;top:0;
+}
+#main-manual h2:after{
+	position:absolute;
+	content:"";
+	width:30px;height:100%;background:#E7010F;top:0;left:370px;transform:skewX(20deg);
+}
+*/
+#main-manual p{
+	margin:10px 10px;
+	font-size:11pt;
+}
+#here-is-a-support-account {
+	background:#E7010F;
+	width:480px;
+	margin:20px auto;
+	padding:0;
+	text-align:center;
+	border-radius:5px;
+}
+#here-is-a-support-account p{
+	font-size:16pt;
+	color:white;
+	padding:5px 0;
+	margin:0;
+}
+
+#here-is-a-support-account address{
+	font-style:normal;
+	font-size:20pt;
+	color:white;
+	padding:5px 0;
+	margin:0;
+}
+#here-is-a-support-account .notice{
+	font-size:10pt;
+}
+#main-manual ol li{
+	list-style-type:none;
+	background:#f0f0f0;
+	margin:25px auto;
+	width:666px;
+	padding:10px 10px;
+	border:2px #aaa solid;
+	box-shadow:2px 2px 6px #aaa;
+}
+#main-manual ol li img{display:block;margin:0 auto;width:90%;}
+#donot-change-settings{
+	width:95%;border:3px red solid;
+	margin:20px auto;
+	background:url('../img/alerts.png') 100% 100% no-repeat,black;
+}
+#donot-change-settings h3{
+	text-align:center;
+	background:red;
+	color:black;
+	padding:5px 0;
+	
+}
+#donot-change-settings p{
+	color:red;
+	margin:10px 5%;
+}
+#main-manual article{
+	padding:5px 0;margin:15px 0;
+}
+#main-manual article h3{color:white;background:blue;font-weight:normal;padding:2px 10px;width:92%;margin:5px auto;font-size:13pt;}
+.setting-vpn-account{
+	background:#219AFF;
+	width:90%;
+	padding:10px 2%;
+	margin:10px auto;
+}
+.setting-vpn-account th{
+	color:white;
+	font-weight:700;
+	font-size:12pt;
+	width:40%;
+}
+.setting-vpn-account td{
+	background:white;
+	padding:5px;
+	font-weight:400;
+	border:1px #666 solid;
+	margin:35px 0;
+	font-size:11pt;
+}
+#ppap-for-win7 img{width:540px;}
+#ppap-for-iphone .notice,#ppap-for-macosx .notice{
+	color:red;
+	font-size:11pt;
+	font-weight:700;
+}
+#searching-program dt{
+	font-weight:bold;
+	margin:9px 0;
+	border-left:5px #E7010F solid;
+	padding:0 5px;
+}
+#searching-program dd{
+	margin:0 10px;
+}
+@media only screen and (max-width:768px){
+	#manual-container{
+		width:100%;
+	}
+	#manual-title{font-size:15pt;}
+	#side-bar{width:99.4%;padding:0;border:none;left:0;background:none;cursor:pointer;z-index:977;}
+	#side-bar:before{
+		content:"もくじ";display:block;text-align:center;color:white;padding:5px 0;background:red;width:100.5%;
+	}
+	#side-bar:hover:before{background:#FF6063;}
+	#side-bar dl{
+		display:none;
+		position:relative;
+		background:white;
+		width:98%;
+		padding:5px 1%;
+		border:2px solid red;
+	}
+	#side-bar dt{display:block;width:100%;}
+	#side-bar dt a{font-size:14pt}
+	#side-bar dd{display:inline-block;padding:0;margin:0;text-align:center;text-indent:0;}
+	#side-bar dd a{padding:4px 15px;margin:0;text-align:center;text-indent:0;}
+	
+	#main-manual{
+		width:100%;
+		margin-left:0;
+		margin-top:50px;
+	}
+	#main-manual h2{width:90%;margin:15px auto 20px;font-size:13pt;}
+	#main-manual p{width:95%;margin:5px auto;text-align:left;}
+	
+	#here-is-a-support-account{
+		width:360px;
+	}
+	#here-is-a-support-account p{
+		font-size:12pt;
+		text-align:center;
+	}
+	#here-is-a-support-account address{text-align:center;width:99%;margin:5px auto;font-size:17pt;font-weight:bold;}
+	#here-is-a-support-account .notice{text-align:center;}
+	
+	#main-manual ol li{
+		margin:25px auto;
+		width:83%;
+		padding:10px 2%;
+		border:2px #aaa solid;
+		box-shadow:2px 2px 6px #aaa;
+	}
+}
+
+@media only screen and (max-width:512px){
+	#manual-title{
+		width:260px;margin:0 auto;
+		padding:10px 10px;
+		font-size:11pt;
+		font-weight:bold;
+	}
+	
+	#side-bar{width:280px;padding:0;border:none;left:4px;background:none;cursor:pointer;z-index:977;}
+	#side-bar:before{
+		padding:5px 0;background:red;font-size:11pt;width:280px;
+	}
+	#side-bar dl{
+		display:none;
+		width:266px;
+		padding:5px 5px;
+		border:2px solid red;
+	}
+	#side-bar dt{display:block;}
+	#side-bar dt a{font-size:11pt;}
+	#side-bar dd{display:block;width:88%;text-indent:0;margin:0 auto;}
+	#side-bar dd a{padding:4px 1%;margin:0;text-align:left;font-size:10pt;}	
+	
+	#main-manual h2{width:90%;margin:15px auto 20px;font-size:11pt;}
+	#main-manual p{width:95%;margin:5px auto;text-align:left;font-size:10pt}
+	
+	#here-is-a-support-account {width:230px;padding:5px 5px;}
+	#here-is-a-support-account p{
+		text-align:center;padding:0;
+	}
+	#here-is-a-support-account address{width:100%;font-size:12pt;}
+	#here-is-a-support-account .notice{
+		font-size:8pt;
+		width:120px;
+	}
+	#main-manual ol li h3{font-size:12pt;}
+	#main-manual strong{display:block;font-size:8pt;}
+	
+	#donot-change-settings{
+		width:95%;border:3px red solid;
+		margin:20px auto;
+		background:url('../img/alerts.png') 100% 100% no-repeat,black;
+	}
+	#main-manual #donot-change-settings h3{
+		font-size:10pt;
+		width:90%;
+		padding:5px 5%;
+	
+	}
+	#donot-change-settings p{
+		color:red;
+		width:90%;
+		margin:10px auto;
+	}
+	#main-manual article h3{
+		width:80%;
+	}
+	.setting-vpn-account{
+	}
+	.setting-vpn-account th{
+		display:block;
+		width:90%;
+		font-size:10pt;
+	}
+	.setting-vpn-account td{
+		display:block;
+		margin:5px 0;
+		font-size:9pt;
+	}
+	#ppap-for-iphone .notice,#ppap-for-macosx .notice{
+		width:80%;
+	}
+	#searching-program {margin:10px 0;}
+	#searching-program dt{font-size:11pt;}
+	#searching-program dd{font-size:10pt;}
+}

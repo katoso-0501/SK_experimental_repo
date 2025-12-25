@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	background: #fff3ed;
+background: -moz-linear-gradient(left, #fff3ed 0%, #ffffff 50%, #fff3ed 100%);
+background: -webkit-linear-gradient(left, #fff3ed 0%,#ffffff 50%,#fff3ed 100%);
+background: linear-gradient(to right, #fff3ed 0%,#ffffff 50%,#fff3ed 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff3ed', endColorstr='#fff3ed',GradientType=1 );
+}
+
+article{padding:20px 0;}
+h2{
+	position: relative;
+	padding: 0.5em;
+	background:url(../img/promotion_h2.jpg) repeat-x top,url(../img/promotion_h2.jpg) repeat-x bottom,#E73623;
+	color: white;
+	margin:0 0 30px 0;
+}
+h2::before {
+	position: absolute;
+	content: '';
+	top: 100%;
+	left: 0;
+	border: none;
+	border-bottom: solid 15px transparent;
+	border-right: solid 20px rgb(149, 158, 155);
+}
+
+h3{font-size:18pt; margin-bottom:20px;}
+
+p{padding:0;margin:10px 0;width:100%;}
+.promotion-initial-price{margin:-10px 0 20px 0; font-size:16px;}
+
+#promotion-arecx6{background:url(../img/arecx6.png) no-repeat right center;background-size:240px;}
+#promotion-garapon{background:url(../img/garapon.png) no-repeat right center;background-size:240px;}
+
+.promotion-before-price{font-size:16pt;text-decoration:line-through;padding:0 20px;}
+.promotion-after-price{
+	color:red;
+	font-size:20pt;
+	padding:0 20px;
+	font-weight:bold;
+}
+.promotion-after-price .price{font-size:36pt;}
+@media only screen and (max-width:360px){
+	.promotion-after-price .price{font-size:26pt;}
+}
+@media only screen and (max-width:767px){
+	h3{text-align:center;}article{padding-top:180px;}
+	#promotion-arecx6{background:url(../img/arecx6.png) no-repeat top center;background-size:240px;}
+	#promotion-garapon{background:url(../img/garapon.png) no-repeat top center;background-size:240px;}
+}

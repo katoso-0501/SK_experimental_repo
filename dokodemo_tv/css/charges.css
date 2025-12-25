@@ -1,0 +1,305 @@
+@charset "utf-8";
+/* CSS Document */
+.simulation_wrapper a{
+	cursor: pointer;
+}
+.simulation_wrapper h3{
+	font-size:15pt;
+}
+.simulation_wrapper h3 span:before{
+	content:"STEP";
+	position:absolute;
+	font-size:12pt;
+	color:black;
+	display: block;
+	left:-50px;
+}
+.simulation_wrapper h3 span{
+	margin-left: 50px;
+	margin-right: 12px;
+	position:relative;
+	line-height: 0;
+	font-size:18pt;
+	display:  inline-block;
+	padding:20px 0;
+	width: 40px;
+	text-align: center;
+	color:white;
+	height:0;
+	-webkit-border-radius:50%;
+	-o-border-radius:50%;
+	-ms-border-radius:50%;
+	-moz-border-radius:50%;
+	border-radius: 50%;
+	background-color:#508bcc;
+	font-family: "Lato", sans-serif;
+}
+.forms{
+	width:970px;
+	margin:20px auto 60px;
+}
+.forms div{
+	width:970px;
+	margin:20px auto 0;
+}
+.forms .row2{
+	width:470px;
+}
+.forms .row3{
+	width:720px;
+}
+.radios a {
+	float: left;
+	text-align: center;
+	width: 216px;
+	margin-top:13px;
+	padding: 13px 0;
+	margin-right: 30px;
+	display: block;
+	border: 2px solid #508bcc;
+	transition: 0.4s;
+}
+.checker span{
+	margin-right: 8px;
+	display:block;
+	float:right;
+}
+.checker{
+	text-align: left;
+	margin:16px 0;
+	padding: 13px 0 13px 50px;
+	display: block;
+	border: 2px solid #508bcc;
+	background: url(../img/charges_check_1.png) 10px center no-repeat;
+	transition: 0.4s;
+}
+div.garapon_alternatives p{
+	margin-bottom: 10px;
+}
+div.garapon_alternatives p strong{
+	font-family:'Lato','sans-serif';
+	font-size:22pt;
+}
+div.garapon_alternatives p br{
+	display:none;
+}
+.row3 .checker{
+	font-size:11pt;
+	width:181px;
+	float: left;
+	padding-left: 45px;
+	background-size:25px !important;
+	margin:7.5px 0;
+	margin-right: 15px;
+}
+a.checker.selected {
+	background: url(../img/charges_check_2.png) 10px center no-repeat, #508bcc;
+}
+a.selected {
+	background-color: #508bcc;
+	color: white;
+}
+.hosting-extension{
+	text-align:center;
+	margin:30px 0;
+}
+.hosting-extension span{
+	margin-left:10px;
+}
+.hosting-extension strong{
+	font-size:25pt;
+	font-family: "Lato", sans-serif;
+}
+
+.total_amount {
+	position: relative;
+	color: white;
+	background-color: #508bcc;
+	line-height: 0;
+	margin:10px 0;
+	padding:0pt 0;
+}
+.total_amount h4{
+	float:left;
+	line-height: 0;
+	font-size:15pt;
+	padding:24pt 16px;
+}
+.total_amount span{
+	float:left;
+	display: block;
+	margin-top:0;
+	background:white;
+	text-align:right;
+	line-height: 0;
+	width:150px;
+	border:2px solid #508bcc;
+	padding:20pt 5pt 25pt 12pt;
+	font-size:13pt;
+	color:black;
+}
+.total_amount span strong{
+	display: block;
+	font-size:25pt;
+	float: right;
+	margin-right: 25px;
+	font-family: "Lato",sans-serif;
+}
+.total_amount p{
+	clear:right;
+	line-height: 0;
+	padding:23.4pt 20px;
+	float:left;
+	vertical-align: middle;
+}
+.total_amount p strong{
+	font-style:normal;
+	font-family: "Lato",sans-serif;
+}
+.total_amount .rst_button{
+	float: right;
+	text-align: center;
+	display: block;
+	font-size:9.5pt;
+	font-weight: bold;
+	width:90px;
+	background:url(../img/charges_reset_btn.png) center 5px no-repeat;
+	padding:40pt 0 11px 0;
+	transition:0.4s;
+}
+.total_amount .rst_button:hover{
+	background-color:#9ABCE1;
+}
+div.for-smp.total_amount {
+	display: none;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	z-index:999;
+}
+#payment-simulation nav{
+	width:90%;
+	margin:40px auto;
+}
+#payment-simulation nav a{
+	width:23%;
+	float:left;
+	margin-top:10px;
+	margin-right: 2.66%;
+	font-size:11.7pt;
+	line-height: 0;
+	padding:25px 0;
+	border-radius: 3px;
+}
+#notice{
+	font-size:11.7pt;
+}
+@media only screen and (max-width:768px){
+	.simulation_wrapper h3{
+		text-align:center;
+		margin:0 0 35px 0;
+		font-size:13pt;
+	}
+	.simulation_wrapper p{
+		font-size:11pt;
+	}
+	.simulation_wrapper h3 span{
+		display:block;
+		margin:0 auto 15px;
+		margin-left: calc(50% - 0px);
+	}
+	.forms{
+		width:95%;
+		margin:20px auto 60px;
+	}
+	.forms div,.forms .row3,.forms .row2{
+		width:100%;
+	}
+	.radios a {
+		float: none;
+		text-align: left;
+		line-height: 0;
+		width: calc(96% - 4px);
+		margin:10px 0;
+		padding: 21px 2%;
+	}
+	.radios a span{
+		float:right;
+	}
+	.row3 .checker{
+		font-size:11pt;
+		width:calc(100% - 54px);
+		float: none;
+		padding-left:50px;
+		padding-right:0;
+		margin:7.5px 0;
+	}
+	div.garapon_alternatives p strong{
+		font-size:16pt;
+	}
+	div.garapon_alternatives p br{
+		display:block;
+	}
+	p.hosting-extension{
+		font-size:11pt;
+		margin:30px 3%;
+	}
+	.hosting-extension span{
+		display: block;
+		margin:15px 0 0;
+	}
+	div.for-pc.total_amount{display: none;}
+	div.for-smp.total_amount{
+		padding: 0;
+		margin:0;
+		display: block;
+	}
+	div.for-smp.total_amount h4{
+		padding:25px 0;
+		width:30%;
+		font-size:12pt;
+		text-align: center;
+	}
+	div.for-smp.total_amount span{
+		padding:21px 2%;
+		width: calc(66% - 4px);
+	}
+	div.for-smp.total_amount p{
+		clear: both;
+		font-size:10pt;
+		float:left;
+		width:70%;
+		line-height: 19px;
+		padding:11px 0;
+		padding-left: 1%;
+	}
+	div.for-smp.total_amount a{
+		width:70px;
+		padding:45px 0 15px;
+		background-size:25px;
+		font-size:7pt;
+	}
+	#payment-simulation nav{
+		width: 95%;
+	}
+	#payment-simulation nav p{
+		font-size:10pt;
+	}
+	#payment-simulation nav a{
+		width:48%;
+		margin:6px 1%;
+		font-size:10pt;
+		padding:20px 0;
+	}
+	#notice{
+		margin:0 5%;
+		font-size:10pt;
+	}
+}
+@media only screen and (max-width:350px){
+	#payment-simulation nav a{
+		float:none;
+		width:90%;
+		margin:10px auto !important;
+	}
+}

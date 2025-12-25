@@ -1,0 +1,307 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro');
+
+#index {
+	background: #ddf1fc;
+	background: -moz-linear-gradient(top, #ddf1fc 0%, #7ccaf4 100%);
+	background: -webkit-linear-gradient(top, #ddf1fc 0%, #7ccaf4 100%);
+	background: linear-gradient(to bottom, #ddf1fc 0%, #7ccaf4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ddf1fc', endColorstr='#7ccaf4', GradientType=0 );
+	position: relative;
+	z-index: 15;
+	line-height: 0;
+	padding-top:220px;
+	white-space: nowrap;
+	overflow:hidden;
+}
+#index h2{
+	margin:0;
+	padding:0;
+	position:absolute;
+	width: 100%;
+	left:0;
+	top:20%;
+	z-index:1000;
+}
+#moving_bg{
+	background: url(../img/index_building.png) bottom repeat-x;
+	position:relative;
+	width: 100%;
+	height: 320px;
+}
+.popup{
+	width:90px;
+	height:90px;
+	background:red;
+	line-height:0;
+	text-align:center;
+	display: inline-block;
+	z-index:800;
+	position:absolute;
+	background-size:90px !important;
+}
+#what-can-do2{
+	padding:60px 0;
+	position:relative;
+	z-index:1050;
+}
+#what-can-do2 .image-container{width:240px;height:260px;background:orange;overflow:hidden;float: left;}
+#what-can-do2 .image-container img{width:360px;margin:0 0 0 -40px;}
+#what-can-do2 article{
+	width:770px;
+	float: right;
+}
+#what-can-do2 article h3{
+	line-height: 0;
+	padding:25px 0;
+	width:315px;
+	margin-left: 25px;
+	height: 0;
+	font-size:13pt;
+	position:relative;
+	text-align:center;
+	background:url(../img/index_hosting2-2.png) center repeat-x;	
+}
+#what-can-do2 article h3:before{
+	position:absolute;
+	content:"";
+	height:50px;
+	width:26px;
+	top:0;
+	left:-26px;
+	background:url(../img/index_hosting2-1.png) right center no-repeat;
+}
+#what-can-do2 article h3:after{
+	position:absolute;
+	content:"";
+	height:50px;
+	width:26px;
+	top:0;
+	right:-26px;
+	background:url(../img/index_hosting2-3.png) left center no-repeat;
+}
+#what-can-do2 article h3 span{
+	padding:5px 10px;
+	color:white;
+	border-top:1px solid white;
+	border-bottom:1px solid white;
+}
+#what-can-do2 p{
+	margin:13px 0;
+	line-height: 1.7em;
+	font-size:11.6pt;
+}
+#what-can-do2 li{
+	list-style: none;
+	width:230px;
+	padding:5px 8px 25px;
+	float: left;
+	margin-right: 13px;
+	border:1px solid #74BCF1;
+	position:relative;
+}
+#what-can-do2 li:last-child{
+	margin-right: 0;
+}
+#what-can-do2 li p{
+	font-size:11.5pt;
+	margin:0 0 5px;
+	line-height: 1.62em;
+}
+#what-can-do2 ol li a{
+	display: block;
+	width: calc(100% - 2px);
+	font-size:11.3pt;
+	font-weight:bold;
+	color:#64b5ff;
+	border:1px solid #64b5ff;
+	transition:0.5s;
+	line-height: 0;
+	padding:9px 0;
+	
+	text-align:center;
+	text-decoration: none;
+	margin-bottom:11px;
+}
+#what-can-do2 ol li a:hover{
+	background-color:#64b5ff;
+	color:white;
+}
+#what-can-do2 ol li h4{
+	font-family: 'Advent Pro', sans-serif;
+	color: #64B5EF;
+	position: absolute;
+	right: 7px;
+	bottom: 15px;
+	font-size: 25px;
+	line-height: 0;
+}
+#what-can-do2 p.second{
+	text-align:right;
+	margin:30px 0 0;
+}
+#what-can-do2 p.second a{
+	margin-left:20px;
+}
+/* Added on March 12 */
+#awesome-zenroku{
+	padding:60px 0;
+	background-color:#e9f7ff;
+}
+#awesome-zenroku ul{
+	width:1040px;
+}
+#awesome-zenroku li{
+	width:310px;
+	padding-top:150px;
+	margin-right:55px;
+	float: left;
+	list-style: none;
+}
+#awesome-zenroku h3{
+	font-size:14pt;
+	margin-bottom:16px;
+	text-align: center;
+}
+#awesome-zenroku .contents > p{
+	font-size:12pt;
+	text-align:center ;
+	margin-top:40px;
+}
+#awesome-zenroku li p{
+	font-size:11pt;
+	text-align:left;
+	line-height: 1.6em;
+	margin:0;
+}
+#awesome-zenroku .first{background:url(../img/services_awesome_1.png) center top no-repeat;}
+#awesome-zenroku .second{background:url(../img/services_awesome_2.png) center top no-repeat;}
+#awesome-zenroku .third{background:url(../img/services_awesome_3.png) center top no-repeat;margin-right:0;}
+
+@media only screen and (max-width:960px){
+	#index{
+		padding-top:8%;
+	}
+	#index img{
+		width:77%;
+		max-width:480px;
+	}
+	#moving_bg{
+		background-size:77%;
+	}
+	.popup{
+		width:60px;
+		height:60px;
+		background-size:60px !important;
+	}
+	#what-can-do2 .image-container{
+		width:100%;
+		height:0;
+		padding:0 0 55%;
+		float:none;
+	}
+	#what-can-do2 .image-container img{
+		margin:0;
+		width:100%;
+	}
+	#what-can-do2 article{
+		float:none;
+		width:95%;
+		position: relative;
+		margin:-50px auto 0;
+	}
+	#what-can-do2 article h3{
+		width:90%;
+		margin:0 auto;
+		font-size:11.1pt;
+		padding: 8px 0 42px;
+	}
+	#what-can-do2 article h3 span{
+		width:100%;
+		line-height: 0;
+		height:0;
+		padding:16px 0;
+		display: block;
+	}
+	#what-can-do2 article > p{
+		width:75%;
+		padding:20px 2.5% 10px;
+		margin: -10px auto 30px;
+		font-size:10pt;
+		background:rgba(255,255,255,0.7);
+	}
+	#what-can-do2 article > .second{
+		margin:30px 0 0;
+		padding: 0;
+		width:100%;
+		text-align: center;
+	}
+	#what-can-do2 article p.second a{
+		display: block;
+		width:120px;
+		margin:5px auto 0;
+	}
+	#what-can-do2 article li{
+		border:none;
+		float: none;
+		clear: both;
+		width:95%;
+		padding:0 0 0!important;
+		margin:0px auto !important;
+	}
+	#what-can-do2 article li h4{
+		position:relative;
+		margin:0;
+		font-size:30pt;
+		left:0;
+		top:0;
+		text-align: center;
+		width:45px;
+		padding:35pt 0;
+		float:left;
+	}
+	#what-can-do2 article li p{
+		font-size:10pt;
+		margin-left:45pt;
+		height:35pt;
+	}
+	#what-can-do2 article li a{
+		font-size:10pt;
+		width:53%;
+		float: right;
+		margin:0 0 40px;
+		max-width: 170px;
+		text-align: left;
+		padding:8px 0 8px 2%;
+	}
+	#awesome-zenroku ul{
+		width:90%;
+		margin:0 auto;
+	}
+	#awesome-zenroku ul li{
+		width:calc(100% - 90px);
+		margin:0 auto 50px;
+		float: none;
+		padding:0 0 0 90px;
+		background-position: top left !important;
+		background-size:60px !important;
+	}
+	#awesome-zenroku ul .third{
+		margin: 0 auto;
+	}
+	#awesome-zenroku ul li h3{
+		text-align: left;
+		font-size:12pt;
+	}
+	#awesome-zenroku ul li p{
+		font-size:10pt;
+	}
+	#awesome-zenroku .contents > p{
+		font-size:10pt;
+		line-height: 1.65em;
+		text-align:left;
+		margin:40px 5% 0;
+	}
+}

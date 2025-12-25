@@ -1,0 +1,78 @@
+@charset "utf-8";
+@media only screen and (min-width:769px) {
+.containers {width:960px;margin:0 auto;}section {padding:50px 0;}
+
+p{font-size:14pt;margin:60px 0;}
+
+/* * * * * * * * 
+     Header
+ * * * * * * * */
+header {
+	padding:20px 0;
+	background-size:5px, 100%;
+}
+header h1 {
+	width:480px;
+	font-size:24pt;
+	margin:240px 0 60px 480px;
+}
+
+/* * * * * * * * Index * * * * * * * */
+.index-popup *{font-size:15pt;}
+.index-popup{height:120px;margin:10px 0;}
+.index-popup h3{font-weight:normal;text-align:center;	width:400px;padding:10px 20px;margin-right:30px;}
+.index-popup h3:after{content:"";position:absolute;border:10px solid transparent;border-left-color:#3F6184;top:35%;left:100%;}
+.index-popup p{float:right;padding:17px 0;width:470px;margin:0;}
+
+/* * * * * * * * Services * * * * * * * */
+#service{background-size:5px,100%;}
+#service-todo li{font-size:14pt;width:238px;margin:2% 3%;padding:10px 1%;}
+
+#service-extra-things{width:930px;margin:30px 10px;padding:5px;}
+#service-extra-things h3{width:120px;padding:5px 15px;margin:0 auto 10px;}
+#service-extra-things li{width:46%;margin:1% 1%;padding:0.1% 0.5%;border-left:#3F6184 3px solid;float:left;}
+
+#we-can-speak-them p{font-size:19pt;margin:30px 0;}
+table.available_languages{
+	width:540px;
+	margin:-20px auto 30px auto;
+}
+table.available_languages td{
+	font-size:20pt;font-weight:bold;
+	padding:20px 0;
+}
+
+/* * * * * * * * 
+   Consulting
+ * * * * * * * */
+
+#consulting .consult-requests{	font-size:16pt;background:#3F6184;color:white;width:360px;padding:20px 20px;margin:40px;margin-bottom:80px;float:left;position:relative;}
+#consulting .consult-requests::after{position:absolute;display:block;content:" ";background:url(../img/balloons.png) no-repeat;top:110%;left:160px;width:80px;height:40px;/*position:absolute;content:" ";border:25px transparent double;top:110%;left:180px;border-top-color:#3F6184;border-radius:0px;*/}
+#consult-creambread p{text-align:right;font-size:16pt;}
+/* * * * * * * * 
+     Charges
+ * * * * * * * */
+
+.charges-content{width:260px;padding:10px 5px;margin:35px 25px;}
+.charges-content h3{padding-bottom:5px;border-bottom:#999 solid 1px;height:50px;}
+.charges-content .price{margin:0;}
+.charges-content .price:after{text-align:right;font-size:16pt;padding-right:25px;}
+
+/* * * * * * * * 
+     Form
+ * * * * * * * */
+
+form{width:720px; margin:0 auto;}
+form p{margin:50px 0;}
+form label{width:200px;display:inline-block;}
+form input,form textarea{width:480px;}
+form button{width:160px;padding:10px 20px;margin:0 20px;}
+form textarea{height:120px;}
+
+#aboutus a{font-size:18pt;}
+
+/* Header Menu */
+nav ul{margin:10% auto;width:960px;}
+nav li a{display:block; color:#48c3ff;font-weight:bold; text-decoration:none;width:180px;padding:140px 5px 20px 5px;text-align:center;font-size:16pt;border:#48C3FF 5px solid;margin:20px 20px;float:left;}
+
+}

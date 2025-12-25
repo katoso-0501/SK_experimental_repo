@@ -1,0 +1,181 @@
+﻿@charset "utf-8";
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+/*デフォルト値を初期化する->*/*{padding:0;margin:0;}
+/* スマホ&PC 共通設定 */
+/* 全体 */
+.ofp-you-should-use{background:red;color:white;font-weight:bold;display:inline;}
+
+
+body{
+	background:#fff;
+	color:#222;
+}
+body,input,textarea,select,button{
+	font-family:"YuGothic","Yu Gothic","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+.clearing{clear:both;}
+
+section{padding:50px 0;}
+.price{font-family:'Ubuntu', sans-serif;}
+#new-service,#housing,#inquiry,#frequently-asked{background:url('../img/dots_bg.gif');}#aboutus{background:url('../img/aboutus_bg.jpg') center center no-repeat fixed;background-size:1920px 1080px;}
+
+/* ヘッダー */
+nav ul li a{text-decoration:none;display:block;}ul *{list-style-type:none;}
+
+.faq-menu{display:none;}
+
+/* タイトル */
+#title{background-image:url(../img/dokodemotv_title.jpg);padding:13% 0;}
+
+/* インデックス */
+
+.divvy-index{margin:10px 5px;height:240px;}
+#index-price h2{font-weight:normal;}
+#index-price h2 .price{font-weight:bold;}
+
+#promotions{margin:20px 0;width:100%;}
+
+/* サービス */
+#service-vpn-price{text-align:center;}
+#service-vpn-price h2{margin-top:0;padding:20px 0;border-bottom:1px #aaa solid;}
+#service-vpn-price h3{float:left;background:#1EB3F1;color:white;}
+
+#goto-alt-hosting td a{margin:30px 20px;width:360px;display:block;background:#249CF3;color:white;padding:15px 0;text-align:center;text-decoration:none;font-size:14pt;border-radius:5px;}
+#goto-alt-hosting td a:hover{background:#90CDF8;}
+/* ホスティング */
+#housing table {border-collapse: collapse;}
+#housing table tr *{border-top:none;}
+#housing table td:first-child{border-left:none;}
+#housing table *:last-child{border-right:none;}
+
+/* FAQ */
+.help-balloon{animation:keyframe1 1s linear alternate infinite;position:absolute;text-align:center;width:310px;top:-120px;left:35%;font-size:10pt;background:#888;padding:5px;}
+.help-balloon:after{position:absolute;content:"";border:10px transparent solid;border-top-color:#888;top:100%;left:150px;}
+@keyframes keyframe1{0%{top:-180px;}100%{top:-190px;}}
+.faq-q{transition:0.6s;position:relative;background:#249CF3;padding:10px 10px;color:white;margin:35px 0 20px 0;cursor:pointer;}
+.faq-q.q-hidden{padding:10px 50px;}
+.faq-q:after{transition:0.6s;content:'';position:absolute;border:10px solid transparent;border-top:15px solid #249CF3;width:0;height:0;top:100%;left:15px;}
+.faq-q.q-hidden:after{border:10px solid transparent;border-top:15px solid white;width:0;height:0;top:40%;left:15px;}
+
+.faq-a{text-align:left;}
+.faq_emphasis{font-weight:bold;}
+
+#frequently-asked h4{font-size:12pt;margin:50px 0 0 0;}
+
+
+#faq-service-url li{width:220px;margin:20px 10px;text-align:center;}
+#faq-service-url li h4{font-size:14pt;margin:0px 0 10px;}
+#faq-service-url a::before{content:"公式サイトへ≫";}
+#faq-service-url a{color:white; text-decoration:none;background:#109AFF;display:block;font-size:14pt;padding:15px 0;}
+
+#housing-ups,#hosting-alternative-charge{font-size:20pt;} #housing-ups .price,#hosting-alternative-charge .price{font-size:28pt;}
+
+#for_application_button,#inquiry a[href="inquiry.html"]{
+	display:block;position:relative;
+	text-decoration:none;font-weight:bold;font-size:16pt;text-align:center;
+	width:360px;margin:40px auto; padding:20px 20px;border-radius:5px;
+}
+.push-button{
+	display:block;position:relative;
+	text-decoration:none;font-weight:bold;font-size:15pt;text-align:center;
+	width:440px;margin:30px auto; padding:20px 20px;border-radius:5px;background:#249CF3;color:white;
+}
+.push-button:hover{background:#70BEF7;}
+
+#for_application_button:after,#inquiry a[href="inquiry.html"]:after{position:absolute;background:url('../img/faq_goto.gif') right no-repeat;content:"";width:360px;height:55px;top:12%;right:2%;}
+
+#for_application_button{
+	background: #ffd028;
+background: -moz-linear-gradient(left, #ffd028 0%, #ffc528 52%, #fff026 100%);
+background: -webkit-linear-gradient(left, #ffd028 0%,#ffc528 52%,#fff026 100%);
+background: linear-gradient(to right, #ffd028 0%,#ffc528 52%,#fff026 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd028', endColorstr='#fff026',GradientType=1 );
+color:black;
+box-shadow:0 0 10px black;
+}
+
+#for_application_button:hover{background: #ffe78f;
+background: -moz-linear-gradient(left, #ffe78f 0%, #ffe18f 52%, #fff88f 100%);
+background: -webkit-linear-gradient(left, #ffe78f 0%,#ffe18f 52%,#fff88f 100%);
+background: linear-gradient(to right, #ffe78f 0%,#ffe18f 52%,#fff88f 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe78f', endColorstr='#fff88f',GradientType=1 );}
+
+#inquiry a[href="inquiry.html"],#thanks a{background:#249CF3;color:white;}
+#inquiry a[href="inquiry.html"]:hover,#thanks a:hover{background:#97D3FF;}
+
+/* About US */
+#company_profiles{width:720px; margin:20px auto;font-size:13pt;text-align:left;}
+#company_profiles dt{font-weight:bold;width:15%;float:left;}
+#company_profiles dd{margin:0 15% 25px;padding-bottom:24px; border-bottom:1px solid #999999;width:85%;font-size:12pt;}
+#company_profiles h3{margin:60px 25px 30px; border-left:5px solid #444444; padding-left:10px;}
+
+#aboutus{text-align:center;}
+#aboutus p{font-size:12pt !important;margin-bottom:15px;}
+#aboutus a{font-size:12pt;width:100%; text-decoration:none; color:#666; border-bottom:#666 dotted 1px;}#aboutus a:hover{color:#8866FF;border-color:#86f;}
+.aboutus-branches{margin:10px 0 0px 60px;}
+#company_profiles .aboutus-branches dd{border:none;padding:0;}
+
+/* フッター */
+footer{background:#555;color:white;text-align:center;}
+footer a{color:white;text-decoration:none;}
+footer a:hover{color:#62B3FF;}
+
+/* Formality */
+form table{border-collapse:collapse; margin:5% 0;}
+form td, form th{border-bottom:1px dotted #4E4E4E;}
+form th{text-align:left;text-indent:20px;}
+form table h2{font-size:12pt;}
+.RQRD{color:red;font-weight:bold;}
+input{border:none;border-bottom:2px solid #606060;border-left:#606060 6px solid; padding:5px 0 5px 8px;font-size:12pt;}
+
+select{padding:10px 5px;font-size:12pt;}
+#app-how-to-pay p{text-align:center;width:40%;float:left;margin:15px 5% 0px;}
+
+textarea{width:100% !important;padding:5px 0;height:240px !important;font-size:12pt;border:#505050 solid;border-width:2px 0;clear:both;}
+
+#terms .RQRD{font-size:12pt; font-weight:bold;}
+
+#term{height:240px;overflow-y:scroll;border:3px double #ccc;padding:0 10px;background:white;}
+
+#term h2{text-align:center;font-size:14pt;clear:both;}
+#term h3{font-weight:normal;font-size:11pt;margin:-10px 0 40px;}
+#term h4{margin:20px 0 10px;padding:0;}
+#term p{font-size:11pt;text-align:left;margin:10px 0 !important;}
+#term ul{margin:0;}
+#term ul li{margin:0;font-size:12pt;list-style-type:none !important;}
+#term ul li:before{content:"・";margin:0 10px 0 0;font-weight:bold;}
+#term #i-agree{text-align:center;}
+
+#textareas a small{display:block;margin:2px 0 0;}
+button[type="submit"]{
+	background:#6AA9EC;color:white;
+	border:none;
+	width:320px;margin:0px 80px;padding:10px 0;
+	font-size:14pt;
+	cursor:pointer;
+}
+button[type="reset"]{
+	background:#888;color:white;
+	border:none;
+	width:320px;margin:0px 80px;padding:10px 0;
+	font-size:14pt;
+	cursor:pointer;
+}
+button[type="submit"]:hover{background:#BBD7F6;}
+
+#inquiry-form ul li{position:relative;}
+#inquiry-form ul li:before{position:relative;content:"・";font-weight:bold;margin-right:5px;}
+#inquiry-form h3{margin:40px 0 20px;}
+
+/* Confirmed sent */
+#thanks-dialogue{border:#6BE1FF 6px double;width:80%;margin:0 auto;border-radius:10px;padding:20px 0;text-align:center !important;}
+#thanks-dialogue h2{margin:0 0 20px;}
+#thanks-dialogue li{list-style-type:disc;list-style-position:inside;}
+#thanks-dialogue p{margin:20px 0;}
+#thanks-dialogue ul{text-align:left;margin:30px 15% 0;}#thanks-dialogue li{margin:8px 0; font-size:12pt;}
+
+#thanks a{text-decoration:none;font-size:18pt;padding:15px 0;margin:30px auto;width:360px;display:block;text-align:center;font-weight:bold;border-radius:5px;}
+/* ページトップへ */#pagetop{text-align:right;position: fixed;bottom: 2%;right: 2%;z-index:9500;}
+
+/* Secret to You! */.secret-to-you{display:none;}

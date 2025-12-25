@@ -1,0 +1,148 @@
+@charset "utf-8";
+/* For PC */
+h2{margin:80px 0 40px;}
+#this-is-hosting-site{text-align:left;margin-bottom:80px;}#this-is-hosting-site img{width:240px;}#this-is-hosting-site h1{padding:10px 0;}#this-is-hosting-site h2{text-align:center;margin:10px 0;}#this-is-hosting-site a.push-button{font-size:12pt;width:240px;padding:10px 0;margin-top:2px;}#new-hosting{background:url(img/new-hosting-bg.jpg) fixed no-repeat center center;background-size:105%;}
+#hosting-flow-to-watch li{width:155px;height:320px; padding:0 60px 0 25px;list-style-type:none;float:left;margin:0 0 30px;}
+
+#hosting-flow-to-watch li:nth-child(1){background:url('img/hosting-flow1.png') no-repeat;}#hosting-flow-to-watch li:nth-child(2){background:url('img/hosting-flow2.png') no-repeat;}#hosting-flow-to-watch li:nth-child(3){background:url('img/hosting-flow3.png') no-repeat;}#hosting-flow-to-watch li:nth-child(4){background:url('img/hosting-flow4.png') no-repeat;}
+
+#hosting-flow-to-watch li h2{display:none;color:white;text-align:center;border:4px solid white;border-radius:50%;width:30px;height:30px;line-height:30px;margin:30px auto 20px;}
+#hosting-flow-to-watch li h3{display:none;padding-top:0px;height:60px;text-align:center;font-size:12pt;color:white;}#hosting-flow-to-watch li h3 strong{vertical-align:central;}
+#hosting-flow-to-watch li img{display:none;}
+
+/* Promotion Contents Starts here */
+#promo{margin:70px 0;}
+
+#promo figure{margin:60px auto;width:640px;}
+#promo figure img{width:640px;}
+
+#promo h2{text-align:center;position: relative;padding: 1em 0.5em;font-size:14pt;background:url(../img/promotion_h2.jpg) repeat-x top,url(../img/promotion_h2.jpg) repeat-x bottom,#E73623;color: white;margin:0 0 30px 0;}#promo h2::before{position: absolute;content: '';top: 100%;left: 0;border: none;border-bottom: solid 15px transparent;border-right: solid 20px rgb(149, 158, 155);}
+
+#promotion-arecx6{background:url(../img/arecx6-new.png) 20% center no-repeat;background-size:320px;;width:480px;padding-left:480px;text-align:center;}
+#promo .discounted-price{font-size:22pt;text-align:center;margin-top:50px;}
+#promo .discounted-price .price{font-size:36pt;}
+#promo .former-price:before{position:absolute;content:"▲";text-align:center;color:red;width:360px;top:-60%;left:0;font-size:16pt;}
+#promo .former-price{position:relative;background:red;text-align:center;font-size:14pt;color:white;width:360px;margin:30px auto 0;padding:5px 0;}
+
+/* Hosting Table */
+#hosting-heading{text-align:center;font-weight:normal;margin-bottom:20px;font-size:13pt;}
+
+table{width:870px;margin:0 auto;}
+.hosting-plans{padding:30px 0;border-bottom:1px dashed #999;position:relative;}
+
+.hosting-name{width:320px;font-size:16pt;}
+
+.hosting-garapon{background:url(img/hosting_garapon.png) no-repeat;display:block;width:120px;height:48px;float:left;}
+.hosting-arecx{background:url(img/hosting_arecx6.png)  no-repeat;display:block;width:120px;height:48px;float:left;}
+.hosting-vpn{background:url(img/hosting_vpn.png)  no-repeat;display:block;width:120px;height:48px;float:left;}
+.hosting-icon{background:url(img/hosting_hosting.png);font-size:9pt;font-weight:bold;width:60px;text-align:center;padding:20px 10px 5px 50px;display:inline-block;}
+.hosting-type p{text-align:left;font-size:11pt;clear:both;margin:0;}
+
+.hosting-price-tag{text-align:right;width:160px;padding-right:20px;font-size:14pt;}
+.hosting-price-tag .price{font-size:26pt;font-weight:bold;}
+.hosting-price-tag .discounted-price{color:red;}
+.hosting-price-tag .former-price *{font-size:15pt;text-decoration:line-through !important;}
+
+.hosting-on-sale{font-weight:bold;font-size:12pt;background:white;color:red;display:block;width:240px;padding:5px 0 5px 5px;position:absolute;top:0;}
+
+#including-vpn{padding: 0;text-align:center;}
+#including-vpn p{background:#FF85CD;font-size:12pt;font-weight:bold;top:-8px;padding:10px 30px;text-align:center;color:white;position:relative;display:inline-block;}
+#including-vpn p:after{content:"";border:10px solid transparent;border-right-color: #FF85CD;position:absolute;text-align:center;left:-7%;top:25%;}
+#including-vpn h3{text-align:center;font-size:18pt;font-weight:normal;padding:0 60px;display:inline-block;}#including-vpn h3 .price{font-size:32pt;font-weight:bold;}
+
+#hosting-cost{width:410px;margin:20px auto;border-collapse:collapse;}
+#hosting-cost tr{border-bottom:1px #666 dashed;}
+#hosting-cost th{font-size:14pt;text-align:center;vertical-align:bottom;padding:20px 0;}
+#hosting-cost td{font-size:16pt;text-align:right;padding:20px 0;}
+#hosting-cost td .price{font-size:28pt;font-weight:bold;}
+
+form button[type="submit"]{background-color:#40CC51;}form button[type="submit"]:hover{background-color:#9CE4A5;}
+/* For Tablets */
+@media only screen and (max-width:768px){
+	#new-hosting{background:black;}
+	#new-hosting{background:url(img/new-hosting-bg.jpg) no-repeat center,#F3F5F4;background-size:170%;background-attachment:scroll;}
+	
+	.introduce{width:100%;margin:20px 0;}
+	
+	#hosting-flow-to-watch{margin-bottom:730px;}
+	#hosting-flow-to-watch  li{text-align:center;width:30%;margin:10px 5% ;padding:0 5%;}
+	#hosting-flow-to-watch li:nth-child(1){background:url('img/hosting-flow1.png') no-repeat 100% center,#40CC51;}
+	#hosting-flow-to-watch li:nth-child(2){background:url('img/hosting-flow2.png') no-repeat 100% center,#40CC51;}
+	#hosting-flow-to-watch li:nth-child(3){background:url('img/hosting-flow3.png') no-repeat 100% center,#40CC51;}
+	#hosting-flow-to-watch li:nth-child(4){background:url('img/hosting-flow4.png') no-repeat 50% center,#40CC51;}
+	
+	#we-can-buy-tuner img{display:block;margin:0 auto;}
+	
+	/* Promotion Contents Starts here */
+	#promo figure{width:100%;}
+	#promo figure img{width:100%;}#promo ul{width:90%;} #promo li{width:50%;}
+	#promo{margin:40px 0 20px 0;}#promotion-arecx6{background:url(../img/arecx6-new.png) center -20% no-repeat;background-size:280px;width:100%;padding:180px 0 0 0;}
+	#promo h3{font-size:18pt;}
+	#promo p{margin:10px auto;}
+	#promo .discounted-price{font-size:22pt;text-align:center;margin-top:30px;}
+	#promo .discounted-price .price{font-size:36pt;}
+	#promo .former-price{}#promo .former-price:before{top:-20px;}
+	
+	/* Hosting Table */
+	table{width:99%;margin:0 auto;}
+	.hosting-plans{padding:30px 0;border-bottom:1px dashed #999;}
+	td.hosting-name{text-align:center;display:block;width:100%;font-size:14pt;margin-bottom:12px;}
+	td.hosting-type{display:block;width:360px;margin:0 auto;}
+
+	.hosting-garapon{}.hosting-arecx{}.hosting-vpn{}.hosting-icon{}
+	.hosting-type p{width:100%;}
+	.hosting-on-sale{left:10%;top:-10px;}
+
+	.hosting-price-tag{width:240px;}
+	.hosting-price-tag .price{}.hosting-price-tag .discounted-price{}.hosting-price-tag .former-price *{}
+	
+	#including-vpn p{width:180px;display:inline-block;margin:0;font-size:10pt;}
+	#including-vpn p:after{content:"";border:10px solid transparent;border-right-color: #FF85CD;position:absolute;text-align:center;left:-20px;top:25%;}
+}
+@media only screen and (max-width:512px){
+	#hosting-flow-to-watch{margin:30px 0;}
+	#hosting-flow-to-watch li{float:none;background:#40CC51 !important;width:100%;padding:10px 0;margin:20px 0;height:inherit;position:relative;text-align:center;}
+	#hosting-flow-to-watch li h2{position:absolute;display:block;border-width:2px;border-radius:50%;width:30px;height:30px;line-height:30px;top:15%;left:5%;}
+	#hosting-flow-to-watch li h3{display:block;padding-top:10px;width:70%;margin:0 0 0 24%;text-align:center;font-size:12pt;color:white;height:inherit;vertical-align:middle;}
+	#hosting-flow-to-watch li img{display:block;width:80px;margin:0 10% 0 50%;}
+	
+	
+	#we-can-buy-tuner img{width:50%;}
+	#we-can-buy-tuner h3{font-size:12pt;}
+	
+	#promo{margin:100px 0;}
+	#promo h2{font-size:12pt;}
+	#promotion-arecx6{background-size:90%;}
+	#promotion-arecx6 h3{font-size:14pt;text-align:center;}
+	#promotion-arecx6 .former-price{width:100%;padding:10px 0;font-size:11pt !important;}
+	#promotion-arecx6 .former-price:before{width:100%;top:-60%;font-size:25pt;}
+	/* Hosting Table */
+	table{width:99%;margin:0 auto;}
+	.hosting-plans{padding:30px 0;border-bottom:1px dashed #999;}
+	td.hosting-name{width:100%;font-size:12pt;font-weight:bold;margin-bottom:15px;}td.hosting-type{width:100%;margin:0 auto;}
+	.hosting-garapon{float:none;display:block;margin:0 auto;}.hosting-arecx{float:none;display:block;margin:0 auto;}.hosting-vpn{float:none;display:block;margin:0 auto}.hosting-icon{display:block;margin:0 auto;float:none;}
+	.hosting-type p{width:100%;font-size:10pt;text-align:center;margin-top:20px;}
+
+	.hosting-price-tag{display:block;width:100%;text-align:center;}
+	.hosting-price-tag .price{}.hosting-price-tag .discounted-price{}.hosting-price-tag .former-price *{}
+	
+	.discounted-price{font-size:14pt;text-align:center;margin-top:50px;}
+	.discounted-price .price{font-size:22pt;}
+	.former-price:before{width:100%;font-size:16pt;top:-70%;}
+	.former-price{position:relative;text-align:center;font-size:14pt;color:black;width:90%;margin:30px auto 0;}
+	#promo li{font-size:10pt;}
+	
+	#including-vpn{padding:0px 0;text-align:center;}
+	#including-vpn p{font-size:11pt;padding:5px 0;width:240px;margin:30px auto 0;color:white;position:relative;display:block;}
+	#including-vpn p:after{content:"";border:15px solid transparent;border-bottom-color: #FF85CD;position:absolute;text-align:center;left:110px;top:-90%;}
+	
+	#including-vpn h3{text-align:center;font-size:18pt;font-weight:normal;padding:0 60px;display:inline;}
+	#including-vpn h3 .price{font-size:32pt;font-weight:bold;}
+	
+	#hosting-cost{width:90%;margin:20px auto;border-collapse:collapse;}
+	#hosting-cost tr{}
+	#hosting-cost th{font-size:12pt;text-align:left;vertical-align:bottom;padding:20px 0;}
+	#hosting-cost td{font-size:10pt;text-align:right;padding:20px 0;}
+	#hosting-cost td .price{font-size:22pt;}
+	.hosting-on-sale{width:60%;margin:0 20%;left:0%;top:-10px;}
+}

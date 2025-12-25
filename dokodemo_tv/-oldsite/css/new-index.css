@@ -1,0 +1,578 @@
+@charset "utf-8";
+/* For PC */
+
+/* インデックス */
+@media only screen and (min-width:769px){		
+	#index h1{font-size:22pt;margin-top:-10px;}
+	#all-programs-recorded{margin-bottom: 50px;}
+	#index p{margin:10px 0;}
+	.divvy-index{width:470px; float:left;}
+}
+#index {
+	background: url('../img/index_bg.jpg') center center no-repeat;
+	background-size: 3260px;
+}
+#index h2:first-child {
+	margin-top: 0;
+	padding-top: 0;
+}
+#for-staying-abroad {
+	display: block;
+	margin: 30px auto 80px;
+	width: 640px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 18pt;
+	font-weight: bold;
+	color: white;
+	background: url(../img/forabroad_globe.png) left 1% no-repeat, url(../img/forabroad_stripe.png);
+	border-radius: 5px;
+	box-shadow:2px 2px 2px #999;
+	padding: 12px 0;
+}
+#for-staying-abroad:hover {
+	background: url(../img/forabroad_globe.png) left 1% no-repeat, url(../img/forabroad_stripe-hover.png);
+}
+/* 全録は、ここがスゴイ */
+#awesome-all-recording {
+	width: 100%;
+	margin-bottom: 100px;
+}
+#awesome-all-recording li {
+	padding: 30px 120px 30px 15px;
+}
+#awesome-all-recording li:first-child {
+	background: url('../img/aar_icon1.png') 99% center no-repeat, url('../img/aar_bg1.gif');
+	color: white;
+}
+#awesome-all-recording li:nth-child(2) {
+	background: url('../img/aar_icon2.png') 99% center no-repeat, url('../img/aar_bg2.gif');
+}
+#awesome-all-recording li:nth-child(3) {
+	background: url('../img/aar_icon3.png') 99% center no-repeat, url('../img/aar_bg3.gif');
+}
+#awesome-all-recording li:last-child {
+	padding: 20px 10px;
+	margin: 30px 0 -50px;
+}
+#awesome-all-recording li:last-child p {
+	font-size: 13pt;
+	text-align: center;
+	font-weight: bold;
+}
+#awesome-all-recording li h3 {
+	margin: 0 0 5px 0;
+	font-size: 14pt;
+}
+#awesome-all-recording li p {
+	margin: 0 0 0 5px;
+	font-size: 12pt;
+	text-align: left;
+}
+/* こんな方にお勧め */
+#recommended-for-those li {
+	width: 420px;
+	margin: 0 10px 40px;
+	padding: 200px 10px 0;
+	float: left;
+}
+#recommended-for-those li:nth-child(1) {
+	background: url(../img/recommend-for-business.png) no-repeat;
+}
+#recommended-for-those li:nth-child(2) {
+	background: url(../img/recommend-for-countryside.png) no-repeat;
+}
+#recommended-for-those h3 {
+	font-size: 14pt;
+}
+#recommended-for-those p {
+	margin-top: 10px;
+	padding: 0 10px;
+	text-align: left;
+	font-size: 12pt;
+}
+/* 新・ラインナップ */
+#new-lineup {
+	clear: both;
+}
+#new-lineup-about_vpn p a {
+	display: inline-block;
+	color: #777;
+	text-decoration: none;
+	padding: 20px 0 1px;
+	border-bottom: dashed 1px #aaa;
+	margin-right: 20px;
+}
+#new-lineup-about_vpn p:nth-child(3) {
+	text-align: center;
+}
+#lineup-list2 h2, #new-service h1 {
+	clear: both;
+}
+/*チューナー各種*/
+.lineup-product2 {
+	width: 260px;
+	padding: 0 30px;
+	float: left;
+	margin-bottom: 60px;
+}
+.lineup-product2 li p {
+	border-left: 3px solid #1EB3F1;
+	padding: 2px 0 2px 8px;
+	margin: 10px 0;
+	font-size: 12pt;
+}
+.lineup-product2 h2 {
+	margin: 10px 0 30px 0;
+	text-align: center;
+	font-size: 14pt;
+}
+.lineup-product2 figure {
+	text-align: center;
+}
+.lineup-product2 img {
+	width: 180px;
+}
+#how-to-setup a{background:#249CF3;display:block;text-align:center;color:white;text-decoration:none;padding:5px 0;}#how-to-setup a:hover{background:#93CEF9}
+/* 視聴までの流れ */
+#new-to-start {
+	width: 730px;
+	margin: 0 auto;
+}
+#new-to-start li {
+	width: 720px;
+	position: relative;
+	background-position: 2% center !important;
+	background-repeat: no-repeat !important;
+	height: 180px;
+	margin: 20px 5px;
+	box-shadow: 2px 2px 4px #999;
+}
+#new-to-start li p {
+	margin-left: 200px;
+	margin-right: 50px;
+	margin-top: 0px;
+	padding-top: 20pt;
+	font-size: 22pt;
+	font-weight: bold;
+	color: #5CB4F8;
+	z-index: 5;
+}
+#new-to-start li p strong {
+	position: relative;
+	font-size: 12pt;
+	display: block;
+	background: #7CBEFF;
+	color: white;
+	text-align: center;
+	width: 480px;
+	padding: 7px 0;
+	margin-top: 10px;
+}
+#new-to-start li p strong:before {
+	position: absolute;
+	content: "";
+	border: 15px transparent solid;
+	border-bottom-color: #7CBEFF;
+	top: -70%;
+	left: 5%;
+}
+#new-to-start li h2 {
+	position: absolute;
+	font-size: 72pt;
+	bottom: -20%;
+	right: 0.5%;
+	font-family: "Ubuntu", Myriad Pro, sans-serif;
+	color: #7CBEFF;
+	z-index: 2;
+	opacity: 0.4
+}
+#new-to-start li:nth-child(1) {
+	background: url('../img/to-start-flowchart/fc-i1.png'), white;
+}
+#new-to-start li:nth-child(2) {
+	background: url('../img/to-start-flowchart/fc-i2.png'), white;
+}
+#new-to-start li:nth-child(3) {
+	background: url('../img/to-start-flowchart/fc-i3.png'), white;
+}
+#new-to-start li:nth-child(4) {
+	background: url('../img/to-start-flowchart/fc-i4.png'), white;
+}
+#new-to-start li:nth-child(5) {
+	background: url('../img/to-start-flowchart/fc-i5.png'), white;
+}
+.what-about-tuner h3 {
+	font-weight: normal;
+}
+.what-about-tuner li {
+	width: 440px;
+	text-align: center;
+	margin: 0 10px;
+	display: inline-block;
+}
+.what-about-tuner a {
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	font-size: 12pt;
+	text-align: center;
+	display: block;
+	width: 320px;
+	background: #1EB3F1;
+	padding: 15px 0;
+	margin: 20px auto 50px;
+}
+.what-about-tuner a:hover {
+	background: #78D1F6;
+}
+#about-placement {
+	text-align: center;
+}
+#about-placement .push-button {
+	display: inline-block;
+	margin: 0px 100px 0 0;
+	width: 300px;
+	vertical-align: middle;
+}
+#about-placement a:last-child {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	margin: 0 auto;
+	vertical-align: middle;
+	position: relative;
+}
+#about-placement a:last-child:before {
+	content: "";
+	position: absolute;
+	border: 20px transparent solid;
+	border-right-color: #FCAD2A;
+	top: 40%;
+	left: -40px;
+}
+
+
+
+/* * * * * * * * * * 
+     For Tablets
+* * * * * * * * * */
+@media only screen and (max-width:768px) {
+#index {
+	background: white;
+}
+#all-programs-recorded{margin-bottom:50px;}
+#all-programs-recorded h2{text-align:center;}
+#all-programs-recorded p{margin:10px auto;}
+#for-staying-abroad {
+	width: 70%;
+	font-size: 14pt;
+	padding: 20px 0;
+}
+#lineup-list2 {
+	padding-bottom: 400px;
+}
+#awesome-all-recording li:last-child p {
+	margin: 0 auto;
+}
+/* こんな方にお勧め */
+#recommended-for-those li {
+	width: 48%;
+	margin: 0 0.5% 40px;
+	padding: 190px 0.5% 0;
+}
+#recommended-for-those h3 {
+	font-size: 14pt;
+	text-align: center;
+}
+#recommended-for-those p {
+	margin-top: 10px;
+	text-align: left;
+	font-size: 11pt;
+}
+/*チューナー各種*/
+.lineup-product2 {
+	width: 30%;
+	padding: 0 1.5%;
+	float: left;
+	margin-bottom: 20px;
+}
+.lineup-product2 li p {
+	margin: 15px 0;
+	text-align: left;
+	font-size: 12pt;
+}
+.lineup-product2 img {
+	width: 60%;
+}
+.lineup-list-vpn h2 {
+	margin-bottom: -20px;
+}
+.what-about-tuner li {
+	width: 45%;
+	margin: 0 2%;
+}
+.what-about-tuner a {
+	font-size: 12pt;
+	width: 90%;
+	margin: 20px auto 50px;
+}
+/* 視聴までの流れ */
+#new-to-start {
+	width: 95%;
+	margin: 0 auto;
+}
+#new-to-start li {
+	width: 100%;
+	position: relative;
+	background-position: 2% center !important;
+	background-repeat: no-repeat !important;
+	background-size: 25% !important;
+	height: 180px;
+	margin: 20px 5px;
+}
+#new-to-start li p {
+	margin-left: 30%;
+	margin-right: 10px;
+	padding-top: 2%;
+	font-size: 20pt;
+	font-weight: bold;
+	color: #5CB4F8;
+	width: 70%;
+	text-align: left;
+}
+#new-to-start li p strong {
+	position: relative;
+	font-size: 10pt;
+	width: 90%;
+	margin-top: 10px;
+	font-weight: normal;
+}
+#new-to-start li p strong:before {
+	position: absolute;
+	border: 15px transparent solid;
+	border-bottom-color: #7CBEFF;
+	top: -80%;
+	left: 5%;
+}
+#new-to-start li h2 {
+	position: absolute;
+	font-size: 64pt;
+	bottom: -30%;
+	right: 2%;
+}
+#about-placement .push-button {
+	display: block;
+	margin: 0px auto 30px;
+	width: 360px;
+	vertical-align: middle;
+}
+#about-placement a:last-child {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	margin: 20px auto 0;
+	vertical-align: middle;
+	position: relative;
+}
+#about-placement a:last-child:before {
+	content: "";
+	position: absolute;
+	border: 20px transparent solid;
+	border-bottom-color: #FCAD2A;
+	top: -20%;
+	left: 44%;
+}
+}
+
+@media only screen and (max-width:512px) {
+p {font-size: 12pt;}
+
+#all-programs-recorded h2{text-align:center;margin-bottom:50px;}
+
+#for-staying-abroad {
+	display: block;
+	width: 80%;
+	margin: 30px auto;
+	text-align: center;
+	text-decoration: none;
+	font-size: 11pt;
+	color: white;
+	background: url(../img/forabroad_globe.png) center 10% no-repeat, url(../img/forabroad_stripe.png);
+	background-size: 37px, 10px;
+	border-radius: 10px;
+	padding: 44px 0 12px;
+}
+#for-staying-abroad:hover {
+	background: url(../img/forabroad_globe.png) center 10% no-repeat, url(../img/forabroad_stripe-hover.png);
+	background-size: 37px, 10px;
+}
+#new-lineup-about_vpn p a {
+	margin: 0 auto;
+	display: block;
+	width: 150px;
+}
+#new-lineup-about_vpn p:nth-child(3) {
+	margin-bottom: 50px;
+}
+/* 全録は、ここがスゴイ */
+#awesome-all-recording li {
+	padding: 150px 10px 30px 10px;
+	background-position: center 10% !important;
+	background-size: 25%, 5px !important;
+}
+#awesome-all-recording li h3 {
+	margin-bottom: 20px;
+	font-size: 14pt;
+	text-align: center;
+}
+#awesome-all-recording li p {
+	margin: 0;
+	font-size: 10pt;
+	text-align: center;
+	width: 100%;
+}
+/* こんな方にお勧め */
+#recommended-for-those li {
+	width: 96%;
+	margin: 10px 0;
+	padding: 190px 2% 0px;
+	background-size: 100% !important;
+}
+#recommended-for-those h3 {
+	font-size: 14pt;
+}
+#recommended-for-those p {
+	margin-top: 10px;
+	text-align: left;
+	font-size: 11pt;
+	margin: 20px auto;
+}
+/*チューナー各種*/
+#lineup-list2 {
+	padding-bottom: 20px;
+}
+.lineup-product2, .lineup-list-vpn {
+	width: 98%;
+	padding: 0 1%;
+	float: none;
+	margin: 40px 0;
+}
+.lineup-product2 h2, .lineup-list-vpn h2 {
+	margin-bottom: 30px;
+}
+.lineup-product2 li p {
+	margin: 15px 0;
+	text-align: left;
+	font-size: 12pt;
+	width: 95%;
+}
+.lineup-product2 img {
+	width: 60%;
+}
+.lineup-list-vpn {
+	clear: both;
+}
+.lineup-list-vpn h2 {
+	margin-bottom: 10px;
+	text-align: center;
+}
+.lineup-list-vpn p {
+	border-left: 3px solid #1EB3F1;
+	padding-left: 5px;
+	margin: 5px 0;
+	text-align: left;
+	font-size: 12pt;
+}
+/* 視聴までの流れ */
+#new-to-start {
+	width: 95%;
+	margin: 40px auto 0;
+}
+#new-to-start li {
+	position: relative;
+	background-position: 50% 5% !important;
+	background-repeat: no-repeat !important;
+	background-size: 35% !important;
+	height: inherit;
+	padding: 20px 0;
+	margin: 20px 5px;
+}
+#new-to-start li p {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 42%;
+	font-size: 12pt;
+	text-align: center;
+	font-weight: bold;
+	color: #5CB4F8;
+	width: 95%;
+	z-index: 10;
+}
+#new-to-start li p strong {
+	position: relative;
+	font-size: 10pt;
+	width: 90%;
+	padding: 2.5%;
+	margin: 0 2.5%;
+	margin-top: 10px;
+	font-weight: normal;
+	z-index: 10;
+}
+#new-to-start li p strong:before {
+	display: none;
+}
+#new-to-start li h2 {
+	position: absolute;
+	opacity: 0.4;
+	font-size: 100pt;
+	bottom: -5%;
+	right: 5%;
+	z-index: 1;
+	font-weight: 100;
+}
+/* チューナーについて */
+.what-about-tuner li {
+	width: 100%;
+	margin: 10px 0;
+}
+.what-about-tuner li h3 {
+	display: block;
+	width: 90%;
+	padding-left: 10px;
+	text-align: center;
+	font-size: 12pt;
+}
+.what-about-tuner li a br {
+	display: none;
+}
+.what-about-tuner li a {
+	display: block;
+	width: 85%;
+	padding: 15px 2.5%;
+	font-size: 10pt;
+	margin: 20px auto;
+}
+#about-placement .push-button {
+	display: block;
+	width: 95%;
+	margin: 30px auto;
+}
+#about-placement a:last-child {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	margin: 0 auto;
+	vertical-align: middle;
+	position: relative;
+}
+#about-placement a img {
+	width: 90%;
+}
+#about-placement a:last-child:before {
+	display: none;
+}
+}
+
+/* For Experiment */

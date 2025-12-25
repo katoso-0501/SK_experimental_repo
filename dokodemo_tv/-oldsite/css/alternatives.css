@@ -1,0 +1,186 @@
+@charset "utf-8";
+/* CSS Document */
+#alternative-setup{background:#FFF8EF;}#frequently-asked{background:url('../img/dots_bg_alt.gif');}
+#hosting-alternative-charge{font-size:15pt;}#hosting-alternative-charge .price{font-size:32pt;margin-left:20px;margin-right:5px;}
+#hosting-alternative-charge small{font-size:14pt;}
+
+
+
+#fare-basis{margin:40px auto;width:900px;}
+#fare-basis h3{margin:30px 0;position: relative;padding:10px 0;}
+#fare-basis h3:after {
+content: "";
+position: absolute;
+left: 0;bottom: 0;
+width: 100%;height: 3px;
+background: -webkit-repeating-linear-gradient(-45deg, #222222, #222222 2px, #fff 2px, #fff 4px);
+background: repeating-linear-gradient(-45deg, #222222, #222222 2px, #fff 2px, #fff 4px);
+}
+
+#basis-including{border-collapse:collapse;width:540px;margin:0 auto;}
+#basis-including th{width:240px;font-size:16pt;}
+#basis-including td{padding:20px 0;font-size:16pt;text-align:center;}
+#basis-including td .price,#area-charge .price{font-size:28pt;}
+#basis-including td .exclamation{background:red;color:#FFE99E;width:240px; margin:25px auto 20px;position:relative;text-shadow:2px 2px 5px orange;}
+#basis-including td .exclamation:before{content:"";position:absolute;border:20px transparent solid; border-bottom-color:red; top:-80%; left:100px;}
+#basis-including tr:nth-child(3){border-top:1px #999 dashed;}
+
+#fare-basis p{text-align:center;margin-bottom:50px;}
+
+#area-charge{border-collapse:collapse;width:540px;margin:0 auto;}
+#area-charge th{width:240px;font-size:14pt;}
+#area-charge tr{border-bottom:1px dashed #888;}
+#area-charge tr:last-child{border:none;}
+#area-charge td{padding:30px 0;font-size:16pt;text-align:center;}
+
+#honshu-region,#remote-region{color:white;padding:10px 0;width:240px;margin:0 auto;position:relative;}
+#honshu-region:before,#remote-region:before{position:absolute;content:"";border:15px solid transparent;top:30%;left:-30px;}
+#honshu-region{background:#0700BC;}#honshu-region:before{border-right-color:#0700BC;}
+#remote-region{background:#B81100;}#remote-region:before{border-right-color:#B81100;}
+
+.how-service-connects{margin:50px 0 400px;}
+.how-service-connects li{width:440px;background:#E37F00;padding:10px 0;margin:0px 15px 15px;float:left;list-style-type:none;color:white;text-align:center;}
+.how-service-connects li p{font-size:12pt;}
+
+.alt-chklst {margin:50px 0;clear:both;}
+.alt-chklst h3{margin-top:50px !important;font-size:14pt;clear:both;}
+.alt-chklst ul{font-size:12pt;margin:30px 0;margin-left:60px;}
+.alt-chklst li{border-left:5px orange solid;padding:0px 12px 0;margin:20px 0;}
+.alt-chklst dt{font-weight:bold;margin-bottom:10px;}
+.alt-chklst dd{margin:10px 20px 10px;padding-left:10px;border-left:#FF7F33 3px solid;}
+.option-contents h4{display:inline-block;width:320px;}.option-contents .price{font-size:18pt;}
+
+#surveilance_camera_option .option-contents{border:none;padding:20px 0;padding-left:180px;background:url(../img/surveilance/surveil_camera.gif) 1% center no-repeat;background-size:120px;}
+#surveilance_camera_option .option-contents h3{margin:10px 0 !important;font-weight:normal;font-size:14pt;}
+#surveilance_camera_option .option-contents h4{margin-top:0px;width:120px;}
+#surveilance_camera_option .option-contents .price{font-size:24pt;}
+#surveilance_camera_option .option-contents a{display:block;text-decoration:none;color:#222;background:#FFA500;width:360px;text-align:center;margin:20px 0 0 60px;padding:8px 0;font-size:13pt;font-weight:bold;}
+#surveilance_camera_option .option-contents a:hover{background:#FFCA6B;}
+
+#we-can-buy-tuner{text-align:center;}
+#we-can-buy-tuner figure{width:300px;vertical-align:middle;display:inline-block;}
+#we-can-buy-tuner figure img{width:240px;}
+#we-can-buy-tuner h3{margin:60px 0 60px;}
+#alternative-tuner-purchase{width:260px;margin-left:120px;}
+#alternative-tuner-purchase img{margin:50px 0 30px;width:240px;}
+#alternative-tuner-purchase figcaption{border-top:1px solid #aaa;padding-top:50px;}
+#we-can-buy-tuner .tuner-name{font-weight:bold;font-size:16pt;}
+#we-can-buy-tuner .tuner-to-buy a{display:block;background:#FFA500;color:white;text-decoration:none;padding:10px 0;width:240px; margin:20px auto 10px;}
+
+.push-button{background-color:#FFA500;}
+
+#promo{margin:40px 0 20px 0;}#promo figure{margin:60px auto;width:640px;}#promo figure img{width:640px;}#promo h2{position: relative;	padding: 1em 0.5em;	background:url(../img/promotion_h2.jpg) repeat-x top,url(../img/promotion_h2.jpg) repeat-x bottom,#E73623;color: white;margin:0 0 30px 0;}#promo h2::before{position: absolute;content: '';top: 100%;left: 0;border: none;border-bottom: solid 15px transparent;border-right: solid 20px rgb(149, 158, 155);}.discounted-price{font-size:22pt;text-align:center;margin-top:50px;}.discounted-price .price{font-size:36pt;}
+
+.former-price:before{position:absolute;content:"▲";text-align:center;color:red;width:360px;top:-60%;left:0;font-size:16pt;}
+.former-price{position:relative;background:red;text-align:center;font-size:18pt;color:white;text-decoration:line-through;width:360px;margin:30px auto 0;}
+#promo ul{width:960px;margin:25px auto;} #promo li{font-size:18pt;width:240px;display:inline-block;list-style-type:disc;}#promo li:before{content:"・";}
+
+.faq-q{background:#FFA500;} .faq-q:after{border-top-color:#FFA500;}
+
+@media only screen and (max-width:768px){
+	#garapon-basis{margin:-20px auto 30px;}
+	#garapon-basis p{margin:10px auto;}
+	
+	.how-service-connects{margin:50px 0 410px;}
+	.how-service-connects li{width:48%;margin-left:1%;margin-right:1%;padding:0;text-align:center;}
+	.how-service-connects li p{margin:10px auto;}
+	
+	#fare-basis{width:95%; margin:15px auto;}
+	#fare-basis h3{text-align:center;}
+
+	#basis-including{width:90%;}
+	#basis-including th{width:45%;font-size:12pt;}
+	#basis-including td{padding:10px 0;font-size:12pt;}
+	#basis-including td .price,#area-charge .price{font-size:24pt;}
+	#basis-including td .exclamation{width:70%; margin:25px auto 0px;}
+	#basis-including td .exclamation:before{top:-95%; left:100px;}
+	
+	#area-charge{width:90%;}
+	#area-charge th{width:40%;font-size:12pt;}
+	#area-charge td{padding:23px 0;font-size:12pt;}
+
+	#honshu-region,#remote-region{color:white;padding:5px 0;width:70%;margin:0 auto;position:relative;}
+	#honshu-region:before,#remote-region:before{position:absolute;content:"";border:10px solid transparent;top:30%;left:-20px;}
+	
+	#promo figure{width:100%;}#promo figure img{width:100%;}#promo ul{width:90%;} #promo li{width:50%;}
+	.alt-chklst ul{margin-left:10px;}
+	
+	#surveilance_camera_option dd:nth-child(2){border:none;}
+	#surveilance_camera_option .option-contents{padding:150px 0 20px;background:url(../img/surveilance/surveil_camera.gif) 50% 5% no-repeat;background-size:20%;text-align:center;}
+	#surveilance_camera_option .option-contents p{margin-bottom:15px;}
+	#surveilance_camera_option .option-contents h3{font-size:12pt;}
+	#surveilance_camera_option .option-contents h4{margin-top:0px;width:120px;}
+	#surveilance_camera_option .option-contents a{display:block;text-decoration:none;color:#222;background:#FFA500;width:320px;margin:20px auto 20px;padding:10px 0;font-size:11pt;}
+	
+	#we-can-buy-tuner img{display:block;margin:0 10%;width:30% !important;float:left;}
+	#we-can-buy-tuner figure{width:100%;display:block;}
+	#we-can-buy-tuner figcaption{width:40%;float:right;}
+	.tuner-to-buy a{display:block;padding:10px 0;width:100% !important; margin:30px 0 !important;}
+	
+	#alternative-tuner-purchase{border-top:1px solid #aaa;margin:20px auto;width:100%;display:block;clear:both;position:relative;}
+	#alternative-tuner-purchase:after{content:"";clear:both;display:block;position:relative;margin:0;}
+	#alternative-tuner-purchase img{margin:30px 0 30px 12.5% !important;width:25% !important;}
+	#alternative-tuner-purchase figcaption{border:none;width:55%;padding-top:40px;position:relative}
+}
+
+@media only screen and (max-width:512px){
+	#garapon-basis{margin:0px auto 30px;}
+	#garapon-basis p{margin:20px auto;}
+	
+	.how-service-connects{margin-bottom:0}
+	.how-service-connects li{float:none;width:90%;margin:20px auto;padding: 5px 0;}
+	.how-service-connects li p{font-size:10pt;}
+	#hosting-alternative-charge{font-size:14pt;}
+	#hosting-alternative-charge small{font-size:12pt;display:block;}
+	
+	#fare-basis h3{font-size:12pt;}
+	
+	#basis-including{width:90%;}
+	#basis-including th{width:100%;display:block;font-size:10pt;}
+	#basis-including td{padding:10px 0 20px;width:100%;display:block;font-size:10pt;}
+	#basis-including td .price,#area-charge .price{font-size:22pt;}
+	#basis-including td .exclamation{width:70%; margin:25px auto 0px;padding:3px 0;}
+	#basis-including td .exclamation:before{top:-70%; left:40%;border-width:15px;}
+	#basis-including tr:nth-child(3){border-top:1px #999 dashed;}
+	#basis-including tr:nth-child(3) th{padding-top:20px;}
+	#fare-basis p{font-size:10pt;}
+	
+	#area-charge{width:90%;}
+	#area-charge th{width:100%;display:block;font-size:10pt;padding:10px 0;}
+	#area-charge th br{display:none;}
+	#area-charge td{display:block;width:100%;padding:10px 0 20px;font-size:12pt;}
+
+	#honshu-region,#remote-region{color:white;padding:5px 0;width:90%;margin:0 auto;position:relative;}
+	#honshu-region:before,#remote-region:before{position:absolute;content:"";border:10px solid transparent;top:30%;left:-20px;}	
+	
+	.option-contents h4{display: block;width: 70%;}
+	.alt-chklst{margin:70px 0;}
+	.alt-chklst h3{font-size:12pt;margin-bottom:40px;text-align:center;}
+	.alt-chklst ul{font-size:11pt;}.alt-chklst li{padding-top:5px;padding-bottom:5px;}
+	.alt-chklst dd{margin:5% 0;margin-left:0px;}
+	
+	#surveilance_camera_option .option-contents{padding:100px 0 0px;background:url(../img/surveilance/surveil_camera.gif) 50% 1% no-repeat;background-size:80px;}
+	#surveilance_camera_option .option-contents p{font-size:11pt;}	#surveilance_camera_option .option-contents h4{display:block;margin:0 0 5px;width:100%;}
+	#surveilance_camera_option .option-contents h3{font-size:10pt;margin:20px auto !important;width:80%;}
+	#surveilance_camera_option .option-contents a{display:block;text-decoration:none;color:#222;background:#FFA500;width:95%;margin:20px auto 0px;padding:10px 0;font-size:9pt;}
+	
+	#we-can-buy-tuner img{display:block;margin:0 auto 20px;width:50% !important;float:none;}
+	#we-can-buy-tuner figure{width:100%;display:block;}
+	#we-can-buy-tuner .tuner-name{font-weight:bold;font-size:14pt;}
+	#we-can-buy-tuner figcaption{width:100%;float:none;}
+	.tuner-to-buy a{display:block;padding:7px 0 !important;width:80% !important; margin:30px auto !important;}
+	
+	#alternative-tuner-purchase{border-top:1px solid #aaa;margin:20px auto;width:100%;display:block;clear:both;position:relative;}
+	#alternative-tuner-purchase:after{content:"";clear:both;display:block;position:relative;margin:0;}
+	#alternative-tuner-purchase img{margin:30px auto !important;width:65% !important;}
+	#alternative-tuner-purchase figcaption{border:none;width:90%;margin:0 auto;padding-top:0px;font-size:12pt;}
+	
+	#promo h2{font-size:12pt;}
+	
+	.discounted-price{font-size:14pt;text-align:center;margin-top:50px;}
+	.discounted-price .price{font-size:22pt;}
+
+	.former-price:before{width:100%;font-size:16pt;top:-70%;}
+	.former-price{position:relative;background:red;text-align:center;font-size:14pt;color:white;text-decoration:line-through;width:90%;margin:30px auto 0;}
+	#promo li{font-size:10pt;}
+}
