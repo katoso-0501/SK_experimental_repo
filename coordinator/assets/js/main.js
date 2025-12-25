@@ -202,17 +202,34 @@ class EddyA extends Jonny {
 }
 
 class EddA extends Jonny {
-    constructor() {
+    constructor(currency) {
         super();
-        this.img.src = "assets/images/eddA_original.webp";
+        this.currency = currency;
+        switch(this.currency) {
+            case 0 :
+                this.img.src = "assets/images/eddA_original.webp";
+                this.createColormat('Dollar','char__dollar');
+            break;
+            case 1:
+                this.img.src = "assets/images/eddA_variable_yen.webp";
+                this.createColormat('Yen','char__yen');
+            break;
+            case 2:
+                this.img.src = "assets/images/eddA_variable_euro.webp";
+                this.createColormat('Euro','char__euro');
+            break;
+        }
+        // this.img.src = "assets/images/eddA_original.webp";
         this.jonnyMain.classList.remove('jonny');
         this.jonnyMain.classList.add('eddA');
+        console.log(this.currency);
     }
     
     loadIndependentParts () {
         this.createColormat('Jacket','char__jacket');
         this.createColormat('Hat','char__hat');
-        this.createColormat('Dollar','char__dollar');
+        // this.createColormat('Dollar','char__dollar');
+        
         this.createColormat('Printer','char__printer');
     }
 }
@@ -290,22 +307,14 @@ class ColorChip {
         const controlGroupInner = document.createElement('div');
         controlGroupInner.classList.add('controlGroupInner');
         this.controllerInner = controlGroupInner;
-        
+
         const controllerPanel = document.createElement('div');
         const controllerLabel = document.createElement('span');
 
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
 
-            /* Adjust controller's position when it is on the bottom of screen */
-            const top = controlGroupInner.getBoundingClientRect().top;
-            const screenHeight = window.innerHeight;
-
-            if(top > (screenHeight - 350)){
-                controlGroupInner.classList.add('onBottom');
-            }else {
-                controlGroupInner.classList.remove('onBottom');
-            }
+             this.adjustControllerPos(controlGroupInner, controlGroup);
         });
         
         controllerPanel.append(this.thumbnail);
@@ -384,8 +393,12 @@ class ColorChip {
         controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
-
         this.controllerMaster.append(controlGroup);
+
+        if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
+            controlGroupInner.classList.add('onRightSide');
+        }
+        
         this.HSLupdate(
             this.thumbnailInner,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
@@ -413,15 +426,7 @@ class ColorChip {
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
             
-            /* Adjust controller's position when it is on the bottom of screen */
-            const top = controlGroupInner.getBoundingClientRect().top;
-            const screenHeight = window.innerHeight;
-
-            if(top > (screenHeight - 350)){
-                controlGroupInner.classList.add('onBottom');
-            }else {
-                controlGroupInner.classList.remove('onBottom');
-            }
+             this.adjustControllerPos(controlGroupInner, controlGroup);
         });
         
         controllerLabel.addEventListener('click', ()=>{
@@ -554,6 +559,10 @@ class ColorChip {
         this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
 
         this.controllerMaster.append(controlGroup);
+        
+        if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
+            controlGroupInner.classList.add('onRightSide');
+        }
     }
 
     createGradientControls () {
@@ -583,16 +592,8 @@ class ColorChip {
 
             specimensPos[0] = gradientSpecimen.getBoundingClientRect().left;
             specimensPos[1] = gradientSpecimen.getBoundingClientRect().right;
-            console.log(specimensPos);
-            /* Adjust controller's position when it is on the bottom of screen */
-            const top = controlGroupInner.getBoundingClientRect().top;
-            const screenHeight = window.innerHeight;
-
-            if(top > (screenHeight - 350)){
-                controlGroupInner.classList.add('onBottom');
-            }else {
-                controlGroupInner.classList.remove('onBottom');
-            }
+            
+            this.adjustControllerPos(controlGroupInner, controlGroup);
         });
         
         controllerPanel.append(this.thumbnail);
@@ -941,7 +942,7 @@ class ColorChip {
         [
             [document.createElement('input'),"Linear"],
             [document.createElement('input'),"Radial"],
-        ]
+        ];
 
         gradientModeRadio.forEach((radio)=>{
             const label = document.createElement('label');
@@ -959,15 +960,18 @@ class ColorChip {
             label.append(radio[0]);
             label.innerHTML += radio[1];
             controllerPanel.append(label);
-        })
+        });
 
         // Append Controller on Controller Master
         controlGroup.innerHTML = '';
         controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
-
         this.controllerMaster.append(controlGroup);
+        if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
+            controlGroupInner.classList.add('onRightSide');
+        }
+        
         this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
         this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
         this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
@@ -995,6 +999,26 @@ class ColorChip {
             array.splice(this.chipID, 1);
             array.forEach(f=>{f.updateThisChipPos(this.chipID, array);});
         });
+    }
+
+    adjustControllerPos (dialog, thumbnail) {
+            const top = dialog.getBoundingClientRect().top;
+            const left = thumbnail.getBoundingClientRect().left;
+            const screenHeight = window.innerHeight;
+            const leftTurningPoint = (document.querySelector('header').offsetWidth - 280);
+            console.log(left + " / " + leftTurningPoint);
+
+            if(top > (screenHeight - 350)){
+                dialog.classList.add('onBottom');
+            }else {
+                dialog.classList.remove('onBottom');
+            }
+
+            if(left > leftTurningPoint) {
+                dialog.classList.add('onRightSide');
+            }else {
+                dialog.classList.remove('onRightSide');
+            }
     }
 }
 
@@ -1125,7 +1149,7 @@ class ColorMat {
     });
     document.querySelector('.character_adder__eddA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new EddA());
+        characters.push(new EddA(Math.floor(Math.random()*3)));
     });
     
     // Print button
@@ -1384,13 +1408,11 @@ function moveHeartPop () {
     }
 }
 
-
 function wipeAllHeartPop () {
     document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterMultiply')});
     document.querySelectorAll('.heartItem').forEach(f=>f.remove());
     heartPopStats = [];
 }
-
 
 /* Flame-Related */
 let flameParticleStats = [];
