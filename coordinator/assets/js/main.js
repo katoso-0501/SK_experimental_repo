@@ -222,6 +222,10 @@ class EddA extends Jonny {
                 this.img.src = "assets/images/eddA_variable_rupee.webp";
                 this.createColormat('Rupee','char__rupee');
             break;
+            case 4:
+                this.img.src = "assets/images/eddA_variable_wong.webp";
+                this.createColormat('Wong','char__wong');
+            break;
         }
         // this.img.src = "assets/images/eddA_original.webp";
         this.jonnyMain.classList.remove('jonny');
@@ -1153,7 +1157,7 @@ class ColorMat {
     });
     document.querySelector('.character_adder__eddA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new EddA(Math.floor(Math.random()*4)));
+        characters.push(new EddA(Math.floor(Math.random()*5)));
     });
     
     // Print button
