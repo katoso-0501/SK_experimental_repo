@@ -206,7 +206,7 @@ class EddA extends Jonny {
         super();
         this.currency = currency;
         switch(this.currency) {
-            case 0 :
+            case 0:
                 this.img.src = "assets/images/eddA_original.webp";
                 this.createColormat('Dollar','char__dollar');
             break;
@@ -217,6 +217,10 @@ class EddA extends Jonny {
             case 2:
                 this.img.src = "assets/images/eddA_variable_euro.webp";
                 this.createColormat('Euro','char__euro');
+            break;
+            case 3:
+                this.img.src = "assets/images/eddA_variable_rupee.webp";
+                this.createColormat('Rupee','char__rupee');
             break;
         }
         // this.img.src = "assets/images/eddA_original.webp";
@@ -1149,7 +1153,7 @@ class ColorMat {
     });
     document.querySelector('.character_adder__eddA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new EddA(Math.floor(Math.random()*3)));
+        characters.push(new EddA(Math.floor(Math.random()*4)));
     });
     
     // Print button

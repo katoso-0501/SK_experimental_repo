@@ -94,7 +94,8 @@
 
 .eddA .char__dollar,
 .eddA .char__yen,
-.eddA .char__euro
+.eddA .char__euro,
+.eddA .char__rupee
 {
     position: absolute;
     /* Testing Purpose Only */
@@ -126,10 +127,15 @@
     -webkit-mask-image: url(../images/eddA_euro.png);
     mask-image: url(../images/eddA_euro.png);
 }
+.eddA .char__rupee {
+    -webkit-mask-image: url(../images/eddA_rupee.png);
+    mask-image: url(../images/eddA_rupee.png);
+}
 
 .testingPurpose .eddA .char__dollar::before,
 .testingPurpose .eddA .char__yen::before,
-.testingPurpose .eddA .char__euro::before
+.testingPurpose .eddA .char__euro::before,
+.testingPurpose .eddA .char__rupee::before
  {
     content:" - Currency";
     position: absolute;
@@ -176,6 +182,7 @@
 .testingPurpose .eddA .char__dollar,
 .testingPurpose .eddA .char__yen,
 .testingPurpose .eddA .char__euro,
+.testingPurpose .eddA .char__rupee,
 .testingPurpose .eddA .char__printer {
     mask: none !important;
     width: 20px !important;
@@ -191,7 +198,9 @@
 }
 .testingPurpose .eddA .char__dollar,
 .testingPurpose .eddA .char__yen,
-.testingPurpose .eddA .char__euro {
+.testingPurpose .eddA .char__euro,
+.testingPurpose .eddA .char__rupee
+ {
     top: 60px;
 }
 .testingPurpose .eddA .char__printer {
