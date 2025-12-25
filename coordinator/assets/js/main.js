@@ -456,6 +456,7 @@ class ColorChip {
             ["Butterfly", "butterfly"],
             ["Cheetah", "cheetah"],
             ["Pictgram A", "pictgram-a"],
+            ["Wave", "wave"],
         ];
 
         const patternController = document.createElement('div');
