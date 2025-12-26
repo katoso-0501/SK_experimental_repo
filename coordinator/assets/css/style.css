@@ -361,9 +361,6 @@ body {
     background-color: #000000;
 }
 
-/*
-Theatre mode
-*/
 .theatreMode .char__controller {
     display: none;
 }
@@ -403,14 +400,32 @@ Theatre mode
     border:3px solid #AAAAAA;
     border-radius: 8px;
     background-color: #FFFFFF;
+    /* user-select: none; */
+    transition: all 0.4s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.character_adder a:hover {
+    transform :scale(1.2);
+    border-color: #DE5001;
+}
+
+.character_adder a:active {
+    transition-timing-function: linear;
+    transition-duration: 0.1s;
+    transform :scale(0.98);
 }
 
 .character_adder a img {
     width: 64px;
     height: 64px;
     object-fit: contain;
+    pointer-events: none;
 }
 
+/*_/_/_/_/_/_/_/_/_/_/
+Theatre mode
+_/_/_/_/_/_/_/_/_/*/
 /* Background Setter */
 .theatre_background_setter {
     position: fixed;
@@ -530,33 +545,33 @@ Theatre mode
     background: linear-gradient(0deg, #530909 0%, #330202 100%);
 }
 
-.theatreMode .jonny.filterHardlight,
-.theatreMode .jimmy.filterHardlight,
-.theatreMode .rolf.filterHardlight,
-.theatreMode .kevin.filterHardlight,
-.theatreMode .ed.filterHardlight,
+.theatreMode .jonnyA.filterHardlight,
+.theatreMode .jimmyA.filterHardlight,
+.theatreMode .rolfA.filterHardlight,
+.theatreMode .kevinA.filterHardlight,
+.theatreMode .edA.filterHardlight,
 .theatreMode .eddyA.filterHardlight,
 .theatreMode .eddA.filterHardlight {
     -webkit-mix-blend-mode: hard-light;
     mix-blend-mode: hard-light;
 }
 
-.theatreMode .jonny.filterMultiply,
-.theatreMode .jimmy.filterMultiply,
-.theatreMode .rolf.filterMultiply,
-.theatreMode .kevin.filterMultiply,
-.theatreMode .ed.filterMultiply,
+.theatreMode .jonnyA.filterMultiply,
+.theatreMode .jimmyA.filterMultiply,
+.theatreMode .rolfA.filterMultiply,
+.theatreMode .kevinA.filterMultiply,
+.theatreMode .edA.filterMultiply,
 .theatreMode .eddyA.filterMultiply,
 .theatreMode .eddA.filterMultiply {
     -webkit-mix-blend-mode: multiply;
     mix-blend-mode: multiply;
 }
 
-.theatreMode .jonny.filterOverlay,
-.theatreMode .jimmy.filterOverlay,
-.theatreMode .rolf.filterOverlay,
-.theatreMode .kevin.filterOverlay,
-.theatreMode .ed.filterOverlay,
+.theatreMode .jonnyA.filterOverlay,
+.theatreMode .jimmyA.filterOverlay,
+.theatreMode .rolfA.filterOverlay,
+.theatreMode .kevinA.filterOverlay,
+.theatreMode .edA.filterOverlay,
 .theatreMode .eddyA.filterOverlay,
 .theatreMode .eddA.filterOverlay{
     -webkit-mix-blend-mode: overlay;
@@ -677,7 +692,6 @@ Theatre mode
         height: 15px;
         width: 15px;
     }
-    /* filter: blur(6px); */
 }
 
 .flameParticle__phase02 {
@@ -696,7 +710,6 @@ Theatre mode
         height: 80px;
         width: 80px;
     }
-    /* filter: blur(10px); */
 }
 
 
@@ -716,7 +729,6 @@ Theatre mode
         height: 95px;
         width: 95px;
     }
-    /* filter: blur(10px); */
 }
 
 .flameParticle__phase04 {

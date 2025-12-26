@@ -4,18 +4,18 @@
 let characterID = 0;
 //  __________________
 // Character classes start
-class Jonny {
+class JonnyA {
     constructor() {
         characterID++;
         this.jonnyMain = document.createElement('div');
-        this.jonnyMain.classList.add('jonny');
+        this.jonnyMain.classList.add('jonnyA');
         this.jonnyMain.classList.add('charID_'+characterID);
         
         this.jonnyBody = document.createElement('div');
         this.jonnyBody.classList.add('char__body');
 
         this.img = document.createElement('img');
-        this.img.src = "assets/images/jonny_original.webp";
+        this.img.src = "assets/images/jonnyA_original.webp";
         this.jonnyBody.append(this.img);
 
         this.controllerMaster = document.createElement('div');
@@ -121,12 +121,12 @@ class Jonny {
     }
 }
 
-class Jimmy extends Jonny {
+class JimmyA extends JonnyA {
     constructor() {
         super();
-        this.img.src = "assets/images/jimmy_original.webp";
-        this.jonnyMain.classList.remove('jonny');
-        this.jonnyMain.classList.add('jimmy');
+        this.img.src = "assets/images/jimmyA_original.webp";
+        this.jonnyMain.classList.remove('jonnyA');
+        this.jonnyMain.classList.add('jimmyA');
     }
     
     loadIndependentParts () {
@@ -136,12 +136,12 @@ class Jimmy extends Jonny {
     }
 }
 
-class Rolf extends Jonny {
+class RolfA extends JonnyA {
     constructor() {
         super();
-        this.img.src = "assets/images/rolf_original.webp";
-        this.jonnyMain.classList.remove('jonny');
-        this.jonnyMain.classList.add('rolf');
+        this.img.src = "assets/images/rolfA_original.webp";
+        this.jonnyMain.classList.remove('jonnyA');
+        this.jonnyMain.classList.add('rolfA');
     }
     
     loadIndependentParts () {
@@ -154,12 +154,12 @@ class Rolf extends Jonny {
     }
 }
 
-class Kevin extends Jonny {
+class KevinA extends JonnyA {
     constructor() {
         super();
-        this.img.src = "assets/images/kevin_original.webp";
-        this.jonnyMain.classList.remove('jonny');
-        this.jonnyMain.classList.add('kevin');
+        this.img.src = "assets/images/kevinA_original.webp";
+        this.jonnyMain.classList.remove('jonnyA');
+        this.jonnyMain.classList.add('kevinA');
     }
     
     loadIndependentParts () {
@@ -169,12 +169,12 @@ class Kevin extends Jonny {
     }
 }
 
-class Ed extends Jonny {
+class EdA extends JonnyA {
     constructor() {
         super();
-        this.img.src = "assets/images/ed_original.webp";
-        this.jonnyMain.classList.remove('jonny');
-        this.jonnyMain.classList.add('ed');
+        this.img.src = "assets/images/edA_original.webp";
+        this.jonnyMain.classList.remove('jonnyA');
+        this.jonnyMain.classList.add('edA');
     }
     
     loadIndependentParts () {
@@ -186,11 +186,11 @@ class Ed extends Jonny {
     }
 }
 
-class EddyA extends Jonny {
+class EddyA extends JonnyA {
     constructor() {
         super();
         this.img.src = "assets/images/eddyA_original.webp";
-        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('eddyA');
     }
     
@@ -201,7 +201,7 @@ class EddyA extends Jonny {
     }
 }
 
-class EddA extends Jonny {
+class EddA extends JonnyA {
     constructor(currency) {
         super();
         this.currency = currency;
@@ -227,8 +227,7 @@ class EddA extends Jonny {
                 this.createColormat('Wong','char__wong');
             break;
         }
-        // this.img.src = "assets/images/eddA_original.webp";
-        this.jonnyMain.classList.remove('jonny');
+        this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('eddA');
         console.log(this.currency);
     }
@@ -1124,7 +1123,7 @@ class ColorMat {
     const characters = [];
     
     window.addEventListener('load', ()=>{
-        characters.push(new Jonny());
+        characters.push(new JonnyA());
         
         if(window.innerWidth > 768) {
             document.querySelectorAll('.char__controller > div').forEach(controller=>{
@@ -1133,27 +1132,27 @@ class ColorMat {
         }
     });
     
-    document.querySelector('.character_adder__jonny').addEventListener('click', b=>{
+    document.querySelector('.character_adder__jonnyA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new Jonny());
+        characters.push(new JonnyA());
     });
     
-    document.querySelector('.character_adder__jimmy').addEventListener('click', b=>{
+    document.querySelector('.character_adder__jimmyA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new Jimmy());
+        characters.push(new JimmyA());
     });
     
-    document.querySelector('.character_adder__rolf').addEventListener('click', b=>{
+    document.querySelector('.character_adder__rolfA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new Rolf());
+        characters.push(new RolfA());
     });
-    document.querySelector('.character_adder__kevin').addEventListener('click', b=>{
+    document.querySelector('.character_adder__kevinA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new Kevin());
+        characters.push(new KevinA());
     });
-    document.querySelector('.character_adder__ed').addEventListener('click', b=>{
+    document.querySelector('.character_adder__edA').addEventListener('click', b=>{
         b.preventDefault();
-        characters.push(new Ed());
+        characters.push(new EdA());
     });
     document.querySelector('.character_adder__eddyA').addEventListener('click', b=>{
         b.preventDefault();
@@ -1169,7 +1168,7 @@ class ColorMat {
 }
 
 
-const charClasses = '.jonny,.jimmy,.rolf,.kevin,.ed,.eddyA,.eddA';
+const charClasses = '.jonnyA,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
 /* ________________________
 Theatre Mode
 _________________________*/
