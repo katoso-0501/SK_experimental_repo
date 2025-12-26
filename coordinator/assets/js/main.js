@@ -246,8 +246,9 @@ class EddA extends Jonny {
 // Character classes end
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 
-// Color Managements
 //  ______________________
+// Color Managements
+//￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 class ColorChip {
     constructor(initialColor, colorMode, mat, controllerMaster, chipID) {
         this.chipID = chipID;
@@ -711,24 +712,42 @@ class ColorChip {
 
         gradientSpecimen.addEventListener('mouseup', f=>{
             let pinPos = ((f.clientX - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100;
-            console.log(pinPos);
 
             
             if(dragMode === 0) {
-                let insertPos = gradientStops.length - 1;
+                let insertPos = gradientStops.length;
+                console.log(insertPos);
                 gradientStops.forEach((stop,i)=>{
-                    if(pinPos <= stop[4])
-                        {
-                            insertPos--;
-                        } 
+                    if(pinPos <= stop[4]) {
+                        pins[i].dataset.index = parseInt(pins[i].dataset.index) + 1;
+                        insertPos--;
+                    }
                 });
                 console.log("New pin is gonna be inserted to No." + insertPos);
-
+                
                 // Add a new stop
-                gradientStops.push([Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, pinPos]);
+                gradientStops.splice(insertPos,0,[Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, pinPos]);
+
                 controlParts[7][1].max =  gradientStops.length - 1;
-                controlParts[7][1].value =  gradientStops.length - 1;
-                selectedStop = gradientStops.length - 1;
+                controlParts[7][1].value = insertPos;
+
+                const gradientPin = document.createElement('div');
+                const gradientPinInner = document.createElement('div');
+        
+                gradientPin.classList.add('gradientPin');
+                gradientPinInner.classList.add('gradientPinInner');
+                gradientPin.dataset.index = insertPos;
+                pins.splice(insertPos,0,gradientPin);
+                gradientPin.append(gradientPinInner);
+                
+                if(insertPos < gradientStops.length) {
+                    gradientSpecimen.insertBefore(gradientPin, gradientSpecimen.children[insertPos]);
+                }else{
+                    gradientSpecimen.append(gradientPin);
+                }
+        
+                selectedStop = insertPos;
+                
                 
                 controlParts[0][1].value = gradientStops[selectedStop][0];
                 controlParts[1][1].value = gradientStops[selectedStop][1];
@@ -736,22 +755,9 @@ class ColorChip {
                 controlParts[3][1].value = gradientStops[selectedStop][3];
                 controlParts[4][1].value = gradientStops[selectedStop][4];
 
-                    
-                const gradientPin = document.createElement('div');
-                const gradientPinInner = document.createElement('div');
-        
-                gradientPin.classList.add('gradientPin');
-                gradientPinInner.classList.add('gradientPinInner');
-                gradientPin.dataset.index = gradientStops.length - 1;
-                pins.push(gradientPin);
-        
-                gradientPin.append(gradientPinInner);
-                gradientSpecimen.append(gradientPin);
-                
                 gradientPin.style.top = "12px";
-                gradientPin.style.left = "calc("+ gradientStops[gradientStops.length - 1][4] +"% - 0px)";            
-                gradientPinInner.style.background = "hsla(" + gradientStops[gradientStops.length - 1][0] + "," + gradientStops[gradientStops.length - 1][1] + "%," + gradientStops[gradientStops.length - 1][2] + "%," + gradientStops[gradientStops.length - 1][3] / 100 + ")";
-                
+                gradientPin.style.left = "calc("+ gradientStops[selectedStop][4] +"% - 0px)";            
+                gradientPinInner.style.background = "hsla(" + gradientStops[selectedStop][0] + "," + gradientStops[selectedStop][1] + "%," + gradientStops[selectedStop][2] + "%," + gradientStops[selectedStop][3] / 100 + ")";
                 
                 document.querySelectorAll('.gradientPin').forEach(pin=>{
                     pin.classList.remove('selected');
@@ -777,15 +783,10 @@ class ColorChip {
             }
             dragMode = 0;
         });
-        
 
         gradientSpecimen.addEventListener('touchend', f=>{
             let pinPos = 0;
-            
             pinPos = ((pins[selectedStop].getBoundingClientRect().left - specimensPos[0]) / (specimensPos[1] - specimensPos[0])) * 100;
-
-            console.log(pinPos);
-
             if(pinPos<0){
                 pinPos=0;
             }
@@ -931,7 +932,9 @@ class ColorChip {
             pins[selectedStop].classList.add('selected');
 
             controlParts[7][1].max =  gradientStops.length - 1;
-            controlParts[7][1].value =  selectedStop;
+            controlParts[7][1].value =  gradientStops.length - 1;
+
+            pins.forEach((pin, i) => {pin.dataset.index = i;});
             
             controlParts[0][1].value = gradientStops[selectedStop][0];
             controlParts[1][1].value = gradientStops[selectedStop][1];
@@ -986,12 +989,6 @@ class ColorChip {
         this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
     }
 
-    deleteColorChip () {
-        this.thumbnail.remove();
-        this.layer.remove();
-        this.controller.remove();
-    }
-
     updateThisChipPos (deletedPos, array) {
         if(this.chipID > deletedPos) {
             this.chipID--;
@@ -1008,6 +1005,12 @@ class ColorChip {
             array.splice(this.chipID, 1);
             array.forEach(f=>{f.updateThisChipPos(this.chipID, array);});
         });
+    }
+
+    deleteColorChip () {
+        this.thumbnail.remove();
+        this.layer.remove();
+        this.controller.remove();
     }
 
     adjustControllerPos (dialog, thumbnail) {
