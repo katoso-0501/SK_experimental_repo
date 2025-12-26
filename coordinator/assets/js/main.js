@@ -433,8 +433,7 @@ class ColorChip {
 
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
-            
-             this.adjustControllerPos(controlGroupInner, controlGroup);
+            this.adjustControllerPos(controlGroupInner, controlGroup);
         });
         
         controllerLabel.addEventListener('click', ()=>{
@@ -457,6 +456,7 @@ class ColorChip {
             ["Cheetah", "cheetah"],
             ["Pictgram A", "pictgram-a"],
             ["Wave", "wave"],
+            ["Country", "country"],
         ];
 
         const patternController = document.createElement('div');
