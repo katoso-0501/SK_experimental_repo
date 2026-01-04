@@ -23,6 +23,8 @@ class JonnyA {
         
         this.jonnyMain.append(this.jonnyBody);
         this.jonnyMain.append(this.controllerMaster);
+
+        this.resurrectionSpell = { char : "JonnyA", parts: {}};
         
         this.loadIndependentParts();
 
@@ -54,6 +56,8 @@ class JonnyA {
         });
 
         const mat = new ColorMat (targetPart, controllerPanel);
+
+        this.resurrectionSpell.parts[tgtname] = mat;
         
         this.controllerMaster.append(controllerPanel);
         this.jonnyBody.append(targetPart);
@@ -118,6 +122,10 @@ class JonnyA {
 
     deleteCharacter () {
         this.jonnyMain.remove();
+    }
+
+    generateResurrectionSpell () {
+        return JSON.stringify(this.resurrectionSpell);
     }
 }
 
@@ -321,8 +329,7 @@ class ColorChip {
 
         this.thumbnail.addEventListener('click', ()=>{
             controlGroupInner.classList.toggle('expanded');
-
-             this.adjustControllerPos(controlGroupInner, controlGroup);
+            this.adjustControllerPos(controlGroupInner, controlGroup);
         });
         
         controllerPanel.append(this.thumbnail);
@@ -1038,6 +1045,8 @@ class ColorMat {
         this.matMain = document.createElement('div');   
         this.matMain.classList.add('mat_main');
 
+        this.matSpell = {};
+
         this.mat = document.createElement('div');   
         this.mat.classList.add('mat');
         this.mat.style.width = "100%";
@@ -1109,12 +1118,15 @@ class ColorMat {
         this.reRender();
     }  
     
-    
     reRender () {
         this.mat.innerHTML = "";
         this.layers.forEach(l=>{
             this.mat.append(l.layer);
         });
+    }
+
+    getMatObj () {
+        return this.matSpell;
     }
 }
 // Color Managements end

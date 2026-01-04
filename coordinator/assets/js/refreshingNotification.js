@@ -6,9 +6,7 @@ function refreshingNotification () {
         notification.addEventListener('stalled', ()=>{
             window.location.reload();
         });
-
-    }
-    ,299000);
+    },299000);
     if(new Date().getHours() <= 8) {
         setTimeout(()=>{window.location.reload();},300000);
     }else{
