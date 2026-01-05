@@ -25,9 +25,18 @@ class JonnyA {
         this.jonnyMain.append(this.controllerMaster);
 
         this.resurrectionSpell = { char : "JonnyA", parts: {}};
+        this.exportBtn = document.createElement('span');
+        this.exportBtn.classList.add('exportBtn');
+        this.exportBtn.textContent = 'Export';
+        this.exportBtn.addEventListener('click', ()=>{
+            console.log(this.generateResurrectionSpell());
+            openSpellExportation(this.generateResurrectionSpell());
+        });
+        this.mats = [];
         
         this.loadIndependentParts();
 
+        this.jonnyBody.append(this.exportBtn);
         document.querySelector('.character_wrapper').append(this.jonnyMain);
     }
 
@@ -55,9 +64,10 @@ class JonnyA {
             controllerPanel.classList.toggle('expanded');
         });
 
-        const mat = new ColorMat (targetPart, controllerPanel);
+        const mat = new ColorMat (targetPart, controllerPanel, tgtname);
+        this.mats.push(mat);
 
-        this.resurrectionSpell.parts[tgtname] = mat;
+        this.resurrectionSpell.parts[tgtname] = mat.getMatObj();
         
         this.controllerMaster.append(controllerPanel);
         this.jonnyBody.append(targetPart);
@@ -68,6 +78,9 @@ class JonnyA {
     }
 
     generateResurrectionSpell () {
+        this.mats.forEach(mat=>{
+            this.resurrectionSpell.parts[mat.targetName] = mat.getMatObj();
+        });
         return JSON.stringify(this.resurrectionSpell);
     }
 }
@@ -75,6 +88,7 @@ class JonnyA {
 class JimmyA extends JonnyA {
     constructor() {
         super();
+        this.resurrectionSpell.char = "JimmyA";
         this.img.src = "assets/images/jimmyA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('jimmyA');
@@ -90,6 +104,7 @@ class JimmyA extends JonnyA {
 class RolfA extends JonnyA {
     constructor() {
         super();
+        this.resurrectionSpell.char = "RolfA";
         this.img.src = "assets/images/rolfA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('rolfA');
@@ -108,6 +123,7 @@ class RolfA extends JonnyA {
 class KevinA extends JonnyA {
     constructor() {
         super();
+        this.resurrectionSpell.char = "KevinA";
         this.img.src = "assets/images/kevinA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('kevinA');
@@ -123,6 +139,7 @@ class KevinA extends JonnyA {
 class EdA extends JonnyA {
     constructor() {
         super();
+        this.resurrectionSpell.char = "EdA";
         this.img.src = "assets/images/edA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('edA');
@@ -140,6 +157,7 @@ class EdA extends JonnyA {
 class EddyA extends JonnyA {
     constructor() {
         super();
+        this.resurrectionSpell.char = "EddyA";
         this.img.src = "assets/images/eddyA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('eddyA');
@@ -155,6 +173,7 @@ class EddyA extends JonnyA {
 class EddA extends JonnyA {
     constructor(currency) {
         super();
+        this.resurrectionSpell.char = "EddA";
         this.currency = currency;
         switch(this.currency) {
             case 0:
@@ -180,14 +199,11 @@ class EddA extends JonnyA {
         }
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('eddA');
-        console.log(this.currency);
     }
     
     loadIndependentParts () {
         this.createColormat('Jacket','char__jacket');
         this.createColormat('Hat','char__hat');
-        // this.createColormat('Dollar','char__dollar');
-        
         this.createColormat('Printer','char__printer');
     }
 }
@@ -203,7 +219,7 @@ class ColorChip {
     constructor(initialColor, colorMode, mat, controllerMaster, chipID) {
         this.chipID = chipID;
         this.layer = document.createElement('div');
-        // this.layer.classList.add('colorChip');
+        
         this.layer.style.width = "200%";
         this.layer.style.height = "200%";
         this.layer.style.position = "absolute";
@@ -224,6 +240,8 @@ class ColorChip {
         this.controller = undefined;
         this.controllerInner = undefined;
         this.gradientMode = "linear";
+
+        this.tipSpell = { "colorMode": colorMode};
 
         if(colorMode === "simple") {
             this.createSimpleColorControls();
@@ -293,11 +311,21 @@ class ColorChip {
             controlParts[i][1].addEventListener('change', ()=>{
                 this.HSLupdate(this.layer,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
                 this.HSLupdate(this.thumbnailInner,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
+                
+                this.tipSpell["hue"] = controlParts[0][1].value;
+                this.tipSpell["saturation"] = controlParts[1][1].value;
+                this.tipSpell["brightness"] = controlParts[2][1].value;
+                this.tipSpell["opacity"] = controlParts[3][1].value / 100;
             });
         }
         controlParts[3][1].addEventListener('change', m=>{
             this.layer.style.opacity = controlParts[3][1].value / 100;
             this.thumbnailInner.style.opacity = controlParts[3][1].value / 100;
+        
+            this.tipSpell["hue"] = controlParts[0][1].value;
+            this.tipSpell["saturation"] = controlParts[1][1].value;
+            this.tipSpell["brightness"] = controlParts[2][1].value;
+            this.tipSpell["opacity"] = controlParts[3][1].value / 100;
         });
         
         controlParts.forEach((part, i) => {
@@ -319,32 +347,33 @@ class ColorChip {
 
         /* Define blend modes */
         const blendMode = [
-            "Normal",
-            "Multiply",
-            "Screen",
-            "Overlay",
-            "Darken",
-            "Lighten",
-            "Color Dodge",
-            "Color Burn",
-            "Hard Light",
-            "Soft Light",
-            "Difference",
-            "Exclusion",
-            "Hue",
-            "Saturation",
-            "Color",
-            "Luminosity"
+            "normal",
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "luminosity"
         ];
         blendMode.forEach(mode=>{
             const option = document.createElement('option');
             option.value = mode;
-            option.textContent = mode;
+            option.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
             controlParts[4][1].append(option);
         });
 
         controlParts[4][1].addEventListener('change', m=>{
             this.layer.style.mixBlendMode = controlParts[4][1].value;
+            this.tipSpell["mixblendmode"] = controlParts[4][1].value;
         });
 
         controlGroup.innerHTML = '';
@@ -365,6 +394,11 @@ class ColorChip {
             this.layer,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
         );
+        this.tipSpell["hue"] = controlParts[0][1].value;
+        this.tipSpell["saturation"] = controlParts[1][1].value;
+        this.tipSpell["brightness"] = controlParts[2][1].value;
+        this.tipSpell["opacity"] = controlParts[3][1].value / 100;
+        this.tipSpell["mixblendmode"] = "normal";
     }
 
     createPatternControls() {
@@ -522,6 +556,8 @@ class ColorChip {
         if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
             controlGroupInner.classList.add('onRightSide');
         }
+
+        this.tipSpell["sorry"] = "The spell in the Pattern Tip is under construction!"
     }
 
     createGradientControls () {
@@ -933,6 +969,8 @@ class ColorChip {
             controlGroupInner.classList.add('onRightSide');
         }
         
+        this.tipSpell["sorry"] = "The spell in the Gradient Tip is under construction!"
+        
         this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
         this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
         this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
@@ -981,13 +1019,22 @@ class ColorChip {
                 dialog.classList.remove('onRightSide');
             }
     }
+
+    getTipID () {
+        return this.chipID;
+    }
+    
+    getTipObj () {
+        return this.tipSpell;
+    }
 }
 
 class ColorMat {
-    constructor (addTo,controllerMaster) {
+    constructor (addTo,controllerMaster,targetName) {
         this.matMain = document.createElement('div');   
         this.matMain.classList.add('mat_main');
 
+        this.targetName = targetName;
         this.matSpell = {};
 
         this.mat = document.createElement('div');   
@@ -1071,7 +1118,7 @@ class ColorMat {
     getMatObj () {
         this.matSpell = {};
         this.layers.forEach(layer => {
-            // this.matSpell[layer.id] = layer.getLayerObj();
+            this.matSpell[layer.getTipID()] = layer.getTipObj();
         });
         return this.matSpell;
     }
@@ -1089,15 +1136,6 @@ class ColorMat {
                 controller.classList.add('expanded');
             });
         }
-                
-        setInterval(()=>{
-            characters.forEach(character => {
-                console.log(character.generateResurrectionSpell());
-            });
-        }, 60000);
-        characters.forEach(character => {
-            console.log(character.generateResurrectionSpell());
-        });
     });
     
     document.querySelector('.character_adder__jonnyA').addEventListener('click', b=>{
@@ -1134,7 +1172,6 @@ class ColorMat {
     // Print button
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
 }
-
 
 const charClasses = '.jonnyA,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
 /* ________________________
@@ -1470,4 +1507,22 @@ function wipeAllFlames () {
     document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterOverlay')});
     document.querySelectorAll('.flameParticle').forEach(f=>f.remove());
     flameParticleStats = [];
+}
+
+/* Resurrection spell */
+document.querySelector('.resurrection_dialog').addEventListener('click', e => {
+    if(e.target.classList.contains("resurrection_dialog")) {
+        document.querySelector('.resurrection_dialog').classList.remove('expanded');
+    document.querySelector('.resurrection_dialog_export__inner').classList.remove('expanded');  
+    }
+});
+
+function openSpellExportation(spell) {
+    try {
+        document.querySelector('.resurrectionSpell__stoneboard').textContent = spell;
+        document.querySelector('.resurrection_dialog').classList.add('expanded');   
+        document.querySelector('.resurrection_dialog_export__inner').classList.add('expanded');   
+    } catch (err) {
+        alert("Alas! Generating thy spell has failed! Reason: " + err.message);
+    }
 }

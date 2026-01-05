@@ -66,6 +66,17 @@ body {
     min-height: 0;
 }
 
+.exportBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.theatreMode .exportBtn {
+    display: none;
+}
+
 .char__controller {
     position: relative;
     display: flex;
@@ -763,5 +774,58 @@ _/_/_/_/_/_/_/_/_/*/
 
 /* Church for resurrection */
 .resurrection_dialog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    opacity: 0;
+    backdrop-filter: none;
+    transition: 0.4s;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+
+    font-family: serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resurrectionSpellTitle {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.resurrection_dialog.expanded {
+    backdrop-filter : blur(4px);
+    background-color: rgba(0,0,0,.6);
+    pointer-events: all;
+    opacity: 1;
+}
+
+.resurrection_dialog_export__inner,
+.resurrection_dialog_import__inner {
     display: none;
+}
+
+.resurrection_dialog_export__inner.expanded,
+.resurrection_dialog_import__inner.expanded {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    height: 80%;
+    padding: 32px;
+    gap: 16px;
+    background-color: #a0a0a0;
+}
+
+.resurrectionSpell__stoneboard {
+    background-color: white;
+    padding: 16px;
+    word-break: break-all
+
 }
