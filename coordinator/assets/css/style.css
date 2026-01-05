@@ -760,3 +760,8 @@ _/_/_/_/_/_/_/_/_/*/
         min-height: none;
     }
 }
+
+/* Church for resurrection */
+.resurrection_dialog {
+    display: none;
+}

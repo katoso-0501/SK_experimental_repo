@@ -63,63 +63,6 @@ class JonnyA {
         this.jonnyBody.append(targetPart);
     }
 
-    createControls (tgtname, tgt) {
-        const targetPart = document.createElement('div');
-        targetPart.classList.add(tgt);
-        
-        const controllerPanel = document.createElement('div');
-        const controllerLabel = document.createElement('span');
-        controllerLabel.textContent = tgtname;
-        controllerPanel.append(controllerLabel);
-        controllerPanel.classList.add(tgtname);
-
-        controllerLabel.addEventListener('click', ()=>{
-            controllerPanel.classList.toggle('expanded');
-        });
-
-        const controlParts = [
-            ['Hue',document.createElement('input')],
-            ['Saturation',document.createElement('input')],
-            ['Brightness',document.createElement('input')],
-        ];
-
-        controlParts[0][1].addEventListener('change', m=>{
-            this.HSLupdate(targetPart,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
-        controlParts[1][1].addEventListener('change', m=>{
-            this.HSLupdate(targetPart,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
-        controlParts[2][1].addEventListener('change', m=>{
-            this.HSLupdate(targetPart,controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value);
-        });
-        
-        controlParts.forEach((part, i) => {
-            const paragraph = document.createElement('p');
-
-            part[1].setAttribute('type', 'range');
-            part[1].setAttribute('min', '0');
-            if(i === 0 || i ===  3) {
-                part[1].setAttribute('max', '360');
-                part[1].setAttribute('value', Math.floor(Math.random() * 360));
-            }else{
-                part[1].setAttribute('max', '100');
-                part[1].setAttribute('value', Math.floor(Math.random() * 100));
-            }
-            
-            paragraph.append(part[0],part[1]);
-            controllerPanel.append(paragraph); 
-        });
-        
-        this.controllerMaster.append(controllerPanel);
-        this.jonnyBody.append(targetPart);
-        this.HSLupdate(
-            targetPart,
-            controlParts[0][1].value,
-            controlParts[1][1].value,
-            controlParts[2][1].value
-        );
-    }
-
     deleteCharacter () {
         this.jonnyMain.remove();
     }
@@ -1126,6 +1069,10 @@ class ColorMat {
     }
 
     getMatObj () {
+        this.matSpell = {};
+        this.layers.forEach(layer => {
+            // this.matSpell[layer.id] = layer.getLayerObj();
+        });
         return this.matSpell;
     }
 }
@@ -1140,8 +1087,17 @@ class ColorMat {
         if(window.innerWidth > 768) {
             document.querySelectorAll('.char__controller > div').forEach(controller=>{
                 controller.classList.add('expanded');
-            })
+            });
         }
+                
+        setInterval(()=>{
+            characters.forEach(character => {
+                console.log(character.generateResurrectionSpell());
+            });
+        }, 60000);
+        characters.forEach(character => {
+            console.log(character.generateResurrectionSpell());
+        });
     });
     
     document.querySelector('.character_adder__jonnyA').addEventListener('click', b=>{
