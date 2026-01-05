@@ -1,216 +1,280 @@
+@charset "UTF-8";
+html,body {
+    width: 100%;
+    height: 100%;
 
-        html,body {
-            width: 100%;
-            height: 100%;
+    font-family: sans-serif;
 
-            font-family: sans-serif;
-     
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            
-            @media (width <= 768px) {
-                height: auto;
-                overflow-y: scroll;
-            }
-        }
-        
-        .swipeRefreshPreventer {
-            @media (width <= 768px) {
-                height: 1200px;
-                width: 100%;
-            }
-        }
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    
+    @media (width <= 768px) {
+        height: auto;
+        overflow-y: scroll;
+    }
+}
 
-        .embed_body {
-            height: 70%;
-            width: 90%;
-            position: fixed;
-            overflow-y: auto;
-            top: 8px;
-            left: 5%;
-        }
-        
-        .embed_body.locked {
-            overflow: hidden;
-            pointer-events: none;
-        }
+.swipeRefreshPreventer {
+    @media (width <= 768px) {
+        height: 1200px;
+        width: 100%;
+    }
+}
 
-        .video_container {
-            position: relative;
-            border: 2px solid #20af30;
-            margin-top: 32px;
-            border-radius: 8px;
-            padding: 30px 3.5% 3.5%;
-            height: 315px;
-            overflow: hidden;
-        }
+.embed_body {
+    height: calc(90% - 140px);
+    width: 90%;
+    position: fixed;
+    overflow-y: auto;
+    top: calc(10% + 40px);
+    left: 5%;
+}
 
-        .video_container iframe {
-            transform-origin: left top;
-            transform: scale(0.5);
-        }
+.embed_body.locked {
+    overflow: hidden;
+    pointer-events: none;
+}
 
-        .video_container.shrinked {
-            transform: scale(0.02);
-            transform-origin: center center;
-            transition: 1s;
-        }
+.video_container {
+    position: relative;
+    border: 2px solid #20af30;
+    margin-top: 32px;
+    border-radius: 8px;
+    padding: 30px 3.5% 3.5%;
+    height: 315px;
+    overflow: hidden;
+}
 
-        .video_container .close_btn {
-            position: absolute;
-            content: "";
-            display: block;
-            right: 0;
-            top: 0;
-            width: 48px;
-            height: 24px;
-            background-color: #ff0909;
-            border-radius: 20px;
-            cursor: pointer;
-            z-index: 3;
-        }
-        
-        .video_container .close_btn:before {
-            content: "";
-            display: block;
-            position: absolute;
-            left: 18px;
-            top: 12px;
-            width: 16px;
-            border-top: 2px solid #FFFFFF;
-            transform: rotate(45deg);
-        }
-        
-        .video_container .close_btn:after {
-            content: "";
-            display: block;
-            position: absolute;
-            left: 18px;
-            top: 12px;
-            width: 16px;
-            border-top: 2px solid #FFFFFF;
-            transform: rotate(-45deg);
-        }
+.video_container iframe {
+    transform-origin: left top;
+    transform: scale(0.5);
+}
 
-        .lock_button {
-            position: fixed;
-            bottom: 24px;
-            right: calc(50% - 24px);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            font-size: 0;
-            border: 2px solid #202020;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .lock_button.locked {
-            background-color: #202020;
-        }
-        
-        .lock_button span {
-            position: absolute;
-            background-color: #FFFFFF;
-            left: 0;
-            top: 7px;
-            bottom: 0px;
-            right: 0;
-            margin: auto;
-            width: 3px;
-            height: 8px;
-            border-radius: 12px;
-        }
+.video_container.shrinked {
+    transform: scale(0.02);
+    transform-origin: center center;
+    transition: 1s;
+}
 
-        .lock_button:before {
-            content: "";
-            position: absolute;
-            top: 18px;
-            left: 12px;
-            width: 24px;
-            height: 19px;
-            background: #202020;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
+.video_container .close_btn {
+    position: absolute;
+    content: "";
+    display: block;
+    right: 0;
+    top: 0;
+    width: 48px;
+    height: 24px;
+    background-color: #ff0909;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 3;
+}
 
-        .lock_button.locked:before {
-            background: #ffffff;
-        }
+.video_container .stopBtn {
+    position: absolute;
+    left: 2px;
+    top: 2px;    
+    display: inline-flex;
+    padding: 2px 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    border-radius: 24px;
+    background-color: #20A0FF;
+    user-select: none;
+    text-decoration: none;
+    cursor: pointer;
+}
 
-        .lock_button:after {
-            content: "";
-            display: block;
-            width: 12px;
-            height: 20px;
-            position: absolute;
-            border: 2px solid #202020;
-            border-bottom:0px solid transparent;
-            border-right: 0px solid transparent;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            top: 8px;
-            left: 17px;
-        }
-        
-        .lock_button.locked:after {
-            border: 2px solid #FFFFFF;
-            border-bottom:0px solid transparent;
-        }
+.video_container .close_btn:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 18px;
+    top: 12px;
+    width: 16px;
+    border-top: 2px solid #FFFFFF;
+    transform: rotate(45deg);
+}
 
-        .lock_button.locked span {
-            background-color: #202020;
-        }
+.video_container .close_btn:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 18px;
+    top: 12px;
+    width: 16px;
+    border-top: 2px solid #FFFFFF;
+    transform: rotate(-45deg);
+}
 
-        .lock_remaining {
-            position: fixed;
-            bottom: 120px;
-            display: flex;
-            
-            left: 0;
-            width: 100%;
-            justify-content: center;
-            gap: 15px;
-            letter-spacing: 20px;
-            font-size: 12px;
-        }
-        
-        .lock_potch {
-            display: inline-flex;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid #2008FF;
-            background-color: #ffffff;
-        }
-        
-        .lock_potch.active {
-            background-color: #2008FF;;
-        }
+/*
+Screen Locking
+*/
+.lock_button {
+    position: fixed;
+    bottom: 24px;
+    right: calc(50% - 24px);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    font-size: 0;
+    border: 2px solid #202020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
 
-        .movie_adder a {
-            display: inline-flex;
-            padding: 2px 7px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #FFFFFF;
-            border-radius: 24px;
-            background-color: #fe6320;
-            user-select: none;
-            text-decoration: none
-        }
+.lock_button.locked {
+    background-color: #202020;
+}
 
-        .movie_adder input[type="text"] 
-        {
-            border-radius: 12px;
-            border: 1px solid #d6d6d6;
-            padding: 3px 5px;
-            /* width: 100%; */
+.lock_button span {
+    position: absolute;
+    background-color: #FFFFFF;
+    left: 0;
+    top: 7px;
+    bottom: 0px;
+    right: 0;
+    margin: auto;
+    width: 3px;
+    height: 8px;
+    border-radius: 12px;
+}
 
-        }
+.lock_button:before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 12px;
+    width: 24px;
+    height: 19px;
+    background: #202020;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.lock_button.locked:before {
+    background: #ffffff;
+}
+
+.lock_button:after {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 20px;
+    position: absolute;
+    border: 2px solid #202020;
+    border-bottom:0px solid transparent;
+    border-right: 0px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    top: 8px;
+    left: 17px;
+}
+
+.lock_button.locked:after {
+    border: 2px solid #FFFFFF;
+    border-bottom:0px solid transparent;
+}
+
+.lock_button.locked span {
+    background-color: #202020;
+}
+
+.lock_remaining {
+    position: fixed;
+    bottom: 100px;
+    display: flex;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+    letter-spacing: 20px;
+    font-size: 12px;
+}
+
+.lock_potch {
+    display: inline-flex;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #2008FF;
+    background-color: #ffffff;
+}
+
+.lock_potch.active {
+    background-color: #2008FF;;
+}
+
+/* Movie adder*/
+.movie_adder {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: calc(100% - 32px);
+    background-color: rgba(255,210,210,0.6);
+    padding: 45px 16px 10px;
+}
+
+.movie_adder.locked {
+    pointer-events: none;
+}
+
+.movie_adder a {
+    display: inline-flex;
+    padding: 2px 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    border-radius: 24px;
+    background-color: #fe6320;
+    user-select: none;
+    text-decoration: none
+}
+
+.movie_adder input[type="text"] {
+    border-radius: 12px;
+    border: 1px solid #d6d6d6;
+    padding: 3px 5px;
+}
+
+/* More movie adder */
+.more_movie_adder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    transform: translateY(calc(-100% + 30px));
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: 0.4s;
+    z-index: 1000;
+}
+
+.more_movie_adder.expanded {
+    transform: translateY(0);
+}
+
+.more_movie_adder__arrow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #fe6320;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
