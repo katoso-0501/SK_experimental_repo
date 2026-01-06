@@ -220,14 +220,15 @@ Screen Locking
     top: 0;
     width: calc(100% - 32px);
     background-color: rgba(255,210,210,0.6);
-    padding: 45px 16px 10px;
+    padding: 24px 16px 10px;
 }
 
 .movie_adder.locked {
     pointer-events: none;
 }
 
-.movie_adder a {
+.movie_adder a,
+.more_movie_adder__contentInner a {
     display: inline-flex;
     padding: 2px 7px;
     font-size: 12px;
@@ -251,9 +252,9 @@ Screen Locking
     top: 0;
     left: 0;
     width: 100%;
-    height: 400px;
-    transform: translateY(calc(-100% + 30px));
-    background-color: rgba(255, 255, 255, 0.9);
+    height: 370px;
+    transform: translateY(calc(-100% + 10px));
+    background-color: #fe6320;
     transition: 0.4s;
     z-index: 1000;
 }
@@ -264,7 +265,7 @@ Screen Locking
 
 .more_movie_adder__arrow {
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     width: 40px;
@@ -272,9 +273,70 @@ Screen Locking
     background-color: #fe6320;
     border-radius: 50%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
     cursor: pointer;
+}
+
+.more_movie_adder__arrow:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 20px;
+    top: 20px;
+    border-right: 2px solid #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.more_movie_adder__content {
+    width: 90%;
+    height: 320px;
+    margin: 16px auto 0;
+    border-radius: 16px;
+    border: 1px solid #DEDEDE;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+
+.more_movie_adder__contentInner {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    min-height: 320px;
+    flex-flow: row;
+    background-color: #FFFFFF;
+}
+
+.more_movie_adder__group {
+    padding: 0 16px;
+    border-right: 1px solid #DEDEDE;
+    width: 210px;
+}
+
+.more_movie_adder__contentInner h2 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 8px 0;
+    background-color: #fe6320;
+    color: #FFFFFF;
+}
+
+.more_movie_adder__contentInner ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.more_movie_adder__contentInner li {
+    margin-bottom: 8px;
+}
+
+.more_movie_adder__contentInner a {
+    display: flex;
+    padding: 4px 8px;
+    width: calc(100% - 16px);
+    min-height: 16px;
 }
