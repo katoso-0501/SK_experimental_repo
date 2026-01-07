@@ -22,6 +22,10 @@ html,body {
     }
 }
 
+.itemToBeLocked.locked {
+    pointer-events: none;
+}
+
 .embed_body {
     height: calc(90% - 140px);
     width: 90%;
@@ -33,7 +37,6 @@ html,body {
 
 .embed_body.locked {
     overflow: hidden;
-    pointer-events: none;
 }
 
 .video_container {
@@ -221,10 +224,6 @@ Screen Locking
     width: calc(100% - 32px);
     background-color: rgba(255,210,210,0.6);
     padding: 24px 16px 10px;
-}
-
-.movie_adder.locked {
-    pointer-events: none;
 }
 
 .movie_adder a,

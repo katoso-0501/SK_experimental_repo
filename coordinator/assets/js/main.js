@@ -1513,7 +1513,7 @@ function wipeAllFlames () {
 document.querySelector('.resurrection_dialog').addEventListener('click', e => {
     if(e.target.classList.contains("resurrection_dialog")) {
         document.querySelector('.resurrection_dialog').classList.remove('expanded');
-    document.querySelector('.resurrection_dialog_export__inner').classList.remove('expanded');  
+        document.querySelector('.resurrection_dialog_export__inner').classList.remove('expanded');  
     }
 });
 
@@ -1521,8 +1521,24 @@ function openSpellExportation(spell) {
     try {
         document.querySelector('.resurrectionSpell__stoneboard').textContent = spell;
         document.querySelector('.resurrection_dialog').classList.add('expanded');   
-        document.querySelector('.resurrection_dialog_export__inner').classList.add('expanded');   
+        document.querySelector('.resurrection_dialog_export__inner').classList.add('expanded');
     } catch (err) {
         alert("Alas! Generating thy spell has failed! Reason: " + err.message);
     }
 }
+
+/* Copy to clipboard */
+function copyToClipboard(text) {
+    try {
+        navigator.clipboard.writeText(text);
+    } catch {
+        console.log("Clipboard API not available");
+    }
+}
+
+const copyButton = document.querySelector('.copyBtn');
+copyButton.addEventListener("click", e=>{
+    copyToClipboard(document.querySelector('.resurrectionSpell__stoneboard').textContent);
+    e.target.textContent = "Copied!";
+    setTimeout(()=>{e.target.textContent = "Copy";}, 2000);
+})

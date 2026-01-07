@@ -5,6 +5,7 @@ let unlockPushRemaining = 3;
 document.querySelectorAll('.add_movie').forEach(adder=>{
     adder.addEventListener('click',x=>{
         x.preventDefault();
+        document.querySelector('.more_movie_adder').classList.remove("expanded");
         createMovieEmbed(adder.dataset.ytid);
     });
 });
@@ -13,13 +14,11 @@ let timeoutID;
 const lockButton = document.querySelector('.lock_button');
 lockButton.addEventListener('click', () => {
     const lockRemaining = document.querySelector('.lock_remaining');
-    const embedBody = document.querySelector('.embed_body');
-    const movieAdder = document.querySelector('.movie_adder');
+    const itemToBeLocked = document.querySelectorAll('.itemToBeLocked');
     lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
     if (lockState == 0) {
-        embedBody.classList.add('locked');
-        lockButton.classList.add('locked');
-        movieAdder.classList.add('locked');
+        document.querySelector('.more_movie_adder').classList.remove("expanded");
+        itemToBeLocked.forEach(i=>i.classList.add('locked'));
         lockState = 1;
         unlockPushRemaining = 3;
         lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
@@ -37,9 +36,7 @@ lockButton.addEventListener('click', () => {
         }
         if(unlockPushRemaining===0) {
             clearTimeout(timeoutID);
-            embedBody.classList.remove('locked');
-            lockButton.classList.remove('locked');
-            movieAdder.classList.remove('locked');
+            itemToBeLocked.forEach(i=>i.classList.remove('locked'));
             lockState = 0;
             lockRemaining.innerHTML = "";
         }
@@ -53,6 +50,12 @@ window.addEventListener('scroll', ()=>{
 window.addEventListener('load', ()=>{
     upwardSwipePrevention();
 });
+
+screen.orientation.addEventListener('change', ()=>{
+    setTimeout(()=>{
+        upwardSwipePrevention();
+    },1000);
+})
 
 function upwardSwipePrevention () {
     if(window.innerWidth < 768) {

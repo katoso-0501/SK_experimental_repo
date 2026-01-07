@@ -826,6 +826,7 @@ _/_/_/_/_/_/_/_/_/*/
 .resurrectionSpell__stoneboard {
     background-color: white;
     padding: 16px;
-    word-break: break-all
-
+    word-break: break-all;
+    max-height: calc(80% - 64px);
+    overflow-y: auto;
 }
