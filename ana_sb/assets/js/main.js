@@ -54,7 +54,7 @@ window.addEventListener('load', ()=>{
 screen.orientation.addEventListener('change', ()=>{
     setTimeout(()=>{
         upwardSwipePrevention();
-    },1000);
+    },50);
 })
 
 function upwardSwipePrevention () {
