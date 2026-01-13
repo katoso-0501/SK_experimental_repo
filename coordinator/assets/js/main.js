@@ -5,7 +5,7 @@ let characterID = 0;
 //  __________________
 // Character classes start
 class JonnyA {
-    constructor() {
+    constructor(decoded = null) {
         characterID++;
         this.jonnyMain = document.createElement('div');
         this.jonnyMain.classList.add('jonnyA');
@@ -29,10 +29,13 @@ class JonnyA {
         this.exportBtn.classList.add('exportBtn');
         this.exportBtn.textContent = 'Export';
         this.exportBtn.addEventListener('click', ()=>{
-            console.log(this.generateResurrectionSpell());
             openSpellExportation(this.generateResurrectionSpell());
         });
         this.mats = [];
+        this.decodedSpell = null;
+        if(decoded) {
+            this.decodedSpell = decoded;
+        }
         
         this.loadIndependentParts();
 
@@ -45,12 +48,12 @@ class JonnyA {
     }
 
     loadIndependentParts () {
-        this.createColormat('Tops','char__tops');
-        this.createColormat('Trouser','char__trouser');
-        this.createColormat('Skin','char__skin');
+        this.createColormat('Tops','char__tops', this.decodedSpell);
+        this.createColormat('Trouser','char__trouser', this.decodedSpell);
+        this.createColormat('Skin','char__skin', this.decodedSpell);
     }
 
-    createColormat (tgtname, tgt) {
+    createColormat (tgtname, tgt, decoded = null) {
         const targetPart = document.createElement('div');
         targetPart.classList.add(tgt);
         
@@ -60,11 +63,16 @@ class JonnyA {
         controllerPanel.append(controllerLabel);
         controllerLabel.textContent = tgtname;
 
+        let decodedPart = null;
+        if(decoded){
+            decodedPart = decoded?.parts[tgtname];
+        }
+
         controllerLabel.addEventListener('click', ()=>{
             controllerPanel.classList.toggle('expanded');
         });
 
-        const mat = new ColorMat (targetPart, controllerPanel, tgtname);
+        const mat = new ColorMat (targetPart, controllerPanel, tgtname, decodedPart);
         this.mats.push(mat);
 
         this.resurrectionSpell.parts[tgtname] = mat.getMatObj();
@@ -86,8 +94,8 @@ class JonnyA {
 }
 
 class JimmyA extends JonnyA {
-    constructor() {
-        super();
+    constructor(decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "JimmyA";
         this.img.src = "assets/images/jimmyA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
@@ -95,15 +103,15 @@ class JimmyA extends JonnyA {
     }
     
     loadIndependentParts () {
-        this.createColormat('Tops','char__tops');
-        this.createColormat('Trouser','char__trouser');
-        this.createColormat('TeethRetainer','char__retainer');
+        this.createColormat('Tops','char__tops', this.decodedSpell);
+        this.createColormat('Trouser','char__trouser', this.decodedSpell);
+        this.createColormat('TeethRetainer','char__retainer', this.decodedSpell);
     }
 }
 
 class RolfA extends JonnyA {
-    constructor() {
-        super();
+    constructor(decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "RolfA";
         this.img.src = "assets/images/rolfA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
@@ -111,18 +119,18 @@ class RolfA extends JonnyA {
     }
     
     loadIndependentParts () {
-        this.createColormat('Tops','char__tops');
-        this.createColormat('Trouser','char__trouser');
-        this.createColormat('Hair','char__hair');
-        this.createColormat('Socks','char__socks');
-        this.createColormat('Shoes','char__shoes');
-        this.createColormat('Grass','char__grass');
+        this.createColormat('Tops','char__tops', this.decodedSpell);
+        this.createColormat('Trouser','char__trouser', this.decodedSpell);
+        this.createColormat('Hair','char__hair', this.decodedSpell);
+        this.createColormat('Socks','char__socks', this.decodedSpell);
+        this.createColormat('Shoes','char__shoes', this.decodedSpell);
+        this.createColormat('Grass','char__grass', this.decodedSpell);
     }
 }
 
 class KevinA extends JonnyA {
-    constructor() {
-        super();
+    constructor(decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "KevinA";
         this.img.src = "assets/images/kevinA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
@@ -130,15 +138,15 @@ class KevinA extends JonnyA {
     }
     
     loadIndependentParts () {
-        this.createColormat('Tops','char__tops');
-        this.createColormat('Trouser','char__trouser');
-        this.createColormat('Cap','char__cap');
+        this.createColormat('Tops','char__tops', this.decodedSpell);
+        this.createColormat('Trouser','char__trouser', this.decodedSpell);
+        this.createColormat('Cap','char__cap', this.decodedSpell);
     }
 }
 
 class EdA extends JonnyA {
-    constructor() {
-        super();
+    constructor(decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "EdA";
         this.img.src = "assets/images/edA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
@@ -146,17 +154,17 @@ class EdA extends JonnyA {
     }
     
     loadIndependentParts () {
-        this.createColormat('OuterShirt','char__outer_shirt');
-        this.createColormat('InnerShirt','char__inner_shirt');
-        this.createColormat('Trouser','char__trouser');
-        this.createColormat('Socks','char__socks');
-        this.createColormat('Shoes','char__shoes');
+        this.createColormat('OuterShirt','char__outer_shirt', this.decodedSpell);
+        this.createColormat('InnerShirt','char__inner_shirt', this.decodedSpell);
+        this.createColormat('Trouser','char__trouser', this.decodedSpell);
+        this.createColormat('Socks','char__socks', this.decodedSpell);
+        this.createColormat('Shoes','char__shoes', this.decodedSpell);
     }
 }
 
 class EddyA extends JonnyA {
-    constructor() {
-        super();
+    constructor(decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "EddyA";
         this.img.src = "assets/images/eddyA_original.webp";
         this.jonnyMain.classList.remove('jonnyA');
@@ -164,47 +172,52 @@ class EddyA extends JonnyA {
     }
     
     loadIndependentParts () {
-        this.createColormat('Gown','char__gown');
-        this.createColormat('Skin','char__skin');
-        this.createColormat('Tongue','char__tongue');
+        this.createColormat('Gown','char__gown', this.decodedSpell);
+        this.createColormat('Skin','char__skin', this.decodedSpell);
+        this.createColormat('Tongue','char__tongue', this.decodedSpell);
     }
 }
 
 class EddA extends JonnyA {
-    constructor(currency) {
-        super();
+    constructor(currency, decoded = null) {
+        super(decoded);
         this.resurrectionSpell.char = "EddA";
-        this.currency = currency;
+        if(decoded !== null) {
+            this.currency = decoded.currency;
+        }else{
+            this.currency = currency;
+        }
         switch(this.currency) {
             case 0:
                 this.img.src = "assets/images/eddA_original.webp";
-                this.createColormat('Dollar','char__dollar');
+                this.createColormat('Dollar','char__dollar', this.decodedSpell);
             break;
             case 1:
                 this.img.src = "assets/images/eddA_variable_yen.webp";
-                this.createColormat('Yen','char__yen');
+                this.createColormat('Yen','char__yen',  this.decodedSpell);
             break;
             case 2:
                 this.img.src = "assets/images/eddA_variable_euro.webp";
-                this.createColormat('Euro','char__euro');
+                this.createColormat('Euro','char__euro', this.decodedSpell);
             break;
             case 3:
                 this.img.src = "assets/images/eddA_variable_rupee.webp";
-                this.createColormat('Rupee','char__rupee');
+                this.createColormat('Rupee','char__rupee', this.decodedSpell);
             break;
             case 4:
                 this.img.src = "assets/images/eddA_variable_wong.webp";
-                this.createColormat('Wong','char__wong');
+                this.createColormat('Wong','char__wong',  this.decodedSpell);
             break;
         }
+        this.resurrectionSpell.currency = this.currency;
         this.jonnyMain.classList.remove('jonnyA');
         this.jonnyMain.classList.add('eddA');
     }
     
     loadIndependentParts () {
-        this.createColormat('Jacket','char__jacket');
-        this.createColormat('Hat','char__hat');
-        this.createColormat('Printer','char__printer');
+        this.createColormat('Jacket','char__jacket', this.decodedSpell);
+        this.createColormat('Hat','char__hat', this.decodedSpell);
+        this.createColormat('Printer','char__printer', this.decodedSpell);
     }
 }
 
@@ -216,7 +229,9 @@ class EddA extends JonnyA {
 // Color Managements
 //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 class ColorChip {
-    constructor(initialColor, colorMode, mat, controllerMaster, chipID) {
+    constructor(decodedChip = null, colorMode, mat, controllerMaster, chipID) {
+        this.decodedChip = decodedChip;
+
         this.chipID = chipID;
         this.layer = document.createElement('div');
         
@@ -241,7 +256,7 @@ class ColorChip {
         this.controllerInner = undefined;
         this.gradientMode = "linear";
 
-        this.tipSpell = { "colorMode": colorMode};
+        this.tipSpell = {"colorMode": colorMode};
 
         if(colorMode === "simple") {
             this.createSimpleColorControls();
@@ -331,11 +346,15 @@ class ColorChip {
         controlParts.forEach((part, i) => {
             const paragraph = document.createElement('p');
 
-            part[1].setAttribute('type', 'range');
-            part[1].setAttribute('min', '0');
+            if(i !== 4) {
+                part[1].setAttribute('type', 'range');
+                part[1].setAttribute('min', '0');
+            }
             if(i === 0) {
                 part[1].setAttribute('max', '360');
                 part[1].setAttribute('value', Math.floor(Math.random() * 360));
+            }else if (i===4){
+                part[1].setAttribute('value', "normal");
             }else{
                 part[1].setAttribute('max', '100');
                 part[1].setAttribute('value', Math.floor(Math.random() * 100));
@@ -385,15 +404,32 @@ class ColorChip {
         if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
             controlGroupInner.classList.add('onRightSide');
         }
+
+        try {
+            if(this.decodedChip) {
+                controlParts[0][1].value = this.decodedChip.hue;
+                controlParts[1][1].value = this.decodedChip.saturation;
+                controlParts[2][1].value = this.decodedChip.brightness;
+                controlParts[3][1].value = this.decodedChip.opacity;
+                controlParts[4][1].value = this.decodedChip.mixblendmode;
+                this.layer.style.mixBlendMode = this.decodedChip.mixblendmode;
+
+                this.decodedChip = null;
+            }
+        } catch {
+            console.log("Failed to decode chip");
+        }
         
         this.HSLupdate(
             this.thumbnailInner,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
         );
+
         this.HSLupdate(
             this.layer,
             controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
         );
+
         this.tipSpell["hue"] = controlParts[0][1].value;
         this.tipSpell["saturation"] = controlParts[1][1].value;
         this.tipSpell["brightness"] = controlParts[2][1].value;
@@ -459,14 +495,15 @@ class ColorChip {
             anchor.addEventListener('click', m => {
                 m.preventDefault();
                 this.layer.dataset.patternName = pattern[1];
+                this.tipSpell["patternName"] = pattern[1];
                 this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
                 this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
             });
             patternController.append(anchor);
         });
+
         controllerPanel.append(patternController); 
 
-        
         const controlParts = [
             ["Scale",document.createElement('input')],
             ["Opacity", document.createElement('input')],
@@ -506,58 +543,88 @@ class ColorChip {
         controlParts[3][1].max= "360";
         controlParts[3][1].value= "0";
         controlParts[3][1].addEventListener('change', m=>{
-        this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
-        this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
+            this.patternUpdate(this.thumbnailInner,  this.layer.dataset.patternName,  controlParts[0][1].value , controlParts[1][1].value, "none", controlParts[3][1].value);
+            this.patternUpdate(this.layer,  this.layer.dataset.patternName,  controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
         });
         
         /* Define blend modes */
         const blendMode = [
-            "Normal",
-            "Multiply",
-            "Screen",
-            "Overlay",
-            "Darken",
-            "Lighten",
-            "Color Dodge",
-            "Color Burn",
-            "Hard Light",
-            "Soft Light",
-            "Difference",
-            "Exclusion",
-            "Hue",
-            "Saturation",
-            "Color",
-            "Luminosity"
+            "normal",
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "luminosity"
         ];
 
         blendMode.forEach(mode=>{
             const option = document.createElement('option');
             option.value = mode;
-            option.textContent = mode;
+            option.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
             controlParts[2][1].append(option);
         });
 
         controlParts[2][1].addEventListener('change', m=>{
-            console.log(m.target.value);
             this.layer.style.mixBlendMode = m.target.value;
+            this.tipSpell["mixblendmode"] = m.target.value;
         });
+
+        controlParts.forEach(part=>{
+            part[1].addEventListener('change', m=>{
+                this.tipSpell["scale"] = controlParts[0][1].value;
+                this.tipSpell["opacity"] = controlParts[1][1].value / 100;
+                this.tipSpell["rotation"] = controlParts[3][1].value;
+                this.tipSpell["mixblendmode"] = controlParts[2][1].value;
+            });
+        })
 
         controlGroup.innerHTML = '';
         controlGroup.append(this.thumbnail);
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
-        // controlGroupInner.append(controlParts[2][1]);
         
-        this.patternUpdate(this.thumbnailInner, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
-        this.patternUpdate(this.layer, "polka-dot", 16, 100, controlParts[2][1].value, controlParts[3][1].value);
+        
+        this.layer.dataset.patternName = "polka-dot";
+        this.tipSpell["patternName"] = "polka-dot";
+        
+        try {
+            if(this.decodedChip) {
+                console.log("Decoded chip ID :" + this.chipID + "　👇🏻");
+                controlParts[0][1].value = this.decodedChip.scale;
+                controlParts[1][1].value = this.decodedChip.opacity * 100;
+                controlParts[2][1].value = this.decodedChip.mixblendmode;
+                this.layer.style.mixBlendMode = this.decodedChip.mixblendmode;
+                controlParts[3][1].value = this.decodedChip.rotation;
+                this.layer.dataset.patternName = this.decodedChip.patternName;
+                
+                this.decodedChip = null;
+            }
+        } catch {
+            console.log("Failed to decode chip");
+        }
+
+        this.patternUpdate(this.thumbnailInner, this.layer.dataset.patternName, controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
+        this.patternUpdate(this.layer, this.layer.dataset.patternName, controlParts[0][1].value, controlParts[1][1].value, controlParts[2][1].value, controlParts[3][1].value);
+        this.tipSpell["scale"] = controlParts[0][1].value;
+        this.tipSpell["opacity"] = controlParts[1][1].value / 100;
+        this.tipSpell["rotation"] = controlParts[3][1].value;
+        this.tipSpell["mixblendmode"] = "normal";
 
         this.controllerMaster.append(controlGroup);
         
         if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
             controlGroupInner.classList.add('onRightSide');
         }
-
-        this.tipSpell["sorry"] = "The spell in the Pattern Tip is under construction!"
     }
 
     createGradientControls () {
@@ -597,10 +664,19 @@ class ColorChip {
             controllerPanel.classList.toggle('expanded');
         });
 
-        const gradientStops = [
-            [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 0],
-            [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100],
-        ];
+        const gradientStops = [];
+        if(this.decodedChip) {
+            console.log(this.decodedChip);
+            this.decodedChip.colorStops.forEach(stop=>{
+                gradientStops.push(stop);
+            });
+            
+            this.decodedChip = null;
+        }else{
+            gradientStops.push(
+                [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 0],
+                [Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, 100]);
+        }
 
         // Pins
         const pins = [];
@@ -624,6 +700,7 @@ class ColorChip {
 
         let dragMode = 0;
         let movingPin;
+
         gradientSpecimen.addEventListener('mousedown', f=>{
             if(f.target.classList.contains("gradientPin")) {
                 movingPin = f.target;
@@ -701,14 +778,12 @@ class ColorChip {
             
             if(dragMode === 0) {
                 let insertPos = gradientStops.length;
-                console.log(insertPos);
                 gradientStops.forEach((stop,i)=>{
                     if(pinPos <= stop[4]) {
                         pins[i].dataset.index = parseInt(pins[i].dataset.index) + 1;
                         insertPos--;
                     }
                 });
-                console.log("New pin is gonna be inserted to No." + insertPos);
                 
                 // Add a new stop
                 gradientStops.splice(insertPos,0,[Math.floor(Math.random()*360), Math.floor(Math.random()*100), Math.floor(Math.random()*100), 100, pinPos]);
@@ -732,7 +807,6 @@ class ColorChip {
                 }
         
                 selectedStop = insertPos;
-                
                 
                 controlParts[0][1].value = gradientStops[selectedStop][0];
                 controlParts[1][1].value = gradientStops[selectedStop][1];
@@ -766,6 +840,7 @@ class ColorChip {
                 this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);    
                 movingPin = "";
             }
+            this.tipSpell["colorStops"] = gradientStops;
             dragMode = 0;
         });
 
@@ -780,6 +855,7 @@ class ColorChip {
             }
             gradientStops[selectedStop][4] = pinPos;
             controlParts[4][1].value = pinPos;
+            this.tipSpell["colorStops"] = gradientStops;
             this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
             this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
             this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);    
@@ -829,43 +905,41 @@ class ColorChip {
             }else{
                 part[1].setAttribute('max', '100');
                 part[1].setAttribute('value', Math.floor(Math.random() * 100));
-            }
-            if(i === 7){
-                part[1].type = "number";
-                part[1].setAttribute('max', gradientStops.length - 1);
-                part[1].setAttribute('min', 0);
-                part[1].setAttribute('value',0);
-            }
-            
+            }            
             if(i !== 4 && i !== 7){
                 paragraph.append(part[0],part[1]);
                 controllerPanel.append(paragraph); 
             }
+            
+            this.tipSpell["gradientRotation"] = controlParts[6][1].value;
+            this.tipSpell["opacity"] = controlParts[4][1].value;
+            this.tipSpell["mixblendmode"] = controlParts[5][1].value;
         });
 
         /* Define blend modes */
         const blendMode = [
-            "Normal",
-            "Multiply",
-            "Screen",
-            "Overlay",
-            "Darken",
-            "Lighten",
-            "Color Dodge",
-            "Color Burn",
-            "Hard Light",
-            "Soft Light",
-            "Difference",
-            "Exclusion",
-            "Hue",
-            "Saturation",
-            "Color",
-            "Luminosity"
+            "normal",
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "luminosity"
         ];
+        
         blendMode.forEach(mode=>{
             const option = document.createElement('option');
             option.value = mode;
-            option.textContent = mode;
+            option.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
             controlParts[5][1].append(option);
         });
 
@@ -878,24 +952,6 @@ class ColorChip {
            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
            this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
-        });
-        
-        // Stop Selector
-        controlParts[7][1].addEventListener('change', m=>{
-            if(m.value <= gradientStops.length - 1) {
-                controlParts[7][1].value =  gradientStops.length - 1;
-            }
-            
-            try  {
-                selectedStop = controlParts[7][1].value;
-                controlParts[0][1].value = gradientStops[selectedStop][0];
-                controlParts[1][1].value = gradientStops[selectedStop][1];
-                controlParts[2][1].value = gradientStops[selectedStop][2];
-                controlParts[3][1].value = gradientStops[selectedStop][3];
-                controlParts[4][1].value = gradientStops[selectedStop][4];
-            } catch {
-                console.log("Hah! You should visit \"http://boysandmen.jp\"");
-            }
         });
 
         // Remove color stop
@@ -915,10 +971,6 @@ class ColorChip {
                 selectedStop--;
             }
             pins[selectedStop].classList.add('selected');
-
-            controlParts[7][1].max =  gradientStops.length - 1;
-            controlParts[7][1].value =  gradientStops.length - 1;
-
             pins.forEach((pin, i) => {pin.dataset.index = i;});
             
             controlParts[0][1].value = gradientStops[selectedStop][0];
@@ -926,6 +978,8 @@ class ColorChip {
             controlParts[2][1].value = gradientStops[selectedStop][2];
             controlParts[3][1].value = gradientStops[selectedStop][3];
             controlParts[4][1].value = gradientStops[selectedStop][4];
+            
+            this.tipSpell["colorStops"] = gradientStops;
             
            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
@@ -952,6 +1006,7 @@ class ColorChip {
                 this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
                 this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
                 this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
+                this.tipSpell["gradientMode"] = this.gradientMode;
             });
 
             label.append(radio[0]);
@@ -965,11 +1020,23 @@ class ColorChip {
         controlGroupInner.append(controllerPanel);
         controlGroup.append(controlGroupInner);
         this.controllerMaster.append(controlGroup);
-        if(controlGroup.getBoundingClientRect().left > (window.innerWidth - 280)){
-            controlGroupInner.classList.add('onRightSide');
+
+        this.adjustControllerPos(this.controllerMaster, this.thumbnail);
+        
+        try {
+            if(this.decodedChip) {
+                console.log("Decoded chip ID :" + this.chipID + "　👇🏻");
+                console.log(this.decodedChip);
+            }
+        } catch {
+            console.log("Failed to decode chip");
         }
         
-        this.tipSpell["sorry"] = "The spell in the Gradient Tip is under construction!"
+        this.tipSpell["colorStops"] = gradientStops;
+        this.tipSpell["gradientRotation"] = controlParts[6][1].value;
+        this.tipSpell["opacity"] = controlParts[4][1].value;
+        this.tipSpell["mixblendmode"] = controlParts[5][1].value;
+        this.tipSpell["gradientMode"] = this.gradientMode;
         
         this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
         this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
@@ -1030,12 +1097,17 @@ class ColorChip {
 }
 
 class ColorMat {
-    constructor (addTo,controllerMaster,targetName) {
+    constructor (addTo, controllerMaster, targetName, decodedPart) {
         this.matMain = document.createElement('div');   
         this.matMain.classList.add('mat_main');
 
         this.targetName = targetName;
         this.matSpell = {};
+
+        this.decodedPart = null;
+        if(decodedPart) {
+            this.decodedPart = decodedPart;
+        }
 
         this.mat = document.createElement('div');   
         this.mat.classList.add('mat');
@@ -1054,13 +1126,17 @@ class ColorMat {
         
         this.matMain.append(this.mat);
         this.matMain.append(this.controllerMaster);
-        this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
+        if(!this.decodedPart) {
+            this.addColorLayer();
+        }else{
+            this.reviveBySpell();
+        }
 
         this.simpleColorAddBtn = document.createElement('div');
         this.simpleColorAddBtn.textContent = " Color";
         this.simpleColorAddBtn.classList.add('plusBtn');
         this.simpleColorAddBtn.addEventListener('click', ()=>{
-        this.addColorLayer( `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`, "simple");
+            this.addColorLayer();
         });
         
         this.patternAddBtn = document.createElement('div');
@@ -1068,7 +1144,7 @@ class ColorMat {
         this.patternAddBtn.classList.add('plusBtn');
         this.patternAddBtn.style.top = "40px";
         this.patternAddBtn.addEventListener('click', ()=>{
-        this.addPattern();
+            this.addPattern();
         });
 
         this.gradientAddBtn = document.createElement('div');
@@ -1076,7 +1152,7 @@ class ColorMat {
         this.gradientAddBtn.classList.add('plusBtn');
         this.gradientAddBtn.style.top = "72px";
         this.gradientAddBtn.addEventListener('click', ()=>{
-        this.addGradient();
+            this.addGradient();
         });
 
         this.palette.append(this.simpleColorAddBtn);
@@ -1087,22 +1163,22 @@ class ColorMat {
         addTo.append(this.matMain);
     }
     
-    addColorLayer (color = "#FFFFFF") {
-        this.layers.push(new ColorChip(color, "simple", this.mat, this.palette, this.layers.length));
+    addColorLayer () {
+        this.layers.push(new ColorChip(this.decodedPart, "simple", this.mat, this.palette, this.layers.length));
         this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
         this.reRender();
     }
 
     addPattern () {
-        this.layers.push(new ColorChip("#000000", "pattern", this.mat, this.palette, this.layers.length));
+        this.layers.push(new ColorChip(this.decodedPart, "pattern", this.mat, this.palette, this.layers.length));
         this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
         this.reRender();
     } 
 
     addGradient () {
-        this.layers.push(new ColorChip("#000000", "gradient", this.mat, this.palette, this.layers.length));
+        this.layers.push(new ColorChip(this.decodedPart, "gradient", this.mat, this.palette, this.layers.length));
         this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
         this.layerID++;
         this.reRender();
@@ -1113,6 +1189,20 @@ class ColorMat {
         this.layers.forEach(l=>{
             this.mat.append(l.layer);
         });
+    }
+
+    reviveBySpell () {
+        try {
+            Object.entries(this.decodedPart).forEach(([key, chip]) => {
+                this.layers.push(new ColorChip(chip, chip.colorMode, this.mat, this.palette, this.layers.length));
+                this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+                this.layerID++;
+                this.reRender();
+            });
+            this.decodedPart = null;
+        } catch (err) {
+            console.log("Some of restoring parts could not be restored!");
+        }
     }
 
     getMatObj () {
@@ -1127,7 +1217,7 @@ class ColorMat {
 //  ______________________
 
     const characters = [];
-    
+
     window.addEventListener('load', ()=>{
         characters.push(new JonnyA());
         
@@ -1137,17 +1227,17 @@ class ColorMat {
             });
         }
     });
-    
+
     document.querySelector('.character_adder__jonnyA').addEventListener('click', b=>{
         b.preventDefault();
         characters.push(new JonnyA());
     });
-    
+
     document.querySelector('.character_adder__jimmyA').addEventListener('click', b=>{
         b.preventDefault();
         characters.push(new JimmyA());
     });
-    
+
     document.querySelector('.character_adder__rolfA').addEventListener('click', b=>{
         b.preventDefault();
         characters.push(new RolfA());
@@ -1168,10 +1258,10 @@ class ColorMat {
         b.preventDefault();
         characters.push(new EddA(Math.floor(Math.random()*5)));
     });
-    
+
     // Print button
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
-}
+
 
 const charClasses = '.jonnyA,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
 /* ________________________
@@ -1508,12 +1598,16 @@ function wipeAllFlames () {
     document.querySelectorAll('.flameParticle').forEach(f=>f.remove());
     flameParticleStats = [];
 }
-
 /* Resurrection spell */
+document.querySelector('.resurrectionBtn').addEventListener('click', b=>{
+    b.preventDefault();
+    openSpellImportation();
+});
 document.querySelector('.resurrection_dialog').addEventListener('click', e => {
     if(e.target.classList.contains("resurrection_dialog")) {
         document.querySelector('.resurrection_dialog').classList.remove('expanded');
         document.querySelector('.resurrection_dialog_export__inner').classList.remove('expanded');  
+        document.querySelector('.resurrection_dialog_import__inner').classList.remove('expanded');  
     }
 });
 
@@ -1527,12 +1621,74 @@ function openSpellExportation(spell) {
     }
 }
 
+function openSpellImportation() {
+    try {
+        document.querySelector('.resurrection_dialog').classList.add('expanded');   
+        document.querySelector('.resurrection_dialog_import__inner').classList.add('expanded');
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+document.querySelector('#resurrectionSpell_cast').addEventListener('click', reviveBySpell);
+
+function reviveBySpell () {
+    let validity = 0;
+    let decoded = null;
+
+    
+    document.querySelector('.resurrection_dialog').classList.remove('expanded');
+    document.querySelector('.resurrection_dialog_import__inner').classList.remove('expanded'); 
+    try {
+        const spell = document.getElementById('resurrectionSpell_input').value;
+        decoded = JSON.parse(spell);
+        console.log(decoded);
+        validity = 1;
+    } catch (err) {
+        alert('Alas! Reviving thy characters has failed! Reason: ' + err.message);
+    }
+    if(!validity) return;
+    validity = 0;
+    if(decoded.char === "JonnyA") {
+        characters.push(new JonnyA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "JimmyA") {
+        characters.push(new JimmyA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "RolfA") {
+        characters.push(new RolfA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "KevinA") {
+        characters.push(new KevinA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "EdA") {
+        characters.push(new EdA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "EddyA") {
+        characters.push(new EddyA(decoded));
+        validity=1;
+    }
+    if(decoded.char === "EddA" && decoded.currency <= 4 && decoded.currency >=0 ) {
+        characters.push(new EddA(0,decoded));
+        validity=1;
+    }
+    if(!validity) {
+        alert("Alas! Reviving thy characters has failed! Reason: Invalid spell");
+        return;
+    };
+}
+
 /* Copy to clipboard */
 function copyToClipboard(text) {
     try {
         navigator.clipboard.writeText(text);
     } catch {
-        console.log("Clipboard API not available");
+        alert("Clipboard API not available");
     }
 }
 
@@ -1541,4 +1697,7 @@ copyButton.addEventListener("click", e=>{
     copyToClipboard(document.querySelector('.resurrectionSpell__stoneboard').textContent);
     e.target.textContent = "Copied!";
     setTimeout(()=>{e.target.textContent = "Copy";}, 2000);
-})
+});
+
+
+}

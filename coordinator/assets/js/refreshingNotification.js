@@ -19,38 +19,28 @@ function refreshingNotification () {
 
 function enablePiPBypass() {
     try {
-        // `disablePictureInPicture` を削除
         const removeDisablePiP = () => {
             let video = document.querySelector('video');
             if (video) {
                 video.removeAttribute('disablePictureInPicture');
-                console.log("disablePictureInPicture 属性を削除しました");
-            } else {
-                console.log("video 要素が見つかりません");
             }
         };
 
-        // exitPictureInPicture の無効化（書き換え不可回避）
         const redefineExitPiP = () => {
             if (typeof document.exitPictureInPicture === "function") {
                 document.exitPictureInPicture = function() {
-                    console.log("PiP強制終了をブロックしました");
                 };
-                console.log("exitPictureInPicture のオーバーライド完了");
             }
         };
 
-        // MutationObserver の無効化
         const disableMutationObserver = () => {
             window.MutationObserver = class {
                 constructor() {}
                 observe() {}
                 disconnect() {}
             };
-            console.log("MutationObserverを無効化しました");
         };
 
-        // 監視しながら定期的に PiP 関連の設定を適用
         setInterval(() => {
             try {
                 removeDisablePiP();
@@ -62,7 +52,6 @@ function enablePiPBypass() {
 
         disableMutationObserver();
 
-        // PiPを手動で起動するショートカットキー
         document.addEventListener("keydown", function(event) {
             if (event.key === "p") {
                 let video = document.querySelector('video');
@@ -72,8 +61,8 @@ function enablePiPBypass() {
             }
         });
 
-        console.log("TVer PiP スクリプト（最終版）の適用完了");
+        console.log("PiP Disabler Blocker Enabled.");
     } catch (error) {
-        console.error("TVer PiP解除スクリプト（最終版）でエラーが発生:", error);
+        console.error("PiP Disabler Blocker Error:", error);
     }
 }

@@ -1,9 +1,31 @@
 'use strict';
 {
+    let disgusting = 0;
+    let itvlID = setInterval(()=>{
+      if(!document.querySelectorAll('.mirageBtn').length
+      && 
+      disgusting===0){
+      createAddMirageBtn ();
+      }
+    },1000);
+    
     const mouse = [0,0];
     const mirages = [];
     let mirageCount = 20;
     let timeIntervalID;
+
+    window.addEventListener('keydown', key=>{
+        if(key.key === "x"){
+            disgusting=1;
+            clearInterval(itvlID);
+            clearInterval(timeIntervalID);
+            mirages.forEach(mirage=>{
+                document.querySelector('body').removeChild(mirage[0]);
+            });
+            mirages.length=0;
+            document.querySelector('.mirageBtn').remove();
+        }
+    })
 
     function activateMirage () {
         for (let i = 0; i < mirageCount; i++) {
@@ -45,6 +67,23 @@
         mouse[0] = f.clientX - 60;
         mouse[1] = f.clientY - 60;
     });
-
-    activateMirage();
+    
+    function createAddMirageBtn () {
+      const a = document.createElement('button');
+      a.style.all="unset";
+      a.textContent= "ミラっちゃう?";
+      a.classList.add('mirageBtn');
+      a.style.position="fixed";
+      a.style.bottom="8px";
+      a.style.right="8px";
+      a.style.backgroundColor="black";
+      a.style.color="white";
+      a.style.padding="4px";
+      a.style.cursor="pointer";
+      a.style.borderRadius="4px";
+      a.style.fontSize = "12px";
+      a.style.zIndex = "99999999";
+      a.addEventListener('click', ()=>{activateMirage();});
+      document.querySelector('body').appendChild(a);
+    }
 }

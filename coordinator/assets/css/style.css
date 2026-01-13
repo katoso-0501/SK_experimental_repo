@@ -830,3 +830,33 @@ _/_/_/_/_/_/_/_/_/*/
     max-height: calc(80% - 64px);
     overflow-y: auto;
 }
+
+.theatreMode .resurrectionBtn {
+    display: none;
+}
+
+#resurrectionSpell_input {
+    all: unset;
+    font-family: serif;
+    background-color: white;
+    padding: 16px;
+    word-break: break-all;
+    min-height: calc(80% - 64px);
+    overflow-y: auto;
+    resize: vertical;
+}
+
+#resurrectionSpell_cast {
+    all: unset;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #202020;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 auto;
+    padding: 16px 0;
+}

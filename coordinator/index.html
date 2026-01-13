@@ -19,27 +19,30 @@
         <nav>
             <a href="#" class="printBtn">Print!</a>
             <a href="#" class="theatreBtn">Theatre Mode</a>
-            <!-- <a href="#" class="resurrectionBtn">Resurrection Spell</a> -->
+            <a href="#" class="resurrectionBtn">Resurrection Spell</a>
         </nav>
     </header>
 
-    <!-- The church is currently under construction! -->
+    <!-- Resurrection Dialog -->
     <div class="resurrection_dialog">
+        <!-- Resurrection Dialog Export -->
         <div class="resurrection_dialog_export__inner">
             <span class="resurrectionSpellTitle">Thy resurrection spell is generated....</span>
             <div class="copyBtn">Copy</div>
             <span class="resurrectionSpell__stoneboard"></span>
         </div>
+
+        <!-- Resurrection Dialog Import -->
         <div class="resurrection_dialog_import__inner">
             <span>Enter thy spell here...</span>
-            <textarea id="resurrectionSpell" placeholder="Enter resurrection spell here..."></textarea>
-            <button id="castSpellButton">Cast Spell</button>
+            <textarea id="resurrectionSpell_input" placeholder="Enter resurrection spell here..."></textarea>
+            <button id="resurrectionSpell_cast">Cast Spell</button>
         </div>
     </div>
     
     <main>
         <!-- Mainly, characters appear here -->
-        <div class="character_wrapper "></div>
+        <div class="character_wrapper"></div>
         
         <!-- Adding characters from here -->
         <div class="character_adder">
