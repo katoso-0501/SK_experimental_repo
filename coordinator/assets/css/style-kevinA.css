@@ -12,19 +12,6 @@
     }
 }
 
-.char__body {
-    position: relative;
-    width: 100%;
-    max-width: 854px;
-    margin: auto;
-}
-
-.char__body img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .kevinA .char__tops {
     position: absolute;
     

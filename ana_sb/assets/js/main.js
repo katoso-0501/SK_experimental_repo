@@ -14,7 +14,7 @@ let timeoutID;
 const lockButton = document.querySelector('.lock_button');
 lockButton.addEventListener('click', () => {
     const lockRemaining = document.querySelector('.lock_remaining');
-    const itemToBeLocked = document.querySelectorAll('.itemToBeLocked');
+    const itemToBeLocked = document.querySelectorAll('.itemToBeLocked, .lock_button');
     lockRemaining.innerHTML = '<span class="lock_potch"></span><span class="lock_potch"></span><span class="lock_potch"></span>';
     if (lockState == 0) {
         document.querySelector('.more_movie_adder').classList.remove("expanded");
@@ -116,3 +116,18 @@ document.querySelector('.more_movie_adder__arrow').addEventListener('click', f=>
     f.preventDefault();
     document.querySelector('.more_movie_adder').classList.toggle('expanded');
 });
+
+// Fully expanded the list of movies in more Adder
+const observerTarget = document.querySelectorAll('.observer_target');
+const observerOptions = {
+    threshold: 0.5
+}
+const entry = (entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting) {
+            document.querySelector('.more_movie_adder').classList.add('expanded');
+        }
+    })
+}
+const io = new IntersectionObserver(entry, observerOptions);
+document.querySelectorAll('.observer_target').forEach(target=>io.observe(target));

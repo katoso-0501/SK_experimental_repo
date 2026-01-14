@@ -12,19 +12,6 @@
     }
 }
 
-.char__body {
-    position: relative;
-    width: 100%;
-    max-width: 854px;
-    margin: auto;
-}
-
-.char__body img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .eddA .char__jacket {
     position: absolute;
     
@@ -96,7 +83,8 @@
 .eddA .char__yen,
 .eddA .char__euro,
 .eddA .char__rupee,
-.eddA .char__wong
+.eddA .char__wong,
+.eddA .char__gbp
 {
     position: absolute;
     /* Testing Purpose Only */
@@ -136,13 +124,18 @@
     -webkit-mask-image: url(../images/eddA_wong.png);
     mask-image: url(../images/eddA_wong.png);
 }
+.eddA .char__gbp {
+    -webkit-mask-image: url(../images/eddA_gbp.png);
+    mask-image: url(../images/eddA_gbp.png);
+}
 
 .testingPurpose .eddA .char__dollar::before,
 .testingPurpose .eddA .char__yen::before,
 .testingPurpose .eddA .char__euro::before,
 .testingPurpose .eddA .char__rupee::before,
-.testingPurpose .eddA .char__wong::before
- {
+.testingPurpose .eddA .char__wong::before,
+.testingPurpose .eddA .char__gbp::before
+{
     content:" - Currency";
     position: absolute;
     top: 0px;
@@ -189,6 +182,7 @@
 .testingPurpose .eddA .char__euro,
 .testingPurpose .eddA .char__rupee,
 .testingPurpose .eddA .char__wong,
+.testingPurpose .eddA .char__gbp,
 .testingPurpose .eddA .char__printer {
     mask: none !important;
     width: 20px !important;
@@ -206,7 +200,8 @@
 .testingPurpose .eddA .char__yen,
 .testingPurpose .eddA .char__euro,
 .testingPurpose .eddA .char__rupee,
-.testingPurpose .eddA .char__wong
+.testingPurpose .eddA .char__wong,
+.testingPurpose .eddA .char__gbp
  {
     top: 60px;
 }

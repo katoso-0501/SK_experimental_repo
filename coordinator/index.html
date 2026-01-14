@@ -14,12 +14,23 @@
     <link rel="stylesheet" href="assets/css/style-eddA.css">
 </head>
 <body>
+    <div class="popup_menu">
+        <ul>
+            <li><a href="#" class="popup_menu__generate_spell">Generate Spell</a></li>
+            <li><a href="#" class="popup_menu__delete_char">Delete Char</a></li>
+        </ul>
+    </div>
+    
+    <noscript>
+        Please enable JavaScript to use this application.
+    </noscript>
+
     <header>
         <h1>Let the characters such as Jonny wear a fashion you desire♪</h1>
         <nav>
             <a href="#" class="printBtn">Print!</a>
-            <a href="#" class="theatreBtn">Theatre Mode</a>
             <a href="#" class="resurrectionBtn">Resurrection Spell</a>
+            <a href="#" class="theatreBtn">Theatre Mode</a>
         </nav>
     </header>
 
@@ -39,10 +50,16 @@
             <button id="resurrectionSpell_cast">Cast Spell</button>
         </div>
     </div>
-    
+
+    <!-- Main Tag -->
     <main>
         <!-- Mainly, characters appear here -->
-        <div class="character_wrapper"></div>
+        <div class="character_wrapper">
+            <div class="messageWhenEmpty">
+                <p>Add the character from below and have fun to play with them!</p>
+            </div>
+        </div>
+
         
         <!-- Adding characters from here -->
         <div class="character_adder">
