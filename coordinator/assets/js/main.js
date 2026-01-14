@@ -80,7 +80,7 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = Math.floor(Math.random()*5);
+            const randomAnimation = Math.floor(Math.random()*6);
 
             switch(randomAnimation) {
                 case 0 :
@@ -98,9 +98,20 @@
                 case 4 :
                     this.jonnyMain.classList.add('animating_shadowedOut');
                     break;
+                case 5 :
+                    this.jonnyBody.classList.add('animating_stompedOut');
+                    summonAnvil(
+                        this.jonnyMain,
+                        this.jonnyMain.getBoundingClientRect().left,
+                        this.jonnyBody.getBoundingClientRect().top,
+                        this.jonnyMain.getBoundingClientRect().width + "px",
+                        "300px"
+                    );
+                    break;
             }
+            
             this.controllerMaster.remove();
-            this.exportBtn.remove();    
+            this.exportBtn.remove(); 
 
             setTimeout(()=>{
                 this.jonnyMain.remove();
@@ -1801,4 +1812,19 @@
     //         e.preventDefault();
     //     }
     // });
+
+
+    function summonAnvil (summonTarget, x, y, width, height = 200) {
+        console.log(`Data taken: ${summonTarget}, ${x}, ${y}, ${width}, ${height}`);
+        const anvil = document.createElement('div');
+        anvil.classList.add('animation_anvil');
+        anvil.textContent="100t";
+        summonTarget.appendChild(anvil);
+        summonTarget.style.position = 'relative';
+        // anvil.style.left = x + 'px';
+        // anvil.style.top = y + 'px';
+        anvil.style.width = width;
+        anvil.style.height = height;
+        // setTimeout(()=>{anvil.remove();}, 5000);
+    }
 }
