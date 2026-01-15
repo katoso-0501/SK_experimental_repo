@@ -8,6 +8,7 @@
             
             this.jonnyMain = document.createElement('div');
             this.jonnyMain.classList.add('jonnyA');
+            this.jonnyMain.classList.add('char__main');
             
             this.charID = characterID;
             this.jonnyMain.dataset.charid = characterID;
@@ -102,10 +103,10 @@
                     this.jonnyBody.classList.add('animating_stompedOut');
                     summonAnvil(
                         this.jonnyMain,
-                        this.jonnyMain.getBoundingClientRect().left,
-                        this.jonnyBody.getBoundingClientRect().top,
-                        this.jonnyMain.getBoundingClientRect().width + "px",
-                        "300px"
+                        0,
+                        0,
+                        this.jonnyMain.getBoundingClientRect().width,
+                        300
                     );
                     break;
             }
@@ -941,6 +942,8 @@
 
                     pins[selectedStop].children[0].style.background = "hsla(" + controlParts[0][1].value + "," + controlParts[1][1].value + "%," + controlParts[2][1].value + "%," + controlParts[3][1].value / 100 + ")";
                     pins[selectedStop].style.left = controlParts[4][1].value + "%";
+
+                    this.tipSpell["colorStops"] = gradientStops;
                     
                     this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
                     this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
@@ -1791,12 +1794,28 @@
 
     document.querySelector('.popup_menu__generate_spell').addEventListener('click', e =>{
         e.preventDefault();
-        openSpellExportation(characters[charHandler].generateResurrectionSpell());
+        try{
+
+            openSpellExportation(characters[charHandler].generateResurrectionSpell());
+        }catch(err){
+            console.log("There's no character here");
+        }
     });
 
     document.querySelector('.popup_menu__delete_char').addEventListener('click', e => {
-        e.preventDefault();
+        e.preventDefault();try{
         characters[charHandler].deleteCharacter();
+        }catch(err){
+            console.log("There's no character here");
+        }
+    });
+    document.querySelector('.popup_menu__dropanvil').addEventListener('click', e => {
+        e.preventDefault();
+            if(e.touches) {
+                summonAnvil(document.querySelector('main'), e.touches[0].clientX - 100, (window.scrollY + e.touches[0].clientY) - 100);
+            }else{
+                summonAnvil(document.querySelector('main'), e.clientX - 100, (window.scrollY + e.clientY) - 100);
+            }
     });
 
     // // Disable function keys 
@@ -1814,17 +1833,45 @@
     // });
 
 
-    function summonAnvil (summonTarget, x, y, width, height = 200) {
-        console.log(`Data taken: ${summonTarget}, ${x}, ${y}, ${width}, ${height}`);
+    function summonAnvil (summonTarget, x, y, width = 200, height = 200) {
         const anvil = document.createElement('div');
         anvil.classList.add('animation_anvil');
         anvil.textContent="100t";
         summonTarget.appendChild(anvil);
         summonTarget.style.position = 'relative';
-        // anvil.style.left = x + 'px';
-        // anvil.style.top = y + 'px';
-        anvil.style.width = width;
-        anvil.style.height = height;
-        // setTimeout(()=>{anvil.remove();}, 5000);
+        anvil.style.left = x + 'px';
+        if(y !== 0 ){
+            anvil.style.top = y + 'px';
+        }
+        anvil.style.width = width + "px";
+        anvil.style.height = height + "px";
+        setTimeout(()=>{
+            anvil.style.transform = "translateY(-200px)";
+            anvil.style.animation = "blurringOut 1s ease-in-out forwards";
+        }, 4000);
+        setTimeout(()=>{anvil.remove();}, 5000);
     }
+
+    document.querySelector('main').addEventListener('contextmenu',f=>{
+        f.preventDefault();
+        const tgt = f.target;
+        if(menu.classList.contains('expanded')){
+            menu.classList.remove("expanded");
+        };
+        let l = -1;
+        if(tgt.classList.contains("char__body")){
+            l = tgt.parentElement.dataset.charid;
+            console.log(l);
+            charHandler = l;
+        }
+        if(l >= 0){
+            toggleMenuDialog(l, f.clientX, f.clientY);
+        }else {
+            if(f.touches) {
+                summonAnvil(document.querySelector('main'), f.touches[0].clientX - 100, (window.scrollY + f.touches[0].clientY) - 100);
+            }else{
+                summonAnvil(document.querySelector('main'), f.clientX - 100, (window.scrollY + f.clientY) - 100);
+            }
+        }
+    });
 }
