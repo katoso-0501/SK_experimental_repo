@@ -58,7 +58,7 @@
 
     /* If uploading to Github, Uncomment those items below */
     left: 0;
-    top: -2px;
+    top: 1px;
     width: 100%;
     height: calc(99% - 4px);
     -webkit-mask-image: url(../images/jonnyB_diaper.png);
