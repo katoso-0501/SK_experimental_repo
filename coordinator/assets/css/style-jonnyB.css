@@ -1,0 +1,169 @@
+
+.jonnyB {
+    width: 23%;
+    margin: 0;
+
+    @media (width <= 1400px) {
+        width: 48%;
+    }
+
+    @media (width <= 768px) {
+        width: 98%;
+    }
+}
+
+.jonnyB .char__skin {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 20px;
+    background: rgb(251, 42, 73);
+    
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(99% - 4px);
+    -webkit-mask-image: url(../images/jonnyB_skin.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/jonnyB_skin.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+
+}
+
+.testingPurpose .jonnyB .char__skin::before {
+    content:" - Skin";
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 400px;
+}
+
+.jonnyB .char__diaper {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 50px;
+    background: rgb(41, 197, 121);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: -3px;
+    width: 100%;
+    height: calc(99% - 4px);
+    -webkit-mask-image: url(../images/jonnyB_diaper.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/jonnyB_diaper.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .jonnyB .char__diaper::before {
+    content:" - Diaper";
+    position: absolute;
+    top: 0.0px;
+    left: 30px;
+    width: 400px;
+}
+
+.jonnyB .char__pacifier  {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 80px;
+    background: rgb(138, 49, 27);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(99% - 4px);
+    -webkit-mask-image: url(../images/jonnyB_pacifier.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/jonnyB_pacifier.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .jonnyB .char__pacifier::before {
+    content:" - Pacifier";
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    width: 400px;
+}
+
+.jonnyB .char__safetyclip  {
+    position: absolute;
+    
+    /* Testing Purpose Only */
+    width: 20px;
+    height: 20px;
+    left: 8px;
+    top: 80px;
+    background: rgb(138, 49, 27);
+
+    /* If uploading to Github, Uncomment those items below */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(99% - 4px);
+    -webkit-mask-image: url(../images/jonnyB_safety_clip.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(../images/jonnyB_safety_clip.png);
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+
+.testingPurpose .jonnyB .char__safetyclip::before {
+    content:" - Safety Clip";
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    width: 400px;
+}
+
+.testingPurpose .jonnyB .char__skin,
+.testingPurpose .jonnyB .char__diaper,
+.testingPurpose .jonnyB .char__pacifier,
+.testingPurpose .jonnyB .char__safetyclip {
+    mask: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    left: 8px !important
+}
+
+.testingPurpose .jonnyB .char__skin {
+    top: 0;
+}
+.testingPurpose .jonnyB .char__diaper {
+    top: 30px;
+}
+.testingPurpose .jonnyB .char__pacifier {
+    top: 60px;
+}
+.testingPurpose .jonnyB .char__safetyclip {
+    top: 90px;
+}

@@ -651,6 +651,7 @@ _/_/_/_/_/_/_/_/_/*/
 }
 
 .theatreMode .jonnyA.filterHardlight,
+.theatreMode .jonnyB.filterHardlight,
 .theatreMode .jimmyA.filterHardlight,
 .theatreMode .rolfA.filterHardlight,
 .theatreMode .kevinA.filterHardlight,
@@ -662,6 +663,7 @@ _/_/_/_/_/_/_/_/_/*/
 }
 
 .theatreMode .jonnyA.filterMultiply,
+.theatreMode .jonnyB.filterMultiply,
 .theatreMode .jimmyA.filterMultiply,
 .theatreMode .rolfA.filterMultiply,
 .theatreMode .kevinA.filterMultiply,
@@ -673,6 +675,7 @@ _/_/_/_/_/_/_/_/_/*/
 }
 
 .theatreMode .jonnyA.filterOverlay,
+.theatreMode .jonnyB.filterOverlay,
 .theatreMode .jimmyA.filterOverlay,
 .theatreMode .rolfA.filterOverlay,
 .theatreMode .kevinA.filterOverlay,

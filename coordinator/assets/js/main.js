@@ -146,6 +146,23 @@
             return JSON.stringify(this.resurrectionSpell);
         }
     }
+    
+    class JonnyB extends JonnyA {
+        constructor(decoded = null) {
+            super(decoded);
+            this.resurrectionSpell.char = "JonnyB";
+            this.img.src = "assets/images/jonnyB_original.webp";
+            this.jonnyMain.classList.remove('jonnyA');
+            this.jonnyMain.classList.add('jonnyB');
+        }
+        
+        loadIndependentParts () {
+            this.createColormat('Skin','char__skin', this.decodedSpell);
+            this.createColormat('Diaper','char__diaper', this.decodedSpell);
+            this.createColormat('Pacifier','char__pacifier', this.decodedSpell);
+            this.createColormat('SafetyClip','char__safetyclip', this.decodedSpell);
+        }
+    }
 
     class JimmyA extends JonnyA {
         constructor(decoded = null) {
@@ -1002,13 +1019,17 @@
             controlParts[5][1].addEventListener('change', m=>{
                 this.layer.style.mixBlendMode = controlParts[5][1].value;
                 this.tipSpell["mixblendmode"] = controlParts[5][1].value;
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
             });
 
             // Gradient Rotation
             controlParts[6][1].addEventListener('change', m=>{
-            this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
-            this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
-            this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
+                this.tipSpell["gradientRotation"] = controlParts[6][1].value;
+                this.gradientUpdate(this.layer, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(this.thumbnailInner, gradientStops, controlParts[6][1].value, this.gradientMode);
+                this.gradientUpdate(gradientSpecimen, gradientStops, 90, this.gradientMode);
             });
 
             // Remove color stop
@@ -1289,6 +1310,9 @@
     document.querySelector('.character_adder__jonnyA').addEventListener('click', ()=>{
         characters.push(new JonnyA());
     });
+    document.querySelector('.character_adder__jonnyB').addEventListener('click', ()=>{
+        characters.push(new JonnyB());
+    });
     document.querySelector('.character_adder__jimmyA').addEventListener('click', ()=>{
         characters.push(new JimmyA());
     });
@@ -1312,7 +1336,7 @@
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
 
 
-    const charClasses = '.jonnyA,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
+    const charClasses = '.jonnyA,.jonnyB,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
     /* ________________________
     Theatre Mode
     _________________________*/
@@ -1706,6 +1730,10 @@
             characters.push(new JonnyA(decoded));
             validity=1;
         }
+        if(decoded.char === "JonnyB") {
+            characters.push(new JonnyB(decoded));
+            validity=1;
+        }
         if(decoded.char === "JimmyA") {
             characters.push(new JimmyA(decoded));
             validity=1;
@@ -1817,21 +1845,6 @@
                 summonAnvil(document.querySelector('main'), e.clientX - 100, (window.scrollY + e.clientY) - 100);
             }
     });
-
-    // // Disable function keys 
-    // document.addEventListener('keydown', e => {
-    //     if(e.key === 'F5') {
-    //         e.preventDefault();
-    //     }
-    // });
-
-    // // Block default shortcut key
-    // document.addEventListener('keydown', e => {
-    //     if(e.key === 'c' && e.ctrlKey) {
-    //         e.preventDefault();
-    //     }
-    // });
-
 
     function summonAnvil (summonTarget, x, y, width = 200, height = 200) {
         const anvil = document.createElement('div');
