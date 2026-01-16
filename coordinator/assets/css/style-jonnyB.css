@@ -26,7 +26,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(99% - 1px);
     -webkit-mask-image: url(../images/jonnyB_skin.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -58,7 +58,7 @@
 
     /* If uploading to Github, Uncomment those items below */
     left: 0;
-    top: -3px;
+    top: -2px;
     width: 100%;
     height: calc(99% - 4px);
     -webkit-mask-image: url(../images/jonnyB_diaper.png);
@@ -93,7 +93,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(99% - 2px);
     -webkit-mask-image: url(../images/jonnyB_pacifier.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
@@ -124,9 +124,9 @@
 
     /* If uploading to Github, Uncomment those items below */
     left: 0;
-    top: 0;
+    top: 1px;
     width: 100%;
-    height: calc(99% - 4px);
+    height: calc(99% - 3px);
     -webkit-mask-image: url(../images/jonnyB_safety_clip.png);
     -webkit-mask-position: center;
     -webkit-mask-size: cover;
