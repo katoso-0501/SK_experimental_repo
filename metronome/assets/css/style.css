@@ -121,7 +121,6 @@ body::-webkit-scrollbar-thumb:hover {
     height: 40px;
     width: calc(100% - 8px);
     max-width: max-content;
-    /* max-width: 320px; */
     transform: translateY(-22px);
     transition: 0.4s;
     pointer-events: none;
@@ -129,8 +128,9 @@ body::-webkit-scrollbar-thumb:hover {
     opacity: 0;
     
     @media (width <= 768px) {
-       right: 4px;
-       max-width: none;
+        height: 64px;
+        right: 4px;
+        max-width: none;
     }
 }
 
@@ -168,7 +168,13 @@ body::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
     
     @media (width <= 768px) {
-    height: 56px;
+        height: 56px;
+    }
+}
+
+.sticky_instant_changer__btn.expanded {
+    @media (width <= 768px) {
+        height: 24px;
     }
 }
 
@@ -192,6 +198,10 @@ body::-webkit-scrollbar-thumb:hover {
     border-radius: 24px;
     background-color: #2e4bb3;
     cursor: pointer;
+
+    @media (width <= 768px) {
+        height: 64px;
+    }
 }
 
 .sticky_instant_changer_toggle span {
@@ -204,6 +214,10 @@ body::-webkit-scrollbar-thumb:hover {
     height: 12px;
     background: #FFFFFF;
     clip-path: polygon(100% 50%, 0 0, 0 100%);
+
+    @media (width <= 768px) {
+        top: 26px;
+    }
 }
 
 
@@ -219,6 +233,9 @@ body::-webkit-scrollbar-thumb:hover {
     background: #FFFFFF;
     transform: scale(0.01);
     transform-origin: left center;
+    @media (width <= 768px) {
+        top: 26px;
+    }
 }
 
 .sticky_instant_changer_toggle.expanded:before {
@@ -241,6 +258,10 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: #2e4bb3;
     color: #ffffff;
     cursor: pointer;
+
+    @media (width <= 768px) {
+        padding: 32px 12px;
+    }
 }
 
 .modal {
@@ -300,7 +321,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 
 .general-bpm-settings > button.bpm_button_update{
-    width: 100px
+    width: 100px;
 }
 
 .general-bpm-settings > button:not(.bpm_button_update) {

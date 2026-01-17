@@ -119,15 +119,19 @@ document.querySelector('.more_movie_adder__arrow').addEventListener('click', f=>
 
 // Fully expanded the list of movies in more Adder
 const observerTarget = document.querySelectorAll('.observer_target');
+
+function callback (entries) {
+    entries.forEach(entry=>{
+        if(entry.isIntersecting) {
+            entry.target.classList.add('expanded');
+        }else{
+            entry.target.classList.remove('expanded');
+        }
+    });
+}
 const observerOptions = {
     threshold: 0.5
 }
-const entry = (entries)=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting) {
-            document.querySelector('.more_movie_adder').classList.add('expanded');
-        }
-    })
-}
-const io = new IntersectionObserver(entry, observerOptions);
-document.querySelectorAll('.observer_target').forEach(target=>io.observe(target));
+const io = new IntersectionObserver(callback, observerOptions);
+
+observerTarget.forEach(target=>io.observe(target));

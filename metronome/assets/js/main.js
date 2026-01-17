@@ -400,6 +400,7 @@ window.addEventListener('scroll', ()=>{
 document.querySelector('.sticky_instant_changer__btn').addEventListener('click', (s)=>{
     s.preventDefault();
     document.querySelector('.sticky_instant_changer').classList.toggle('expanded');
+    document.querySelector('.sticky_instant_changer__btn').classList.toggle('expanded');
     checkTimeoutExists ();
 });
 
@@ -442,6 +443,7 @@ function updateAnimatingPictures (dur) {
 // stickyMenuTimeout
 function shrinkInstantChanger () {
     document.querySelector('.sticky_instant_changer').classList.remove('expanded');
+    document.querySelector('.sticky_instant_changer__btn').classList.remove('expanded');
 }
 
 //stickyMenuTimeout 

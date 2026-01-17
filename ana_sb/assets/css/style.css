@@ -297,7 +297,6 @@ Screen Locking
     overflow-y: auto;
 }
 
-
 .more_movie_adder__contentInner {
     display: flex;
     width: fit-content;
@@ -307,10 +306,39 @@ Screen Locking
     background-color: #FFFFFF;
 }
 
+
 .more_movie_adder__group {
+    position: relative;
     padding: 0 16px;
     border-right: 1px solid #DEDEDE;
     width: 210px;
+    max-height: 320px;
+    transition: 0.4s;
+    overflow: hidden;
+}
+
+.more_movie_adder__group::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    opacity: 1;
+    transition: 0.4s;
+}
+
+.more_movie_adder__group.expanded {
+    max-height: none;
+    height: auto;
+    overflow: visible;
+}
+
+
+.more_movie_adder__group.expanded::after {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .more_movie_adder__contentInner h2 {
