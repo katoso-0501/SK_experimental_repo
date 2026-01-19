@@ -5,8 +5,7 @@
     // Character classes start
     class JonnyA {
         constructor(decoded = null) {
-            
-        document.querySelector('.messageWhenEmpty').classList.remove('expanded');
+            document.querySelector('.messageWhenEmpty').classList.remove('expanded');
             
             this.jonnyMain = document.createElement('div');
             this.jonnyMain.classList.add('jonnyA');
@@ -119,6 +118,7 @@
 
             setTimeout(()=>{
                 this.jonnyMain.remove();
+                charHandler = 99;
                 characters.splice(this.charID, 1);
                 characters.forEach(char=>{
                     if(char.getCharID() > this.charID){
@@ -700,6 +700,7 @@
                     this.layer.style.mixBlendMode = this.decodedChip.mixblendmode;
                     controlParts[3][1].value = this.decodedChip.rotation;
                     this.layer.dataset.patternName = this.decodedChip.patternName;
+                    this.tipSpell["patternName"] = this.decodedChip.patternName;
                     
                     this.decodedChip = null;
                 }
@@ -1085,6 +1086,7 @@
             controllerPanel.append(gradientRemoveBtn);
 
             // Gradient Mode Sel
+            this.gradientMode = "linear";
             controllerPanel.append(document.createElement("br"));
             const gradientModeRadio = 
             [
@@ -1313,10 +1315,19 @@
             });
             return this.matSpell;
         }
-    }
-    // Color Managements end
-    //  ______________________
 
+        shiftLayerPos (layerNo, movePosition) {
+            console.log(layerNo);
+            const copier = this.layers[layerNo];
+            this.layers.splice(layerNo, 1);
+            this.layers.splice(layerNo + movePosition, 0, copier);
+            this.reRender();
+        }
+    }
+
+    /*______________________
+    Characters
+    ________________________*/
     const characters = [];
 
     document.querySelectorAll('.character_adder__inner a').forEach(a=>{
@@ -1355,18 +1366,17 @@
 
 
     const charClasses = '.jonnyA,.jonnyB,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
+
     /* ________________________
     Theatre Mode
     _________________________*/
-    // Theatre mode button
+    //   - Theatre mode button
     document.querySelector('.theatreBtn').addEventListener('click', b=>{
         b.preventDefault();
         toggleTheatreMode ();
     });
 
-    // ___________________
-    //background settings
-    //____________________
+    //   - background settings
     document.querySelector('.theatre_background_setter a').addEventListener('click', b=>{
         b.preventDefault();
         document.querySelector('.theatre_background_setter').classList.toggle('expanded');
@@ -1382,37 +1392,41 @@
 
     document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
         radio.addEventListener('click', (item)=>{
-            console.log(item.target.id);
             document.querySelector('.theatre_background_setter').classList.remove('expanded');
-            
             wipeAllSnowdrops ();
             wipeAllColorballs ();
             wipeAllHeartPop ();
             wipeAllFlames ();
-                
             backgroundParts.forEach(bgs=>{
                 document.querySelector(bgs).classList.remove('expanded');
             });
         
-            console.log(document.querySelector(backgroundParts[index]));
             document.querySelector(backgroundParts[index]).classList.add('expanded');
         });
     });
 
     document.getElementById('theatre_background_snowfall').addEventListener('click',function(){
-        initiateSnowdrop();
+        setTimeout(()=>{
+            initiateSnowdrop();
+        }, 100);
     });
 
     document.getElementById('theatre_background_spotlight').addEventListener('click',function(){
-        initiateColorball();
+        setTimeout(()=>{
+            initiateColorball();
+        }, 100);
     });
 
     document.getElementById('theatre_background_heartfullyheart').addEventListener('click',function(){
+        setTimeout(()=>{
         initiateHeartPop();
+        }, 100);
     });
 
     document.getElementById('theatre_background_burstfullyflame').addEventListener('click',function(){
+        setTimeout(()=>{
         initiateFlames();
+        }, 100);
     });
 
     /* Snowdrop-Related */
@@ -1797,7 +1811,6 @@
             document.querySelector('.copyBtn').textContent="Copied!";
             setTimeout(()=>{document.querySelector('.copyBtn').textContent = "Copy";}, 2000);
         }
-
     }
 
     const copyButton = document.querySelector('.copyBtn');
@@ -1826,8 +1839,7 @@
             a.href = "#";
             a.textContent=list[0];
             li.appendChild(a);
-            if(list[1])
-            a.addEventListener('click', list[1]);
+            if(list[1]) a.addEventListener('click', list[1]);
             document.querySelector('.popup_menu ul').appendChild(li);
         });
 
@@ -1848,8 +1860,8 @@
 
         charHandler = charID;
         let to = "";
-        if(x > window.innerWidth - 150) {
-            x -= 140;
+        if(x > window.innerWidth - (menu.offsetWidth)) {
+            x -= (menu.offsetWidth - 0);
             to += "right ";
         } else {
             to += "left ";
@@ -1893,6 +1905,25 @@
 
     function toggleTheatreMode () {
         document.querySelector('body').classList.toggle('theatreMode');
+        if(!document.querySelector('body').classList.contains('theatreMode')) {
+            wipeAllColorballs();
+            wipeAllFlames();
+            wipeAllHeartPop();
+            wipeAllSnowdrops();
+            return;
+        } 
+        if(document.querySelector(".background_02").classList.contains("expanded")) {
+            document.getElementById('theatre_background_snowfall').click();
+        }
+        if(document.querySelector(".background_03").classList.contains("expanded")) {
+            document.getElementById('theatre_background_spotlight').click();
+        }
+        if(document.querySelector(".background_04").classList.contains("expanded")) {
+            document.getElementById('theatre_background_heartfullyheart').click();
+        }
+        if(document.querySelector(".background_05").classList.contains("expanded")) {
+            document.getElementById('theatre_background_burstfullyflame').click();
+        }
     }
 
     /* Right-click menu */
@@ -1905,7 +1936,6 @@
         let l = -1;
         if(tgt.classList.contains("char__body")){
             l = tgt.parentElement.dataset.charid;
-            console.log(l);
             charHandler = l;
         }
         if(l >= 0){
@@ -1917,8 +1947,9 @@
                     ["Add Edd with Yen", function () {characters.push(new EddA(1))}],
                     ["Add Edd with Euro", function () {characters.push(new EddA(2))}],
                     ["Add Edd with Rupee", function () {characters.push(new EddA(3))}],
-                    ["Add Edd with Wong", function () {characters.push(new EddA(4))}]
-                ]
+                    ["Add Edd with Wong", function () {characters.push(new EddA(4))}],
+                    ["Add Edd with GBP", function () {characters.push(new EddA(5))}],
+                ];
                 toggleMenuDialog(0, f.clientX, f.clientY, g);
             }else{
                 const g = function () {
