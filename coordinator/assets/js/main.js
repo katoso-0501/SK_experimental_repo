@@ -367,7 +367,7 @@
 
         patternUpdate (tgt, pattern, scale, opacity, blendmode, rotation = 0) {
             tgt.style.backgroundImage = "url(./assets/images/pattern-" + pattern + ".png)";    
-            tgt.style.backgroundSize = scale + "px";
+            tgt.style.backgroundSize = scale + "%";
             tgt.style.backgroundPosition = "center";
             tgt.style.opacity = opacity / 100;
             tgt.style.transform = "rotate(" + rotation + "deg)";
