@@ -6,6 +6,8 @@
     class JonnyA {
         constructor(decoded = null) {
             
+        document.querySelector('.messageWhenEmpty').classList.remove('expanded');
+            
             this.jonnyMain = document.createElement('div');
             this.jonnyMain.classList.add('jonnyA');
             this.jonnyMain.classList.add('char__main');
@@ -33,7 +35,7 @@
             this.exportBtn.classList.add('exportBtn');
             this.exportBtn.textContent = '...';
             this.exportBtn.addEventListener('click', ()=>{
-                toggleMenuDialog(this.charID, this.exportBtn.getBoundingClientRect().left, this.exportBtn.getBoundingClientRect().top);
+                toggleMenuDialog(this.charID, this.exportBtn.getBoundingClientRect().left, this.exportBtn.getBoundingClientRect().top, this.contextMenuMaker());
             });
 
             this.mats = [];
@@ -113,6 +115,7 @@
             
             this.controllerMaster.remove();
             this.exportBtn.remove(); 
+            this.jonnyMain.dataset.charid = null;
 
             setTimeout(()=>{
                 this.jonnyMain.remove();
@@ -124,7 +127,7 @@
                 });
                 characterID = characters.length;
                 if(characters.length === 0){
-                    document.querySelector('.messageWhenEmpty').style.display = 'flex';
+                    document.querySelector('.messageWhenEmpty').classList.add("expanded");
                 }
             }, 1000);
 
@@ -144,6 +147,22 @@
                 this.resurrectionSpell.parts[mat.targetName] = mat.getMatObj();
             });
             return JSON.stringify(this.resurrectionSpell);
+        }
+
+        contextMenuMaker () {
+            const actions = [];
+            const a = function () {
+                try{
+                    openSpellExportation(this.generateResurrectionSpell());
+                }catch(err){
+                    console.log("There's no character here");
+                }
+            }
+            const b = function () {
+                this.deleteCharacter();
+            }
+            actions.push(["Generate Spell", a.bind(this)],["Delete Character", b.bind(this)]);
+            return actions;
         }
     }
     
@@ -1303,7 +1322,6 @@
     document.querySelectorAll('.character_adder__inner a').forEach(a=>{
         a.addEventListener('click', a=>{
             a.preventDefault();
-            document.querySelector('.messageWhenEmpty').style.display = 'none';
         });
     });
     
@@ -1343,7 +1361,7 @@
     // Theatre mode button
     document.querySelector('.theatreBtn').addEventListener('click', b=>{
         b.preventDefault();
-        document.querySelector('body').classList.toggle('theatreMode');
+        toggleTheatreMode ();
     });
 
     // ___________________
@@ -1763,7 +1781,6 @@
             return;
         };
         
-        document.querySelector('.messageWhenEmpty').style.display = 'none';
     }
 
     /* Copy to clipboard */
@@ -1792,8 +1809,43 @@
     const menu = document.querySelector('.popup_menu');
     let charHandler = 0;
 
-    function toggleMenuDialog (charID, x, y) {
+    function toggleMenuDialog (charID, x, y, actions = []) {
+        const actionsArray = [];
+        document.querySelectorAll('.popup_menu li').forEach(f=>f.remove());
+        if(actions.length > 0){
+            actions.forEach(action => {
+                actionsArray.push(action);
+            });
+        }
+
+        actionsArray.push(["Drop Anvil Anyway", null]);
+        actionsArray.forEach(list => {
+            // action is an array with [label, callback]
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = "#";
+            a.textContent=list[0];
+            li.appendChild(a);
+            if(list[1])
+            a.addEventListener('click', list[1]);
+            document.querySelector('.popup_menu ul').appendChild(li);
+        });
+
+        document.querySelectorAll('.popup_menu li').forEach((li, index) => {
+            li.children[0].addEventListener('click', f => {
+                f.preventDefault();
+                if(index === actionsArray.length - 1) {
+                    if(f.touches) {
+                        summonAnvil(document.querySelector('main'), f.touches[0].clientX - 100, (window.scrollY + f.touches[0].clientY) - 100);
+                    }else{
+                        summonAnvil(document.querySelector('main'), f.clientX - 100, (window.scrollY + f.clientY) - 100);
+                    }
+                }
+            });
+        });
+
         menu.classList.toggle("expanded");
+
         charHandler = charID;
         let to = "";
         if(x > window.innerWidth - 150) {
@@ -1802,8 +1854,8 @@
         } else {
             to += "left ";
         }
-        if(y > window.innerHeight - 200) {
-            y -= 100;
+        if(y > window.innerHeight - (menu.offsetHeight + 50)) {
+            y -= (menu.offsetHeight + 25);
             to += "bottom";
         }else{
             to += "top";
@@ -1818,32 +1870,6 @@
         if(!e.target.classList.contains("popup_menu") && !e.target.classList.contains("exportBtn")) {
             document.querySelector('.popup_menu').classList.remove("expanded");
         }
-    });
-
-    document.querySelector('.popup_menu__generate_spell').addEventListener('click', e =>{
-        e.preventDefault();
-        try{
-
-            openSpellExportation(characters[charHandler].generateResurrectionSpell());
-        }catch(err){
-            console.log("There's no character here");
-        }
-    });
-
-    document.querySelector('.popup_menu__delete_char').addEventListener('click', e => {
-        e.preventDefault();try{
-        characters[charHandler].deleteCharacter();
-        }catch(err){
-            console.log("There's no character here");
-        }
-    });
-    document.querySelector('.popup_menu__dropanvil').addEventListener('click', e => {
-        e.preventDefault();
-            if(e.touches) {
-                summonAnvil(document.querySelector('main'), e.touches[0].clientX - 100, (window.scrollY + e.touches[0].clientY) - 100);
-            }else{
-                summonAnvil(document.querySelector('main'), e.clientX - 100, (window.scrollY + e.clientY) - 100);
-            }
     });
 
     function summonAnvil (summonTarget, x, y, width = 200, height = 200) {
@@ -1865,6 +1891,11 @@
         setTimeout(()=>{anvil.remove();}, 5000);
     }
 
+    function toggleTheatreMode () {
+        document.querySelector('body').classList.toggle('theatreMode');
+    }
+
+    /* Right-click menu */
     document.querySelector('main').addEventListener('contextmenu',f=>{
         f.preventDefault();
         const tgt = f.target;
@@ -1878,12 +1909,22 @@
             charHandler = l;
         }
         if(l >= 0){
-            toggleMenuDialog(l, f.clientX, f.clientY);
+            toggleMenuDialog(charHandler, f.clientX, f.clientY, characters[charHandler].contextMenuMaker());
         }else {
-            if(f.touches) {
-                summonAnvil(document.querySelector('main'), f.touches[0].clientX - 100, (window.scrollY + f.touches[0].clientY) - 100);
+            if(tgt.classList.contains("character_adder__eddA")){
+                const g = [
+                    ["Add Edd with Dollar", function () {characters.push(new EddA(0))}],
+                    ["Add Edd with Yen", function () {characters.push(new EddA(1))}],
+                    ["Add Edd with Euro", function () {characters.push(new EddA(2))}],
+                    ["Add Edd with Rupee", function () {characters.push(new EddA(3))}],
+                    ["Add Edd with Wong", function () {characters.push(new EddA(4))}]
+                ]
+                toggleMenuDialog(0, f.clientX, f.clientY, g);
             }else{
-                summonAnvil(document.querySelector('main'), f.clientX - 100, (window.scrollY + f.clientY) - 100);
+                const g = function () {
+                    toggleTheatreMode();
+                }
+                toggleMenuDialog(0, f.clientX, f.clientY, [["Theatre Mode",g]]);
             }
         }
     });
