@@ -937,7 +937,9 @@ _/_/_/_/_/_/_/_/_/*/
     height: 70%;
     padding: 32px 16px;
     gap: 16px;
-    background-color: #a0a0a0;
+    background: linear-gradient(0deg, rgba(140,140,140,0.9) 0%,rgba(140,140,140,0.9) 100%), url(../images/pattern-cheetah.png) repeat;
+    background-size: 32px;
+    /* background-color: #a0a0a0; */
 }
 
 .resurrectionSpell__stoneboard {

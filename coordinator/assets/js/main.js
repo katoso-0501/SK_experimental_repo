@@ -115,7 +115,7 @@
                     paperIsFun(0,
                         this.jonnyMain,
                         this.jonnyBody.getBoundingClientRect().left,
-                        this.jonnyBody.getBoundingClientRect().top + window.scrollY - 30,
+                        this.jonnyBody.getBoundingClientRect().top + window.scrollY - document.querySelector('header').getBoundingClientRect().height - 30,
                         this.jonnyBody.offsetWidth,
                         this.jonnyBody.offsetHeight
                     );
@@ -1332,11 +1332,11 @@
             return this.matSpell;
         }
 
-        shiftLayerPos (layerNo, movePosition) {
+        swapLayerPos (layerNo, movePosition) {
             console.log(layerNo);
             const copier = this.layers[layerNo];
             this.layers.splice(layerNo, 1);
-            this.layers.splice(layerNo + movePosition, 0, copier);
+            this.layers.splice(movePosition, 0, copier);
             this.reRender();
         }
     }
@@ -1977,10 +1977,9 @@
     });
 
     function paperIsFun (animationNo,character,x,y,wid,hei) {
-        const preferredY = y - (hei * 0.25);
+        const preferredY = y;
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
-        // console.log(duplicated);
         duplicated.dataset.charid=null;
         for( const child of duplicated.children){
             if(child.matches('.char__controller')) {
@@ -2074,12 +2073,4 @@
 
         document.querySelector("main").appendChild(scoreCounter);
     }
-
-    // setInterval(f=>{
-    //     document.querySelectorAll('.character_adder__inner a')[Math.floor(Math.random()*8)].click();
-    // }, 150);
-
-    // setInterval(f=>{
-    //     characters.forEach(f=>{f.deleteCharacter()});;
-    // },2000);
 }
