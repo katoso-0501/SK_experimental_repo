@@ -82,8 +82,7 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = 6;
-            // const randomAnimation = Math.floor(Math.random()*7);
+            const randomAnimation = Math.floor(Math.random()*7);
 
             switch(randomAnimation) {
                 case 0 :
@@ -459,11 +458,14 @@
                 if(i === 0) {
                     part[1].setAttribute('max', '360');
                     part[1].setAttribute('value', Math.floor(Math.random() * 360));
-                }else if (i===4){
+                }else if (i===4) {
                     part[1].setAttribute('value', "normal");
                 }else{
                     part[1].setAttribute('max', '100');
                     part[1].setAttribute('value', Math.floor(Math.random() * 100));
+                }
+                if(i===3) {
+                    part[1].setAttribute('value', 100);
                 }
                 
                 paragraph.append(part[0],part[1]);
@@ -516,7 +518,7 @@
                     controlParts[0][1].value = this.decodedChip.hue;
                     controlParts[1][1].value = this.decodedChip.saturation;
                     controlParts[2][1].value = this.decodedChip.brightness;
-                    controlParts[3][1].value = this.decodedChip.opacity;
+                    controlParts[3][1].value = this.decodedChip.opacity * 100;
                     controlParts[4][1].value = this.decodedChip.mixblendmode;
                     this.layer.style.mixBlendMode = this.decodedChip.mixblendmode;
 
@@ -1975,7 +1977,7 @@
     });
 
     function paperIsFun (animationNo,character,x,y,wid,hei) {
-        const preferredY = y - (hei / 3);
+        const preferredY = y - (hei * 0.25);
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
         // console.log(duplicated);
@@ -2050,7 +2052,6 @@
                             clearInterval(intv);
                             if(score > 0){
                                 showScore(score);
-                                // console.log("Your score is "+ score);
                             }
                             paper.remove();                            
                         }
@@ -2073,4 +2074,12 @@
 
         document.querySelector("main").appendChild(scoreCounter);
     }
+
+    // setInterval(f=>{
+    //     document.querySelectorAll('.character_adder__inner a')[Math.floor(Math.random()*8)].click();
+    // }, 150);
+
+    // setInterval(f=>{
+    //     characters.forEach(f=>{f.deleteCharacter()});;
+    // },2000);
 }

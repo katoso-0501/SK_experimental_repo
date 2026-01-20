@@ -63,8 +63,7 @@ main {
     transition: 0.4s;
 }
 
-.theatreMode 
-.messageWhenEmpty {
+.theatreMode .messageWhenEmpty {
     opacity: 0;
 }
 
@@ -934,9 +933,9 @@ _/_/_/_/_/_/_/_/_/*/
 .resurrection_dialog_import__inner.expanded {
     display: flex;
     flex-flow: column;
-    width: 80%;
-    height: 80%;
-    padding: 32px;
+    width: calc(80% - 32px);
+    height: 70%;
+    padding: 32px 16px;
     gap: 16px;
     background-color: #a0a0a0;
 }
@@ -964,7 +963,8 @@ _/_/_/_/_/_/_/_/_/*/
     resize: vertical;
 }
 
-#resurrectionSpell_cast {
+#resurrectionSpell_cast,
+.copyBtn {
     all: unset;
     display: block;
     width: 100%;
