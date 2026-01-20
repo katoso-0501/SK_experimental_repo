@@ -82,8 +82,8 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = Math.floor(Math.random()*6);
-
+            const randomAnimation = Math.floor(Math.random()*7);
+            
             switch(randomAnimation) {
                 case 0 :
                     this.jonnyMain.classList.add('animating_shrinkingOut');
@@ -109,6 +109,17 @@
                         this.jonnyMain.getBoundingClientRect().width,
                         300
                     );
+                    break;
+                case 6 :
+                    this.exportBtn.remove();
+                    paperIsFun(0,
+                        this.jonnyBody,
+                        this.jonnyBody.getBoundingClientRect().left,
+                        this.jonnyBody.getBoundingClientRect().top + window.scrollY - 30,
+                        this.jonnyBody.offsetWidth,
+                        this.jonnyBody.offsetHeight
+                    );
+                    this.jonnyBody.style.opacity = 0;
                     break;
             }
             
@@ -367,7 +378,7 @@
 
         patternUpdate (tgt, pattern, scale, opacity, blendmode, rotation = 0) {
             tgt.style.backgroundImage = "url(./assets/images/pattern-" + pattern + ".png)";    
-            tgt.style.backgroundSize = scale + "%";
+            tgt.style.backgroundSize = scale + "px";
             tgt.style.backgroundPosition = "center";
             tgt.style.opacity = opacity / 100;
             tgt.style.transform = "rotate(" + rotation + "deg)";
@@ -523,6 +534,8 @@
                 this.layer,
                 controlParts[0][1].value,controlParts[1][1].value,controlParts[2][1].value
             );
+            this.layer.style.opacity = controlParts[3][1].value / 100;
+            this.thumbnailInner.style.opacity = controlParts[3][1].value / 100;
 
             this.tipSpell["hue"] = controlParts[0][1].value;
             this.tipSpell["saturation"] = controlParts[1][1].value;
@@ -1959,4 +1972,103 @@
             }
         }
     });
+
+    function paperIsFun (animationNo,character,x,y,wid,hei) {
+        const preferredY = y - (hei / 3);
+        document.querySelector("main").style.position = "relative";
+        const duplicated = character.cloneNode(true);
+        duplicated.dataset.charid=null;
+        for( const child of duplicated.children){
+            if(child.matches('.char__controller')) {
+                child.remove();
+            }
+        }
+        duplicated.style.position = "absolute";
+        duplicated.style.left = x + 'px';
+        duplicated.style.top = preferredY + 'px';
+        duplicated.style.width = wid + 'px';
+        duplicated.style.height = hei + 'px';
+        duplicated.style.zIndex = 8;
+        duplicated.style.animation = "paperIsFun_" + animationNo + " 1s ease-in-out forwards";
+        document.querySelector('main').appendChild(duplicated);
+
+        switch(animationNo) {
+            case 0:
+                const rotates = [0, 0, 0];
+                const paper = document.createElement('div');
+                let intv;
+                let opc = 100;
+                let trsY = 0;
+                let trsX = 0;
+                let velY = 1;
+                let velX = Math.random()*1 - 1;
+                let score = 0;
+                const scl = (screen.width < 768) ? 0.66 : 1;
+                paper.classList.add("paperIsFun__paper");
+                paper.style.position = "absolute";
+                paper.style.width = wid + 30 + 'px';
+                paper.style.height = hei + 30 + 'px';
+                paper.style.minHeight = "640px";
+                paper.style.background = "#FFFFFF";
+                paper.style.border = "1px solid #808080";
+                paper.style.zIndex = 7;
+                paper.style.left = x - 15 + 'px';
+                paper.style.top = (preferredY + 15) + 'px';
+                paper.style.transform = "translateY(100%)";
+
+                setTimeout(()=>{
+                    paper.style.transition = "0.4s";
+                    paper.style.transform = "translateY(0%)";
+                    paper.addEventListener('click', f => {
+                        const ctr =  paper.getBoundingClientRect().left + (paper.getBoundingClientRect().width / 2);
+                        console.log((f.clientX - ctr ) * -0.01);
+                        velX += (f.clientX - ctr) * -0.01;
+                        velY = velY > 0 ? -10 : velY - 10;
+                        opc = 100;
+                        score ++;
+                    });
+                },25);
+                setTimeout(()=>{
+                    duplicated.style.left = "0px";
+                    duplicated.style.top = "0px";
+                    paper.style.transition = "scale 0.5s";
+                    paper.style.scale = scl;
+                    paper.append(duplicated);
+                    intv = setInterval(()=>{
+                        velY += 0.1;
+                        trsY += velY;
+                        trsX += velX;
+                        opc = velY > 0 ? opc - 0.5 : 100;
+                        rotates[0] += Math.random()*2 - 4;
+                        rotates[1] += Math.random()*2 - 4;
+                        rotates[2] += Math.random()*2 - 4;
+                        paper.style.transform = `translateX(${trsX}px) translateY(${trsY}px) rotateX(${rotates[0]}deg) rotateY(${rotates[1]}deg) rotateZ(${rotates[2]}deg)`;
+                        paper.style.opacity = opc / 100;
+                        if(opc<0) {
+                            clearInterval(intv);
+                            if(score > 0){
+                                showScore(score);
+                                // console.log("Your score is "+ score);
+                            }
+                            paper.remove();                            
+                        }
+                    },12);
+                },400);
+                
+                document.querySelector('main').appendChild(paper);
+            break;
+        }
+    }
+
+    function showScore (scr) {
+        const scoreCounter = document.createElement("span");
+        scoreCounter.textContent = scr > 1 ? `${scr} pts.` : `${scr} pt.`;
+        scoreCounter.classList.add('scoreCounter');
+
+        setTimeout(()=>{
+            scoreCounter.remove();
+        }, 3000);
+
+        document.querySelector("main").appendChild(scoreCounter);
+    }
 }
