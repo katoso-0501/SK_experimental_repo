@@ -82,8 +82,9 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = Math.floor(Math.random()*7);
-            
+            const randomAnimation = 6;
+            // const randomAnimation = Math.floor(Math.random()*7);
+
             switch(randomAnimation) {
                 case 0 :
                     this.jonnyMain.classList.add('animating_shrinkingOut');
@@ -113,7 +114,7 @@
                 case 6 :
                     this.exportBtn.remove();
                     paperIsFun(0,
-                        this.jonnyBody,
+                        this.jonnyMain,
                         this.jonnyBody.getBoundingClientRect().left,
                         this.jonnyBody.getBoundingClientRect().top + window.scrollY - 30,
                         this.jonnyBody.offsetWidth,
@@ -1977,6 +1978,7 @@
         const preferredY = y - (hei / 3);
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
+        // console.log(duplicated);
         duplicated.dataset.charid=null;
         for( const child of duplicated.children){
             if(child.matches('.char__controller')) {
