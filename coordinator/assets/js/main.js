@@ -355,6 +355,17 @@
             this.thumbnailInner.style.backgroundColor = "#000";
             this.thumbnailInner.classList.add('thumbnail__inner');
 
+            this.g = [];
+
+            this.thumbnailInner.addEventListener('contextmenu', e=>{
+                e.preventDefault();
+            if(menu.classList.contains('expanded')){
+                menu.classList.remove("expanded");
+            };
+
+                toggleMenuDialog(0, e.clientX, e.clientY, this.g);
+            });
+
             this.thumbnail.append(this.thumbnailInner);
 
             this.controller = undefined;
@@ -1168,17 +1179,138 @@
             }
         }
 
-        addDeleteTrigger(array) {
+        addDeleteTrigger(mat) {
+            const depthGroup = document.createElement('div');
+            depthGroup.classList.add('depthGroup');
+            
+            
+            const LowestBtn = document.createElement('div');
+            LowestBtn.classList.add('depthBtn');
+            LowestBtn.innerHTML="&laquo;";
+            depthGroup.append(LowestBtn);
+            LowestBtn.addEventListener('click', ()=>{
+                this.swapLayerPos(0, mat.layers);
+                mat.reRender();
+            });
+
+            const lvDn = document.createElement('div');
+            lvDn.classList.add('depthBtn');
+            lvDn.innerHTML="&lt;";
+            depthGroup.append(lvDn);
+            lvDn.addEventListener('click', ()=>{
+                this.swapLayerPos(this.chipID-1, mat.layers);
+                mat.reRender();
+            });
+
+            const lvUp = document.createElement('div');
+            lvUp.classList.add('depthBtn');
+            lvUp.innerHTML="&gt;";
+            depthGroup.append(lvUp);
+            lvUp.addEventListener('click', ()=>{
+                this.swapLayerPos(this.chipID+1, mat.layers);
+                mat.reRender();
+            });
+
+            const HighestBtn = document.createElement('div');
+            HighestBtn.classList.add('depthBtn');
+            HighestBtn.innerHTML="&raquo;";
+            depthGroup.append(HighestBtn);
+            HighestBtn.addEventListener('click', ()=>{
+                this.swapLayerPos(mat.layers.length-1, mat.layers);
+                mat.reRender();
+            });
+
+            this.controllerInner.append(depthGroup);
+            
             const deleteBtn = document.createElement('div');
-            deleteBtn.classList.add('deteleBtn');
+            deleteBtn.classList.add('deleteBtn');
             deleteBtn.textContent="DELETE";
             this.controllerInner.append(deleteBtn);
+
             deleteBtn.addEventListener('click', ()=>{
                 this.deleteColorChip();
-                array.splice(this.chipID, 1);
-                array.forEach(f=>{f.updateThisChipPos(this.chipID, array);});
+                mat.layers.splice(this.chipID, 1);
+                mat.layers.forEach(f=>{f.updateThisChipPos(this.chipID, mat.layers);});
             });
+
+            const a = function () {
+                this.swapLayerPos(this.chipID+1, mat.layers);
+                mat.reRender();
+            }
+
+            const b = function () {
+                this.swapLayerPos(this.chipID-1, mat.layers);
+                mat.reRender();
+            }
+            
+            const c = function () {
+                this.deleteColorChip();
+                mat.layers.splice(this.chipID, 1);
+                mat.layers.forEach(f=>{f.updateThisChipPos(this.chipID, mat.layers);});
+            }
+
+            this.g.push(
+                ["Raise Layer", a.bind(this)],
+                ["Lower Layer", b.bind(this)],
+                ["Delete layer", c.bind(this)],
+            );
         }
+        
+        swapLayerPos (movePosition, array) {
+            if(movePosition<0 || movePosition>array.length-1){
+                return;
+            }
+
+            const prevPos = [];
+            const copier = array[this.chipID];
+            
+            array.forEach((f,index)=>{
+                const x = this.controller.getBoundingClientRect().left + 8 - f.thumbnail.getBoundingClientRect().left;
+                const y = this.controller.getBoundingClientRect().top + 8 - f.thumbnail.getBoundingClientRect().top;
+                prevPos.push([index, x, y]);
+                console.log(`Coordinates x : ${x} y : ${y}`);
+            });
+            const copier2 = prevPos[this.chipID];
+            
+            prevPos.splice(this.chipID, 1);
+            prevPos.splice(movePosition, 1, copier2);
+            array.splice(this.chipID, 1);
+            array.splice(movePosition, 0, copier);
+            
+            array.forEach((f,index)=>{
+                this.controllerMaster.append(f.controller);
+                f.chipID = index;
+            });
+            prevPos.forEach((pos, index) => {
+                array[pos[0]].animateChip(pos[1], pos[2], 0, 0);
+            })
+        }
+
+        animateChip(startX, startY, endX, endY) {
+            // console.log('やぁ、僕は chip' + this.chipID +"!")
+            let current = [startX,startY];
+            let spd = 6;
+            let intvl = setInterval(()=>{
+                current[0] += (endX - current[0]) / spd;
+                current[1] += (endY - current[1]) / spd;
+                
+                // console.log(`Coordinates x : ${current[0]} y : ${current[1]}`);
+
+                this.thumbnail.style.transform = `translate(${current[0]}px, ${current[1]}px)`;
+
+                if(Math.abs(current[0] - endX) < 1) {
+                    current[0] = endX;
+                    current[1] = endY;
+                    clearInterval(intvl);
+                    this.thumbnail.style.transform = `translate(0, 0)`;
+                }
+                
+            }, 16);
+            
+            // this.thumbnail.style.transform = `translate(${startX}px, ${startY}px)`;
+            // this.thumbnail.style.transform = `translate(${endX}px, ${endY}px)`;
+        }
+
 
         deleteColorChip () {
             this.thumbnail.remove();
@@ -1245,11 +1377,7 @@
             
             this.matMain.append(this.mat);
             this.matMain.append(this.controllerMaster);
-            if(!this.decodedPart) {
-                this.addColorLayer();
-            }else{
-                this.reviveBySpell();
-            }
+            
 
             this.simpleColorAddBtn = document.createElement('div');
             this.simpleColorAddBtn.textContent = " Color";
@@ -1273,6 +1401,12 @@
             this.gradientAddBtn.addEventListener('click', ()=>{
                 this.addGradient();
             });
+            
+            if(!this.decodedPart) {
+                this.addColorLayer();
+            }else{
+                this.reviveBySpell();
+            }
 
             this.palette.append(this.simpleColorAddBtn);
             this.palette.append(this.patternAddBtn);
@@ -1284,21 +1418,21 @@
         
         addColorLayer () {
             this.layers.push(new ColorChip(this.decodedPart, "simple", this.mat, this.palette, this.layers.length));
-            this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+            this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
         }
 
         addPattern () {
             this.layers.push(new ColorChip(this.decodedPart, "pattern", this.mat, this.palette, this.layers.length));
-            this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+            this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
         } 
 
         addGradient () {
             this.layers.push(new ColorChip(this.decodedPart, "gradient", this.mat, this.palette, this.layers.length));
-            this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+            this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
         }  
@@ -1314,7 +1448,7 @@
             try {
                 Object.entries(this.decodedPart).forEach(([key, chip]) => {
                     this.layers.push(new ColorChip(chip, chip.colorMode, this.mat, this.palette, this.layers.length));
-                    this.layers[this.layers.length-1].addDeleteTrigger(this.layers);
+                    this.layers[this.layers.length-1].addDeleteTrigger(this);
                     this.layerID++;
                     this.reRender();
                 });
@@ -1330,14 +1464,6 @@
                 this.matSpell[layer.getTipID()] = layer.getTipObj();
             });
             return this.matSpell;
-        }
-
-        swapLayerPos (layerNo, movePosition) {
-            console.log(layerNo);
-            const copier = this.layers[layerNo];
-            this.layers.splice(layerNo, 1);
-            this.layers.splice(movePosition, 0, copier);
-            this.reRender();
         }
     }
 
@@ -1946,9 +2072,13 @@
     document.querySelector('main').addEventListener('contextmenu',f=>{
         f.preventDefault();
         const tgt = f.target;
+        
+        if(tgt.classList.contains('thumbnail__inner')) return;
+        
         if(menu.classList.contains('expanded')){
             menu.classList.remove("expanded");
         };
+
         let l = -1;
         if(tgt.classList.contains("char__body")){
             l = tgt.parentElement.dataset.charid;

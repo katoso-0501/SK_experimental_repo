@@ -237,13 +237,19 @@ Export Button for characters
     padding: 0;
 }
 
-.char__controller .expanded  div.mat_palette {
+.char__controller .expanded div.mat_palette {
     height: auto;
     min-height: 86px;
     transform: scaleY(1); 
     pointer-events: all;
     opacity: 1;
     padding: 8px 80px 8px 8px;
+}
+
+.colorGroup {
+    /* position: absolute; */
+    width: 30px;
+    height: 30px;
 }
 
 .controlGroupInner {
@@ -282,7 +288,13 @@ Export Button for characters
     height: auto;
 }
 
-.controlGroupInner .deteleBtn {
+.controlGroupInner .depthGroup {
+    display: flex;
+    gap: 4px;
+}
+
+.controlGroupInner .depthGroup .depthBtn,
+.controlGroupInner .deleteBtn {
     display: block;
     background-color: #DE5001;
     color: #FFFFFF;
@@ -295,6 +307,10 @@ Export Button for characters
     margin-top: 8px;
     cursor: pointer;
     user-select: none;
+}
+
+.controlGroupInner .depthGroup .depthBtn {
+    width: 16px;
 }
 
 .char__controller .char__colorTips {
