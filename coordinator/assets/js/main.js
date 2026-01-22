@@ -359,10 +359,9 @@
 
             this.thumbnailInner.addEventListener('contextmenu', e=>{
                 e.preventDefault();
-            if(menu.classList.contains('expanded')){
-                menu.classList.remove("expanded");
-            };
-
+                if(menu.classList.contains('expanded')){
+                    menu.classList.remove("expanded");
+                };
                 toggleMenuDialog(0, e.clientX, e.clientY, this.g);
             });
 
@@ -420,6 +419,9 @@
             const controllerLabel = document.createElement('span');
 
             this.thumbnail.addEventListener('click', ()=>{
+                if(!controlGroupInner.classList.contains("expanded")){
+                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                }
                 controlGroupInner.classList.toggle('expanded');
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
@@ -573,6 +575,9 @@
             controllerPanel.append(this.thumbnail);
 
             this.thumbnail.addEventListener('click', ()=>{
+                if(!controlGroupInner.classList.contains("expanded")){
+                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                }
                 controlGroupInner.classList.toggle('expanded');
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
@@ -772,9 +777,10 @@
             ];
             
             this.thumbnail.addEventListener('click', ()=>{
+                if(!controlGroupInner.classList.contains("expanded")){
+                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                }
                 controlGroupInner.classList.toggle('expanded');
-                specimensPos[0] = gradientSpecimen.getBoundingClientRect().left;
-                specimensPos[1] = gradientSpecimen.getBoundingClientRect().right;
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
             
@@ -821,6 +827,9 @@
             let movingPin;
 
             gradientSpecimen.addEventListener('mousedown', f=>{
+                specimensPos[0] = gradientSpecimen.getBoundingClientRect().left;
+                specimensPos[1] = gradientSpecimen.getBoundingClientRect().right;
+
                 if(f.target.classList.contains("gradientPin")) {
                     movingPin = f.target;
                     selectedStop = f.target.dataset.index;
@@ -843,6 +852,8 @@
             });
             
             gradientSpecimen.addEventListener('touchstart', f=>{
+                specimensPos[0] = gradientSpecimen.getBoundingClientRect().left;
+                specimensPos[1] = gradientSpecimen.getBoundingClientRect().right;
                 if(f.target.classList.contains("gradientPin")) {
                     movingPin = f.target;
                     selectedStop = f.target.dataset.index;
@@ -1148,6 +1159,7 @@
             this.controllerMaster.append(controlGroup);
 
             this.adjustControllerPos(this.controllerMaster, this.thumbnail);
+            this.adjustControllerPos(controlGroupInner, controlGroup);
             
             try {
                 if(this.decodedChip) {
@@ -1261,41 +1273,48 @@
                 return;
             }
 
+            const bases = [this.controllerMaster.getBoundingClientRect().left + 8,this.controllerMaster.getBoundingClientRect().top + 8];
             const prevPos = [];
             const copier = array[this.chipID];
             
             array.forEach((f,index)=>{
-                const x = this.controller.getBoundingClientRect().left + 8 - f.thumbnail.getBoundingClientRect().left;
-                const y = this.controller.getBoundingClientRect().top + 8 - f.thumbnail.getBoundingClientRect().top;
-                prevPos.push([index, x, y]);
-                console.log(`Coordinates x : ${x} y : ${y}`);
+                const x = index === 0 ? 0 : bases[0] - f.controller.getBoundingClientRect().left;
+                const y = index === 0 ? 0 : bases[1] - f.controller.getBoundingClientRect().top;
+                prevPos.push([f.getTipID(), x, y, f.getTipObj().colorMode]);
             });
-            const copier2 = prevPos[this.chipID];
             
+            const copier2 = prevPos[this.chipID];
             prevPos.splice(this.chipID, 1);
-            prevPos.splice(movePosition, 1, copier2);
+            prevPos.splice(movePosition, 0, copier2);
+
             array.splice(this.chipID, 1);
             array.splice(movePosition, 0, copier);
-            
-            array.forEach((f,index)=>{
+
+            array.forEach((f,index)=>{                
                 this.controllerMaster.append(f.controller);
                 f.chipID = index;
+                f.controllerInner.classList.add('onRightSide');
             });
-            prevPos.forEach((pos, index) => {
-                array[pos[0]].animateChip(pos[1], pos[2], 0, 0);
-            })
+
+            this.adjustControllerPos(this.controllerInner , this.thumbnail);
+            
+            array.forEach((f,index)=>{
+                f.animateChip(
+                    ((bases[0] - f.controller.getBoundingClientRect().left) - prevPos[index][1]),
+                    ((bases[1] - f.controller.getBoundingClientRect().top) - prevPos[index][2]),
+                    0,
+                    0
+                );
+            });
         }
 
         animateChip(startX, startY, endX, endY) {
-            // console.log('やぁ、僕は chip' + this.chipID +"!")
             let current = [startX,startY];
             let spd = 6;
             let intvl = setInterval(()=>{
                 current[0] += (endX - current[0]) / spd;
                 current[1] += (endY - current[1]) / spd;
                 
-                // console.log(`Coordinates x : ${current[0]} y : ${current[1]}`);
-
                 this.thumbnail.style.transform = `translate(${current[0]}px, ${current[1]}px)`;
 
                 if(Math.abs(current[0] - endX) < 1) {
@@ -1304,13 +1323,8 @@
                     clearInterval(intvl);
                     this.thumbnail.style.transform = `translate(0, 0)`;
                 }
-                
             }, 16);
-            
-            // this.thumbnail.style.transform = `translate(${startX}px, ${startY}px)`;
-            // this.thumbnail.style.transform = `translate(${endX}px, ${endY}px)`;
         }
-
 
         deleteColorChip () {
             this.thumbnail.remove();
@@ -1323,7 +1337,7 @@
                 const left = thumbnail.getBoundingClientRect().left;
                 const screenHeight = window.innerHeight;
                 const leftTurningPoint = (document.querySelector('header').offsetWidth - 280);
-                console.log(left + " / " + leftTurningPoint);
+                // console.log(left + " / " + leftTurningPoint);
 
                 if(top > (screenHeight - 350)){
                     dialog.classList.add('onBottom');
@@ -1417,21 +1431,21 @@
         }
         
         addColorLayer () {
-            this.layers.push(new ColorChip(this.decodedPart, "simple", this.mat, this.palette, this.layers.length));
+            this.layers.push(new ColorChip(this.decodedPart, "simple", this, this.palette, this.layers.length));
             this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
         }
 
         addPattern () {
-            this.layers.push(new ColorChip(this.decodedPart, "pattern", this.mat, this.palette, this.layers.length));
+            this.layers.push(new ColorChip(this.decodedPart, "pattern", this, this.palette, this.layers.length));
             this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
         } 
 
         addGradient () {
-            this.layers.push(new ColorChip(this.decodedPart, "gradient", this.mat, this.palette, this.layers.length));
+            this.layers.push(new ColorChip(this.decodedPart, "gradient", this, this.palette, this.layers.length));
             this.layers[this.layers.length-1].addDeleteTrigger(this);
             this.layerID++;
             this.reRender();
@@ -1668,8 +1682,7 @@
         document.querySelectorAll('.colorBall').forEach(f=>f.remove());
         colorballStats = [];
     }
-
-
+    
     /* HeartRipples-Related */
     let heartPopStats = [];
     function initiateHeartPop () {
@@ -2088,15 +2101,15 @@
             toggleMenuDialog(charHandler, f.clientX, f.clientY, characters[charHandler].contextMenuMaker());
         }else {
             if(tgt.classList.contains("character_adder__eddA")){
-                const g = [
+                const addEddOptions = [
                     ["Add Edd with Dollar", function () {characters.push(new EddA(0))}],
                     ["Add Edd with Yen", function () {characters.push(new EddA(1))}],
                     ["Add Edd with Euro", function () {characters.push(new EddA(2))}],
                     ["Add Edd with Rupee", function () {characters.push(new EddA(3))}],
-                    ["Add Edd with Wong", function () {characters.push(new EddA(4))}],
+                    ["Add Edd with Won", function () {characters.push(new EddA(4))}],
                     ["Add Edd with GBP", function () {characters.push(new EddA(5))}],
                 ];
-                toggleMenuDialog(0, f.clientX, f.clientY, g);
+                toggleMenuDialog(0, f.clientX, f.clientY, addEddOptions);
             }else{
                 const g = function () {
                     toggleTheatreMode();
@@ -2110,7 +2123,7 @@
         const preferredY = y;
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
-        duplicated.dataset.charid=null;
+        duplicated.dataset.charid = null;
         for( const child of duplicated.children){
             if(child.matches('.char__controller')) {
                 child.remove();

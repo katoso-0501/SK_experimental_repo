@@ -271,9 +271,9 @@ Export Button for characters
 }
 
 .controlGroupInner.onBottom {
-    top:initial;
+    top: initial;
     transform-origin: center bottom;
-    bottom: 90px;
+    bottom: 30px;
 }
 
 .controlGroupInner.onRightSide {
