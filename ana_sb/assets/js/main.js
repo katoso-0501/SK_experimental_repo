@@ -130,7 +130,7 @@ function callback (entries) {
     });
 }
 const observerOptions = {
-    threshold: 0.5
+    threshold: 0.25
 }
 const io = new IntersectionObserver(callback, observerOptions);
 
