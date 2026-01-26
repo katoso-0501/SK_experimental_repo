@@ -82,8 +82,7 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = Math.floor(Math.random()*7);
-
+            const randomAnimation = Math.floor(Math.random()*8);
             switch(randomAnimation) {
                 case 0 :
                     this.jonnyMain.classList.add('animating_shrinkingOut');
@@ -120,6 +119,9 @@
                         this.jonnyBody.offsetHeight
                     );
                     this.jonnyBody.style.opacity = 0;
+                    break;
+                case 7 :
+                    checkers(this.jonnyMain, 7);
                     break;
             }
             
@@ -2215,5 +2217,67 @@
         }, 3000);
 
         document.querySelector("main").appendChild(scoreCounter);
+    }
+
+    /* Checkers */
+    function checkers (target, tileRows) {
+        if(tileRows<2) {
+            console.log("tileRows must be greater than 2");
+            return;
+        }
+        const display = target;
+        // const display = document.querySelector(target);
+        let checkerRem = tileRows * tileRows;
+        const checkerState = [];
+
+        for (let i = 0; i < tileRows; i++){
+            checkerState.push(Array.from({length: tileRows}, () => 1));
+        }
+
+        let bgPosSettings = "";
+        for(let i = 0; i < tileRows; i++) {
+            for(let j = 0; j < tileRows; j++) {
+                bgPosSettings += `${(100 / tileRows) * j}% ${(100 / tileRows) * i}%, `;
+            }
+        }
+        bgPosSettings = bgPosSettings.slice(0, -2);
+
+        let intv = setInterval (()=>{
+            let isCheckRemoved = 0;
+            do {
+                const random = [Math.floor(Math.random()*tileRows), Math.floor(Math.random()*tileRows)];
+                if(checkerState[random[0]][random[1]] == 1) {
+                    checkerState[random[0]][random[1]] = 0;
+                    checkerRem --;
+                    isCheckRemoved = 1;
+                }
+            }while(isCheckRemoved===0);
+    
+            let bgSettings = "";
+            const chipSize = [
+                display.getBoundingClientRect().width / tileRows,
+                display.getBoundingClientRect().height / tileRows
+            ];
+            
+            for(let i = 0; i < tileRows; i++) {
+                for(let j = 0; j < tileRows; j++) {
+                    bgSettings += "linear-gradient(0deg, ";
+                    let lastPrefix = "),";
+                    bgSettings += checkerState[i][j] == 1 ? "rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%" + lastPrefix : "rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%" + lastPrefix;
+                }
+            }
+
+            bgSettings = bgSettings.slice(0, -1);
+
+            display.style.maskImage = bgSettings;
+            display.style.maskSize = `${chipSize[0]}px ${chipSize[1]}px`;
+            display.style.maskRepeat = "no-repeat";
+            display.style.maskPosition = bgPosSettings;
+
+    
+            if(checkerRem <= 0) {
+                clearInterval(intv);
+            }
+        }, 17);
     }
 }
