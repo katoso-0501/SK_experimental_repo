@@ -1,0 +1,17 @@
+name: Slow Starter
+
+on:
+  workflow_dispatch:
+    inputs:
+      msg:
+        type: string
+        required: false
+        description: "any message"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Hello from Actions!"
+          echo "msg='${{ inputs.msg }}'"
