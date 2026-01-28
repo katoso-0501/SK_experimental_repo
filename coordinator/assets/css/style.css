@@ -1173,3 +1173,63 @@ _/_/_/_/_/_/_/_/_/*/
     text-shadow: 0 0 4px #07bbc1;
     pointer-events: none;
 }
+
+/* Effects in slasher animation */
+.blackBG {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.98);
+    left: 0;
+    top: 0;
+    z-index: 190;
+    transition: opacity 0.4s;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.slashEffect {
+    position: absolute;
+    width: 820px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    transform: rotate(-17deg);
+    z-index: 191;
+    transform-origin: left top;
+    animation: slashAnimation 0.12s 1 linear forwards;
+}
+
+@keyframes slashAnimation 
+{
+    0% {
+        transform: rotate(-17deg) translate(150%, 199%);
+    }
+    100% {
+        transform: rotate(-17deg) translate(-110%, 201%);
+    }
+}
+
+.turningBlack {
+    transition: filter 1s;
+    /* filter: brightness(0); */
+}
+.turningBlack.active {
+    filter: brightness(0);
+}
+
+.slashedPartA {
+    mask-image: linear-gradient(177deg, rgba(0,0,0,1) 49.9%, rgba(0,0,0,0) 50.1%);
+    mask-position: left top;
+    mask-size: 100% 100%;
+    transition: transform 1.5s ease-out, opacity 0.4s;
+    pointer-events: none;
+}
+
+.slashedPartB {
+    mask-image: linear-gradient(357deg, rgba(0,0,0,1) 49.9%, rgba(0,0,0,0) 50.1%);
+    mask-position: left top;
+    mask-size: 100% 100%;
+    transition: transform 1.5s ease-out, opacity 0.4s;
+    pointer-events: none;
+}

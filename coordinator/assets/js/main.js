@@ -82,7 +82,7 @@
         }
 
         deleteCharacter () {
-            const randomAnimation = Math.floor(Math.random()*8);
+            const randomAnimation = Math.floor(Math.random()*9);
             switch(randomAnimation) {
                 case 0 :
                     this.jonnyMain.classList.add('animating_shrinkingOut');
@@ -123,6 +123,17 @@
                 case 7 :
                     this.exportBtn.remove();
                     checkers(this.jonnyMain, 7);
+                    break;
+                case 8 :
+                    this.exportBtn.remove();
+                    paperIsFun(1,
+                        this.jonnyMain,
+                        this.jonnyBody.getBoundingClientRect().left,
+                        this.jonnyBody.getBoundingClientRect().top + window.scrollY - document.querySelector('header').getBoundingClientRect().height - 30,
+                        this.jonnyBody.offsetWidth,
+                        this.jonnyBody.offsetHeight
+                    );
+                    this.jonnyBody.style.opacity = 0;
                     break;
             }
             
@@ -2178,6 +2189,7 @@
                         score ++;
                     });
                 },25);
+
                 setTimeout(()=>{
                     duplicated.style.left = "0px";
                     duplicated.style.top = "0px";
@@ -2206,7 +2218,64 @@
                 
                 document.querySelector('main').appendChild(paper);
             break;
+
+            case 1:
+                slasher(duplicated);
+            break;
         }
+    }
+
+    /* Slasher */
+    function slasher (duplicated) {
+        const cloneA = duplicated;
+        const cloneB = cloneA.cloneNode(true);
+        cloneA.style.transition = "0.4s";
+        cloneB.style.transition = "0.4s";
+        const blackBG = document.createElement("div");
+        blackBG.classList.add("blackBG");
+
+        cloneA.classList.add("turningBlack");
+        cloneA.classList.add("slashedPartA");
+
+        cloneB.classList.add("turningBlack");
+        cloneB.classList.add("slashedPartB");
+
+        const slashEffect = document.createElement('div');
+        slashEffect.classList.add("slashEffect");
+        slashEffect.style.left = "0";
+
+        const slashPos = duplicated.getBoundingClientRect().top * 2 + (duplicated.getBoundingClientRect().height * 0.76 );
+        console.log(duplicated.getBoundingClientRect().top);
+        slashEffect.style.top = `${slashPos}px`;
+
+        document.querySelector("main").appendChild(blackBG);
+        blackBG.appendChild(slashEffect);
+
+        document.querySelector("main").appendChild(cloneA);
+        document.querySelector("main").appendChild(cloneB);
+
+        setTimeout(()=>{
+            blackBG.style.opacity="0";
+            cloneA.classList.add("active");
+            cloneB.classList.add("active");
+        }, 100);
+
+        setTimeout(()=>{
+            blackBG.remove();
+        }, 600);
+
+        setTimeout(()=>{
+            cloneA.style.transform = "translate(-240px, 15px)";
+            cloneB.style.transform = "translate(240px, -15px)";
+        }, 600);
+        setTimeout(()=>{
+            cloneA.style.opacity = "0";
+            cloneB.style.opacity = "0";
+        }, 1200);
+        setTimeout(()=>{
+            cloneA.remove();
+            cloneB.remove();
+        }, 1600);
     }
 
     function showScore (scr) {

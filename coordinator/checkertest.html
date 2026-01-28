@@ -88,6 +88,14 @@
     <span class="canceller bigBtn">Cancel test</span>
 
 <script>
+    // Keep the screen on during the test
+    // try {
+    //     const wakeLock = await navigator.wakeLock.request("screen");
+    // } catch (err) {
+    //     // Wake lock request failed - usually due to low battery or system constraints
+    //     console.log(`${err.name}, ${err.message}`);
+    // }
+
     let cancelFlag;
     let intv;
     function checkers (target, tileRows) {
@@ -174,14 +182,6 @@
         document.querySelector('.message').textContent = "Checkers have been aborted.";
         clearInterval(intv);
     });
-
-    // Keep the screen on during the testtry {
-    // try {
-    //     const wakeLock = await navigator.wakeLock.request("screen");
-    // } catch (err) {
-    //     // Wake lock request failed - usually due to low battery or system constraints
-    //     console.log(`${err.name}, ${err.message}`);
-    // }
 </script>
 </body>
 </html>
