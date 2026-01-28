@@ -176,12 +176,12 @@
     });
 
     // Keep the screen on during the testtry {
-    try {
-        const wakeLock = await navigator.wakeLock.request("screen");
-    } catch (err) {
-        // Wake lock request failed - usually due to low battery or system constraints
-        console.log(`${err.name}, ${err.message}`);
-    }
+    // try {
+    //     const wakeLock = await navigator.wakeLock.request("screen");
+    // } catch (err) {
+    //     // Wake lock request failed - usually due to low battery or system constraints
+    //     console.log(`${err.name}, ${err.message}`);
+    // }
 </script>
 </body>
 </html>
