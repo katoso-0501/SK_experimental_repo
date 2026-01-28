@@ -1559,11 +1559,13 @@
         '.background_03',
         '.background_04',
         '.background_05',
+        '.background_06',
     ]
 
     document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
         radio.addEventListener('click', (item)=>{
             document.querySelector('.theatre_background_setter').classList.remove('expanded');
+            document.querySelector('main').classList.remove('reminiscence');
             wipeAllSnowdrops ();
             wipeAllColorballs ();
             wipeAllHeartPop ();
@@ -1598,6 +1600,10 @@
         setTimeout(()=>{
         initiateFlames();
         }, 100);
+    });
+
+    document.getElementById('theatre_background_reminiscence').addEventListener('click',function(){
+        document.querySelector('main').classList.add('reminiscence');
     });
 
     /* Snowdrop-Related */

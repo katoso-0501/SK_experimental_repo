@@ -654,7 +654,8 @@ _/_/_/_/_/_/_/_/_/*/
 .background_02,
 .background_03,
 .background_04,
-.background_05 {
+.background_05,
+.background_06 {
     opacity: 0;
     position: fixed;
     left: 0;
@@ -684,6 +685,10 @@ _/_/_/_/_/_/_/_/_/*/
 
 .background_05 {
     background: linear-gradient(0deg, #530909 0%, #330202 100%);
+}
+
+.background_06 {
+    background: repeating-linear-gradient(20deg, #530909 0%, #955901 20px);
 }
 
 .theatreMode .jonnyA.filterHardlight,
@@ -726,7 +731,8 @@ _/_/_/_/_/_/_/_/_/*/
 .theatreMode .background_02.expanded,
 .theatreMode .background_03.expanded,
 .theatreMode .background_04.expanded,
-.theatreMode .background_05.expanded {
+.theatreMode .background_05.expanded, 
+.theatreMode .background_06.expanded {
     opacity: 1;
 }
 
@@ -855,7 +861,6 @@ _/_/_/_/_/_/_/_/_/*/
     }
 }
 
-
 .flameParticle__phase03 {
     position: absolute;
     margin: auto;
@@ -891,6 +896,31 @@ _/_/_/_/_/_/_/_/_/*/
         width: 110px;
     }
 }
+
+/* BG 06 - Reminscence */
+main {
+    transition: transform 0.4s, border 0.4s;
+}
+
+.theatreMode main.reminiscence {
+    background-color: #FFFFFF;
+    transform: skewX(-7deg) scale(0.8);
+    border: 40px solid #ebebeb;
+    height: 40vh;
+    overflow-y: scroll;
+
+    @media (width <= 768px)
+    {
+    transform: skewX(-3deg) scale(0.8);
+    border: 20px solid #ebebeb;
+        height: 32vh;
+    }
+}
+
+main.reminiscence .character_adder {
+    display: none;
+}
+
 /* Some properties are not shown in Theatre Mode */
 @media print {
     .char__controller,
@@ -1212,8 +1242,8 @@ _/_/_/_/_/_/_/_/_/*/
 
 .turningBlack {
     transition: filter 1s;
-    /* filter: brightness(0); */
 }
+
 .turningBlack.active {
     filter: brightness(0);
 }
