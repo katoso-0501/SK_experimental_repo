@@ -121,6 +121,7 @@
                     this.jonnyBody.style.opacity = 0;
                     break;
                 case 7 :
+                    this.exportBtn.remove();
                     checkers(this.jonnyMain, 7);
                     break;
             }
@@ -747,7 +748,8 @@
             this.tipSpell["scale"] = controlParts[0][1].value;
             this.tipSpell["opacity"] = controlParts[1][1].value / 100;
             this.tipSpell["rotation"] = controlParts[3][1].value;
-            this.tipSpell["mixblendmode"] = "normal";
+            console.log(controlParts[2][1].value);
+            this.tipSpell["mixblendmode"] = controlParts[2][1].value;
 
             this.controllerMaster.append(controlGroup);
             
@@ -2276,6 +2278,7 @@
 
     
             if(checkerRem <= 0) {
+                console.log('Interval has been stopped...');
                 clearInterval(intv);
             }
         }, 17);

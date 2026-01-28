@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checker Test</title>
+    <style>
+        body,a,span,div,img {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .checker {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 720px;
+            background: linear-gradient(34deg, #a0dd99 0%, #0b577f 100%);
+        }
+        .checker img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.0rem;
+        }
+        
+        .bigBtn {
+            width: 90%;
+            margin: 16px auto;
+            display: block;
+            text-align: center;
+            background-color: #FF8020;
+            color: #FFFFFF;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            transition: 0.4s;
+        }
+
+        .tileButtonCollection {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tileButtonCollection span {
+            flex: 1;
+            display: block;
+            text-align: center;
+            background-color: #FF8020;
+            color: #FFFFFF;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px 0;
+            transition: 0.4s;
+        }
+
+        .bigBtn:hover,
+        .tileButtonCollection span:hover {
+            background-color: #FFaa40;
+        }
+        .bigBtn:active,
+        .tileButtonCollection span:active {
+            transform: scale(0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checker" >
+        <img src="./assets/images/eddyA_original.webp" alt>
+    </div>
+
+    <div class="message"></div>
+    <span class="letscheck bigBtn">Let's check!</span>
+    <div class="tileButtonCollection">
+        <span class="check_16">16</span>
+        <span class="check_32">32</span>
+        <span class="check_64">64</span>
+        <span class="check_128">128</span>
+    </div>
+
+    <span class="canceller bigBtn">Cancel test</span>
+
+<script>
+    let cancelFlag;
+    let intv;
+    function checkers (target, tileRows) {
+        const startTimer = performance.now();
+        if(tileRows<2) {
+            console.log("tileRows must be greater than 2");
+            return;
+        }
+        const display = document.querySelector(target);
+        let checkerRem = tileRows * tileRows;
+        const checkerState = [];
+
+        for (let i = 0; i < tileRows; i++){
+            checkerState.push(Array.from({length: tileRows}, () => 1));
+        }
+
+        let bgPosSettings = "";
+        for(let i = 0; i < tileRows; i++) {
+            for(let j = 0; j < tileRows; j++) {
+                bgPosSettings += `${(100 / tileRows) * j}% ${(100 / tileRows) * i}%, `;
+            }
+        }
+        bgPosSettings = bgPosSettings.slice(0, -2);
+
+         intv = setInterval (()=>{
+            let isCheckRemoved = 0;
+            do {
+                const random = [Math.floor(Math.random()*tileRows), Math.floor(Math.random()*tileRows)];
+                if(checkerState[random[0]][random[1]] == 1) {
+                    checkerState[random[0]][random[1]] = 0;
+                    checkerRem --;
+                    isCheckRemoved = 1;
+                }
+            }while(isCheckRemoved===0);
+    
+            let bgSettings = "";
+            const chipSize = [display.getBoundingClientRect().width / tileRows, display.getBoundingClientRect().height / tileRows];
+            
+            for(let i = 0; i < tileRows; i++) {
+                for(let j = 0; j < tileRows; j++) {
+                    bgSettings += "linear-gradient(0deg, ";
+                    let lastPrefix = "),";
+                    bgSettings += checkerState[i][j] == 1 ? "rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%" + lastPrefix : "rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%" + lastPrefix;
+                }
+            }
+
+            bgSettings = bgSettings.slice(0, -1);
+
+            display.style.maskImage = bgSettings;
+            display.style.maskSize = `${chipSize[0]}px ${chipSize[1]}px`;
+            display.style.maskRepeat = "no-repeat";
+            display.style.maskPosition = bgPosSettings;
+            
+            if(checkerRem <= 0) {
+                const endTime = performance.now();
+                document.querySelector('.message').textContent=("Your PC/Smartphone took " + ((endTime - startTimer) / 1000).toFixed(2) + " seconds to complete the test.");
+                clearInterval(intv);
+            }
+        }, 17);
+    }
+
+    document.querySelector('.letscheck').addEventListener('click', ()=>{
+        clearInterval(intv);
+        checkers('.checker',8);
+    });
+    document.querySelector('.check_16').addEventListener('click', ()=>{
+        clearInterval(intv);
+        checkers('.checker',16);
+    });
+    document.querySelector('.check_32').addEventListener('click', ()=>{
+        clearInterval(intv);
+        checkers('.checker',32);
+    });
+    document.querySelector('.check_64').addEventListener('click', ()=>{
+        clearInterval(intv);
+        checkers('.checker',64);
+    });
+    document.querySelector('.check_128').addEventListener('click', ()=>{
+        clearInterval(intv);
+        checkers('.checker',128);
+    });
+
+    document.querySelector('.canceller').addEventListener('click', ()=>{
+        document.querySelector('.message').textContent = "Checkers have been aborted.";
+        clearInterval(intv);
+    });
+
+    // Keep the screen on during the testtry {
+    try {
+        const wakeLock = await navigator.wakeLock.request("screen");
+    } catch (err) {
+        // Wake lock request failed - usually due to low battery or system constraints
+        console.log(`${err.name}, ${err.message}`);
+    }
+</script>
+</body>
+</html>
