@@ -1571,6 +1571,7 @@
             wipeAllColorballs ();
             wipeAllHeartPop ();
             wipeAllFlames ();
+            wipeAllReminiscence ();
             backgroundParts.forEach(bgs=>{
                 document.querySelector(bgs).classList.remove('expanded');
             });
@@ -1605,6 +1606,9 @@
 
     document.getElementById('theatre_background_reminiscence').addEventListener('click',function(){
         document.querySelector('main').classList.add('reminiscence');
+        setTimeout(()=>{
+            initiateReminiscence();
+        }, 100);
     });
 
     /* Snowdrop-Related */
@@ -1879,6 +1883,38 @@
         document.querySelectorAll(charClasses).forEach(chars=>{chars.classList.remove('filterOverlay')});
         document.querySelectorAll('.flameParticle').forEach(f=>f.remove());
         flameParticleStats = [];
+    }
+
+    /* Reminiscence */
+    function initiateReminiscence () {
+        for(let i = 0; i < 5; i++)
+        {
+            const initTranslate = [];
+            initTranslate.push(Math.random()*2 <= 1 ? 2000 : -2000);
+            initTranslate.push(Math.random()*2 <= 1 ? 2000 : -2000);
+            const skewDeg = window.innerWidth <= 768 ? "-4deg" : "-8deg";
+            const randomRotation = Math.random()*360 + "deg";
+            const photoFrame = document.createElement('div');
+            photoFrame.classList.add('photoFrame');
+            photoFrame.style.left = (Math.random() * (window.innerWidth) ) + "px";
+            photoFrame.style.top =  (Math.random() * (window.innerHeight) ) + "px";
+            photoFrame.style.transform = "skewX(" + skewDeg + ") rotate(" + randomRotation + ") translate("+  initTranslate[0] +"px, "+ initTranslate[1] +"px)";
+            
+            setTimeout (()=>{
+                if(characters.length > 0) {
+                    const humble = Math.floor(Math.random() * characters.length);
+                    const duplicated = characters[humble].jonnyBody.cloneNode(true);
+                    photoFrame.appendChild(duplicated);
+                }
+                photoFrame.style.transition = "transform 1.4s";
+                photoFrame.style.transform = "skewX(" + skewDeg + ") rotate(" + randomRotation + ") translate(0, 0)";
+            }, 50);
+            document.querySelector('.background_06').appendChild(photoFrame);
+        }
+    }
+    
+    function wipeAllReminiscence () {
+        document.querySelectorAll('.photoFrame').forEach(f=>f.remove());
     }
 
     /* ************************
@@ -2157,6 +2193,7 @@
         }
     });
 
+    /* Paper is Fun */
     function paperIsFun (animationNo,character,x,y,wid,hei) {
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
@@ -2301,6 +2338,7 @@
         }, 1600);
     }
 
+    /* Show score */
     function showScore (scr) {
         const scoreCounter = document.createElement("span");
         scoreCounter.textContent = scr > 1 ? `${scr} pts.` : `${scr} pt.`;

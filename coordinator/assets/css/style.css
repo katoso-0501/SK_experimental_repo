@@ -893,20 +893,23 @@ _/_/_/_/_/_/_/_/_/*/
     }
 }
 
-/* BG 06 - Reminiscence */
+/* -------------------
+BG 06 - Reminiscence
+--------------------- */
 
 .background_06 {
     background: repeating-linear-gradient(3deg, #533e09 0%,#955901 10px, #955901 50px,#533e09 66px);
 }
+
 main {
     transition: transform 0.4s, border 0.4s;
 }
 
 .theatreMode main.reminiscence {
     background-color: #FFFFFF;
-    transform: skewX(-7deg) scale(0.7) translateY(5%);
+    transform: skewX(-7deg) scale(0.7) translateY(1%);
     border: 60px solid #ebebeb;
-    height: 80vh;
+    height: 88vh;
     min-height: 0;
     overflow-y: scroll;
     box-shadow: 2px 2px 55px rgba(0,0,0,0.4);
@@ -920,6 +923,19 @@ main {
 
 .theatreMode main.reminiscence .character_adder {
     display: none;
+}
+
+.photoFrame {
+    position:absolute;
+    border: 40px solid #F0F0F0;
+    width: 640px;
+    height: 480px;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+.photoFrame .char__body {
+    transform: scale(0.5) translateY(-50%);
 }
 
 /* Some properties are not shown in Theatre Mode */
@@ -1096,12 +1112,10 @@ Disappearing Animations
     font-weight: 600;
     text-shadow: 2px 2px 3px #a0a0a0;
     color: #FFFFFF;
-    /* width: 80%; */
     min-width: 200px;
     height: 200px;
     bottom: -200px;
     left: 0;
-    /* transform: translateX(-50%); */
     background: linear-gradient(35deg, #2f0fff 0%, #12d3f1 100%);
     border-radius: 2px;
     animation: anvilLifeSpan 1s ease-in-out 1 forwards;
