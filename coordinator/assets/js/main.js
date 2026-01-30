@@ -1887,9 +1887,16 @@
 
     /* Reminiscence */
     function initiateReminiscence () {
-        for(let i = 0; i < 5; i++)
-        {
-            const initTranslate = [];
+        document.querySelector('.addPhotoFrameBtn').classList.add('expanded');
+        for(let i = 0; i < 5; i++) {
+            addPhotoFrame();
+        }
+    }
+
+    document.querySelector('.addPhotoFrameBtn').addEventListener('click', addPhotoFrame);
+
+    function addPhotoFrame () {
+        const initTranslate = [];
             initTranslate.push(Math.random()*2 <= 1 ? 2000 : -2000);
             initTranslate.push(Math.random()*2 <= 1 ? 2000 : -2000);
             const skewDeg = window.innerWidth <= 768 ? "-4deg" : "-8deg";
@@ -1899,21 +1906,28 @@
             photoFrame.style.left = (Math.random() * (window.innerWidth) ) + "px";
             photoFrame.style.top =  (Math.random() * (window.innerHeight) ) + "px";
             photoFrame.style.transform = "skewX(" + skewDeg + ") rotate(" + randomRotation + ") translate("+  initTranslate[0] +"px, "+ initTranslate[1] +"px)";
+            photoFrame.style.background = "linear-gradient(308deg, rgb(" + Math.random()*255 + " " + Math.random()*255 + " " + Math.random()*255 + ") 0%, rgb(" + Math.random()*255 + " " + Math.random()*255 + " " + Math.random()*255 + ") 100%)";
             
             setTimeout (()=>{
                 if(characters.length > 0) {
                     const humble = Math.floor(Math.random() * characters.length);
-                    const duplicated = characters[humble].jonnyBody.cloneNode(true);
+                    const duplicated = characters[humble].jonnyMain.cloneNode(true);
+                    for(let l = 0; l < duplicated.children.length; l++) {
+                        if(!duplicated.children[l].matches(".char__body")) {
+                            duplicated.children[l].remove();
+                        }
+                    }
+                    duplicated.dataset.charid=null;
                     photoFrame.appendChild(duplicated);
                 }
                 photoFrame.style.transition = "transform 1.4s";
                 photoFrame.style.transform = "skewX(" + skewDeg + ") rotate(" + randomRotation + ") translate(0, 0)";
             }, 50);
             document.querySelector('.background_06').appendChild(photoFrame);
-        }
     }
     
     function wipeAllReminiscence () {
+        document.querySelector('.addPhotoFrameBtn').classList.remove('expanded');
         document.querySelectorAll('.photoFrame').forEach(f=>f.remove());
     }
 

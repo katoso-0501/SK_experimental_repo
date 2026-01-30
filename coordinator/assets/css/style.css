@@ -906,7 +906,7 @@ main {
 }
 
 .theatreMode main.reminiscence {
-    background-color: #FFFFFF;
+    background: linear-gradient(79deg, #EFF9FF 0%, #A9D9FF 100%);
     transform: skewX(-7deg) scale(0.7) translateY(1%);
     border: 60px solid #ebebeb;
     height: 88vh;
@@ -925,6 +925,28 @@ main {
     display: none;
 }
 
+.addPhotoFrameBtn {
+    position: fixed;
+    bottom: -40px;
+    right: 10px;
+    width: 120px;
+    text-align: center;
+    font-size: 14px;
+    height: 0;
+    line-height: 0;
+    padding: 16px 0;
+    border-radius: 8px;
+    background-color: #2f0fff;
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.4s;
+}
+
+.theatreMode .addPhotoFrameBtn.expanded {
+    bottom: 10px;
+}
+
 .photoFrame {
     position:absolute;
     border: 40px solid #F0F0F0;
@@ -932,10 +954,23 @@ main {
     height: 480px;
     overflow: hidden;
     background: #FFFFFF;
+    z-index: 2;
+    
+    @media (width <= 768px) {
+        width: 320px;
+        height: 240px;
+        border: 20px solid #F0F0F0;
+    }
 }
 
-.photoFrame .char__body {
-    transform: scale(0.5) translateY(-50%);
+.photoFrame .char__main {
+    width: 100%;
+    transform-origin: center bottom;
+    transform: scale(0.56) translateY(-50%);
+}
+
+.photoFrame .char__main .exportBtn {
+    display: none;
 }
 
 /* Some properties are not shown in Theatre Mode */
