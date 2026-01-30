@@ -126,6 +126,7 @@
                     break;
                 case 8 :
                     this.exportBtn.remove();
+                    this.controllerMaster.remove();
                     paperIsFun(1,
                         this.jonnyMain,
                         this.jonnyBody.getBoundingClientRect().left,
@@ -1887,6 +1888,22 @@
         b.preventDefault();
         openSpellImportation();
     });
+    document.getElementById('resurrectionSpell_moreOption').addEventListener('click', b=>{
+        b.preventDefault();
+        const a = function () {
+            let flag = 0;
+            const temporarySpell = document.getElementById('resurrectionSpell_input').value;
+            flag = reviveBySpell();
+
+            if(flag) {
+                for(let i = 0; i < 9;i ++){
+                    document.getElementById('resurrectionSpell_input').value  = temporarySpell;
+                    reviveBySpell();
+                }
+            }
+        }
+        toggleMenuDialog(0, b.clientX, b.clientY, [["Cast spell and copy 10 times",a]]);
+    });
 
     document.querySelector('.resurrection_dialog').addEventListener('click', e => {
         if(e.target.classList.contains("resurrection_dialog")) {
@@ -1970,7 +1987,7 @@
             alert("Alas! Reviving thy characters has failed! Reason: Invalid spell");
             return;
         };
-        
+        return 1;
     }
 
     /* Copy to clipboard */
@@ -2055,7 +2072,7 @@
     }
 
     document.addEventListener('click', e => {
-        if(!e.target.classList.contains("popup_menu") && !e.target.classList.contains("exportBtn")) {
+        if(!e.target.classList.contains("popup_menu") && !e.target.classList.contains("exportBtn") && e.target.id !== "resurrectionSpell_moreOption") {
             document.querySelector('.popup_menu').classList.remove("expanded");
         }
     });
@@ -2141,7 +2158,6 @@
     });
 
     function paperIsFun (animationNo,character,x,y,wid,hei) {
-        const preferredY = y;
         document.querySelector("main").style.position = "relative";
         const duplicated = character.cloneNode(true);
         duplicated.dataset.charid = null;
@@ -2152,7 +2168,7 @@
         }
         duplicated.style.position = "absolute";
         duplicated.style.left = x + 'px';
-        duplicated.style.top = preferredY + 'px';
+        duplicated.style.top = y + 'px';
         duplicated.style.width = wid + 'px';
         duplicated.style.height = hei + 'px';
         duplicated.style.zIndex = 8;
@@ -2180,12 +2196,14 @@
                 paper.style.border = "1px solid #808080";
                 paper.style.zIndex = 7;
                 paper.style.left = x - 15 + 'px';
-                paper.style.top = (preferredY + 15) + 'px';
+                paper.style.top = (y + 15) + 'px';
                 paper.style.transform = "translateY(100%)";
+                paper.style.boxShadow = "85px 85px 70px #999999";
 
                 setTimeout(()=>{
-                    paper.style.transition = "0.4s";
+                    paper.style.transition = "transform 0.4s, box-shadow 4s";
                     paper.style.transform = "translateY(0%)";
+                    paper.style.boxShadow = "0 0 0 #FFFFFF";
                     paper.addEventListener('click', f => {
                         const ctr =  paper.getBoundingClientRect().left + (paper.getBoundingClientRect().width / 2);
                         console.log((f.clientX - ctr ) * -0.01);
@@ -2199,7 +2217,7 @@
                 setTimeout(()=>{
                     duplicated.style.left = "0px";
                     duplicated.style.top = "0px";
-                    paper.style.transition = "scale 0.5s";
+                    paper.style.transition = "scale 0.5s, box-shadow 4s";
                     paper.style.scale = scl;
                     paper.append(duplicated);
                     intv = setInterval(()=>{
@@ -2248,14 +2266,13 @@
 
         const slashEffect = document.createElement('div');
         slashEffect.classList.add("slashEffect");
-        slashEffect.style.left = "0";
-
-        const slashPos = duplicated.getBoundingClientRect().top * 2 + (duplicated.getBoundingClientRect().height * 0.76 );
-        console.log(duplicated.getBoundingClientRect().top);
-        slashEffect.style.top = `${slashPos}px`;
-
-        document.querySelector("main").appendChild(blackBG);
+        slashEffect.style.left = cloneA.getBoundingClientRect().left  + "px";
+        
+        document.querySelector("body").appendChild(blackBG);
         blackBG.appendChild(slashEffect);
+
+        const slashPos = cloneA.getBoundingClientRect().top + (cloneA.getBoundingClientRect().height * 0.76 );
+        slashEffect.style.top = `${slashPos}px`;
 
         document.querySelector("main").appendChild(cloneA);
         document.querySelector("main").appendChild(cloneB);
