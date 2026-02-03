@@ -1,17 +1,4 @@
-
-.jonnyB {
-    width: 23%;
-    margin: 0;
-
-    @media (width <= 1400px) {
-        width: 48%;
-    }
-
-    @media (width <= 768px) {
-        width: 98%;
-    }
-}
-
+@charset "UTF-8";
 .jonnyB .char__skin {
     position: absolute;
     
@@ -35,7 +22,6 @@
     mask-position: center;
     mask-size: cover;
     mask-repeat: no-repeat;
-
 }
 
 .testingPurpose .jonnyB .char__skin::before {

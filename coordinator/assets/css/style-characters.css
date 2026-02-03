@@ -1,0 +1,453 @@
+@charset "UTF-8";
+/* _/_/_/_/_/_/_/_/_/_/
+Export Button for characters
+ _/_/_/_/_/_/_/_/_/_/ */
+.exportBtn {
+    position: absolute;
+    top: -24px;
+    right: 8px;
+    cursor: pointer;
+}
+
+.theatreMode .exportBtn {
+    display: none;
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+Character Main
+ _/_/_/_/_/_/_/_/_/_/ */
+.char__main {
+    width: 23%;
+    margin: 0;
+
+    @media (width <= 1400px) {
+        width: 48%;
+    }
+
+    @media (width <= 768px) {
+        width: 98%;
+    }
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+Character Body
+ _/_/_/_/_/_/_/_/_/_/ */
+.char__body {
+    position: relative;
+    width: 100%;
+    max-width: 854px;
+    margin: 32px auto 0;
+}
+
+.char__body > div {
+    pointer-events: none;
+}
+
+.char__body img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.mat_main {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+Controller
+ _/_/_/_/_/_/_/_/_/_/ */
+.char__controller {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    gap: 8px;
+    margin: 16px 16px 150px;
+    
+    @media (width <= 768px) {
+        display: flex;
+        flex-flow: column;
+    }
+}
+
+.char__controller div.mat_palette {
+    display: flex;
+    gap: 4px;
+    flex-flow: wrap;
+    border: #f4f4f4 1px solid;
+    border-radius: 8px;
+    padding: 8px 80px 8px 8px;
+    width: calc(100% - 92px);
+    height: 0.1px;
+    min-height: 0.1px;
+    transform: scaleY(0.01); 
+    pointer-events: none;
+    transform-origin: center top;
+    opacity: 0;
+    transition: 0.4s;;
+    padding: 0;
+}
+
+.char__controller .expanded div.mat_palette {
+    height: auto;
+    min-height: 86px;
+    transform: scaleY(1); 
+    pointer-events: all;
+    opacity: 1;
+    padding: 8px 80px 8px 8px;
+}
+
+.colorGroup {
+    width: 30px;
+    height: 30px;
+}
+
+.controlGroupInner {
+    position: absolute;
+    z-index: 9;
+    top: 40px;
+    left: 0;
+    transform: scaleY(0.001);
+    opacity: 0;
+    transform-origin: center top;
+    pointer-events: none;
+    transition: 0.4s;
+    background-color: #FFFFFF;
+    min-width: 220px;
+    border: 1px solid #E0E0E0;
+    padding: 16px;
+    border-radius: 8px;
+    height: 0.1px;
+}
+
+.controlGroupInner.onBottom {
+    top: initial;
+    transform-origin: center bottom;
+    bottom: 30px;
+}
+
+.controlGroupInner.onRightSide {
+    left: initial;
+    right: -120px;
+}
+
+.controlGroupInner.expanded {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: all;
+    height: auto;
+}
+
+.thumbnail {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.thumbnail.expanded {
+    border-color: #ff6300;
+    animation: pickedEmphasizer 1s infinite alternate linear;
+}
+
+.thumbnail__inner {
+    width: 100%;
+    height: 100%;
+}
+
+.controlGroupInner .depthGroup {
+    display: flex;
+    gap: 4px;
+}
+
+.controlGroupInner .depthGroup .depthBtn,
+.controlGroupInner .deleteBtn {
+    display: block;
+    background-color: #DE5001;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    width: 48px;
+    margin-top: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.controlGroupInner .depthGroup .depthBtn {
+    width: 16px;
+}
+
+.char__controller .char__colorTips {
+    position: relative;
+}
+
+.char__controller .plusBtn {
+    position: absolute;
+    width: 64px;
+    height: 0;
+    line-height: 0;
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin: 0;
+    font-size: 12px;
+    top :8px;
+    right: 12px;
+    background-color: #f3f3f3;
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    z-index: 8;
+    cursor: pointer;
+}
+
+.char__controller div.plusBtn:before {
+    content: "+";
+    font-size: 12px;
+    color: #202020;
+    width: 0;
+    height: 0;
+    top: 7px;
+    left: 4px;
+    transform: none !important;
+}
+
+.char__controller > div {
+    position: relative;
+    width: calc(100% - 34px);
+    padding: 4px 16px;
+    border-radius: 8px;
+    border: 1px solid #CCCCCC;
+}
+
+.char__controller > div.expanded {
+    z-index: 10;
+}
+
+.char__controller > div:before {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #303030;
+    border-bottom: 2px solid #303030;
+    transform: rotate(45deg);
+    transition: 0.4s;;
+}
+
+.char__controller > div.expanded:before {
+    transform: rotate(-135deg);
+}
+
+.char__controller > div > span {
+    display: block;
+    font-weight: bold;
+    transition: 0.4s;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.char__controller > div.expanded > span {
+    margin-bottom: 16px;
+}
+
+.char__controller > div > p {
+    transform-origin: center top;
+    transform: scaleY(0.01);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+    height: 1px;
+}
+/* 
+.mat_main {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+} */
+
+.char__controller > div.expanded > p {
+    display: flex;
+    justify-content: space-between;
+    height: 32px;
+    opacity: 1;
+    transform: scaleY(1);
+    pointer-events: all;
+}
+
+.char__controller > div > p > [type="range"] {
+    width: calc(100% - 120px);
+}
+
+.char__controller select {
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    font-family: "Jost", sans-serif;
+    user-select: none;
+}
+
+.controlGroupInner p {
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.char__controller div.colorGroup {
+    position: relative;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+}
+
+.char__controller > div.colorGroup:before {
+    display: none;
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+Palette Gradient Settings 
+ _/_/_/_/_/_/_/_/_/_/ */
+.char__controller  div.gradient_stopRemove {
+    display: inline-block;
+    background-color: #2f0fff;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 24px;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 8px;
+    width: 120px;
+    margin-top: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.char__controller  div.gradientSpecimen {
+    width: 100%;
+    height: 42px;
+    background-color: #AAAAAA;
+    margin: 0 0 14px;
+    position: relative;
+}
+
+.char__controller  div.gradientPin {
+    position: absolute;
+    border-radius: 8px;
+    background: #dadada;
+    padding: 13px 0px 0px;
+    border: 3px solid #dadada;
+    cursor: pointer;
+    filter: drop-shadow(0 0 4px #9d9b9b55);
+    transform: translateX(-50%);
+}
+
+.char__controller  div.gradientPin.selected {
+    background: #909090;
+    border-color: #ff6300;
+    animation: pickedEmphasizer 1s infinite alternate linear;
+}
+
+.char__controller  div.gradientPin:before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 1.25px;
+    width: 11px;
+    height: 11px;
+    transform: rotate(45deg);
+    background: #dadada;
+    border-left: 3px solid #dadada;
+    border-top: 3px solid #dadada;
+}
+
+.char__controller  div.gradientPin.selected:before{
+    background: #909090;
+    border-color: 3px solid #ff6300;
+    animation: pickedEmphasizer 1s infinite alternate linear;
+}
+
+.char__controller  div.gradientPinInner {
+    width: 13px;
+    height: 19px;
+    border: 2px solid #000000;
+    border-radius: 4px;;
+    background-color: #000000;
+}
+
+.theatreMode .char__controller {
+    display: none;
+}
+
+.character_adder {
+    position: fixed;
+    bottom: 0;
+    z-index: 16;
+    left: 0;
+    padding: 16px 5%;
+    width: 90%;
+    background-color: #dcdcdc;
+    transition: 0.4s;
+    overflow-x: auto;
+}
+
+.character_adder__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: max-content;
+    min-width: 100%;
+}
+
+.theatreMode .character_adder {
+    transform: translateY(100%);
+}
+
+.character_adder a {
+    display: flex;
+    width: 72px;
+    height: 72px;
+    justify-content: center;
+    align-items: center;
+    border:3px solid #AAAAAA;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.4s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.character_adder a:hover {
+    transform :scale(1.2);
+    border-color: #DE5001;
+}
+
+.character_adder a:active {
+    transition-timing-function: linear;
+    transition-duration: 0.1s;
+    transform :scale(0.98);
+}
+
+.character_adder a img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+@keyframes pickedEmphasizer {
+    0% {
+        border-color: #fff716;
+    }
+    100% {
+        border-color: #ff6300;
+    }
+}

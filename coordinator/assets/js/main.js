@@ -1895,6 +1895,36 @@
         for(let i = 0; i < 5; i++) {
             addPhotoFrame();
         }
+
+        const adoleImages = [
+            document.createElement('img'),
+            document.createElement('img'),
+            document.createElement('img'),
+        ]
+        adoleImages[0].src = "assets/images/bg_adolescence_01.png";
+        adoleImages[1].src = "assets/images/bg_adolescence_02.png";
+        adoleImages[2].src = "assets/images/bg_adolescence_03.png";
+        
+        const colorTape = document.createElement('div');
+        colorTape.classList.add('colorTape');
+        colorTape.appendChild(adoleImages[0]);
+        document.querySelector('body').append(colorTape);
+        
+        const colorPen = document.createElement('div');
+        colorPen.classList.add('colorPen');
+        colorPen.appendChild(adoleImages[1]);
+        document.querySelector('body').append(colorPen);
+        
+        const pencil = document.createElement('div');
+        pencil.classList.add('pencil');
+        pencil.appendChild(adoleImages[2]);
+        document.querySelector('body').append(pencil);
+
+        setTimeout(()=>{
+            document.querySelector('.colorTape').classList.add('expanded');
+            document.querySelector('.colorPen').classList.add('expanded');
+            document.querySelector('.pencil').classList.add('expanded');
+        }, 50);
     }
 
     function addPhotoFrame () {
@@ -1930,7 +1960,7 @@
     
     function wipeAllReminiscence () {
         document.querySelector('.addPhotoFrameBtn').classList.remove('expanded');
-        document.querySelectorAll('.photoFrame').forEach(f=>f.remove());
+        document.querySelectorAll('.photoFrame,.pencil,.colorPen,.colorTape').forEach(f=>f.remove());
     }
 
     /* ************************
@@ -2157,6 +2187,7 @@
             wipeAllFlames();
             wipeAllHeartPop();
             wipeAllSnowdrops();
+            wipeAllReminiscence ();
             return;
         } 
         if(document.querySelector(".background_02").classList.contains("expanded")) {
@@ -2170,6 +2201,9 @@
         }
         if(document.querySelector(".background_05").classList.contains("expanded")) {
             document.getElementById('theatre_background_burstfullyflame').click();
+        }
+        if(document.querySelector(".background_06").classList.contains("expanded")) {
+            document.getElementById('theatre_background_reminiscence').click();
         }
     }
 
@@ -2256,7 +2290,7 @@
                 paper.style.boxShadow = "85px 85px 70px #999999";
 
                 setTimeout(()=>{
-                    paper.style.transition = "transform 0.4s, box-shadow 4s";
+                    paper.style.transition = "transform 0.4s, box-shadow  1s";
                     paper.style.transform = "translateY(0%)";
                     paper.style.boxShadow = "0 0 0 #FFFFFF";
                     paper.addEventListener('click', f => {
@@ -2272,7 +2306,7 @@
                 setTimeout(()=>{
                     duplicated.style.left = "0px";
                     duplicated.style.top = "0px";
-                    paper.style.transition = "scale 0.5s, box-shadow 4s";
+                    paper.style.transition = "scale 0.5s, box-shadow 1s";
                     paper.style.scale = scl;
                     paper.append(duplicated);
                     intv = setInterval(()=>{

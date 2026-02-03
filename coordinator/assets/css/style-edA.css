@@ -1,17 +1,4 @@
-
-.edA {
-    width: 23%;
-    margin: 0;
-
-    @media (width <= 1400px) {
-        width: 48%;
-    }
-
-    @media (width <= 768px) {
-        width: 98%;
-    }
-}
-
+@charset "UTF-8";
 .edA .char__outer_shirt {
     position: absolute;
     

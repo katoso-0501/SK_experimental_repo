@@ -1,0 +1,483 @@
+@charset "UTF-8";
+/*_/_/_/_/_/_/_/_/_/_/
+Theatre mode
+_/_/_/_/_/_/_/_/_/*/
+/* -  Background Setter */
+.theatre_background_setter {
+    position: fixed;
+    left: 0;
+    bottom: 100px;
+    transform: translateX(calc(-100% - 24px));
+    transition: 0.4s;
+    width: max-content;
+    max-width: 496px;
+    z-index: 20;
+}
+
+.theatre_background_setter a {
+    position: absolute;
+    right: -24.0px;
+    bottom: 120px;
+    width: 24px;
+    height: 0;
+    line-height:0;
+    padding: 30px 0;
+    display: block;
+    background: #202020;
+    border-radius: 0 8px 8px 0;
+    font-size: 0;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    color: #202020;
+}
+
+.theatre_background_setter a:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 6px;
+    width: 5px;
+    height: 5px;
+    border-top: 2px solid #FFFFFF;
+    border-right: 2px solid #FFFFFF;
+    transform: rotate(45deg);
+}
+
+.theatreMode .theatre_background_setter {
+    display: block;
+    transform: translateX(calc(-100% - 1px));
+}
+
+.theatreMode .theatre_background_setter.expanded {
+    transform: translateX(0);
+}
+
+.theatre_background_setter__inner {
+    display: flex;
+    flex-flow: column;
+    padding: 16px 12px;
+    background-color: #202020;
+}
+
+.theatre_background_setter__inner label {
+    display: flex;
+}
+
+.theatre_background_setter__inner label input {
+    appearance: none;
+}
+
+.theatre_background_setter__inner label input + span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color:#FFFFFF;
+    border:2px solid transparent;
+    padding: 4px 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+
+.theatre_background_setter__inner label input:checked + span {
+    color: #12d3f1;
+    border: 2px solid #12d3f1;
+}
+
+.theatreBG {
+    opacity: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    transition: opacity 0.4s;
+}
+
+.theatreMode .char__main.filterHardlight {
+    -webkit-mix-blend-mode: hard-light;
+    mix-blend-mode: hard-light;
+}
+
+.theatreMode .char__main.filterMultiply { 
+    -webkit-mix-blend-mode: multiply;
+    mix-blend-mode: multiply;
+}
+
+.theatreMode .char__main.filterOverlay{ 
+    -webkit-mix-blend-mode: overlay;
+    mix-blend-mode: overlay;
+}
+
+.theatreMode .theatreBG.expanded {
+    opacity: 1;
+}
+
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 01 - Default
+_/_/_/_/_/_/_/_/_/_/ */
+.background_01 {
+    background: linear-gradient(41deg, rgb(255 209 115) 0%, #ffc0c0 100%);
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 02 - Snow Drop
+_/_/_/_/_/_/_/_/_/_/ */
+.background_02 {
+    background: linear-gradient(41deg, #e6fdff 0%, #c4e9ff 100%);
+}
+
+.snowDrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(#FFFFFF 0%, #FFFFFF00 100%);
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 03 - Spotlight
+_/_/_/_/_/_/_/_/_/_/ */
+.background_03 {
+    background:#101010;
+}
+
+.colorBall {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #fff716;
+    filter: blur(2px);
+}
+
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 04 - Heartfully Heart
+_/_/_/_/_/_/_/_/_/_/ */
+.background_04 {
+    background: radial-gradient(#fff1ec 0%, #f9cbcb 100%);
+}
+
+.heartItem {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+}
+
+.heartItemInner {
+    position: absolute;
+    border: 60px solid transparent;
+    border-top-color: #ff9b9b;
+    opacity: 0.8;
+}
+
+.heartItemInner:before,
+.heartItemInner:after {
+    content: "";
+    top: -107px; 
+    position: absolute;
+    border-radius: 50%;
+    background: #ff9b9b;
+    width: 66px;
+    height: 66px;
+}
+
+.heartItemInner:before {
+    left: -4px;
+}
+
+.heartItemInner:after {
+    right: -4px;
+}
+
+
+.heartItem.whiteHeart .heartItemInner{
+    border-top-color: #FFEDEF;
+}
+
+.heartItem.whiteHeart .heartItemInner:before, 
+.heartItem.whiteHeart .heartItemInner:after {
+    background: #FFEDEF;
+}
+
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 05 - Bursting Flame
+_/_/_/_/_/_/_/_/_/_/ */
+.background_05 {
+    background: linear-gradient(0deg, #530909 0%, #330202 100%);
+}
+
+.background_05.expanded {
+    filter: blur(35px);
+    transform-origin: bottom center;
+    transform: scale(1.32) translateY(30px);
+    
+    @media (width <= 768px) {
+        filter: blur(20px);
+    }
+}
+
+.flameParticle {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+}
+
+.flameParticle__phase01 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #120506;
+
+    @media (width <= 768px) {
+        height: 15px;
+        width: 15px;
+    }
+}
+
+.flameParticle__phase02 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: #c80000;
+    
+    @media (width <= 768px) {
+        height: 80px;
+        width: 80px;
+    }
+}
+
+.flameParticle__phase03 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: #ffae22;
+    
+    @media (width <= 768px) {
+        height: 95px;
+        width: 95px;
+    }
+}
+
+.flameParticle__phase04 {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #fff8eb;
+    
+    @media (width <= 768px) {
+        height: 110px;
+        width: 110px;
+    }
+}
+
+/* _/_/_/_/_/_/_/_/_/_/
+BG 06 - Reminiscence
+_/_/_/_/_/_/_/_/_/_/ */
+.background_06 {
+    background: repeating-linear-gradient(3deg, #533e09 0%,#955901 10px, #955901 50px,#533e09 66px);
+}
+
+.theatreMode main.reminiscence {
+    background: linear-gradient(79deg, #EFF9FF 0%, #A9D9FF 100%);
+    transform: skewX(-7deg) scale(0.7) translateY(1%);
+    border: 60px solid #ebebeb;
+    height: 88vh;
+    min-height: 0;
+    overflow-y: scroll;
+    box-shadow: 2px 2px 55px rgba(0,0,0,0.4);
+
+    @media (width <= 768px) {
+        transform: skewX(-3deg) scale(0.8) translateY(0%);
+        border: 20px solid #ebebeb;
+        height: 82vh;
+    }
+}
+
+.theatreMode main.reminiscence .character_adder {
+    display: none;
+}
+
+.addPhotoFrameBtn {
+    position: fixed;
+    bottom: -40px;
+    right: 10px;
+    width: 120px;
+    text-align: center;
+    font-size: 14px;
+    height: 0;
+    line-height: 0;
+    padding: 16px 0;
+    border-radius: 8px;
+    background-color: #2f0fff;
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.4s;
+    pointer-events: none;
+}
+
+.theatreMode .addPhotoFrameBtn.expanded {
+    bottom: 10px;
+    pointer-events: all;
+}
+
+.photoFrame {
+    position:absolute;
+    border: 40px solid #F0F0F0;
+    width: 640px;
+    height: 480px;
+    overflow: hidden;
+    user-select: none;
+    background: #FFFFFF;
+    z-index: 2;
+    
+    @media (width <= 768px) {
+        width: 320px;
+        height: 240px;
+        border: 20px solid #F0F0F0;
+    }
+}
+
+.photoFrame .char__main {
+    width: 100%;
+    transform-origin: center bottom;
+    transform: scale(0.56) translateY(-50%);
+}
+
+.photoFrame .char__main .exportBtn {
+    display: none;
+}
+
+.theatreMode 
+.colorTape {
+    z-index: 8;
+    position: absolute;
+    left: 1%;
+    top: 10%;
+    width: 30%;
+    height: 30vh;
+    filter: drop-shadow(0 3px 4px #202020aa);
+    pointer-events: none;
+
+    transform: translate(-100%, -5%);
+    transition: transform 0.3s;
+
+    @media (width <= 768px) {
+        width: 30%;
+        height: 30vh;
+        top: 1%;
+    }
+}
+
+.theatreMode 
+.pencil {
+    z-index: 8;
+    position: absolute;
+    right: 0%;
+    bottom: 10%;
+    width: 30%;
+    height: 40vh;
+    filter: drop-shadow(3px 3px 4px #202020aa);
+    pointer-events: none;
+
+    transform: translate(10%, 100%);
+    transition: transform 0.3s;
+
+    @media (width <= 768px) {
+        width: 56.0%;
+        height: 31vh;
+        bottom: -1%;
+    }
+}
+
+.theatreMode 
+.colorPen {
+    z-index: 8;
+    position: absolute;
+    left: 4%;
+    bottom: 10%;
+    width: 16%;
+    height: 45vh;
+    filter: drop-shadow(-3px 3px  4px #202020aa);
+    pointer-events: none;
+
+    transform: translate(-100%, 5%);
+    transition: transform 0.3s;
+    
+    @media (width <= 768px) {
+        width: 40%;
+        height: 29vh;
+        bottom: 14%;
+        left: 0;
+    }
+}
+
+
+.colorTape.expanded,
+.pencil.expanded,
+.colorPen.expanded{
+    transform: translate(0%, 0%);
+}
+
+.colorTape img,
+.pencil img,
+.colorPen img {
+    width: 100%;
+    height: 100%;object-fit: contain;
+}
+
+/* Some properties are not shown in Theatre Mode */
+@media print {
+    .char__controller,
+    .printBtn,
+    .character_adder,
+    .theatre_background_setter {
+        display: none;
+    }
+
+    .character_wrapper {
+        min-height: none;
+    }
+}

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 @import "style-bases.css";
+@import "style-characters.css";
+@import "style-theatreMode.css";
+@import "style-deleteChar.css";
+@import "style-church.css";
 @import "style-jonnyA.css";
 @import "style-jonnyB.css";
 @import "style-jimmyA.css";
