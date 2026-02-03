@@ -190,6 +190,10 @@
             actions.push(["Generate Spell", a.bind(this)],["Delete Character", b.bind(this)]);
             return actions;
         }
+
+        tellThyName () {
+            return this.resurrectionSpell.char;
+        }
     }
     
     class JonnyB extends JonnyA {
@@ -340,7 +344,6 @@
             this.createColormat('Printer','char__printer', this.decodedSpell);
         }
     }
-
     //  ______________________
     // Character classes end
     //￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -428,6 +431,7 @@
 
             const controlGroupInner = document.createElement('div');
             controlGroupInner.classList.add('controlGroupInner');
+            controlGroupInner.classList.add('onRightSide');
             this.controllerInner = controlGroupInner;
 
             const controllerPanel = document.createElement('div');
@@ -435,8 +439,9 @@
 
             this.thumbnail.addEventListener('click', ()=>{
                 if(!controlGroupInner.classList.contains("expanded")){
-                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                    document.querySelectorAll('.controlGroupInner, .thumbnail').forEach(f=>f.classList.remove("expanded"));
                 }
+                this.thumbnail.classList.toggle('expanded');
                 controlGroupInner.classList.toggle('expanded');
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
@@ -582,6 +587,7 @@
 
             const controlGroupInner = document.createElement('div');
             controlGroupInner.classList.add('controlGroupInner');
+            controlGroupInner.classList.add('onRightSide');
             this.controllerInner = controlGroupInner;
             
             const controllerPanel = document.createElement('div');
@@ -591,8 +597,9 @@
 
             this.thumbnail.addEventListener('click', ()=>{
                 if(!controlGroupInner.classList.contains("expanded")){
-                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                    document.querySelectorAll('.controlGroupInner, .thumbnail').forEach(f=>f.classList.remove("expanded"));
                 }
+                this.thumbnail.classList.toggle('expanded');
                 controlGroupInner.classList.toggle('expanded');
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
@@ -777,6 +784,7 @@
 
             const controlGroupInner = document.createElement('div');
             controlGroupInner.classList.add('controlGroupInner');
+            controlGroupInner.classList.add('onRightSide');
             this.controllerInner = controlGroupInner;
 
             
@@ -794,8 +802,9 @@
             
             this.thumbnail.addEventListener('click', ()=>{
                 if(!controlGroupInner.classList.contains("expanded")){
-                    document.querySelectorAll('.controlGroupInner').forEach(f=>f.classList.remove("expanded"));
+                    document.querySelectorAll('.controlGroupInner,.thumbnail').forEach(f=>f.classList.remove("expanded"));
                 }
+                this.thumbnail.classList.toggle('expanded');
                 controlGroupInner.classList.toggle('expanded');
                 this.adjustControllerPos(controlGroupInner, controlGroup);
             });
@@ -1353,7 +1362,6 @@
                 const left = thumbnail.getBoundingClientRect().left;
                 const screenHeight = window.innerHeight;
                 const leftTurningPoint = (document.querySelector('header').offsetWidth - 280);
-                // console.log(left + " / " + leftTurningPoint);
 
                 if(top > (screenHeight - 350)){
                     dialog.classList.add('onBottom');
@@ -1501,43 +1509,36 @@
     Characters
     ________________________*/
     const characters = [];
+    let charClasses = "";
 
-    document.querySelectorAll('.character_adder__inner a').forEach(a=>{
-        a.addEventListener('click', a=>{
-            a.preventDefault();
-        });
-    });
+    function adderButtonAdder () {
+        [[JonnyA, "jonnyA"], [JonnyB, "jonnyB"], [JimmyA, "jimmyA"], [RolfA, "rolfA"], [KevinA, "kevinA"], [EdA, "edA"], [EddyA, "eddyA"], [EddA, "eddA"]].forEach(char => {
+            const a = document.createElement('a');
+            a.classList.add("character_adder__" + char[1]);
+            const img = document.createElement('img');
+            img.src = "./assets/images/" + char[1] + "_original.webp";
+            img.alt = char[1];
+            a.appendChild(img);
+            charClasses += "." + char[1] + ", ";
     
-    document.querySelector('.character_adder__jonnyA').addEventListener('click', ()=>{
-        characters.push(new JonnyA());
-    });
-    document.querySelector('.character_adder__jonnyB').addEventListener('click', ()=>{
-        characters.push(new JonnyB());
-    });
-    document.querySelector('.character_adder__jimmyA').addEventListener('click', ()=>{
-        characters.push(new JimmyA());
-    });
-    document.querySelector('.character_adder__rolfA').addEventListener('click', ()=>{
-        characters.push(new RolfA());
-    });
-    document.querySelector('.character_adder__kevinA').addEventListener('click', ()=>{
-        characters.push(new KevinA());
-    });
-    document.querySelector('.character_adder__edA').addEventListener('click', ()=>{
-        characters.push(new EdA());
-    });
-    document.querySelector('.character_adder__eddyA').addEventListener('click', ()=>{
-        characters.push(new EddyA());
-    });
-    document.querySelector('.character_adder__eddA').addEventListener('click', ()=>{
-        characters.push(new EddA(Math.floor(Math.random()*6)));
-    });
-
+            if(char[1] !== "eddA"){
+                a.addEventListener('click', e=>{
+                    e.preventDefault();
+                    characters.push(new char[0]());
+                });
+            }else{
+                a.addEventListener('click', e=>{
+                    e.preventDefault();
+                    characters.push(new EddA(Math.floor(Math.random()*6)));
+                });
+            }
+            document.querySelector('.character_adder__inner').appendChild(a); 
+        });
+        charClasses = charClasses.slice(0, -2);
+    }
+    adderButtonAdder();
     // Print button
     document.querySelector('.printBtn').addEventListener('click', ()=>{window.print();});
-
-
-    const charClasses = '.jonnyA,.jonnyB,.jimmyA,.rolfA,.kevinA,.edA,.eddyA,.eddA';
 
     /* ________________________
     Theatre Mode
@@ -1554,6 +1555,7 @@
         document.querySelector('.theatre_background_setter').classList.toggle('expanded');
     });
 
+    // - Define All Background Classes
     const backgroundParts = [
         '.background_01',
         '.background_02',
@@ -1563,6 +1565,7 @@
         '.background_06',
     ]
 
+    // - Define each input to reset all effects and apply background which is picked
     document.querySelectorAll('.theatre_background_setter input').forEach((radio, index)=>{
         radio.addEventListener('click', (item)=>{
             document.querySelector('.theatre_background_setter').classList.remove('expanded');
@@ -1886,14 +1889,13 @@
     }
 
     /* Reminiscence */
+    document.querySelector('.addPhotoFrameBtn').addEventListener('click', addPhotoFrame);
     function initiateReminiscence () {
         document.querySelector('.addPhotoFrameBtn').classList.add('expanded');
         for(let i = 0; i < 5; i++) {
             addPhotoFrame();
         }
     }
-
-    document.querySelector('.addPhotoFrameBtn').addEventListener('click', addPhotoFrame);
 
     function addPhotoFrame () {
         const initTranslate = [];
@@ -1903,8 +1905,8 @@
             const randomRotation = Math.random()*360 + "deg";
             const photoFrame = document.createElement('div');
             photoFrame.classList.add('photoFrame');
-            photoFrame.style.left = (Math.random() * (window.innerWidth) ) + "px";
-            photoFrame.style.top =  (Math.random() * (window.innerHeight) ) + "px";
+            photoFrame.style.left = (Math.random() * (window.innerWidth) - 300 ) + "px";
+            photoFrame.style.top =  (Math.random() * (window.innerHeight) - 300 ) + "px";
             photoFrame.style.transform = "skewX(" + skewDeg + ") rotate(" + randomRotation + ") translate("+  initTranslate[0] +"px, "+ initTranslate[1] +"px)";
             photoFrame.style.background = "linear-gradient(308deg, rgb(" + Math.random()*255 + " " + Math.random()*255 + " " + Math.random()*255 + ") 0%, rgb(" + Math.random()*255 + " " + Math.random()*255 + " " + Math.random()*255 + ") 100%)";
             
@@ -1938,6 +1940,7 @@
         b.preventDefault();
         openSpellImportation();
     });
+
     document.getElementById('resurrectionSpell_moreOption').addEventListener('click', b=>{
         b.preventDefault();
         const a = function () {
@@ -1983,7 +1986,6 @@
     }
 
     document.querySelector('#resurrectionSpell_cast').addEventListener('click', reviveBySpell);
-
     function reviveBySpell () {
         let validity = 0;
         let decoded = null;
@@ -2061,7 +2063,9 @@
         copyToClipboard(document.querySelector('.resurrectionSpell__stoneboard').textContent);
     });
 
-    /* Expand/Shrink Pop up menu */
+    /* ****************************** 
+    Codes about context menu dialog 
+    ****************************** */
     const menu = document.querySelector('.popup_menu');
     let charHandler = 0;
 

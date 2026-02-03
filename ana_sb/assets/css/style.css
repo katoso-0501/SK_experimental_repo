@@ -223,7 +223,7 @@ Screen Locking
     top: 0;
     width: calc(100% - 32px);
     background-color: rgba(255,210,210,0.6);
-    padding: 24px 16px 10px;
+    padding: 48px 16px 10px;
 }
 
 .movie_adder a,
@@ -265,7 +265,7 @@ Screen Locking
 .more_movie_adder__arrow {
     position: absolute;
     bottom: -20px;
-    left: 50%;
+    left: 40px;
     transform: translateX(-50%);
     width: 40px;
     height: 40px;
