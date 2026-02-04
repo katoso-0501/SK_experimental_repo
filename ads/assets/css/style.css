@@ -1,0 +1,57 @@
+@charset "UTF-8";
+body,h1,h2,h3,h4,h5,h6,p,span,i,a,img,figure,ul,li,ol {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ff9900;
+}
+
+main {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+}
+
+.message_container {
+    border: 10px solid #F0F0F0;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 128px;
+    min-height: 40px;
+    background-color: #19a7ff;
+}
+.windowFlexBox {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+.windowFlexBox > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 25%;
+    border: 10px solid #F0F0F0;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #19a7ff;
+}
+
+.windowFlexBox > div > p {
+    margin: 0;
+}
+
+.windowMain p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.windowFlexBox > div p span {
+    display: inline-block;
+    width: 60px;
+    background-color: #F0F0F0;
+}
