@@ -77,6 +77,7 @@
         }
 
         parallelProgress () {
+            this.nameindicator.innerHTML = this.stats.charName;
             this.hpindicator.innerHTML = "HP <span>"+this.stats.hpa+"</span>";
             this.tpindicator.innerHTML = "TP <span>"+this.stats.tpa+"</span>";
             if(this.stats.hpa < this.stats.hp) {

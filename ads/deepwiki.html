@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Duel </h1>
+    <p>
+    `Duel` is a JavaScript class that manages a turn-based battle between two characters.  
+It handles combat logic, action resolution, and game state progression in a simple duel simulation.
+
+---
+
+### Definition
+
+The `Duel` class orchestrates a battle between two `LeadChar` instances (`charA` and `charB`). It initializes character stats, determines turn order based on agility (`agl`), and runs a loop via `draw()` and `seekTurn()` until one or both characters are defeated.
+
+```javascript
+102:295:c:\Users\katos\Desktop\2020A-Katoso\ads\assets\js\main.js
+class Duel {
+    constructor(rules) {
+        this.rules = rules;
+        this.message = "";
+        this.totalMessage = "";
+        this.gameFlag = 1; // 1 = active, 0 = ended
+        this.totalTurn = 0;
+        this.sideA = ["*", "*", "*", "*", "*", "*"]; // unused placeholder
+        this.sideB = ["*", "*", "*", "*", "*", "*"]; // unused placeholder
+        this.orders = []; // determines turn order
+
+        // Create two lead characters with randomized stats
+        this.charA = new LeadChar(this, { /* randomized stats */ });
+        this.charB = new LeadChar(this, { /* randomized stats */ });
+
+        // Ensure unique names
+        if (this.charA.stats.charName === this.charB.stats.charName) {
+            this.charA.stats.charName += "A";
+            this.charB.stats.charName += "B";
+        }
+
+        this.writeMessage("The engage!");
+        this.parallelProgress(); // Starts animation loop
+    }
+
+    determineOrder() { /* sets turn order based on agility + randomness */ }
+    draw() { /* starts turn loop with setTimeout */ }
+    seekTurn() { /* executes actions per turn */ }
+    charNormalBash(origin, target) { /* deals damage */ }
+    charDefend(origin) { /* sets guard state */ }
+    charLifeUp(origin) { /* heals to full HP if enough TP */ }
+    charSetAction(origin, target) { /* AI-driven action selection */ }
+    writeMessage(msg) { /* updates UI message */ }
+    writeBreakdown(msg) { /* logs message history */ }
+    parallelProgress() { /* runs animation frame loop for HP/TP bars */ }
+    terminate() { /* ends game, displays result */ }
+}
+```
+
+- **Purpose**: Manages a single duel instance between two AI-controlled characters.
+- **Params**: `rules` – an object that configures game behavior (e.g. `{ duelmode: "normal" }` enables magic).
+- **Side effects**: 
+  - Modifies DOM elements (`.message_container`, `.breakdown_container`).
+  - Starts a recursive `setTimeout` loop via `draw()`.
+  - Uses `requestAnimationFrame` for smooth HP/TP bar updates.
+- **State tracking**: 
+  - `gameFlag`: controls whether the duel is active.
+  - `orders`: queue of characters waiting to act.
+  - `totalTurn`: increments each round.
+- **AI behavior**: Uses `determineMainCharAction()` to simulate decision-making with weighted randomness.
+
+---
+
+### Example Usages
+
+The `Duel` class is instantiated once at runtime to start a new duel. It runs autonomously with no player input.
+
+```javascript
+337:338:c:\Users\katos\Desktop\2020A-Katoso\ads\assets\js\main.js
+let game = new Duel({ duelmode: "normal" });
+setTimeout(() => { game.draw(); }, 1000);
+```
+
+This creates a new duel with normal rules (magic enabled) and starts the battle loop after a 1-second delay. The `draw()` method calls `seekTurn()` every second, advancing the fight turn by turn.
+
+**Overall Usage in Codebase**:
+- `Duel` is defined and used in a single file: `main.js`.
+- It is instantiated exactly once via the `game` variable.
+- No other files or modules reference `Duel`, making it the root of the application’s logic.
+- The duel is fully automatic — characters act based on randomized AI decisions.
+
+---
+
+### Notes
+
+- Despite having `sideA` and `sideB` arrays of six elements each, the system only uses two characters (`charA` and `charB`). The arrays appear to be placeholders for potential future expansion (e.g. team battles), but are currently unused.
+- The `parallelProgress()` method uses `window.requestAnimationFrame()` recursively to animate HP and TP bars smoothly, while `draw()` uses `setTimeout` for turn pacing — a dual timing strategy.
+- Critical hits and misses are implemented with `Math.random()*16 <= 1`, giving roughly a 6.25% chance for each.
+
+---
+
+### See Also
+
+- `LeadChar`: The character class used by `Duel`; extends `CharBase` and manages UI elements and stat updates.
+- `CharBase`: Base class for characters, stores shared stats and provides `setStats()`.
+- `determineMainCharAction(origin)`: Standalone function that simulates AI decision-making by sampling possible actions.
+- `characterNames`: Array of Japanese names used to randomly name characters (e.g., "そう", "メイプル").
+        
+    </p>
+
+    <h1>Determine Main Char Action</h1>
+    <p>
+        `determineMainCharAction` is a standalone function that simulates AI decision-making for characters in a duel system.
+
+It determines the next action (e.g., attack, defend, heal) a character will take based on their current state, using weighted randomness and health/TP thresholds.
+
+---
+
+### Definition
+
+```javascript
+297:327:c:\Users\katos\Desktop\2020A-Katoso\ads\assets\js\main.js
+function determineMainCharAction(origin) {
+    const opinions = [];                     // Collects 10 proposed actions
+    const player = origin.stats;             // Shortcut to character stats
+    let action;
+
+    for (let i = 0; i < 10; i++) {
+        action = "bash";                     // Default action: attack
+
+        // 10% chance to choose "defend" instead
+        if (Math.random() * 10 <= 1) {
+            action = "defend";
+        }
+
+        // If TP >= 24 and HP is low, consider "lifeup" (heal)
+        if (player.tp >= 24 && player.hp < player.mhp) {
+            if (player.hpa <= player.mhp * 0.7 && Math.random() * 6 <= 1) {
+                action = "lifeup";
+            }
+            if (player.hpa <= player.mhp * 0.4 && Math.random() * 3 <= 1) {
+                action = "lifeup";
+            }
+            if (player.hpa <= 100) {
+                action = "lifeup";           // Always heal if HP <= 100
+            }
+        }
+
+        opinions.push(action);               // Store this iteration's choice
+    }
+
+    console.log(origin.stats.charName + "のしこう : " + opinions.join("、"));
+
+    // Final decision: randomly pick one of the 10 proposed actions
+    const finalDecision = opinions[Math.floor(Math.random() * opinions.length)];
+    return finalDecision;
+}
+```
+
+- **Params**: `origin` – a `LeadChar` instance with `.stats` containing HP, TP, and other character attributes
+- **Returns**: A string: `"bash"`, `"defend"`, `"lifeup"`, or (rarely) undefined
+- **Side effects**: Logs decision log to console; no DOM or game state modifications
+- **Logic**: Simulates deliberation by sampling 10 possible actions with weighted rules, then randomly selects one
+
+---
+
+### Example Usages
+
+The function is called during each turn in the duel loop to decide what a character should do. It is used exclusively within the `charSetAction` method of the `Duel` class.
+
+```javascript
+235:246:c:\Users\katos\Desktop\2020A-Katoso\ads\assets\js\main.js
+charSetAction(origin, target) {
+    const action = determineMainCharAction(origin);  // Get AI decision
+
+    if (action === "bash") {
+        this.charNormalBash(origin, target);
+    } else if (action === "defend") {
+        this.charDefend(origin);
+    } else if (action === "lifeup") {
+        this.charLifeUp(origin);
+    } else {
+        this.writeMessage(`${origin.stats.charName} は たちすくんだ！`);
+    }
+}
+```
+
+**Usage Flow**:
+1. `draw()` triggers `seekTurn()` every second via `setTimeout`
+2. `seekTurn()` calls `charSetAction()` for the next character in `orders`
+3. `charSetAction()` calls `determineMainCharAction(origin)` to get the AI's choice
+4. The chosen action is executed
+
+This function is used **twice per turn** (once per character) and runs fully autonomously—no player input is involved.
+
+---
+
+### Notes
+
+- Despite generating 10 opinions, the final choice is uniformly random across them—there is no bias toward majority decisions.
+- The healing logic has three tiers: probabilistic at 70% and 40% HP, and **mandatory** at 100 HP or below, making it aggressive about survival.
+- The 10% chance to defend is unconditional and can override healing, introducing risk of suboptimal choices—this adds unpredictability, mimicking human-like hesitation.
+
+---
+
+### See Also
+
+- `LeadChar`: The character class whose instances are passed as `origin`; holds stats and UI elements.
+- `Duel`: The main game loop class; calls `determineMainCharAction` via `charSetAction` during turns.
+- `charSetAction(origin, target)`: The method that consumes the result of `determineMainCharAction` and executes the corresponding action.
+- `characterNames`: Array of Japanese names used to randomly name characters (e.g., "そう", "メイプル"), visible in logs and messages.
+    </p>
+</body>
+</html>
