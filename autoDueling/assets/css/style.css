@@ -1,0 +1,173 @@
+@charset "UTF-8";
+body,h1,h2,h3,h4,h5,h6,p,span,i,a,img,figure,ul,li,ol,div {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+}
+
+main {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+}
+
+.duelScreen {
+    width: 96%;
+    padding: 17px 2%;
+    background-color: rgb(255, 167, 59);
+    border-radius: 16px;
+    position: relative;
+}
+
+.damage-indicator {
+    position: absolute;
+    text-shadow: 0 0 7px #34343488;
+    font-weight: 700;
+    font-size: 24px;
+    transform: translate(-50%, 0);
+    animation: damageIndiSpan 0.7s 1 linear forwards;
+}
+
+@keyframes damageIndiSpan {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, 0px);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, 0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 0px);
+    }
+}
+
+.messageContainer {
+    border: 10px solid #F0F0F0;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 128px;
+    min-height: 40px;
+    background-color: #19a7ff;
+}
+
+.windowFlexBox {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.windowFlexBox > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 25%;
+    border: 10px solid #F0F0F0;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #19a7ff;
+}
+
+.windowFlexBox > div.fainted {
+    background-color: #f33a1e;
+    border-color: #ff8080;
+}
+
+
+.windowFlexBox > div > p {
+    margin: 0;
+}
+
+.windowMain {
+    position: relative;
+}
+
+.windowMain.acting {
+    transform: translateY(-8px);
+}
+
+.windowMain .indicator_name {
+    display: block;
+    text-align: center;
+    min-height: 24px;
+}
+
+.windowMain p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.windowFlexBox > div p span {
+    display: inline-block;
+    width: 60px;
+    background-color: #F0F0F0;
+}
+
+.ailmentBalloon {
+    display: none;
+    position: absolute;
+    border-radius: 50%;
+    width: 60px;
+    height: 54px;
+    background-color: #FFFFFF;
+    left: 50%;
+    top: -50px;
+    transform: translateX(-50%);
+}
+
+.ailmentBalloon.expanded {
+    display: flex;
+}
+
+.ailmentBalloon::before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #FFFFFF;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ailmentBalloon::after {
+    content: "";
+    position: absolute;
+    width: 44px;
+    text-align: center;
+    left: 10px;
+    font-size: 14px;;
+}
+
+.ailmentBalloon.poisoned::after {
+    content: "poisoned";
+}
+.ailmentBalloon.asleep::after {
+    content: "asleep";
+}
+.ailmentBalloon.paralysed::after {
+    content: "paralysed";
+}
+.ailmentBalloon.crying::after {
+    content: "crying";
+}
+.ailmentBalloon.silenced::after {
+    content: "silenced";
+}

@@ -211,5 +211,99 @@ This function is used **twice per turn** (once per character) and runs fully aut
 - `charSetAction(origin, target)`: The method that consumes the result of `determineMainCharAction` and executes the corresponding action.
 - `characterNames`: Array of Japanese names used to randomly name characters (e.g., "そう", "メイプル"), visible in logs and messages.
     </p>
+    <h1>Char Normal Bash</h1>
+    <p>
+        Two-line introduction
+- **charNormalBash** is a function that executes a basic attack action in a duel.
+
+- In short, it computes damage, handles possible misses or critical hits, applies defense reduction, and updates TP/hp as appropriate during a fight turn.
+
+Definition
+This section reproduces the most relevant parts of the implementation to help understanding. The code is paraphrased for readability. See the original for exact syntax in the repository context.
+
+```typescript
+205:        charNormalBash (origin, target) {
+206:            // base damage: random in [30, 149]
+207:            let damage =  Math.floor(Math.random()*120) + 30;
+208:
+209:            // announce the attack
+210:            this.writeMessage(`${origin.stats.charName} の こうげき！`);
+211:            // 1/16 chance to miss
+212:            if(Math.random()*16 <= 1){
+213:                this.writeMessage(`The missed!`);
+214:            }else{
+215:                // 1/16 chance for a critical hit
+216:                if(Math.random()*16 <= 1){
+217:                    damage = damage * 3;
+218:                    this.writeMessage(`Critical hit!`);
+219:                }else if(target.stats.isDefending) {
+220:                    // if target is defending, reduce damage to 30%
+221:                    damage = Math.floor(damage * 0.3);
+222:                }
+223:                // increase attacker's TP by 1 (capped elsewhere)
+224:                origin.stats.tp++;
+225:                // apply damage to target HP
+226:                target.stats.hp -= damage;
+227:                // log damage breakdown
+228:                this.writeBreakdown(`${damage} ダメージ`);
+229:            }
+230:        }
+```
+
+- Basic information:
+  - **Params**: 
+    - origin: character performing the bash (object with stats including tp, name, etc.)
+    - target: character receiving the attack (object with stats.hp, isDefending, etc.)
+  - **Returns**: void (side effects: writes messages, updates TP, HP)
+  - **Side effects**: writes action messages, updates target.hp, increments origin.tp, logs breakdown
+  - **Notes**: includes randomness for miss and critical hit; if target is defending, damage is reduced to 30%; critical hit multiplies by 3x
+
+- Related context:
+  - This method is invoked from charSetAction when the AI decides to perform a bash.
+  - See the surrounding flow for how actions are chosen and how turns progress (seekTurn, determineOrder, draw).
+
+Enhanced context (why this matters)
+- The function models a turn-based combat mechanic with simple RPG-like randomness: miss chance, crit chance, and guard mitigation.
+- TP (technique points) are increased on successful hit to enable abilities like Life Up later (e.g., Life Up logic consumes TP to fully heal the user).
+- The interaction with defending status is an important defensive mechanic; it directly reduces incoming damage when defending.
+- The code logs both immediate messages (e.g., “critical hit”) and a breakdown line that records the numeric damage, enabling UI and history features to reflect the duel.
+
+Example usages
+- Using the function in a typical turn:
+  - The AI decides to perform a bash.
+  - charNormalBash(origin, target) computes damage with randomness.
+  - If hit, TP increases, HP of target decreases, and a breakdown line is logged.
+  - If miss, a miss message is shown and no damage is applied.
+
+Code snippet illustrating usage (paraphrased):
+```javascript
+// During a turn, the AI selects "bash" and calls the attack
+this.charNormalBash(attacker, defender);
+```
+
+- Practical in-file references:
+  - charNormalBash is called by charSetAction when action === "bash".
+  - The same function appears in multiple copies of the file (the project includes similar copies in different builds/locations; usage remains the same).
+
+See Also
+- charSetAction: the dispatcher that selects actions including charNormalBash
+- charDefend: defense action that interacts with the damaged calculation
+- determineMainCharAction: decides a given character’s action tendencies
+- Duel: the class coordinating the fight loop, order, and terminal conditions
+
+Notes
+- The symbol is implemented as a method of the LeadChar/ Duel context and relies on shared utilities like writeMessage and writeBreakdown for UI/logging.
+- There are multiple copies of similarly named methods in the codebase due to file structure variations; the logic for charNormalBash remains consistent across these references.
+
+Code blocks (enhanced location format)
+- For reference, the key portion defining charNormalBash is presented above with paraphrased readability. The original source lines are shown in the code block for clarity.
+
+See Also references in the repository
+- charSetAction: chooses between bash/defend/lifeup
+- determineMainCharAction: AI decision engine that influences whether bash will be called
+- writeMessage / writeBreakdown: UI and logging helpers used by the action methods
+
+End of article.
+    </p>
 </body>
 </html>
