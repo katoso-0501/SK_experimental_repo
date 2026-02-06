@@ -1,22 +1,12 @@
 "use strict";
-{
-    const spellBook = {
-        "lifeup" : {
-            "cost": 24,
-            "desc": "ヒットポイントをぜんかいふくする",
-            "func": function (target, duel) {
-                target.stats.tp -= 24;
-                target.stats.hp = target.stats.mhp;
-                popDamage(target.stats.mhp, "heal", duel.duelScreen, target.charPos);
-            }
-        }
-    };
+{ 
     class CharBase {
         constructor (duel) {
             this.duel = duel;
             this.actable = 0;
             this.actionTime = 0;
             this.charPos = [0,0];
+            this.promisedMessage = "";
             this.stats =
             {
                 id: 0,
@@ -27,7 +17,7 @@
                 mtp: 100,
                 tp: 100,
                 offense: 100,
-                isDefending: 0,
+                isDefending: this.duel.rules.duelmode !== "withrevive" ? 1 : 0,
                 agl: 0,
                 ailments: {
                     // Every turn, decreasing HP by 50-100
@@ -37,9 +27,16 @@
                     // Cannot do physical actions
                     paralysed: 0,
                     // Often missing physical bash
-                    crying:0,
+                    crying: 0,
                     // Cannot do PSI actions
                     silenced: 0,
+                },
+                shielding: {type:"", duration: 0},
+                reviveEnchanted: 0,
+                parameterAlteration:
+                {
+                    offense : 0,
+                    defense : 0,
                 },
             }
         }
@@ -53,9 +50,27 @@
         }
 
         takeDamage(dmg, type) {
-            this.stats.hp -= dmg;
-            this.duel.writeBreakdown(`${dmg} ダメージ`);
-            popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+            if(type==="physical"){
+                if(
+                this.stats.shielding.type==="shield"
+                &&
+                this.stats.shielding.duration>0){
+                    dmg = Math.ceil(dmg / 2);
+                    this.stats.hp -= dmg;
+                    this.stats.shielding.duration--;
+                    if(this.stats.shielding.duration<=0){
+                        this.duel.writeMessage(`${this.stats.charName}のシールドはきえてなくなった！`);
+                    }
+                }else{
+                    this.stats.hp -= dmg;
+                }
+                this.duel.writeBreakdown(`${dmg} ダメージ`);
+                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+            }else if(type==="psi"){
+                this.stats.hp -= dmg;
+                this.duel.writeBreakdown(`${dmg} ダメージ`);
+                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+            }
         }
     }
 
@@ -65,6 +80,13 @@
             this.setStats(initStat);
             this.actable = 1;
             this.opponent = [];
+
+            this.recognizing = {
+                "rule" : ""
+            }
+            if(this.duel.rules.duelmode==="nomagic"){
+                this.recognizing.rule = "nomagic";
+            }
 
             this.windowMain = document.createElement('div');
             this.windowMain.classList.add('windowMain');
@@ -92,9 +114,7 @@
             this.duel.windowContainer.appendChild(this.windowMain);
 
             this.ailmentJog = 0;
-            this.seeking = setInterval(()=>{
-                this.seekAilmentState ();
-            }, 2000);
+            this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
 
             this.charPos =
             [
@@ -135,13 +155,15 @@
                 this.defend();
             } else if(action === "lifeup") {
                 this.lifeUp();
+            } else if(action === "psimagnet") {
+                this.psiMagnet();
             } else {
                 this.duel.writeMessage(`${this.stats.charName} は たちすくんだ！`);
             }
         }
 
         normalBash (target) {
-            let damage =  Math.floor(Math.random()*120) + 30;
+            let damage =  Math.floor(Math.random()*80) + 60;
             const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
             if(target.stats.isDefending) {
                 damage = Math.floor(damage * 0.3);
@@ -154,6 +176,9 @@
                 }else{
                     if(Math.random()*16 <= 1){
                         damage = damage * 3;
+                        if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
+                            target.stats.shielding.duration = 1;
+                        }
                         this.duel.writeMessage(`SMEEEEEEEESH!!`);
                         this.stats.tp += 4;
                     }else if(target.stats.isDefending) {
@@ -179,24 +204,42 @@
                 this.duel.seekTurn();
             }, 1000);
         }
-
+        
         lifeUp () {
-            this.duel.writeMessage(`${this.stats.charName} は ライフアップ をこころみた！`);
+            this.psiTrial("ライフアップ", this, spellBook.lifeup, 0);
+        }
 
-            setTimeout(()=>{
-                if(this.stats.tp>= spellBook.lifeup.cost && this.stats.ailments.silenced === 0){
-                    spellBook.lifeup.func(this, this.duel);
-                } else if(this.stats.ailments.silenced) {
-                    this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
-                } else {
-                    this.duel.writeMessage(`しかし TPがたりなかった！`);
-                }
-            },1200);
+        psiMagnet () {
+            this.psiTrial("サイマグネット", this.opponent, spellBook.psiMagnet, 0);
+        }
+
+        psiTrial (psiname, target, spell, animationTime) {
+            let success = 0;
+            this.duel.writeMessage(`${this.stats.charName} は ${psiname} をこころみた！`);
+
+            if(this.stats.tp >= spell.cost && this.stats.ailments.silenced === 0){
+                success = 1;
+                this.stats.tp -= spell.cost;
+            }
+
+            if(success){
+                setTimeout(()=>{
+                    spell.func(this, target, this.duel);
+                },(1200 + animationTime));
+            }else{
+                setTimeout(()=>{
+                    if(this.stats.ailments.silenced) {
+                        this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
+                    } else {
+                        this.duel.writeMessage(`しかし TPがたりなかった！`);
+                    }
+                }, 800);
+            }
                 
             setTimeout(() => {
                 this.windowMain.classList.remove("acting");
                 this.duel.seekTurn();
-            }, 2000);
+            }, (2000 + animationTime));
         }
 
         faint () {
@@ -210,7 +253,24 @@
             });
             clearInterval(this.seeking);
             this.ailmentIndicator.classList.remove("expanded");
-            this.duel.terminate();
+            // this.duel.terminate();
+        }
+
+        invokeRevive () {
+            this.duel.writeMessage(`しかし ${this.stats.charName} に かかっていたリヴァイブまほうが ${this.stats.charName} に ちからをくれた！`);
+
+            setTimeout(()=>{
+                this.duel.writeMessage(`${this.stats.charName} は カムバックした！`);
+                this.stats.reviveEnchanted = 0;
+                this.stats.hp = this.stats.mhp;
+                this.stats.tp = Math.floor(this.stats.mtp * 0.3);
+                this.windowMain.classList.remove("fainted");
+                this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
+            },1000);
+            
+            setTimeout(()=>{
+                this.duel.seekTurn();
+            },1800);
         }
 
         parallelProgress () {
@@ -263,8 +323,7 @@
                 this.stats.ailments.crying,
                 this.stats.ailments.silenced,
             ];
-
-            console.log(ailments.join("-"));
+            
             if(ailments.join("-") === "0-0-0-0-0") {
                 this.ailmentIndicator.classList.remove('expanded');
             }else {
@@ -409,20 +468,53 @@
         }
 
         seekTurn () {
-            if(this.charB.stats.hpa <= 0 ){
+            if(this.charB.stats.hpa<=0 && this.charA.stats.hpa<=0) {
+                this.charA.faint();
                 this.charB.faint();
+                if(!this.charB.stats.reviveEnchanted && !this.charA.stats.reviveEnchanted){
+                    this.terminate();
+                }else if(this.charA.stats.reviveEnchanted) {
+                    this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
+                    this.charA.invokeRevive();
+                }else if(this.charB.stats.reviveEnchanted) {
+                    this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
+                    this.charB.invokeRevive();
+                }
+            }else if(this.charB.stats.hpa <= 0 ){
+                this.charB.faint();
+                if(this.charB.stats.reviveEnchanted === 0){
+                    this.terminate();
+                }else{
+                    this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
+                    setTimeout(()=>{
+                        this.charB.invokeRevive();
+                    }, 1000);
+                }
             }else if (this.charA.stats.hpa <= 0 ){
                 this.charA.faint();
+                if(this.charA.stats.reviveEnchanted === 0){
+                    this.terminate();
+                }else{
+                    this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
+                    setTimeout(()=>{
+                        this.charA.invokeRevive();
+                    }, 1000);
+                }
             }else{
-                if(this.orders.length <= 0) {
+                if(this.orders.length <= 0 && this.gameFlag) {
                     this.totalTurn ++;
                     this.writeBreakdown(` ********** Turn ${this.totalTurn} **********`);
                     this.determineOrder();
                 }
             }
             
-            if(this.orders.length >= 1){
-                // console.log(...this.orders.map(char => char.stats.charName));
+            if(
+                this.orders.length >= 1
+                &&
+                this.charB.stats.hpa>0 
+                &&
+                this.charA.stats.hpa>0
+            ){
                 if(this.orders[0].actable){
                     this.orders[0].initAction();
                     this.orders.shift();
@@ -434,8 +526,7 @@
         }
 
         writeMessage(msg) {
-            const board = this.messageBox;
-            board.innerHTML = msg;
+            this.messageBox.innerHTML = msg;
             this.writeBreakdown(msg);
         }
 
@@ -459,7 +550,7 @@
                 this.charA.stats.hp = 0;
                 this.charB.stats.hpa = 0;
                 this.charA.stats.hpa = 0;
-                this.writeBreakdown(`りょうしゃとも きずつきたおれた…`);
+                this.writeMessage(`りょうしゃとも きずつきたおれた…`);
                 this.writeBreakdown(`Draw!`);
             } else if(this.charB.stats.hpa <= 0){
                 this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
@@ -473,8 +564,19 @@
             }
             this.charA.parallelProgress();
             this.charB.parallelProgress();
-            document.querySelector(".breakdown_container").innerHTML = 
-            String(this.totalMessage).replace(/\n/g, "<br>");
+
+            const showBrkdwnBtn = document.createElement('div');
+            showBrkdwnBtn.textContent = "うちわけを ひょうじする";
+            showBrkdwnBtn.classList.add("showBreakdownBtn");
+            this.duelScreen.appendChild(showBrkdwnBtn);
+            const brkdwnContainer = document.createElement("div");
+            brkdwnContainer.classList.add("breakdownContainer");
+            brkdwnContainer.innerHTML = String(this.totalMessage).replace(/\n/g, "<br>");
+            this.duelScreen.appendChild(brkdwnContainer);
+            showBrkdwnBtn.addEventListener('click', ()=>{
+                brkdwnContainer.classList.toggle("expanded");
+                this.duelScreen.classList.toggle("scrollable");
+            });
         }
     }
     
@@ -488,8 +590,22 @@
             if(Math.random()*10<=1) {
                 action = "defend"
             }
+            
+            if(
+                Math.random()*5 <= 1 &&
+                player.tp < (player.mtp * 0.3) &&
+                !player.ailments.silenced &&
+                origin.recognizing.rule !== "nomagic"
+            ) {
+                action = "psimagnet";
+            }
 
-            if(player.tp >= spellBook.lifeup.cost && player.hp < (player.mhp * 0.7)) {
+            if(
+                player.tp >= spellBook.lifeup.cost && 
+                player.hp < (player.mhp * 0.7) &&
+                !player.ailments.silenced &&
+                origin.recognizing.rule !== "nomagic"
+            ) {
                 if(player.hpa <= (player.mhp * 0.7) && Math.random()*6 <= 1) {
                     action = "lifeup";
                 }
@@ -501,10 +617,11 @@
                     action = "lifeup";
                 }
             }
+            
             opinions.push(action);
         }
 
-        // console.log(origin.stats.charName+"のしこう : " + opinions.join("、"));
+        console.log(opinions.join("-"));
 
         const finalDecision = opinions[Math.floor(Math.random()*opinions.length)];
         return finalDecision;
@@ -533,11 +650,54 @@
         "せんし",
         "Dさん",
         "いぶりがっこくん",
+        "ネッス",
+        "しのだ",
     ];
+
+    /* Spell Book */
+    const spellBook = {
+        "lifeup" : {
+            "cost": 24,
+            "desc": "ヒットポイントをぜんかいふくする",
+            "func": function (caster, target, duel) {
+                target.stats.hp = target.stats.mhp;
+                popDamage(target.stats.mhp, "heal", duel.duelScreen, target.charPos);
+            }
+        },
+        "psiMagnet" : {
+            "cost" : 0,
+            "desc" : "あいてから TPをうばう",
+            "func" : function (caster, target, duel) {
+                let drainValue = Math.floor(Math.random()*10) + 1;
+                if(target.stats.tp < drainValue) {
+                    drainValue = target.stats.tp;
+                }
+                if(drainValue>0){
+                    duel.writeMessage(`${target.stats.charName}のTPを ${drainValue} ポイント すいとった！`);
+                }else{
+                    duel.writeMessage(`${target.stats.charName} は TPをもっていなかった！`);
+                }
+                target.stats.tp -= drainValue;
+                caster.stats.tp += drainValue;
+            }
+        }
+    };
     
-    const duelMain = [new Duel({duelmode : "normal"})];
-    setTimeout(()=>{
-        duelMain[0].seekTurn();
-    },1000);
+    const duelMain = [];
+
+    document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
+        duelMain.push(new Duel({duelmode : "normal", background : 0}));
+        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+    });
+
+    document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
+        duelMain.push(new Duel({duelmode : "nomagic", background : 0}));
+        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+    });
+
+    document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
+        duelMain.push(new Duel({duelmode : "withrevive", background : 0}));
+        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+    });
 
 }

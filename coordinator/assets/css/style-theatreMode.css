@@ -356,6 +356,7 @@ _/_/_/_/_/_/_/_/_/_/ */
     z-index: 1000;
     transition: 0.4s;
     pointer-events: none;
+    user-select: none;
 }
 
 .theatreMode .addPhotoFrameBtn.expanded {

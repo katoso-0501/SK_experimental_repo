@@ -305,5 +305,225 @@ See Also references in the repository
 
 End of article.
     </p>
+
+
+    <h1>Life Up</h1>
+    <p>
+
+        `lifeUp` is a method on a character class that attempts to heal the character using a PSI spell.  
+    It checks TP cost and silence status before executing a full heal via `spellBook.lifeup.func`.
+    
+    ---
+    
+    ### Definition
+    
+    The `lifeUp` method is a member of a character class (likely `LeadChar` or similar) in a turn-based duel system. It represents the action of using the "Life Up" PSI ability, which fully restores the user's HP if conditions are met.
+    
+    ```javascript
+    183:200:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+    lifeUp () {
+        // Announce the action
+        this.duel.writeMessage(`${this.stats.charName} は ライフアップ をこころみた！`);
+    
+        setTimeout(()=>{
+            // Check TP and silence ailment
+            if (this.stats.tp >= spellBook.lifeup.cost && this.stats.ailments.silenced === 0) {
+                spellBook.lifeup.func(this, this.duel); // Execute healing
+            } else if (this.stats.ailments.silenced) {
+                this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
+            } else {
+                this.duel.writeMessage(`しかし TPがたりなかった！`);
+            }
+        }, 1200);
+    
+        // End action phase after delay
+        setTimeout(() => {
+            this.windowMain.classList.remove("acting");
+            this.duel.seekTurn();
+        }, 2000);
+    }
+    ```
+    
+    - **Params**: None (bound to character instance via `this`)
+    - **Side effects**: 
+      - Writes messages to duel log via `this.duel.writeMessage`
+      - May reduce user's TP and fully restore HP via `spellBook.lifeup.func`
+      - Removes `"acting"` class from UI element
+      - Triggers next turn via `this.duel.seekTurn()`
+    - **Returns**: `undefined`
+    - **Conditions**: Requires 24 TP and not silenced
+    
+    The actual healing logic is defined externally in `spellBook.lifeup.func`, which deducts TP and sets HP to maximum.
+    
+    ---
+    
+    ### Example Usages
+    
+    `lifeUp` is invoked during a character's turn when the AI decides to heal. The decision is made by `determineMainCharAction`, which evaluates HP, TP, and randomness.
+    
+    ```javascript
+    136:138:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+    } else if(action === "lifeup") {
+        this.lifeUp();
+    }
+    ```
+    
+    In practice, `lifeUp` is called only when:
+    - The character has at least 24 TP (as defined in `spellBook.lifeup.cost`)
+    - The character is not silenced
+    - The AI simulation (in `determineMainCharAction`) randomly selects "lifeup" based on HP thresholds
+    
+    The AI logic (from `deepwiki.html`) shows that healing is prioritized when:
+    - HP ≤ 70% with 1/6 chance
+    - HP ≤ 40% with 1/3 chance
+    - HP ≤ 100 (hard threshold)
+    
+    This method is part of a larger turn resolution system triggered by `initAction → setAction → lifeUp`.
+    
+    ---
+    
+    ### Notes
+    
+    - Despite the name `lifeUp`, the method does **not directly heal**—it only attempts to cast the spell. The actual healing is delegated to `spellBook.lifeup.func`.
+    - The 1200ms delay ensures the message appears before resolution, simulating casting time.
+    - `lifeUp` is one of only three valid actions (`bash`, `defend`, `lifeup`) returned by the AI decision function.
+    
+    ---
+    
+    ### See Also
+    
+    - `spellBook.lifeup`: Object defining the cost (24 TP) and healing function; `lifeUp` depends on it for execution
+    - `determineMainCharAction`: AI function that returns `"lifeup"` as a possible action based on HP/TP state
+    - `initAction`: Top-level method that starts the action chain leading to `lifeUp`
+    - `LeadChar`: Likely class containing `lifeUp`; manages character state and actions in duels
+    </p>
+
+    <h1>Terminate</h1>
+    <p>
+        `terminate` is a method that ends a duel instance and displays the result.<br >
+It is called when both characters are defeated or when revival is not possible.<br >
+<br >
+---<br >
+<br >
+### Definition<br >
+<br >
+The `terminate` method is part of a duel management class in `main.js`, responsible for ending a duel between two AI-controlled characters. It stops the game loop, clears action orders, updates character states, and renders the outcome in the UI.<br >
+<br >
+```javascript<br >
+<br >
+terminate () {<br >
+    this.gameFlag = 0;                    // Stop the game loop<br >
+    this.orders = [];                     // Clear turn queue<br >
+<br >
+    // Handle draw condition: both characters defeated
+    if (this.charB.stats.hpa === 0 && this.charA.stats.hpa === 0) {
+        this.charB.stats.hp = 0;
+        this.charA.stats.hp = 0;
+        this.charB.stats.hpa = 0;
+        this.charA.stats.hpa = 0;
+        this.writeMessage(`りょうしゃとも きずつきたおれた…`); // Both fighters fell...
+        this.writeBreakdown(`Draw!`);
+    } 
+    // B is defeated, A wins
+    else if (this.charB.stats.hpa <= 0) {
+        this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`); // ...has fallen
+        this.writeBreakdown(`${this.charA.stats.charName} Wins!`);
+    }
+    // A is defeated, B wins
+    else if (this.charA.stats.hpa <= 0) {
+        this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
+        this.writeBreakdown(`${this.charB.stats.charName} Wins!`);
+    } 
+    // Otherwise: manual termination (e.g., game reset)
+    else {
+        this.writeMessage(`しあいは ちゅうしされた！`); // The match was suspended!
+        this.writeBreakdown(`Draw!`);
+    }
+
+    // Trigger final UI updates
+    this.charA.parallelProgress();
+    this.charB.parallelProgress();
+
+    // Add "Show Breakdown" button to view full log
+    const showBrkdwnBtn = document.createElement('div');
+    showBrkdwnBtn.textContent = "うちわけを ひょうじする"; // Show breakdown
+    showBrkdwnBtn.classList.add("showBreakdownBtn");
+    this.duelScreen.appendChild(showBrkdwnBtn);
+
+    const brkdwnContainer = document.createElement("div");
+    brkdwnContainer.classList.add("breakdownContainer");
+    brkdwnContainer.innerHTML = String(this.totalMessage).replace(/\n/g, "<br>");
+    this.duelScreen.appendChild(brkdwnContainer);
+
+    // Toggle visibility on click
+    showBrkdwnBtn.addEventListener('click', () => {
+        brkdwnContainer.classList.toggle("expanded");
+        this.duelScreen.classList.toggle("scrollable");
+    });
+}
+```
+
+- **Params**: None  
+- **Side effects**:  
+  - Sets `this.gameFlag = 0`, halting the `requestAnimationFrame` loop in `parallelProgress()`  
+  - Clears `this.orders`, stopping turn execution  
+  - Modifies DOM: appends a results UI with message, winner, and expandable log  
+  - Calls `writeMessage()` and `writeBreakdown()` to update displayed text  
+- **Returns**: `undefined`  
+
+---
+
+### Example Usages
+
+`terminate` is called from `seekTurn()` when a character is defeated and cannot be revived. It acts as the final step in duel resolution.
+
+```javascript
+463:471:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+seekTurn () {
+    if (this.charB.stats.hpa <= 0 && this.charA.stats.hpa <= 0) {
+        this.charA.faint();
+        this.charB.faint();
+        this.terminate(); // End duel immediately
+    } else if (this.charB.stats.hpa <= 0) {
+        this.charB.faint();
+        if (this.charB.stats.reviveEnchanted === 0) {
+            this.terminate(); // No revival available → end duel
+        } else {
+            // Revive sequence triggered instead
+            this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
+            setTimeout(() => {
+                this.charB.invokeRevive();
+            }, 1000);
+        }
+    }
+    // ...similar logic for charA...
+}
+```
+
+Overall, `terminate` is called in three main scenarios:
+1. Both fighters are defeated → draw
+2. One fighter is defeated and cannot revive → opponent wins
+3. Manual interruption (fallback case)
+
+It is used exclusively within the duel lifecycle, primarily by `seekTurn()`, and is central to game state resolution.
+
+---
+
+### Notes
+
+- Despite being called `terminate`, the function does **not** remove DOM elements or clean up event listeners beyond toggling UI states. Cleanup appears partial.
+- The method calls `parallelProgress()` on both characters *after* setting `gameFlag = 0`, ensuring one final UI sync before freeze.
+- The Japanese messages suggest this is a fan-made or localized RPG battle simulator, possibly inspired by games like *EarthBound* or *Mother*.
+
+---
+
+### See Also
+
+- `seekTurn`: Primary caller of `terminate`; evaluates game state each turn and triggers end conditions  
+- `faint`: Called before `terminate`; sets character visual/UI state to "defeated"  
+- `parallelProgress`: Animation loop that `terminate` stops by setting `gameFlag = 0`  
+- `writeMessage` / `writeBreakdown`: Used to display results; `writeBreakdown` logs persistent text for the final summary panel  
+- `invokeRevive`: Alternative to `terminate` when revival is possible; delays game end
+    </p>
 </body>
 </html>
