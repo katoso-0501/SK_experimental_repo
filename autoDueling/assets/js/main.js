@@ -17,7 +17,7 @@
                 mtp: 100,
                 tp: 100,
                 offense: 100,
-                isDefending: this.duel.rules.duelmode !== "withrevive" ? 1 : 0,
+                isDefending: 0,
                 agl: 0,
                 ailments: {
                     // Every turn, decreasing HP by 50-100
@@ -27,12 +27,12 @@
                     // Cannot do physical actions
                     paralysed: 0,
                     // Often missing physical bash
-                    crying: 0,
+                    crying: this.duel.rules.duelmode === "suddendeath" ? 1 : 0,
                     // Cannot do PSI actions
                     silenced: 0,
                 },
                 shielding: {type:"", duration: 0},
-                reviveEnchanted: 0,
+                reviveEnchanted: this.duel.rules.duelmode === "withrevive" ? 1 : 0,
                 parameterAlteration:
                 {
                     offense : 0,
@@ -126,6 +126,10 @@
         adjustCharPos (x, y) {
             this.charPos[0] = x;
             this.charPos[1] = y;
+        }
+
+        forget(name) {
+            this.recognizing[name] = "";
         }
 
         initAction () {
@@ -409,11 +413,11 @@
                 id: 0,
                 iff: 0,
                 charName: characterNames[Math.floor(Math.random()*characterNames.length)],
-                mhp: Math.floor(Math.random()*520) + 350,
+                mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*520) + 350,
                 hp: 0,
                 hpa: 0,
                 tp: 0,
-                mtp: this.rules.duelmode !== "nomagic" ? Math.floor(Math.random()*500) + 250 : 0,
+                mtp: this.rules.duelmode === "nomagic" || this.rules.duelmode === "suddendeath" ? 0 : Math.floor(Math.random()*500) + 250,
                 tpa: 0,
                 isDefending: 0,
                 offense: 100,
@@ -423,11 +427,11 @@
                     id: 1,
                     iff: 1,
                     charName: characterNames[Math.floor(Math.random()*characterNames.length)],
-                    mhp: Math.floor(Math.random()*520) + 350,
+                    mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*520) + 350,
                     hp: 0,
                     hpa: 0,
                     tp: 0,
-                    mtp: this.rules.duelmode !== "nomagic" ? Math.floor(Math.random()*500) + 250 : 0,
+                    mtp: this.rules.duelmode === "nomagic" || this.rules.duelmode === "suddendeath" ? 0 : Math.floor(Math.random()*500) + 250,
                     tpa: 0,
                     isDefending: 0,
                     offense: 100,
@@ -465,6 +469,25 @@
                 this.orders.unshift(this.charB);
                 this.orders.push(this.charA);
             }
+        }
+
+        test () {
+            const newOrder = [];
+            const a = [{ name: "hitani", agl: 53},{name: "sakuma", agl: 18 }];
+            const b = [{ name: "saraqui", agl: 25},{name: "paserja", agl: 42 }];
+            const c = [...a,...b];
+
+            c.forEach(v=>{v.tempAgl = v.agl + Math.floor(Math.random()*15) - 7});
+            for(let agl = 999; agl > 0; agl --){
+                c.forEach(v=>{
+                    if(v.tempAgl === agl){
+                        newOrder.push(v);
+                        console.log("Yes "+ v.name +", yer are in order " + newOrder.length + ".");
+                    }
+                });
+            }
+            console.log(newOrder);
+
         }
 
         seekTurn () {
@@ -583,6 +606,11 @@
     function determineMainCharAction (origin) {
         const opinions = [];
         const player = origin.stats;
+
+        if(Math.random()*200 <= 1){
+            origin.forget("rule");
+        }
+
         let action;
         for(let i = 0; i<10; i++){
             action = "bash";
@@ -686,18 +714,26 @@
     const duelMain = [];
 
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
-        duelMain.push(new Duel({duelmode : "normal", background : 0}));
-        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+        const a = new Duel({duelmode: "normal", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
-        duelMain.push(new Duel({duelmode : "nomagic", background : 0}));
-        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+        const a = new Duel({duelmode : "nomagic", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
-        duelMain.push(new Duel({duelmode : "withrevive", background : 0}));
-        setTimeout(()=>{duelMain[duelMain.length-1].seekTurn();}, 1000);
+        const a = new Duel({duelmode : "withrevive", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
+    });
+    document.querySelector('.suddenDeath').addEventListener('click', ()=>{
+        const a = new Duel({duelmode : "suddendeath", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
 }

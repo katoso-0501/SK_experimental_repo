@@ -17,6 +17,11 @@ body {
     gap: 8px;
     padding: 8px 8px;
     background-color: #CCCCCC;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 998;
 }
 
 .duel_starter_group > div {
@@ -37,7 +42,7 @@ main {
     align-items: flex-start;
     padding-left: 24px;
     padding-right: 24px;
-    padding-top: 16px;
+    padding-top: 48px;
     gap: 16px;
 }
 

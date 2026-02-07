@@ -345,10 +345,10 @@ Screen Locking
     text-align: center;
     font-weight: 600;
     font-size: 14px;
-    border-radius: 8px;
-    padding: 8px 0;
-    background-color: #fe6320;
-    color: #FFFFFF;
+    padding:0 0 8px;
+    border-bottom: 2px solid #fe6320;
+    margin-bottom: 16px;
+    color: #fe6320;
 }
 
 .more_movie_adder__contentInner ul {
