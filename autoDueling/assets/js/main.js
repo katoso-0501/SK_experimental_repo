@@ -86,6 +86,8 @@
             }
             if(this.duel.rules.duelmode==="nomagic"){
                 this.recognizing.rule = "nomagic";
+            }else if(this.duel.rules.duelmode==="suddendeath"){
+                this.recognizing.rule = "suddendeath";
             }
 
             this.windowMain = document.createElement('div');
@@ -126,6 +128,10 @@
         adjustCharPos (x, y) {
             this.charPos[0] = x;
             this.charPos[1] = y;
+        }
+
+        recognize (name, val) {
+            this.recognizing[name] = val;
         }
 
         forget(name) {
@@ -169,9 +175,9 @@
         normalBash (target) {
             let damage =  Math.floor(Math.random()*80) + 60;
             const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
-            if(target.stats.isDefending) {
-                damage = Math.floor(damage * 0.3);
-            }
+            // if(target.stats.isDefending) {
+            //     damage = Math.floor(damage * 0.3);
+            // }
             this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
 
             setTimeout(()=>{
@@ -221,7 +227,11 @@
             let success = 0;
             this.duel.writeMessage(`${this.stats.charName} は ${psiname} をこころみた！`);
 
-            if(this.stats.tp >= spell.cost && this.stats.ailments.silenced === 0){
+            if(
+                this.duel.rules.duelmode !== "nomagic" && 
+                this.stats.tp >= spell.cost && 
+                this.stats.ailments.silenced === 0
+            ){
                 success = 1;
                 this.stats.tp -= spell.cost;
             }
@@ -232,7 +242,10 @@
                 },(1200 + animationTime));
             }else{
                 setTimeout(()=>{
-                    if(this.stats.ailments.silenced) {
+                    if(this.duel.rules.duelmode === "nomagic"){
+                        this.duel.writeMessage(`だが せいやくで PSIは つかえない！`);
+                        this.recognize('rule','nomagic');
+                    } else if(this.stats.ailments.silenced) {
                         this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
                     } else {
                         this.duel.writeMessage(`しかし TPがたりなかった！`);
@@ -646,6 +659,10 @@
                 }
             }
             
+            if(origin.recognizing.rule === "suddendeath") {
+                action = "bash";
+            }
+
             opinions.push(action);
         }
 

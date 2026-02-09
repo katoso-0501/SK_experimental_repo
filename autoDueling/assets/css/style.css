@@ -9,22 +9,32 @@ body {
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
+    position: relative;
 }
 
 .duel_starter_group {
-    display: flex;
-    flex-flow: wrap;
-    gap: 8px;
-    padding: 8px 8px;
+    display: block;
+    padding: 4px 8px;
     background-color: #CCCCCC;
-    position: fixed;
+    position: sticky;
     width: 100%;
     left: 0;
     top: 0;
     z-index: 998;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
-.duel_starter_group > div {
+.duel_starter_group__inner {
+    display: flex;
+    width: max-content;
+    padding: 4px 0;
+    flex-flow: row;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.duel_starter_group__inner > div {
     padding: 6px 4px;
     background: rgb(255,167,59);
     color:#FFFFFF;
@@ -43,6 +53,7 @@ main {
     padding-left: 24px;
     padding-right: 24px;
     padding-top: 48px;
+    padding-bottom: 16px;
     gap: 16px;
 }
 
