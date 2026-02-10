@@ -6,7 +6,7 @@
             this.actable = 0;
             this.actionTime = 0;
             this.charPos = [0,0];
-            this.promisedMessage = "";
+            this.promisedMessage = [];
             this.stats =
             {
                 id: 0,
@@ -21,9 +21,9 @@
                 agl: 0,
                 ailments: {
                     // Every turn, decreasing HP by 50-100
-                    poisoned: 0,
+                    poisoned: this.duel.rules.duelmode === "poisonrelying" ? 1 : 0,
                     // Cannot act till he/she awakens
-                    asleep: 0,
+                    asleep: this.duel.rules.duelmode === "poisonrelying" ? 1 : 0,
                     // Cannot do physical actions
                     paralysed: 0,
                     // Often missing physical bash
@@ -33,8 +33,7 @@
                 },
                 shielding: {type:"", duration: 0},
                 reviveEnchanted: this.duel.rules.duelmode === "withrevive" ? 1 : 0,
-                parameterAlteration:
-                {
+                parameterAlteration: {
                     offense : 0,
                     defense : 0,
                 },
@@ -47,6 +46,76 @@
             this.stats.hpa = this.stats.mhp;
             this.stats.tp = this.stats.mtp;
             this.stats.tpa = this.stats.mtp;
+        }
+        
+        initAction () {
+            this.actionTime = 0;
+            this.stats.isDefending = 0;
+            this.windowMain.classList.add("acting");
+            if(this.stats.ailments.poisoned) {
+                this.poisonDamage();
+            } else if(this.stats.ailments.asleep) {
+                this.asleep();
+            } else {
+                this.setAction();
+            }
+        }
+
+        asleep () {
+            this.duel.writeMessage(`${this.stats.charName} は ねむっている…`);
+
+            if(Math.random()*4 <= 1 && this.duel.rules.duelmode !== "poisonrelying") {
+                setTimeout(()=>{
+                    this.stats.ailments.asleep=0;
+                    this.duel.writeMessage(`${this.stats.charName} は めをさました！`);
+                }, 1000);
+                setTimeout(()=>{
+                    this.endTurn();
+                }, 2000);
+            }else{
+                setTimeout(()=>{
+                    this.endTurn();
+                }, 1000);
+            }
+
+        }
+
+        poisonDamage () {
+            this.stats.hp -= Math.floor(Math.random()*50) + 50;
+            this.duel.writeMessage(`${this.stats.charName} は どくで ${Math.floor(Math.random()*50) + 50} の ダメージ！`);
+            setTimeout(()=>{
+                 if(this.stats.ailments.asleep) {
+                    this.asleep();
+                }else{
+                    this.setAction();
+                }
+            },1000);
+        }
+        
+        setAction () {
+            this.duel.writeMessage('わたしもいつかこうどうできるようになってみたい。');
+            setTimeout(()=>{
+                this.endTurn();
+            }, 2000);
+        }
+
+        endTurn () {
+            if(Math.random()*30 <= 1 && this.stats.ailments.poisoned && this.duel.rules.duelmode !== "poisonrelying"){
+                this.stats.ailments.poisoned=0;
+                this.promisedMessage.push(`${this.stats.charName} のからだから どくがきえた！`);
+            }
+            let to = 17;
+            if(this.promisedMessage.length>0){
+                this.promisedMessage.forEach(m => {
+                    this.duel.writeMessage(m);
+                });
+                to = 1000 * this.promisedMessage.length;
+            }
+            this.promisedMessage = [];
+            this.windowMain.classList.remove("acting");
+            setTimeout(()=>{
+                this.duel.seekTurn();
+            },to);
         }
 
         takeDamage(dmg, type) {
@@ -66,10 +135,22 @@
                 }
                 this.duel.writeBreakdown(`${dmg} ダメージ`);
                 popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+                
+                if(Math.random()*1.6 <= 1 && this.stats.ailments.asleep) {
+                    this.duel.writeMessage(`${this.stats.charName} は めをさました！`);
+                    this.stats.ailments.asleep = 0;
+                }
+
             }else if(type==="psi"){
                 this.stats.hp -= dmg;
                 this.duel.writeBreakdown(`${dmg} ダメージ`);
                 popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+            }
+
+            if(this.stats.hp<=0) {
+                this.duel.shakeScreen(1,this);
+            }else{
+                this.duel.shakeScreen(0,this);
             }
         }
     }
@@ -117,6 +198,7 @@
 
             this.ailmentJog = 0;
             this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
+            this.seekAilmentState ();
 
             this.charPos =
             [
@@ -138,25 +220,6 @@
             this.recognizing[name] = "";
         }
 
-        initAction () {
-            this.actionTime = 0;
-            this.stats.isDefending = 0;
-            this.windowMain.classList.add("acting");
-            if(this.stats.ailments.poisoned) {
-                this.poisonDamage();
-            }else{
-                this.setAction();
-            }
-        }
-
-        poisonDamage () {
-            this.stats.hp -= Math.floor(Math.random()*50) + 50;
-            this.duel.writeMessage(`${this.stats.charName} は どくで${Math.floor(Math.random()*50) + 50}のダメージ！`);
-            setTimeout(()=>{
-            this.setAction();
-            },1000);
-        }
-        
         setAction () {
             const action = determineMainCharAction(this);
             if(action === "bash") {
@@ -175,9 +238,6 @@
         normalBash (target) {
             let damage =  Math.floor(Math.random()*80) + 60;
             const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
-            // if(target.stats.isDefending) {
-            //     damage = Math.floor(damage * 0.3);
-            // }
             this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
 
             setTimeout(()=>{
@@ -189,7 +249,8 @@
                         if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
                             target.stats.shielding.duration = 1;
                         }
-                        this.duel.writeMessage(`SMEEEEEEEESH!!`);
+                        this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
+                        popsmesh(this.duel.duelScreen, target.charPos);
                         this.stats.tp += 4;
                     }else if(target.stats.isDefending) {
                         damage = Math.floor(damage * 0.3);
@@ -200,8 +261,7 @@
             }, 500);
 
             setTimeout(() => {
-                this.windowMain.classList.remove("acting");
-                this.duel.seekTurn();
+                this.endTurn();
             }, 1200);
         }
 
@@ -210,8 +270,7 @@
             this.stats.isDefending=1;
 
             setTimeout(()=>{
-                this.windowMain.classList.remove("acting");
-                this.duel.seekTurn();
+                this.endTurn();
             }, 1000);
         }
         
@@ -254,8 +313,7 @@
             }
                 
             setTimeout(() => {
-                this.windowMain.classList.remove("acting");
-                this.duel.seekTurn();
+                this.endTurn();
             }, (2000 + animationTime));
         }
 
@@ -404,33 +462,49 @@
 
     class Duel {
         constructor (rules) {
+            // Initialize Duel Screen
             this.duelScreen = document.createElement("div");
             this.duelScreen.classList.add("duelScreen");
-
             this.messageBox = document.createElement('div');
             this.messageBox.classList.add('messageContainer');
             this.duelScreen.appendChild(this.messageBox);
-
             this.windowContainer = document.createElement('div');
             this.windowContainer.classList.add('windowFlexBox');
             this.duelScreen.appendChild(this.windowContainer);
-
             document.querySelector("main").appendChild(this.duelScreen);
 
+            this.startTime = performance.now();
             this.rules = rules;
             this.message = "";
             this.totalMessage = "";
             this.gameFlag = 1;
             this.totalTurn = 0;
+            this.hitPointSetting = [];
+            this.technicalPointSetting = [];
+            for(let k = 0; k < 2; k++){
+                if(this.rules.duelmode === "suddendeath") {
+                    this.hitPointSetting.push(1);
+                }else if(this.rules.duelmode === "poisonrelying"){
+                    this.hitPointSetting.push(Math.floor(Math.random()*99) + 900);
+                }else{
+                    this.hitPointSetting.push(Math.floor(Math.random()*520) + 350);
+                }
+        
+                if(this.rules.duelmode === "suddendeath" || this.rules.duelmode === "nomagic" || this.rules.duelmode === "poisonrelying") {
+                    this.technicalPointSetting.push(0);
+                }else{
+                    this.technicalPointSetting.push(Math.floor(Math.random()*500) + 250);
+                }
+            }
             this.sideA = [new LeadChar(this, {
                 id: 0,
                 iff: 0,
                 charName: characterNames[Math.floor(Math.random()*characterNames.length)],
-                mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*520) + 350,
+                mhp: this.hitPointSetting[0],
                 hp: 0,
                 hpa: 0,
                 tp: 0,
-                mtp: this.rules.duelmode === "nomagic" || this.rules.duelmode === "suddendeath" ? 0 : Math.floor(Math.random()*500) + 250,
+                mtp: this.technicalPointSetting[0],
                 tpa: 0,
                 isDefending: 0,
                 offense: 100,
@@ -440,11 +514,11 @@
                     id: 1,
                     iff: 1,
                     charName: characterNames[Math.floor(Math.random()*characterNames.length)],
-                    mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*520) + 350,
+                    mhp: this.hitPointSetting[1],
                     hp: 0,
                     hpa: 0,
                     tp: 0,
-                    mtp: this.rules.duelmode === "nomagic" || this.rules.duelmode === "suddendeath" ? 0 : Math.floor(Math.random()*500) + 250,
+                    mtp: this.technicalPointSetting[1],
                     tpa: 0,
                     isDefending: 0,
                     offense: 100,
@@ -462,6 +536,8 @@
                 this.charA.stats.charName += "A";
                 this.charB.stats.charName += "B";
             }
+
+            this.writeBreakdown(`ルール：${this.rules.japanname}`);
 
             this.writeMessage("The engage!");
             this.parallelProgress();
@@ -578,7 +654,28 @@
             }
         }
 
+        shakeScreen (type, target) {
+            this.duelScreen.classList.remove("damageShakeNormal");
+            this.duelScreen.classList.remove("damageShakeCritical");
+            if(type===1) {
+                this.writeMessage(`${target.stats.charName} はちめいてきなダメージをうけた！`);
+            }
+            window.requestAnimationFrame(
+                ()=>{
+                    if(type===0) {
+                        this.duelScreen.classList.add("damageShakeNormal");
+                    }
+                    if(type===1) {
+                        this.duelScreen.classList.add("damageShakeCritical");
+                    }
+                }
+            )
+            // setTimeout(()=>{
+            // }, 17);
+        }
+
         terminate () {
+            const endTime = performance.now() - this.startTime;
             this.gameFlag=0;
             this.orders = [];
             if(this.charB.stats.hpa === 0 && this.charA.stats.hpa === 0) {
@@ -587,19 +684,24 @@
                 this.charB.stats.hpa = 0;
                 this.charA.stats.hpa = 0;
                 this.writeMessage(`りょうしゃとも きずつきたおれた…`);
+                this.writeBreakdown("---------------------");
                 this.writeBreakdown(`Draw!`);
             } else if(this.charB.stats.hpa <= 0){
                 this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
+                this.writeBreakdown("---------------------");
                 this.writeBreakdown(`${this.charA.stats.charName} Wins!`);
             }else if(this.charA.stats.hpa <= 0){
                 this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
+                this.writeBreakdown("---------------------");
                 this.writeBreakdown(`${this.charB.stats.charName} Wins!`);
             } else {
                 this.writeMessage(`しあいは ちゅうしされた！`);
+                this.writeBreakdown("---------------------");
                 this.writeBreakdown(`Draw!`);
             }
             this.charA.parallelProgress();
             this.charB.parallelProgress();
+            this.writeBreakdown(`せんとうじかん : ${Math.floor(endTime / 1000 / 60)} ふん ${Math.floor(endTime / 1000 % 60)} びょう`);
 
             const showBrkdwnBtn = document.createElement('div');
             showBrkdwnBtn.textContent = "うちわけを ひょうじする";
@@ -686,6 +788,15 @@
         duelScreen.appendChild(dmgInd);
         setTimeout(()=>{dmgInd.remove();}, 1000);
     }
+    function popsmesh(duelScreen, target) {
+        const smesh = document.createElement("div");
+        smesh.textContent = "SMEEEEEEESH!!";
+        smesh.classList.add('damage-smesh');
+        smesh.style.left = target[0]+"px";
+        smesh.style.top = target[1] - 30 +"px";
+        duelScreen.appendChild(smesh);
+        setTimeout(()=>{smesh.remove();}, 1000);
+    }
 
     const characterNames = [
         "そう",
@@ -731,24 +842,29 @@
     const duelMain = [];
 
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode: "normal", background : 0});
+        const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "nomagic", background : 0});
+        const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "withrevive", background : 0});
+        const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
     document.querySelector('.suddenDeath').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "suddendeath", background : 0});
+        const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
+    });
+    document.querySelector('.poisonRelying').addEventListener('click', ()=>{
+        const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });

@@ -66,6 +66,77 @@ main {
     overflow: hidden;
 }
 
+.damageShakeNormal {
+    animation: shakeNormal 0.7s 1 linear forwards;
+}
+
+.damageShakeCritical {
+    animation: shakeCritical 1.5s 1 linear forwards;
+}
+
+@keyframes shakeNormal {
+    0% {
+        transform: translateY(0);
+    }
+    10% {
+        transform: translateY(-25px);
+    }
+    20% {
+        transform: translateY(15px);
+    }
+    30% {
+        transform: translateY(-8px);
+    }
+    40% {
+        transform: translateY(6px);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+    60% {
+        transform: translateY(2px);
+    }
+    70% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes shakeCritical {
+    0% {
+        transform: translateY(0);
+    }
+    5% {
+        transform: translateY(-65px);
+    }
+    10% {
+        transform: translateY(43px);
+    }
+    15% {
+        transform: translateY(-35px);
+    }
+    20% {
+        transform: translateY(24px);
+    }
+    25% {
+        transform: translateY(-16px);
+    }
+    30% {
+        transform: translateY(12px);
+    }
+    35% {
+        transform: translateY(-6px);
+    }
+    40%,50%,60%,70%,80%,90% {
+        transform: translateY(5px);
+    }
+    45%,55%,65%,75%,85%,95% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 .duelScreen.scrollable {
     max-height: 350px;
     overflow-y: scroll;
@@ -76,6 +147,15 @@ main {
     text-shadow: 0 0 7px #34343488;
     font-weight: 700;
     font-size: 24px;
+    transform: translate(-50%, 0);
+    animation: damageIndiSpan 0.7s 1 linear forwards;
+}
+
+.damage-smesh {
+    position: absolute;
+    /* text-shadow: 0 0 7px #34343488; */
+    font-weight: 700;
+    font-size: 16px;
     transform: translate(-50%, 0);
     animation: damageIndiSpan 0.7s 1 linear forwards;
 }
