@@ -6,7 +6,7 @@
             this.actable = 0;
             this.actionTime = 0;
             this.charPos = [0,0];
-            this.promisedMessage = [];
+            this.takenDamage = 0;
             this.stats =
             {
                 id: 0,
@@ -102,16 +102,16 @@
         endTurn () {
             if(Math.random()*30 <= 1 && this.stats.ailments.poisoned && this.duel.rules.duelmode !== "poisonrelying"){
                 this.stats.ailments.poisoned=0;
-                this.promisedMessage.push(`${this.stats.charName} のからだから どくがきえた！`);
+                this.duel.promisedMessage.push(`${this.stats.charName} のからだから どくがきえた！`);
             }
             let to = 17;
-            if(this.promisedMessage.length>0){
-                this.promisedMessage.forEach(m => {
+            if(this.duel.promisedMessage.length>0){
+                this.duel.promisedMessage.forEach(m => {
                     this.duel.writeMessage(m);
                 });
-                to = 1000 * this.promisedMessage.length;
+                to = 1000 * this.duel.promisedMessage.length;
             }
-            this.promisedMessage = [];
+            this.duel.promisedMessage = [];
             this.windowMain.classList.remove("acting");
             setTimeout(()=>{
                 this.duel.seekTurn();
@@ -152,6 +152,8 @@
             }else{
                 this.duel.shakeScreen(0,this);
             }
+
+            this.takenDamage += dmg;
         }
     }
 
@@ -230,6 +232,8 @@
                 this.lifeUp();
             } else if(action === "psimagnet") {
                 this.psiMagnet();
+            } else if(action === "hypnosis-alpha") {
+                this.hypnosisAlpha();
             } else {
                 this.duel.writeMessage(`${this.stats.charName} は たちすくんだ！`);
             }
@@ -239,6 +243,8 @@
             let damage =  Math.floor(Math.random()*80) + 60;
             const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
             this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
+
+            target.recognize('opponentSleeping', 0);
 
             setTimeout(()=>{
                 if(Math.random()*chanceOfMiss <= 1){
@@ -275,16 +281,20 @@
         }
         
         lifeUp () {
-            this.psiTrial("ライフアップ", this, spellBook.lifeup, 0);
+            this.psiTrial(this, spellBook.lifeup, 0);
         }
 
         psiMagnet () {
-            this.psiTrial("サイマグネット", this.opponent, spellBook.psiMagnet, 0);
+            this.psiTrial(this.opponent, spellBook.psiMagnet, 0);
         }
 
-        psiTrial (psiname, target, spell, animationTime) {
+        hypnosisAlpha () {
+            this.psiTrial(this.opponent, spellBook["hypnosis-alpha"], 0);
+        }
+
+        psiTrial (target, spell, animationTime) {
             let success = 0;
-            this.duel.writeMessage(`${this.stats.charName} は ${psiname} をこころみた！`);
+            this.duel.writeMessage(`${this.stats.charName} は ${spell.title} をこころみた！`);
 
             if(
                 this.duel.rules.duelmode !== "nomagic" && 
@@ -382,12 +392,13 @@
         }
 
         seekAilmentState () {
-            if(this.ailmentJog===0) {
+            if(this.ailmentJog===-1) {
                 this.ailmentIndicator.classList.remove("poisoned");
                 this.ailmentIndicator.classList.remove("asleep");
                 this.ailmentIndicator.classList.remove("paralysed");
                 this.ailmentIndicator.classList.remove("crying");
                 this.ailmentIndicator.classList.remove("silenced");
+                this.ailmentJog = 0;
             }
 
             const ailments =
@@ -446,16 +457,13 @@
                     this.ailmentIndicator.classList.add("silenced");
                 }else {
                     this.ailmentIndicator.classList.remove("silenced");
-                    this.ailmentJog=0;
-                    if(ailments.join("-") !== "0-0-0-0-0"){
-                        this.seekAilmentState();
-                    }
                 }
             }
             
             this.ailmentJog++;
-            if(this.ailmentJog > ailments.length - 1){
-                this.ailmentJog = 0;
+            if(this.ailmentJog > ailments.length - 1 && ailments.join("-") !== "0-0-0-0-0"){
+                this.ailmentJog = -1;
+                this.seekAilmentState();
             }
         }
     }
@@ -481,6 +489,7 @@
             this.totalTurn = 0;
             this.hitPointSetting = [];
             this.technicalPointSetting = [];
+            this.promisedMessage = [];
             for(let k = 0; k < 2; k++){
                 if(this.rules.duelmode === "suddendeath") {
                     this.hitPointSetting.push(1);
@@ -702,6 +711,12 @@
             this.charA.parallelProgress();
             this.charB.parallelProgress();
             this.writeBreakdown(`せんとうじかん : ${Math.floor(endTime / 1000 / 60)} ふん ${Math.floor(endTime / 1000 % 60)} びょう`);
+            this.writeBreakdown(
+                `${this.charA.stats.charName} が うけた ダメージ : ${this.charA.takenDamage}`
+            );
+            this.writeBreakdown(
+                `${this.charB.stats.charName} が うけた ダメージ : ${this.charB.takenDamage}`
+            );
 
             const showBrkdwnBtn = document.createElement('div');
             showBrkdwnBtn.textContent = "うちわけを ひょうじする";
@@ -730,10 +745,21 @@
         for(let i = 0; i<10; i++){
             action = "bash";
 
+            // Hypnosis
+            if(
+            Math.random()*3 <= 1 &&
+            origin.recognizing.opponentSleeping === 0 &&
+            !player.ailments.silenced &&
+            origin.recognizing.rule !== "nomagic") {
+                action = "hypnosis-alpha";
+            }
+
+            // Defend
             if(Math.random()*10<=1) {
                 action = "defend"
             }
             
+            // PSI Magnet
             if(
                 Math.random()*5 <= 1 &&
                 player.tp < (player.mtp * 0.3) &&
@@ -743,6 +769,7 @@
                 action = "psimagnet";
             }
 
+            // Lifeup
             if(
                 player.tp >= spellBook.lifeup.cost && 
                 player.hp < (player.mhp * 0.7) &&
@@ -761,6 +788,7 @@
                 }
             }
             
+            // SuddenDeath
             if(origin.recognizing.rule === "suddendeath") {
                 action = "bash";
             }
@@ -768,7 +796,7 @@
             opinions.push(action);
         }
 
-        console.log(opinions.join("-"));
+        // console.log(opinions.join("-"));
 
         const finalDecision = opinions[Math.floor(Math.random()*opinions.length)];
         return finalDecision;
@@ -788,14 +816,18 @@
         duelScreen.appendChild(dmgInd);
         setTimeout(()=>{dmgInd.remove();}, 1000);
     }
+
     function popsmesh(duelScreen, target) {
+        const flasher = document.createElement("div");
+        flasher.classList.add('duelScreenFlashing');
+        duelScreen.appendChild(flasher);
         const smesh = document.createElement("div");
         smesh.textContent = "SMEEEEEEESH!!";
         smesh.classList.add('damage-smesh');
         smesh.style.left = target[0]+"px";
         smesh.style.top = target[1] - 30 +"px";
         duelScreen.appendChild(smesh);
-        setTimeout(()=>{smesh.remove();}, 1000);
+        setTimeout(()=>{flasher.remove();smesh.remove();}, 1000);
     }
 
     const characterNames = [
@@ -808,11 +840,13 @@
         "いぶりがっこくん",
         "ネッス",
         "しのだ",
+        "きし",
     ];
 
     /* Spell Book */
     const spellBook = {
         "lifeup" : {
+            "title" : "ライフアップ",
             "cost": 24,
             "desc": "ヒットポイントをぜんかいふくする",
             "func": function (caster, target, duel) {
@@ -821,6 +855,7 @@
             }
         },
         "psiMagnet" : {
+            "title" : "サイマグネット",
             "cost" : 0,
             "desc" : "あいてから TPをうばう",
             "func" : function (caster, target, duel) {
@@ -836,7 +871,24 @@
                 target.stats.tp -= drainValue;
                 caster.stats.tp += drainValue;
             }
-        }
+        },
+        "hypnosis-alpha" : {
+            "title" : "さいみんじゅつα",
+            "cost" : 10,
+            "desc" : "あいてひとりを ねむらせる",
+            "func" : function (caster, target, duel) {
+                const chance = 1.66 + 2 * (target.stats.hp / target.stats.mhp);
+                const dicing = Math.random()*chance;
+                console.log(`${dicing} <= 1`);
+                if(dicing <= 1 && target.stats.ailments.asleep === 0) {
+                    target.stats.ailments.asleep = 1;
+                    duel.writeMessage(`${target.stats.charName} は ねむってしまった！`);
+                    caster.recognize("opponentSleeping", 1);
+                } else {
+                    duel.writeMessage(`${target.stats.charName} には こうかがなかった！`);
+                }
+            }
+        },
     };
     
     const duelMain = [];
@@ -858,15 +910,23 @@
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
+
     document.querySelector('.suddenDeath').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
+
     document.querySelector('.poisonRelying').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : 0});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
+    document.querySelector('.thirtySecondsBtn').addEventListener('click', ()=>{
+        const a = new Duel({duelmode: "normal", japanname: "30びょうでちゅうし", background : 0});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
+        setTimeout(()=>{a.terminate();}, 30000);
+    });
 }
