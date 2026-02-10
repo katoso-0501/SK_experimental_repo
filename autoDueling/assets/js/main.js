@@ -61,6 +61,20 @@
             }
         }
 
+        poisonDamage () {
+            const poisonDmg = Math.floor(Math.random()*50) + 50;
+            this.stats.hp -= poisonDmg;
+            this.duel.writeMessage(`${this.stats.charName} は どくで ${poisonDmg} の ダメージ！`);
+            this.takenDamage += poisonDmg;
+            setTimeout(()=>{
+                 if(this.stats.ailments.asleep) {
+                    this.asleep();
+                }else{
+                    this.setAction();
+                }
+            },1000);
+        }
+        
         asleep () {
             this.duel.writeMessage(`${this.stats.charName} は ねむっている…`);
 
@@ -77,21 +91,8 @@
                     this.endTurn();
                 }, 1000);
             }
-
         }
 
-        poisonDamage () {
-            this.stats.hp -= Math.floor(Math.random()*50) + 50;
-            this.duel.writeMessage(`${this.stats.charName} は どくで ${Math.floor(Math.random()*50) + 50} の ダメージ！`);
-            setTimeout(()=>{
-                 if(this.stats.ailments.asleep) {
-                    this.asleep();
-                }else{
-                    this.setAction();
-                }
-            },1000);
-        }
-        
         setAction () {
             this.duel.writeMessage('わたしもいつかこうどうできるようになってみたい。');
             setTimeout(()=>{
@@ -378,6 +379,11 @@
                 this.stats.tpa--;
             }
 
+            if(this.duel.rules.duelmode === "poisonrelying"){
+                this.stats.hpa = this.stats.hp;
+                this.stats.tpa = this.stats.tp;
+            }
+
             if(this.stats.hp < 0) {
                 this.stats.hp = 0;
             }else if(this.stats.hp > this.stats.mhp) {
@@ -494,7 +500,7 @@
                 if(this.rules.duelmode === "suddendeath") {
                     this.hitPointSetting.push(1);
                 }else if(this.rules.duelmode === "poisonrelying"){
-                    this.hitPointSetting.push(Math.floor(Math.random()*99) + 900);
+                    this.hitPointSetting.push(999);
                 }else{
                     this.hitPointSetting.push(Math.floor(Math.random()*520) + 350);
                 }
@@ -747,10 +753,12 @@
 
             // Hypnosis
             if(
-            Math.random()*3 <= 1 &&
-            origin.recognizing.opponentSleeping === 0 &&
-            !player.ailments.silenced &&
-            origin.recognizing.rule !== "nomagic") {
+                player.tp >= spellBook["hypnosis-alpha"].cost && 
+                Math.random()*3 <= 1 &&
+                origin.recognizing.opponentSleeping === 0 &&
+                !player.ailments.silenced &&
+                origin.recognizing.rule !== "nomagic"
+            ) {
                 action = "hypnosis-alpha";
             }
 
