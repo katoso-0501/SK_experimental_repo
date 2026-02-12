@@ -78,6 +78,10 @@
         asleep () {
             this.duel.writeMessage(`${this.stats.charName} は ねむっている…`);
 
+            if(this.stats.mtp>=1) {
+                this.stats.tp += Math.floor(Math.random()*3);
+            }
+
             if(Math.random()*4 <= 1 && this.duel.rules.duelmode !== "poisonrelying") {
                 setTimeout(()=>{
                     this.stats.ailments.asleep=0;
@@ -202,6 +206,8 @@
             this.ailmentJog = 0;
             this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
             this.seekAilmentState ();
+
+            this.reductionLagger = 0;
 
             this.charPos =
             [
@@ -371,7 +377,15 @@
             if(this.stats.hpa < this.stats.hp) {
                 this.stats.hpa++;
             } else if(this.stats.hpa > this.stats.hp) {
-                this.stats.hpa--;
+                if(this.stats.isDefending) {
+                    this.reductionLagger++;
+                    if(this.reductionLagger>=4) {
+                        this.stats.hpa--;
+                        this.reductionLagger=0;
+                    }
+                }else{
+                    this.stats.hpa--;
+                }
             }
             if(this.stats.tpa < this.stats.tp) {
                 this.stats.tpa++;
@@ -889,6 +903,7 @@
                 const dicing = Math.random()*chance;
                 console.log(`${dicing} <= 1`);
                 if(dicing <= 1 && target.stats.ailments.asleep === 0) {
+                    target.stats.ailments.crying = 0;
                     target.stats.ailments.asleep = 1;
                     duel.writeMessage(`${target.stats.charName} は ねむってしまった！`);
                     caster.recognize("opponentSleeping", 1);
@@ -897,6 +912,19 @@
                 }
             }
         },
+        "revive" : {
+            "title" : "リヴァイブ",
+            "cost" : 100,
+            "desc" : "リヴァイブのじゅもんをじぶんにふよする",
+            "func" : function (caster, target, duel) {
+                if(Math.random()*4 <= 3) {
+                    caster.stats.reviveEnchanted=1;
+                    duel.writeMessage(`${caster.stats.charName}にリヴァイブのまほうがかかった！`);
+                } else {
+                    duel.writeMessage(` * しっぱい！ * `);
+                }
+            }
+        }
     };
     
     const duelMain = [];
@@ -938,28 +966,26 @@
         setTimeout(()=>{a.terminate();}, 30000);
     });
 
+    // Frame-skip settings
     let fps = 0;
-    let actionSkip  = 0;
-    let maximumSkip = 0;
-    let actionFrame = 0;
+    const skips = [0,0];
     const f = function(){
        fps++;
-       actionSkip++;
-       actionFrame++;
-       if(actionSkip>=maximumSkip){
-           actionSkip=0;
+       skips[0]++;
+       if(skips[0]>=skips[1]){
+           skips[0]=0;
        }
        requestAnimationFrame(f);
     }
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.floor(actionFrame / 60);
-        maximumSkip = skipSetting;
+        const skipSetting = Math.floor(fps / 60);
+        skips[1] = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps . スキップするべきフレーム ${skipSetting}`);
-        actionFrame=0;
         fps=0;
     },500);
+    
     document.querySelector('.textFramer').addEventListener('click', () =>{
         document.querySelector('.textFramer').style.opacity = 0;
     });

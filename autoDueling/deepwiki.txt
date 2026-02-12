@@ -1,0 +1,493 @@
+******************************
+Duel                        *
+******************************
+`Duel` is a JavaScript class that manages a turn-based battle between two AI-controlled characters.  
+It simulates a fully automatic duel with dynamic rules, character actions, and UI feedback.
+
+---
+
+### Definition
+
+The `Duel` class orchestrates a battle between two `LeadChar` instances (`charA` and `charB`). It initializes character stats, determines turn order based on agility (`agl`), and runs a loop via `parallelProgress()` and `seekTurn()` to advance the fight. The duel proceeds autonomously—no player input is required.
+
+```javascript
+487:750:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+class Duel {
+    constructor(rules) {
+        // Create UI elements
+        this.duelScreen = document.createElement("div");
+        this.duelScreen.classList.add("duelScreen");
+        this.messageBox = document.createElement('div');
+        this.messageBox.classList.add('messageContainer');
+        this.windowContainer = document.createElement('div');
+        this.windowContainer.classList.add('windowFlexBox');
+        this.duelScreen.appendChild(this.messageBox);
+        this.duelScreen.appendChild(this.windowContainer);
+        document.querySelector("main").appendChild(this.duelScreen);
+
+        this.startTime = performance.now();
+        this.rules = rules;
+        this.totalMessage = "";
+        this.gameFlag = 1; // 1 = active, 0 = ended
+        this.totalTurn = 0;
+        this.hitPointSetting = [];
+        this.technicalPointSetting = [];
+
+        // Set HP/TP based on duel mode
+        for(let k = 0; k < 2; k++){
+            if(this.rules.duelmode === "suddendeath") {
+                this.hitPointSetting.push(1);
+            } else if(this.rules.duelmode === "poisonrelying"){
+                this.hitPointSetting.push(999);
+            } else {
+                this.hitPointSetting.push(Math.floor(Math.random()*520) + 350);
+            }
+
+            if(this.rules.duelmode === "suddendeath" || this.rules.duelmode === "nomagic" || this.rules.duelmode === "poisonrelying") {
+                this.technicalPointSetting.push(0);
+            } else {
+                this.technicalPointSetting.push(Math.floor(Math.random()*500) + 250);
+            }
+        }
+
+        // Initialize characters
+        this.sideA = [new LeadChar(this, { /* stats */ }), "*", "*", "*", "*", "*"];
+        this.sideB = [new LeadChar(this, { /* stats */ }), "*", "*", "*", "*", "*"];
+        this.charA = this.sideA[0];
+        this.charB = this.sideB[0];
+        this.charA.opponent = this.charB;
+        this.charB.opponent = this.charA;
+
+        if(this.charA.stats.charName === this.charB.stats.charName){
+            this.charA.stats.charName += "A";
+            this.charB.stats.charName += "B";
+        }
+
+        this.writeBreakdown(`ルール：${this.rules.japanname}`);
+        this.writeMessage("The engage!");
+        this.parallelProgress();
+    }
+
+    determineOrder() { /* randomize turn order with slight agl variance */ }
+    seekTurn() { /* process next action, check win/loss, revive if possible */ }
+    writeMessage(msg) { this.messageBox.innerHTML = msg; this.writeBreakdown(msg); }
+    writeBreakdown(msg) { this.totalMessage += msg + "\n"; }
+    parallelProgress() { /* animate HP/TP bars via requestAnimationFrame */ }
+    terminate() { /* end duel, display result, show breakdown */ }
+}
+```
+
+- **Params**: `rules` – an object defining game behavior (e.g. `{ duelmode: "normal", japanname: "ふつうのデュエル" }`)
+- **Side effects**: 
+  - Modifies DOM: adds `.duelScreen`, updates `.messageBox`, appends `.breakdownContainer` on end
+  - Starts animation loop via `requestAnimationFrame(parallelProgress)`
+  - Triggers character actions and AI decisions
+- **State tracking**: 
+  - `gameFlag`: controls whether the duel is active
+  - `orders`: queue of characters waiting to act
+  - `totalTurn`: increments each round
+- **AI behavior**: Uses `determineMainCharAction()` to simulate decision-making with weighted randomness
+
+---
+
+### Example Usages
+
+The `Duel` class is instantiated when a user clicks one of several UI buttons, each starting a duel under different rules. It runs autonomously after creation.
+
+```javascript
+914:918:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
+    const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : 0});
+    duelMain.push(a);
+    setTimeout(()=>{a.seekTurn();}, 1000);
+});
+```
+
+Other rule variants include:
+- `"nomagic"`: disables PSI abilities (TP = 0)
+- `"suddendeath"`: both characters start with 1 HP
+- `"poisonrelying"`: characters start with 999 HP and no TP
+- `"withrevive"`: allows revival after defeat
+- `"30seconds"`: automatically terminates after 30 seconds
+
+Each mode alters gameplay significantly. For example, in `suddendeath`, the first successful hit wins.
+
+---
+
+### Notes
+
+- Despite having `sideA` and `sideB` arrays of six elements each, only the first element (`sideA[0]`, `sideB[0]`) is used. The rest are placeholders, suggesting potential for future expansion (e.g. team battles).
+- The `parallelProgress()` method uses `window.requestAnimationFrame()` recursively to animate HP and TP bars smoothly, while `seekTurn()` is triggered via `setTimeout`—a dual timing strategy balancing visual smoothness and turn pacing.
+- Critical hits and misses are implemented with `Math.random()*16 <= 1`, giving roughly a 6.25% chance for each.
+
+---
+
+### See Also
+
+- `LeadChar`: The character class used by `Duel`; extends `CharBase` and manages UI elements and stat updates.
+- `CharBase`: Base class for characters, stores shared stats and provides `setStats()`.
+- `determineMainCharAction(origin)`: Standalone function that simulates AI decision-making by sampling possible actions.
+- `characterNames`: Array of Japanese names used to randomly name characters (e.g., "そう", "メイプル").
+- `terminate()`: Method that ends the duel, displays results, and appends a scrollable breakdown log.
+
+
+******************************
+Duel.terminate              *
+******************************
+`terminate` is a method that ends a duel session in an automated battle simulation.
+
+It finalizes the game state, displays match results, and disables further actions when a duel concludes due to character defeat, time limit, or mutual knockout.
+
+---
+
+### Definition
+
+The `terminate` method is part of a duel management class in `main.js`, responsible for cleanly ending a duel instance. It stops game execution, logs final outcomes, and renders post-match UI elements such as result messages and damage summaries.
+
+```javascript
+702:749:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+terminate () {
+    const endTime = performance.now() - this.startTime;
+    this.gameFlag = 0;           // Stops game loop
+    this.orders = [];            // Clears action queue
+
+    // Case: Both characters are defeated
+    if (this.charB.stats.hpa === 0 && this.charA.stats.hpa === 0) {
+        this.writeMessage(`りょうしゃとも きずつきたおれた…`); // "Both fighters have fallen..."
+        this.writeBreakdown(`Draw!`);
+    }
+    // Case: Character B is defeated
+    else if (this.charB.stats.hpa <= 0) {
+        this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
+        this.writeBreakdown(`${this.charA.stats.charName} Wins!`);
+    }
+    // Case: Character A is defeated
+    else if (this.charA.stats.hpa <= 0) {
+        this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
+        this.writeBreakdown(`${this.charB.stats.charName} Wins!`);
+    }
+    // Fallback: Game ended prematurely (e.g., time limit)
+    else {
+        this.writeMessage(`しあいは ちゅうしされた！`); // "The match was suspended!"
+        this.writeBreakdown(`Draw!`);
+    }
+
+    // Final stats logging
+    this.writeBreakdown(`せんとうじかん : ${minutes} ふん ${seconds} びょう`); // Combat time
+    this.writeBreakdown(`${charA.name} が うけた ダメージ : ${this.charA.takenDamage}`);
+    this.writeBreakdown(`${charB.name} が うけた ダメージ : ${this.charB.takenDamage}`);
+
+    // Injects "Show Breakdown" button and damage log container into DOM
+    const showBrkdwnBtn = document.createElement('div');
+    showBrkdwnBtn.textContent = "うちわけを ひょうじする"; // "Show breakdown"
+    showBrkdwnBtn.classList.add("showBreakdownBtn");
+    this.duelScreen.appendChild(showBrkdwnBtn);
+
+    const brkdwnContainer = document.createElement("div");
+    brkdwnContainer.classList.add("breakdownContainer");
+    brkdwnContainer.innerHTML = this.totalMessage.replace(/\n/g, "<br>");
+    this.duelScreen.appendChild(brkdwnContainer);
+
+    // Toggle visibility on click
+    showBrkdwnBtn.addEventListener('click', () => {
+        brkdwnContainer.classList.toggle("expanded");
+        this.duelScreen.classList.toggle("scrollable");
+    });
+}
+```
+
+- **Side effects**: 
+  - Sets `this.gameFlag = 0`, halting the game loop.
+  - Clears `this.orders`, stopping queued actions.
+  - Modifies DOM by adding result UI elements.
+  - Logs final messages and combat statistics.
+- **Parameters**: None.
+- **Returns**: `undefined`.
+- **Context**: Called as a method on a `Duel` instance, assumes presence of `charA`, `charB`, `duelScreen`, `totalMessage`, and `startTime`.
+
+---
+
+### Example Usages
+
+The `terminate` method is invoked in two main scenarios: when a character is defeated and cannot revive, or when a time-limited duel ends.
+
+#### 1. Called from `seekTurn` after character defeat
+
+When either combatant’s HP reaches zero and no revival mechanic is active, `terminate` ends the duel.
+
+```javascript
+608:614:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+seekTurn () {
+    if (this.charB.stats.hpa <= 0 && this.charA.stats.hpa <= 0) {
+        this.charA.faint();
+        this.charB.faint();
+        if (!this.charB.stats.reviveEnchanted && !this.charA.stats.reviveEnchanted) {
+            this.terminate(); // Ends duel if neither can revive
+        } else {
+            // Attempt revive instead
+        }
+    }
+}
+```
+
+#### 2. Forced termination after 30 seconds in time-limited mode
+
+A UI button triggers a duel that automatically ends after 30 seconds using `setTimeout`.
+
+```javascript
+944:948:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+document.querySelector('.thirtySecondsBtn').addEventListener('click', () => {
+    const a = new Duel({duelmode: "normal", japanname: "30びょうでちゅうし", background : 0});
+    duelMain.push(a);
+    setTimeout(() => { a.seekTurn(); }, 1000);
+    setTimeout(() => { a.terminate(); }, 30000); // Ends duel after 30 seconds
+});
+```
+
+**Usage Summary**:  
+`terminate` is called in three conditional branches within `seekTurn` and once directly via `setTimeout`. It is central to ending duels under various conditions: knockout, mutual defeat, or time expiration. It is not exported or used outside the `Duel` class context.
+
+---
+
+### Notes
+
+- `terminate` does **not** reset character stats or remove DOM elements from previous matches — it only appends new ones. This could lead to memory leaks or visual clutter over multiple duels unless manually cleared.
+- The method assumes `this.startTime` is set at duel start; if missing, combat duration will be incorrect.
+- Even if one character is still alive, a premature `terminate` call (e.g., via time limit) results in a draw — the fallback branch handles this case.
+
+---
+
+### See Also
+
+- `seekTurn`: Primary caller of `terminate`; evaluates game state each turn and decides whether to continue or end the duel.
+- `writeMessage` and `writeBreakdown`: Used by `terminate` to update UI and log messages; essential for user feedback.
+- `Duel` class: The containing class for `terminate`; manages the lifecycle of a duel instance.
+- `reviveEnchanted`: A flag checked before calling `terminate`; determines whether a character can self-revive instead of ending the match.
+
+
+
+******************************************
+Leadchar.invokeRevive
+******************************************
+`invokeRevive` is a method that revives a fainted character in a duel when a "Revive" effect is active.  
+It restores the character's HP and TP, removes the fainted state, and resumes gameplay after a delay.
+
+---
+
+### Definition
+
+The `invokeRevive` method is a class method within a character controller in a turn-based duel system. It is called when a character who previously received a "Revive" enchantment faints, allowing them to automatically return to battle.
+
+```javascript
+347:362:c:\Users\katos\Desktop\2020A-Katoso\autoDueling\assets\js\main.js
+invokeRevive () {
+    // Notify: Revive magic activates
+    this.duel.writeMessage(`しかし ${this.stats.charName} に かかっていたリヴァイブまほうが ${this.stats.charName} に ちからをくれた！`);
+
+    setTimeout(()=>{
+        // Revival message
+        this.duel.writeMessage(`${this.stats.charName} は カムバックした！`);
+        // Disable revive enchant
+        this.stats.reviveEnchanted = 0;
+        // Restore full HP
+        this.stats.hp = this.stats.mhp;
+        // Restore 30% of max TP
+        this.stats.tp = Math.floor(this.stats.mtp * 0.3);
+        // Remove visual "fainted" state
+        this.windowMain.classList.remove("fainted");
+        // Restart periodic ailment checks
+        this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
+    },1000);
+    
+    // Resume turn processing after revival
+    setTimeout(()=>{
+        this.duel.seekTurn();
+    },1800);
+}
+```
+
+- **Side effects**:  
+  - Updates `hp`, `tp`, and `reviveEnchanted` in `this.stats`  
+  - Removes `"fainted"` CSS class from `this.windowMain`  
+  - Starts a recurring interval for `seekAilmentState()`  
+  - Triggers `this.duel.seekTurn()` after delay  
+  - Writes two sequential messages to the duel log  
+
+- **Params**: None (method is invoked directly on the character instance)  
+- **Returns**: `undefined` (no explicit return value)
+
+This method assumes the character is already in a "fainted" state and that `reviveEnchanted` was previously set to `1` by another game mechanic.
+
+---
+
+### Example Usages
+
+There are **no direct caller references** found for `invokeRevive` in the codebase. It is defined but not explicitly invoked in any visible code. However, based on context, it is likely intended to be called after `faint()` when `reviveEnchanted` is active.
+
+Example invocation logic (inferred):
+```javascript
+// After character faints, check for revive enchant
+if (this.stats.reviveEnchanted) {
+    this.invokeRevive(); // Trigger comeback
+} else {
+    this.duel.terminate(); // Game over
+}
+```
+
+Despite being defined, **`invokeRevive` has zero callers** in the current codebase. It exists as a standalone method with no observed integration into the duel flow. This suggests it may be:
+- A stub for future implementation
+- Called indirectly via reflection or string reference (not found in grep)
+- Leftover from prior development
+
+---
+
+### Notes
+
+- Despite its clear functionality, `invokeRevive` is **not currently used** anywhere in the codebase — it has no callers.
+- The method does **not validate** whether the character is actually fainted before reviving — it assumes prior state checks were made.
+- Revival grants **30% of max TP**, which may be a balancing mechanic to prevent immediate reuse of high-cost PSI abilities.
+
+---
+
+### See Also
+
+- `faint()`: Method that puts the character into the fainted state; likely the intended trigger point for `invokeRevive`  
+- `reviveEnchanted`: A flag in `this.stats` that indicates whether the revive effect is active — this must be set externally  
+- `seekAilmentState()`: Periodic function re-enabled by `invokeRevive` to update visual status effects  
+- `duel.seekTurn()`: Resumes the duel turn sequence after revival completes
+
+**************************************
+Function : determineMainCharAction   *
+**************************************
+`determineMainCharAction` is a standalone AI decision function used in an automated duel simulation.  
+It determines a character's next action (e.g. attack, defend, heal) based on health, TP, and game rules using probabilistic logic.
+
+---
+
+### Definition
+
+```javascript
+752:821:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+function determineMainCharAction(origin) {
+    const opinions = [];                     // Stores 10 proposed actions
+    const player = origin.stats;             // Shortcut to character stats
+
+    // 0.5% chance to forget current rule (e.g. "nomagic")
+    if (Math.random() * 200 <= 1) {
+        origin.forget("rule");
+    }
+
+    let action;
+    for (let i = 0; i < 10; i++) {
+        action = "bash";                     // Default action
+
+        // 33% chance to use hypnosis if conditions met
+        if (player.tp >= spellBook["hypnosis-alpha"].cost &&
+            Math.random() * 3 <= 1 &&
+            origin.recognizing.opponentSleeping === 0 &&
+            !player.ailments.silenced &&
+            origin.recognizing.rule !== "nomagic") {
+            action = "hypnosis-alpha";
+        }
+
+        // 10% unconditional chance to defend
+        if (Math.random() * 10 <= 1) {
+            action = "defend";
+        }
+
+        // Up to 20% chance to drain TP via PSI Magnet if TP low
+        if (Math.random() * 5 <= 1 &&
+            player.tp < (player.mtp * 0.3) &&
+            !player.ailments.silenced &&
+            origin.recognizing.rule !== "nomagic") {
+            action = "psimagnet";
+        }
+
+        // Healing logic with multiple thresholds
+        if (player.tp >= spellBook.lifeup.cost &&
+            player.hp < (player.mhp * 0.7) &&
+            !player.ailments.silenced &&
+            origin.recognizing.rule !== "nomagic") {
+            if (player.hpa <= (player.mhp * 0.7) && Math.random() * 6 <= 1) {
+                action = "lifeup";
+            }
+            if (player.hpa <= (player.mhp * 0.4) && Math.random() * 3 <= 1) {
+                action = "lifeup";
+            }
+            if (player.hpa <= Math.floor(Math.random() * 40) + 100) {
+                action = "lifeup";  // Hard survival threshold
+            }
+        }
+
+        // In sudden death mode, always bash
+        if (origin.recognizing.rule === "suddendeath") {
+            action = "bash";
+        }
+
+        opinions.push(action);
+    }
+
+    // Randomly select one of the 10 generated actions
+    const finalDecision = opinions[Math.floor(Math.random() * opinions.length)];
+    return finalDecision;
+}
+```
+
+- **Params**: `origin` – a character instance (likely `LeadChar`) with `.stats`, `.recognizing`, and AI memory methods like `.forget()`
+- **Returns**: A string representing the chosen action (`"bash"`, `"defend"`, `"lifeup"`, `"psimagnet"`, or `"hypnosis-alpha"`)
+- **Side effects**: None directly; modifies no external state. May trigger `.forget("rule")` on `origin`
+- **Logic**: Simulates AI by generating 10 action proposals with weighted randomness, then picks one uniformly at random
+
+---
+
+### Example Usages
+
+The function is called during each turn to decide what a character should do. It is used within the `setAction` method of a character class, which then dispatches the corresponding behavior.
+
+```javascript
+228:242:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+setAction() {
+    const action = determineMainCharAction(this);  // Get AI decision
+
+    if (action === "bash") {
+        this.normalBash(this.opponent);
+    } else if (action === "defend") {
+        this.defend();
+    } else if (action === "lifeup") {
+        this.lifeUp();
+    } else if (action === "psimagnet") {
+        this.psiMagnet();
+    } else if (action === "hypnosis-alpha") {
+        this.hypnosisAlpha();
+    } else {
+        this.duel.writeMessage(`${this.stats.charName} は たちすくんだ！`);
+    }
+}
+```
+
+**Usage Flow**:
+1. `Duel.seekTurn()` selects the next character to act
+2. The character's `initAction()` is called
+3. `initAction()` calls `setAction()`
+4. `setAction()` calls `determineMainCharAction(this)` to get the AI's choice
+5. The chosen action is executed
+
+This function is used **twice per duel turn** (once per character) and runs fully autonomously—no player input is involved.
+
+---
+
+### Notes
+
+- Despite generating 10 proposed actions, the final decision is **uniformly random** across them—there is no majority voting or weighting. This introduces unpredictability, even if most proposals favor one action.
+- The healing logic has a **hard survival threshold**: if HP is 100 or below (adjusted by random offset), `lifeup` is chosen regardless of other factors—making characters highly aggressive about self-preservation.
+- The 10% chance to `defend` is unconditional and can override healing or spellcasting, potentially leading to suboptimal choices—this mimics hesitation or panic in human players.
+
+---
+
+### See Also
+
+- `LeadChar`: The character class whose instances are passed as `origin`; holds stats, UI elements, and methods like `normalBash()` and `lifeUp()`
+- `Duel`: The main game loop class; indirectly calls `determineMainCharAction` via `initAction → setAction` during turns
+- `spellBook`: Global object defining PSI spells including `"lifeup"`, `"hypnosis-alpha"`, and `"psiMagnet"` with costs and effects
+- `characterNames`: Array of Japanese names (e.g. `"そう"`, `"メイプル"`) used to randomly name characters in logs and messages
+- `initAction`: Top-level method that starts the action chain, handling status effects before calling `setAction`
