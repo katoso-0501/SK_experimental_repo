@@ -937,4 +937,30 @@
         setTimeout(()=>{a.seekTurn();}, 1000);
         setTimeout(()=>{a.terminate();}, 30000);
     });
+
+    let fps = 0;
+    let actionSkip  = 0;
+    let maximumSkip = 0;
+    let actionFrame = 0;
+    const f = function(){
+       fps++;
+       actionSkip++;
+       actionFrame++;
+       if(actionSkip>=maximumSkip){
+           actionSkip=0;
+       }
+       requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+
+    let k = setInterval(()=>{
+        const skipSetting = Math.floor(actionFrame / 60);
+        maximumSkip = skipSetting;
+        document.querySelector('.textFramer').textContent = (`${fps * 2} fps . スキップするべきフレーム ${skipSetting}`);
+        actionFrame=0;
+        fps=0;
+    },500);
+    document.querySelector('.textFramer').addEventListener('click', () =>{
+        document.querySelector('.textFramer').style.opacity = 0;
+    });
 }
