@@ -491,3 +491,248 @@ This function is used **twice per duel turn** (once per character) and runs full
 - `spellBook`: Global object defining PSI spells including `"lifeup"`, `"hypnosis-alpha"`, and `"psiMagnet"` with costs and effects
 - `characterNames`: Array of Japanese names (e.g. `"そう"`, `"メイプル"`) used to randomly name characters in logs and messages
 - `initAction`: Top-level method that starts the action chain, handling status effects before calling `setAction`
+
+
+**************************************
+Class: Background              *
+**************************************
+`Background` is a class that manages visual and interactive elements in a duel scene.  
+It controls background-specific effects, such as random lightning strikes, and integrates with game logic.
+
+---
+
+### Definition
+
+The `Background` class initializes and manages the visual layer of a duel, including special effects triggered during gameplay. It supports multiple background types, with distinct behaviors based on the `bgId` provided.
+
+```javascript
+3:62:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+class Background {
+    static maximumBgs = 2;
+
+    constructor(duel, bgSettings) {
+        this.duel = duel;
+        this.bgSettings = bgSettings;
+
+        this.mat = document.createElement('div');
+        this.mat.classList.add('duelBg');
+        this.duel.duelScreen.appendChild(this.mat);
+
+        if (this.bgSettings.bgId === 0) {
+            this.mat.classList.add('duelBg_00');
+            // Adds decorative sprite elements for static background
+            const sprite00 = document.createElement('div');
+            sprite00.classList.add('duelBg_00__sprites01');
+            const sprite00Inner = document.createElement('div');
+            sprite00Inner.classList.add('duelBg_00__sprites01__inner');
+            sprite00.appendChild(sprite00Inner);
+            this.mat.appendChild(sprite00);
+        }
+
+        if (this.bgSettings.bgId === 1) {
+            this.mat.classList.add('duelBg_01');
+            this.gimmickWorking = 0;
+            setTimeout(() => {
+                this.moveBg01(); // Starts periodic lightning check
+            }, 1000);
+        }
+    }
+
+    moveBg01() {
+        const probabilityOfThunder = 300;
+        if (Math.random() * probabilityOfThunder <= 1 &&
+            this.gimmickWorking === 0 &&
+            this.duel.charA.stats.hpa > 0 &&
+            this.duel.charB.stats.hpa > 0) {
+            this.gimmickWorking = 1;
+            const target = Math.random() * 2 <= 1 ? this.duel.charA : this.duel.charB;
+            this.duel.writeMessage("らくらいだ！");
+            flashScreen("#ffef00", this.duel.duelScreen);
+
+            setTimeout(() => {
+                this.gimmickWorking = 0;
+                target.takeDamage(Math.floor(Math.random() * 80) + 80, "thunder", true);
+                if (Math.random() * 8 <= 1) {
+                    target.stats.ailments.paralysed = 1;
+                    this.duel.writeMessage(`${target.stats.charName} の からだは しびれてしまった！`);
+                }
+            }, 600);
+        }
+        if (this.duel.gameFlag === 1) {
+            window.requestAnimationFrame(this.moveBg01.bind(this));
+        }
+    }
+}
+```
+
+- **Type**: Class
+- **Static property**: `maximumBgs = 2` — defines the number of available background types
+- **Constructor params**:
+  - `duel`: Reference to the parent `Duel` instance managing the game state
+  - `bgSettings`: Object containing `bgId` to determine which background to load
+- **Side effects**:
+  - Appends a DOM element (`div.duelBg`) to `duel.duelScreen`
+  - For `bgId === 1`, starts a recurring animation loop via `requestAnimationFrame`
+  - May trigger damage and status effects on characters during gameplay
+- **Visual behavior**:
+  - `bgId === 0`: Static background with decorative sprites
+  - `bgId === 1`: Dynamic background with random lightning gimmick
+
+---
+
+### Example Usages
+
+The `Background` class is instantiated within the `Duel` class initialization, using a background ID determined either by rules or randomness.
+
+```javascript
+623:626:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+if (this.rules.background === -1) {
+    this.rules.background = Math.floor(Math.random() * Background.maximumBgs);
+}
+this.duelBg = new Background(this, { bgId: this.rules.background });
+```
+
+This snippet shows how the background is selected:
+- If `rules.background` is `-1`, it picks a random valid ID using `Background.maximumBgs`
+- Then constructs the `Background` instance with `{ bgId: ... }`
+
+Another usage occurs in UI logic to validate background selection:
+
+```javascript
+1108:1111:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+if (typeof bgNo === "string" && 
+    parseInt(bgNo) <= Background.maximumBgs - 1 && 
+    parseInt(bgNo) >= -1) {
+    return parseInt(bgNo);
+} else {
+    return -1;
+}
+```
+
+This ensures user-selected background IDs are within valid range.
+
+**Overall usage summary**:
+- Used exclusively in `main.js`
+- Central to duel scene setup
+- Referenced in game initialization (`Duel` constructor), UI controls (`setBg`), and dynamic effects (`moveBg01`)
+- Two background types implemented, but only `bgId === 1` has active gameplay effects
+
+---
+
+### Notes
+
+- The lightning effect on `bgId === 1` can damage either character at random, making it a neutral hazard.
+- The effect only triggers when both characters are alive and the game is running (`gameFlag === 1`), preventing unintended activations post-victory.
+- Despite `maximumBgs = 2`, no code exists for `bgId === 2` or higher, suggesting extensibility was planned but not implemented.
+
+---
+
+### See Also
+
+- `Duel`: The main game manager that instantiates `Background`; controls lifecycle and rules
+- `setBg`: Utility function that validates background input using `Background.maximumBgs`
+- `flashScreen`: External function called by `Background` to create visual flash effects during lightning
+- `CharBase`: Receives damage and status effects from `Background`'s lightning gimmick
+
+
+**************************************
+Function : moveBg01                *
+**************************************
+`moveBg01` is a method in the `Background` class that implements dynamic environmental effects for a specific battle background.
+
+It governs a probabilistic lightning strike mechanic that can damage characters and inflict paralysis, active only during ongoing duels on background ID 1.
+
+---
+
+### Definition
+
+The `moveBg01` method is part of the `Background` class in `main.js`. It is specifically tied to background ID `1` (forest-themed arena) and introduces a periodic environmental hazard — random lightning strikes — during gameplay.
+
+```javascript
+34:61:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+moveBg01 () {
+    const probabilityOfThunder = 300;
+    if (
+        Math.random() * probabilityOfThunder <= 1
+        && this.gimmickWorking === 0
+        && this.duel.charA.stats.hpa > 0
+        && this.duel.charB.stats.hpa > 0
+    ) {
+        this.gimmickWorking = 1;
+        const target = Math.random() * 2 <= 1 ? this.duel.charA : this.duel.charB;
+        this.duel.writeMessage("らくらいだ！");
+        flashScreen("#ffef00", this.duel.duelScreen);
+
+        setTimeout(() => {
+            this.gimmickWorking = 0;
+            target.takeDamage(Math.floor(Math.random() * 80) + 80, "thunder", true);
+            if (Math.random() * 8 <= 1) {
+                target.stats.ailments.paralysed = 1;
+                this.duel.writeMessage(`${target.stats.charName} の からだは しびれてしまった！`);
+            }
+        }, 600);
+    }
+    if (this.duel.gameFlag === 1) {
+        window.requestAnimationFrame(this.moveBg01.bind(this));
+    }
+}
+```
+
+- **Type**: Instance method of `Background` class  
+- **Side effects**: 
+  - Displays messages via `this.duel.writeMessage`
+  - Triggers screen flash with `flashScreen`
+  - Applies damage and status effects (`paralysed`) to one character
+  - Schedules itself recursively using `requestAnimationFrame`
+- **Conditions**: Only activates if:
+  - Game is running (`this.duel.gameFlag === 1`)
+  - No current lightning effect active (`gimmickWorking === 0`)
+  - Both characters are alive
+- **Behavior**: Runs in a loop via `requestAnimationFrame`, checking each frame for a chance (1 in 300) to trigger lightning.
+
+This method effectively creates a passive, turnless hazard unique to one battlefield.
+
+---
+
+### Example Usages
+
+`moveBg01` is automatically invoked when a duel starts on background ID `1`, after a 1-second delay, and then continues to run via animation frame scheduling.
+
+```javascript
+25:31:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+if (this.bgSettings.bgId === 1) {
+    this.mat.classList.add('duelBg_01');
+    this.gimmickWorking = 0;
+    setTimeout(() => {
+        this.moveBg01();
+    }, 1000);
+}
+```
+
+This snippet shows the **only direct call** to `moveBg01`. After initialization, the method keeps itself alive through `requestAnimationFrame`, meaning it runs continuously as long as the game state allows.
+
+**Usage Summary**:
+- Called once at startup for background ID 1
+- Self-sustaining via `requestAnimationFrame`
+- No external callers; fully encapsulated within `Background` instance logic
+- Not used for any other background (`bgId !== 1`)
+
+It is **not widely used** across the codebase — only referenced in three locations: definition, initial call, and recursive scheduling.
+
+---
+
+### Notes
+
+- Despite its name, `moveBg01` does **not animate or move** the background visually — instead, it triggers gameplay events (lightning strikes).
+- The name may be misleading: "move" likely refers to "action" or "gimmick activation", not visual motion.
+- The 1-second delay before first call (`setTimeout(..., 1000)`) prevents immediate activation, possibly to allow UI stabilization before effects begin.
+
+---
+
+### See Also
+
+- `Background`: The class that owns `moveBg01`; responsible for setting up visual and mechanical aspects of the duel stage.
+- `gimmickWorking`: A state flag used to prevent overlapping lightning effects; ensures only one strike occurs at a time.
+- `flashScreen`: A utility function called by `moveBg01` to simulate lightning flash, using color `#ffef00` (bright yellow).
+- `takeDamage`: Method on character objects (`charA`, `charB`) used to apply 80–159 damage from lightning.
+- `duelBg_01`: CSS class applied to the background element when `bgId === 1`, likely tied to visual styling of the forest stage.

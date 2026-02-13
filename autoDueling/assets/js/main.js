@@ -1159,7 +1159,7 @@
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.ceil((fps - 2) / 20);
+        const skipSetting = Math.ceil((fps - 4) / 20);
         maximumSkip = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
