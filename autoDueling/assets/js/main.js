@@ -48,6 +48,10 @@
                 setTimeout(()=>{
                     this.gimmickWorking = 0;
                     target.takeDamage(Math.floor(Math.random()*80) + 80, "thunder", true);
+                    if(Math.random()*8 <= 1) {
+                        target.stats.ailments.paralysed = 1;
+                        this.duel.writeMessage(`${target.stats.charName} の からだは しびれてしまった！`);
+                    }
                 },600);
             }
             if(
@@ -140,8 +144,7 @@
             }
             if(Math.random()*4 <= 1 && this.duel.rules.duelmode !== "poisonrelying") {
                 setTimeout(()=>{
-                    this.stats.ailments.asleep=0;
-                    this.duel.writeMessage(`${this.stats.charName} は めをさました！`);
+                    this.recover("asleep");
                 }, 1000);
                 setTimeout(()=>{
                     this.endTurn();
@@ -153,6 +156,36 @@
             }
         }
 
+        paralysing () {
+            this.duel.writeMessage(`${this.stats.charName} は しびれてうごけない！`);
+            setTimeout(()=>{
+                this.endTurn()
+            },1000);
+        }
+
+        recover (ailment) {
+            if(ailment === "poisoned") {
+                this.stats.ailments.poisoned = 0;
+                this.duel.writeMessage(`${this.stats.charName} の からだから どくがきえた！`);
+            }
+            if(ailment === "crying") {
+                this.stats.ailments.crying = 0;
+                this.duel.writeMessage(`${this.stats.charName} の なみだは ようやくとまった…`);
+            }
+            if(ailment === "asleep") {
+                this.stats.ailments.asleep = 0;
+                this.duel.writeMessage(`${this.stats.charName} は めをさました！`);
+            }
+            if(ailment === "paralysed") {
+                this.stats.ailments.paralysed = 0;
+                this.duel.writeMessage(`${this.stats.charName} の からだから しびれがきえた！`);
+            }
+            if(ailment === "silenced") {
+                this.stats.ailments.silenced = 0;
+                this.duel.writeMessage(`${this.stats.charName} は コンセントレーションが できるようになった！`);
+            }
+        }
+
         setAction () {
             this.duel.writeMessage('わたしもいつかこうどうできるようになってみたい。');
             setTimeout(()=>{
@@ -161,17 +194,30 @@
         }
 
         endTurn () {
-            if(Math.random()*30 <= 1 && this.stats.ailments.poisoned && this.duel.rules.duelmode !== "poisonrelying"){
-                this.stats.ailments.poisoned=0;
-                this.duel.promisedMessage.push(`${this.stats.charName} のからだから どくがきえた！`);
-            }
             let to = 17;
-            if(this.duel.promisedMessage.length>0){
-                this.duel.promisedMessage.forEach(m => {
-                    this.duel.writeMessage(m);
-                });
-                to = 1000 * this.duel.promisedMessage.length;
+            if(
+                Math.random()*30 <= 1 &&
+                this.stats.ailments.poisoned &&
+                this.duel.rules.duelmode !== "poisonrelying"
+            ){
+                this.recover("poisoned");
+                to = 1000;
             }
+
+            if(
+                !this.stats.ailments.poisoned &&
+                this.stats.ailments.paralysed &&
+                Math.random()*10 <= 1 
+            ) {
+                this.recover('paralysed');
+                to = 1000;
+            }
+            // if(this.duel.promisedMessage.length>0){
+            //     this.duel.promisedMessage.forEach(m => {
+            //         this.duel.writeMessage(m);
+            //     });
+            //     to = 1000 * this.duel.promisedMessage.length;
+            // }
             this.duel.promisedMessage = [];
             this.windowMain.classList.remove("acting");
             setTimeout(()=>{
@@ -189,7 +235,7 @@
                     this.stats.hp -= dmg;
                     this.stats.shielding.duration--;
                     if(this.stats.shielding.duration<=0){
-                        this.duel.writeMessage(`${this.stats.charName}のシールドはきえてなくなった！`);
+                        this.duel.writeMessage(`${this.stats.charName} の シールドは きえてなくなった！`);
                     }
                 }else{
                     this.stats.hp -= dmg;
@@ -208,7 +254,7 @@
                     dmg = Math.ceil(dmg / 2);
                     this.stats.hp -= dmg;
                     this.stats.shielding.duration=0;
-                    this.duel.writeMessage(`${this.stats.charName}のシールドはきえてなくなった！`);
+                    this.duel.writeMessage(`${this.stats.charName} の シールドは きえてなくなった！`);
                 }else{
                     this.stats.hp -= dmg;
                 }
@@ -311,52 +357,61 @@
         }
 
         normalBash (target) {
-            let damage =  Math.floor(Math.random()*80) + 60;
-            const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
-            this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
+            if(!this.stats.ailments.paralysed){
+                
+                let damage =  Math.floor(Math.random()*80) + 60;
+                const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
+                this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
 
-            target.recognize('opponentSleeping', 0);
+                target.recognize('opponentSleeping', 0);
 
-            setTimeout(()=>{
-                if(Math.random()*chanceOfMiss <= 1){
-                    this.duel.writeMessage(`The missed!`);
-                }else{
-                    /* SMEEEEESH */
-                    if(Math.random()*16 <= 1){
-                        damage = damage * 3;
-                        if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
-                            target.stats.shielding.duration = 1;
+                setTimeout(()=>{
+                    if(Math.random()*chanceOfMiss <= 1){
+                        this.duel.writeMessage(`The missed!`);
+                    }else{
+                        /* SMEEEEESH */
+                        if(Math.random()*16 <= 1){
+                            damage = damage * 3;
+                            if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
+                                target.stats.shielding.duration = 1;
+                            }
+                            this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
+                            popsmesh(this.duel.duelScreen, target.charPos);
+                            this.stats.tp += 4;
+                        /* Target is defending */
+                        }else if(target.stats.isDefending) {
+                            damage = Math.floor(damage * 0.3);
+                        } else {
+                        /* Other cases, wakes target up when hit */
+                            if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
+                                this.duel.writeMessage(`${target.stats.charName} は めをさました！`);
+                                target.stats.ailments.asleep = 0;
+                            }
                         }
-                        this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
-                        popsmesh(this.duel.duelScreen, target.charPos);
-                        this.stats.tp += 4;
-                    /* Target is defending */
-                    }else if(target.stats.isDefending) {
-                        damage = Math.floor(damage * 0.3);
-                    } else {
-                    /* Other cases, wakes target up when hit */
-                        if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
-                            this.duel.writeMessage(`${target.stats.charName} は めをさました！`);
-                            target.stats.ailments.asleep = 0;
-                        }
+                        this.stats.tp++;
+                        target.takeDamage(damage, "physical");
                     }
-                    this.stats.tp++;
-                    target.takeDamage(damage, "physical");
-                }
-            }, 500);
+                }, 500);
 
-            setTimeout(() => {
-                this.endTurn();
-            }, 1200);
+                setTimeout(() => {
+                    this.endTurn();
+                }, 1200);
+            }else{
+                this.paralysing();
+            }
         }
 
         defend () {
-            this.duel.writeMessage(`${this.stats.charName} は ガードしている`);
-            this.stats.isDefending=1;
-
-            setTimeout(()=>{
-                this.endTurn();
-            }, 1000);
+            if(!this.stats.ailments.paralysed){
+                this.duel.writeMessage(`${this.stats.charName} は ガードしている`);
+                this.stats.isDefending=1;
+                
+                setTimeout(()=>{
+                    this.endTurn();
+                }, 1000);
+            }else{
+                this.paralysing();
+            }
         }
         
         lifeUp () {
@@ -566,6 +621,9 @@
             // Initialize Duel Screen
             this.duelScreen = document.createElement("div");
             this.duelScreen.classList.add("duelScreen");
+            if(this.rules.background===-1) {
+                this.rules.background = Math.floor(Math.random()*Background.maximumBgs);
+            }
             this.duelBg = new Background(this, {bgId: this.rules.background});
 
             this.messageBox = document.createElement('div');
@@ -576,6 +634,7 @@
             this.duelScreen.appendChild(this.windowContainer);
             document.querySelector("main").appendChild(this.duelScreen);
 
+            this.skipper = 0;
             this.startTime = performance.now();
             this.message = "";
             this.totalMessage = "";
@@ -751,8 +810,12 @@
 
         parallelProgress () {
             if(this.gameFlag === 1){
-                this.charA.parallelProgress();
-                this.charB.parallelProgress();
+                this.skipper++;
+                if(this.skipper > maximumSkip) {
+                    this.charA.parallelProgress();
+                    this.charB.parallelProgress();
+                    this.skipper = 0;
+                }
                 window.requestAnimationFrame(this.parallelProgress.bind(this));
             }
         }
@@ -843,9 +906,9 @@
             const hypnoticIntention 
             = player.tp <= 39 ? 10 : 4;
             if(
-                player.tp >= spellBook["hypnosis-alpha"].cost && 
                 Math.random()*hypnoticIntention <= 1 &&
-                origin.recognizing.opponentSleeping === 0 &&
+                player.tp >= spellBook["hypnosis-alpha"].cost && 
+                !origin.recognizing.opponentSleeping &&
                 !player.ailments.silenced &&
                 origin.recognizing.rule !== "nomagic"
             ) {
@@ -894,7 +957,7 @@
             opinions.push(action);
         }
 
-        // console.log(opinions.join("-"));
+        console.log(opinions.join("-"));
 
         const finalDecision = opinions[Math.floor(Math.random()*opinions.length)];
         return finalDecision;
@@ -1013,9 +1076,13 @@
     
     const duelMain = [];
 
+    /* Back Ground Settings */
     const bgSwitcher = document.querySelector('.bgSwitcher_input');
     bgSwitcher.addEventListener('change', ()=>{
         const bgNo = parseInt(bgSwitcher.value);
+        if(bgNo === -1) {
+            document.querySelector('.bgLabel').textContent = "ランダム"
+        }
         if(bgNo === 0) {
             document.querySelector('.bgLabel').textContent = "オーソドックス"
         }
@@ -1024,16 +1091,25 @@
         }
 
         if(bgNo >= Background.maximumBgs) {
-            bgSwitcher.value = 0;
-            document.querySelector('.bgLabel').textContent = "オーソドックス"
+            bgSwitcher.value = -1;
+            document.querySelector('.bgLabel').textContent = "ランダム";
         }
     });
+
+    document.querySelector('.bgAnimationDisabler').addEventListener("change", chk=>{
+        if(chk.target.checked) {
+                document.querySelector('main').classList.add('noBgAnimation');
+        } else {
+            document.querySelector('main').classList.remove('noBgAnimation');
+        }
+    });
+
     function setBg (bgNo) {
         console.log(typeof bgNo);
-        if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1) {
+        if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1 && parseInt(bgNo) >= -1) {
             return parseInt(bgNo);
-        }else{
-            return 0;
+        } else {
+            return -1;
         }
     }
 
@@ -1076,20 +1152,16 @@
 
     // Frame-skip settings
     let fps = 0;
-    const skips = [0,0];
+    let maximumSkip = 0;
     const f = function(){
        fps++;
-       skips[0]++;
-       if(skips[0]>=skips[1]){
-           skips[0]=0;
-       }
        requestAnimationFrame(f);
     }
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.floor(fps / 60);
-        skips[1] = skipSetting;
+        const skipSetting = Math.ceil(fps / 20);
+        maximumSkip = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
     },500);

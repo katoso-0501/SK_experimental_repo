@@ -1,4 +1,8 @@
 @charset "UTF-8";
+:root {
+    --base-bg: #19a7ff;
+}
+
 body,h1,h2,h3,h4,h5,h6,p,span,i,a,img,figure,ul,li,ol,div {
     margin: 0;
     padding: 0;
@@ -13,10 +17,46 @@ body {
     position: relative;
 }
 
+header {
+    background: url(../images/pattern-checkboard.png), var(--base-bg);
+    background-blend-mode: soft-light;
+    background-size: 25px;
+    color: #FFFFFF;
+    padding: 24px 0;
+}
+
+h1 {
+    /* padding:0; */
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    text-shadow: 0 0 5px #000000, 0 0 5px #000000;
+}
+
+.bgSwitcher {
+    width: 90%;
+    margin: 0 auto;
+    padding: 8px 16px;
+    border: 7px solid #FFFFFF;
+    border-radius: 8px;
+    background-color: #101010;
+    box-sizing: border-box;
+}
+
+.bgSwitcher input[type="text"] {
+    background-color: #202020;
+    color: #FFFFFF;
+    width: 24px;
+    padding: 4px 4px;
+    font-size: 20px;
+    border: 2px solid #FFFFFF;
+}
+
 .duel_starter_group {
     display: block;
     padding: 4px 8px;
-    background-color: #CCCCCC;
+    background-color: rgba(0,0,0,0.65);
     position: sticky;
     width: 100%;
     left: 0;
@@ -24,6 +64,17 @@ body {
     z-index: 998;
     box-sizing: border-box;
     overflow-x: auto;
+}
+
+.duel_starter_group::-webkit-scrollbar {
+    background-color : #303030;
+    height: 6px;
+}
+
+.duel_starter_group::-webkit-scrollbar-thumb {
+    background-color : var(--base-bg);
+    height: 6px;
+    border-radius: 4px;
 }
 
 .duel_starter_group__inner {
@@ -37,7 +88,7 @@ body {
 
 .duel_starter_group__inner > div {
     padding: 6px 4px;
-    background: rgb(255,167,59);
+    background: var(--base-bg);
     color:#FFFFFF;
     border-radius: 32px;
     font-weight: 700;
@@ -62,7 +113,7 @@ main {
     position: relative;
     width: 96%;
     padding: 17px 2%;
-    background-color: rgb(255, 167, 59);
+    background-color: var(--base-bg);
     border-radius: 16px;
     overflow: hidden;
 }
@@ -213,7 +264,7 @@ main {
     padding: 8px;
     margin-bottom: 128px;
     min-height: 40px;
-    background-color: #19a7ff;
+    background-color: var(--base-bg);
 }
 
 .windowFlexBox {
@@ -230,7 +281,7 @@ main {
     border: 10px solid #F0F0F0;
     border-radius: 8px;
     padding: 8px;
-    background: url(../images/pattern-checkboard.png), #19a7ff;
+    background: url(../images/pattern-checkboard.png), var(--base-bg);
     background-blend-mode: soft-light;
     background-size: 25px;
 }
@@ -346,7 +397,7 @@ main {
     transform: translateY(-50%);
     width: 80%;
     padding: 6px 0;
-    background-color: #19a7ff;
+    background-color: var(--base-bg);
     border-radius: 8px;
 }
 
@@ -388,6 +439,8 @@ main {
     z-index: 0;
 }
 
+/* バックグラウンド 00 -- テーマ：オーソドックス
+--------------------------------------------*/
 .duelBg_00 {
     background: #0553c0;
 }
@@ -406,13 +459,9 @@ main {
     animation: duelBG00SpriteInner 10s infinite linear alternate;
 }
 
-/*
-バックグラウンド 01 -- テーマ：落雷
-*/
-.duelBg_01 {
-    background: url(../images/background01_part01_seamless.png) center repeat-x;
-    background-size: cover;
-    animation: duelBG01flowingClouds 45s infinite linear;
+.noBgAnimation .duelBg_00__sprites01,
+.noBgAnimation .duelBg_00__sprites01__inner {
+    animation: none;
 }
 
 @keyframes duelBG00Sprite {
@@ -433,11 +482,23 @@ main {
     }
 }
 
+/* バックグラウンド 01 -- テーマ：落雷
+--------------------------------------------*/
+.duelBg_01 {
+    background: url(../images/background01_part01_seamless.png) center repeat-x;
+    background-size: cover;
+    animation: duelBG01flowingClouds 45s infinite linear;
+}
+
+.noBgAnimation .duelBg_01 {
+    animation: none;
+}
+
 @keyframes duelBG01flowingClouds {
     0% {
         background-position: 0% center;
     }
     100% {
-        background-position: 220% center;
+        background-position: -1920px center;
     }
 }
