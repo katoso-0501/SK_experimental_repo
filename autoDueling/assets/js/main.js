@@ -33,7 +33,6 @@
 
         moveBg01 () {
             const probabilityOfThunder = 300;
-            console.log(this.duel.gameFlag);
             if(
                 Math.random()*probabilityOfThunder <= 1
                 && this.gimmickWorking===0
@@ -957,7 +956,7 @@
             opinions.push(action);
         }
 
-        console.log(opinions.join("-"));
+        // console.log(opinions.join("-"));
 
         const finalDecision = opinions[Math.floor(Math.random()*opinions.length)];
         return finalDecision;
@@ -1090,7 +1089,7 @@
             document.querySelector('.bgLabel').textContent = "らくらい"
         }
 
-        if(bgNo >= Background.maximumBgs) {
+        if(bgNo >= Background.maximumBgs || bgNo <= -2) {
             bgSwitcher.value = -1;
             document.querySelector('.bgLabel').textContent = "ランダム";
         }
@@ -1160,7 +1159,7 @@
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.ceil(fps / 20);
+        const skipSetting = Math.ceil((fps - 2) / 20);
         maximumSkip = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
