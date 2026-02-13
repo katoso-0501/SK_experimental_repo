@@ -1,5 +1,63 @@
 "use strict";
-{ 
+{
+    class Background {
+        static maximumBgs = 2;
+
+        constructor (duel, bgSettings) {
+            this.duel = duel;
+            this.bgSettings = bgSettings;
+            
+
+            this.mat = document.createElement('div');
+            this.mat.classList.add('duelBg');
+            this.duel.duelScreen.appendChild(this.mat);
+
+            if(this.bgSettings.bgId === 0) {
+                this.mat.classList.add('duelBg_00');
+                const sprite00 = document.createElement('div');
+                sprite00.classList.add('duelBg_00__sprites01');
+                const sprite00Inner = document.createElement('div');
+                sprite00Inner.classList.add('duelBg_00__sprites01__inner');
+                sprite00.appendChild(sprite00Inner);
+                this.mat.appendChild(sprite00);
+            }
+
+            if(this.bgSettings.bgId === 1) {
+                this.mat.classList.add('duelBg_01');
+                this.gimmickWorking = 0;
+                setTimeout(()=>{
+                    this.moveBg01();
+                }, 1000);
+            }
+        }
+
+        moveBg01 () {
+            const probabilityOfThunder = 300;
+            console.log(this.duel.gameFlag);
+            if(
+                Math.random()*probabilityOfThunder <= 1
+                && this.gimmickWorking===0
+                && this.duel.charA.stats.hpa>0
+                && this.duel.charB.stats.hpa>0
+            ) {
+                this.gimmickWorking = 1;
+                const target = Math.random()*2 <= 1 ? this.duel.charA : this.duel.charB;
+                this.duel.writeMessage("らくらいだ！");
+                flashScreen("#ffef00", this.duel.duelScreen);
+
+                setTimeout(()=>{
+                    this.gimmickWorking = 0;
+                    target.takeDamage(Math.floor(Math.random()*80) + 80, "thunder", true);
+                },600);
+            }
+            if(
+                this.duel.gameFlag===1
+            ){
+                window.requestAnimationFrame(this.moveBg01.bind(this));
+            }
+        }
+    }
+
     class CharBase {
         constructor (duel) {
             this.duel = duel;
@@ -77,11 +135,9 @@
         
         asleep () {
             this.duel.writeMessage(`${this.stats.charName} は ねむっている…`);
-
             if(this.stats.mtp>=1) {
                 this.stats.tp += Math.floor(Math.random()*3);
             }
-
             if(Math.random()*4 <= 1 && this.duel.rules.duelmode !== "poisonrelying") {
                 setTimeout(()=>{
                     this.stats.ailments.asleep=0;
@@ -123,7 +179,7 @@
             },to);
         }
 
-        takeDamage(dmg, type) {
+        takeDamage(dmg, type, byGimic = false) {
             if(type==="physical"){
                 if(
                 this.stats.shielding.type==="shield"
@@ -139,17 +195,25 @@
                     this.stats.hp -= dmg;
                 }
                 this.duel.writeBreakdown(`${dmg} ダメージ`);
-                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
-                
-                if(Math.random()*1.6 <= 1 && this.stats.ailments.asleep) {
-                    this.duel.writeMessage(`${this.stats.charName} は めをさました！`);
-                    this.stats.ailments.asleep = 0;
-                }
-
+                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos, byGimic);
             }else if(type==="psi"){
                 this.stats.hp -= dmg;
                 this.duel.writeBreakdown(`${dmg} ダメージ`);
-                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos);
+                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos, byGimic);
+            } else if(type==="thunder") {
+                if(
+                this.stats.shielding.type==="shield"
+                &&
+                this.stats.shielding.duration>0){
+                    dmg = Math.ceil(dmg / 2);
+                    this.stats.hp -= dmg;
+                    this.stats.shielding.duration=0;
+                    this.duel.writeMessage(`${this.stats.charName}のシールドはきえてなくなった！`);
+                }else{
+                    this.stats.hp -= dmg;
+                }
+                this.duel.writeBreakdown(`${dmg} ダメージ`);
+                popDamage(dmg, "damage", this.duel.duelScreen, this.charPos, byGimic);
             }
 
             if(this.stats.hp<=0) {
@@ -257,6 +321,7 @@
                 if(Math.random()*chanceOfMiss <= 1){
                     this.duel.writeMessage(`The missed!`);
                 }else{
+                    /* SMEEEEESH */
                     if(Math.random()*16 <= 1){
                         damage = damage * 3;
                         if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
@@ -265,8 +330,15 @@
                         this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
                         popsmesh(this.duel.duelScreen, target.charPos);
                         this.stats.tp += 4;
+                    /* Target is defending */
                     }else if(target.stats.isDefending) {
                         damage = Math.floor(damage * 0.3);
+                    } else {
+                    /* Other cases, wakes target up when hit */
+                        if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
+                            this.duel.writeMessage(`${target.stats.charName} は めをさました！`);
+                            target.stats.ailments.asleep = 0;
+                        }
                     }
                     this.stats.tp++;
                     target.takeDamage(damage, "physical");
@@ -490,9 +562,12 @@
 
     class Duel {
         constructor (rules) {
+            this.rules = rules;
             // Initialize Duel Screen
             this.duelScreen = document.createElement("div");
             this.duelScreen.classList.add("duelScreen");
+            this.duelBg = new Background(this, {bgId: this.rules.background});
+
             this.messageBox = document.createElement('div');
             this.messageBox.classList.add('messageContainer');
             this.duelScreen.appendChild(this.messageBox);
@@ -502,7 +577,6 @@
             document.querySelector("main").appendChild(this.duelScreen);
 
             this.startTime = performance.now();
-            this.rules = rules;
             this.message = "";
             this.totalMessage = "";
             this.gameFlag = 1;
@@ -567,8 +641,8 @@
             }
 
             this.writeBreakdown(`ルール：${this.rules.japanname}`);
-
             this.writeMessage("The engage!");
+
             this.parallelProgress();
         }
 
@@ -766,9 +840,11 @@
             action = "bash";
 
             // Hypnosis
+            const hypnoticIntention 
+            = player.tp <= 39 ? 10 : 4;
             if(
                 player.tp >= spellBook["hypnosis-alpha"].cost && 
-                Math.random()*3 <= 1 &&
+                Math.random()*hypnoticIntention <= 1 &&
                 origin.recognizing.opponentSleeping === 0 &&
                 !player.ailments.silenced &&
                 origin.recognizing.rule !== "nomagic"
@@ -824,32 +900,40 @@
         return finalDecision;
     }
 
-    function popDamage(dmg, type, duelScreen, target) {
+    function popDamage(dmg, type, duelScreen, target, byGimic = false) {
+        console.log(type);
         const dmgInd = document.createElement("div");
         dmgInd.textContent = dmg;
         dmgInd.classList.add('damage-indicator');
         if(type === "damage") {
-            dmgInd.style.color = "red";
+            dmgInd.style.color =  byGimic ? "orange" : "red";
         }else if(type === "heal") {
             dmgInd.style.color = "green";
         }
+
         dmgInd.style.left = target[0]+"px";
-        dmgInd.style.top = target[1]+"px";
+        dmgInd.style.top = byGimic ?  target[1] - 35 +"px" : target[1]+"px";
         duelScreen.appendChild(dmgInd);
         setTimeout(()=>{dmgInd.remove();}, 1000);
     }
 
     function popsmesh(duelScreen, target) {
-        const flasher = document.createElement("div");
-        flasher.classList.add('duelScreenFlashing');
-        duelScreen.appendChild(flasher);
+        flashScreen("#FFFFFF", duelScreen);
         const smesh = document.createElement("div");
         smesh.textContent = "SMEEEEEEESH!!";
         smesh.classList.add('damage-smesh');
         smesh.style.left = target[0]+"px";
         smesh.style.top = target[1] - 30 +"px";
         duelScreen.appendChild(smesh);
-        setTimeout(()=>{flasher.remove();smesh.remove();}, 1000);
+        setTimeout(()=>{smesh.remove();}, 1000);
+    }
+
+    function flashScreen(color, duelScreen) {
+        const flasher = document.createElement("div");
+        flasher.classList.add('duelScreenFlashing');
+        flasher.style.backgroundColor = color;
+        duelScreen.appendChild(flasher);
+        setTimeout(()=>{flasher.remove();}, 1000);
     }
 
     const characterNames = [
@@ -929,38 +1013,62 @@
     
     const duelMain = [];
 
+    const bgSwitcher = document.querySelector('.bgSwitcher_input');
+    bgSwitcher.addEventListener('change', ()=>{
+        const bgNo = parseInt(bgSwitcher.value);
+        if(bgNo === 0) {
+            document.querySelector('.bgLabel').textContent = "オーソドックス"
+        }
+        if(bgNo === 1) {
+            document.querySelector('.bgLabel').textContent = "らくらい"
+        }
+
+        if(bgNo >= Background.maximumBgs) {
+            bgSwitcher.value = 0;
+            document.querySelector('.bgLabel').textContent = "オーソドックス"
+        }
+    });
+    function setBg (bgNo) {
+        console.log(typeof bgNo);
+        if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1) {
+            return parseInt(bgNo);
+        }else{
+            return 0;
+        }
+    }
+
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : 0});
+        const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : 0});
+        const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : 0});
+        const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.suddenDeath').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : 0});
+        const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.poisonRelying').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : 0});
+        const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.thirtySecondsBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode: "normal", japanname: "30びょうでちゅうし", background : 0});
+        const a = new Duel({duelmode: "normal", japanname: "30びょうでちゅうし", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
         setTimeout(()=>{a.terminate();}, 30000);
@@ -982,7 +1090,7 @@
     let k = setInterval(()=>{
         const skipSetting = Math.floor(fps / 60);
         skips[1] = skipSetting;
-        document.querySelector('.textFramer').textContent = (`${fps * 2} fps . スキップするべきフレーム ${skipSetting}`);
+        document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
     },500);
     

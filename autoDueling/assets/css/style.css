@@ -76,6 +76,7 @@ main {
     background-color: #FFFFFF;
     pointer-events: none;
     animation: dsFlashing 0.5s 1 forwards;
+    z-index: 5;
 }
 
 @keyframes dsFlashing {
@@ -173,21 +174,22 @@ main {
     font-size: 24px;
     transform: translate(-50%, 0);
     animation: damageIndiSpan 0.7s 1 linear forwards;
+    z-index: 4;
 }
 
 .damage-smesh {
     position: absolute;
-    /* text-shadow: 0 0 7px #34343488; */
     font-weight: 700;
     font-size: 16px;
     transform: translate(-50%, 0);
     animation: damageIndiSpan 0.7s 1 linear forwards;
+    z-index: 4;
 }
 
 @keyframes damageIndiSpan {
     0% {
         opacity: 0;
-        transform: translate(-50%, 30px);
+        transform: translate(-50%, 50px);
     }
     10% {
         opacity: 1;
@@ -204,6 +206,8 @@ main {
 }
 
 .messageContainer {
+    position: relative;
+    z-index: 2;
     border: 10px solid #F0F0F0;
     border-radius: 8px;
     padding: 8px;
@@ -226,7 +230,9 @@ main {
     border: 10px solid #F0F0F0;
     border-radius: 8px;
     padding: 8px;
-    background-color: #19a7ff;
+    background: url(../images/pattern-checkboard.png), #19a7ff;
+    background-blend-mode: soft-light;
+    background-size: 25px;
 }
 
 .windowFlexBox > div.fainted {
@@ -369,4 +375,69 @@ main {
     font-size: 12px;
     z-index: 9999;
     user-select: none;
+}
+
+/* Duel Backgrounds */
+.duelBg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.duelBg_00 {
+    background: #0553c0;
+}
+
+.duelBg_00__sprites01 {
+    width: 100%;
+    height: 100%;
+    animation: duelBG00Sprite 5s infinite alternate linear;
+}
+
+.duelBg_00__sprites01__inner {
+    background: url(../images/background00_part01.svg) center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    animation: duelBG00SpriteInner 10s infinite linear alternate;
+}
+
+/*
+バックグラウンド 01 -- テーマ：落雷
+*/
+.duelBg_01 {
+    background: url(../images/background01_part01_seamless.png) center repeat-x;
+    background-size: cover;
+    animation: duelBG01flowingClouds 45s infinite linear;
+}
+
+@keyframes duelBG00Sprite {
+    0% {
+        filter: brightness(0.5)
+    }
+    100% {
+        filter: brightness(1.1)
+    }
+}
+
+@keyframes duelBG00SpriteInner {
+    0% {
+        transform: skewX(-20deg);
+    }
+    100% {
+        transform: skewX(20deg);
+    }
+}
+
+@keyframes duelBG01flowingClouds {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 220% center;
+    }
 }
