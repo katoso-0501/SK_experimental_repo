@@ -736,3 +736,218 @@ It is **not widely used** across the codebase — only referenced in three locat
 - `flashScreen`: A utility function called by `moveBg01` to simulate lightning flash, using color `#ffef00` (bright yellow).
 - `takeDamage`: Method on character objects (`charA`, `charB`) used to apply 80–159 damage from lightning.
 - `duelBg_01`: CSS class applied to the background element when `bgId === 1`, likely tied to visual styling of the forest stage.
+
+*******************************
+Drum Meters                   *
+*******************************
+
+`drumMeters` is a constant array of DOM elements representing a 4-digit mechanical drum counter display.  
+It visually simulates a retro-style rotating drum meter (like those on old odometers) using CSS transforms and background images.
+
+---
+
+### Definition
+
+The `drumMeters` variable is defined as a constant array containing four dynamically created `<div>` elements, each corresponding to one digit in a 4-digit display. These elements are styled and positioned to form a horizontal row of rotating drums, where each drum scrolls vertically to simulate rotation.
+
+```javascript
+28:34:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/drummeter.html
+const drumMeters = [
+    document.createElement("div"),
+    document.createElement("div"),
+    document.createElement("div"),
+    document.createElement("div"),
+];
+```
+
+Each element in `drumMeters` is styled and appended to a container `.drum_container`. The styling includes:
+
+- Background image (`./assets/images/drummeter.png`) for the drum face.
+- Gradient overlay on the first three drums to simulate lighting/depth.
+- Absolute positioning, 80px width, and variable height based on digit place value.
+- Smooth vertical translation via CSS `transform` for animation.
+
+After creation, these elements are configured in a loop and added to the DOM.
+
+Basic information:
+- **Type**: `const drumMeters: HTMLElement[]`
+- **Length**: 4 (one per digit, from thousands to units)
+- **Side effects**: Modifies DOM by appending 4 styled `<div>`s to `.drum_container`
+- **Usage**: Controlled via `syncronize(param)` to display a 4-digit number (0–9999)
+
+---
+
+### Example Usages
+
+The primary use of `drumMeters` is in the `syncronize(param)` function, which updates the vertical position of each drum to reflect a given number. For example, to display `1234`, the thousands drum shifts down by 1×120px, the hundreds by 2×120px, etc.
+
+```javascript
+58:65:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/drummeter.html
+drumMeters[0].style.transform = 
+    `translateY(${(Math.floor(destParam / 1000) * 120) * -1}px)`;
+drumMeters[1].style.transform = 
+    `translateY(${(Math.floor(destParam / 100) * 120) * -1}px)`;
+drumMeters[2].style.transform = 
+    `translateY(${(Math.floor(destParam / 10) * 120) * -1}px)`;
+drumMeters[3].style.transform = 
+    `translateY(${(destParam * 120) * -1}px)`;
+```
+
+This code calculates how many "drum segments" (each 120px high) to shift each drum upward (hence `*-1`) based on digit place.
+
+User input from an `<input class="targetChanger">` triggers updates:
+```javascript
+68:71:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/drummeter.html
+document.querySelector('.targetChanger').addEventListener('input', (e)=>{
+    tgtParam = e.target.value;
+    syncronize(tgtParam);
+});
+```
+
+This makes `drumMeters` respond in real time to user input, updating the visual counter.
+
+Overall, `drumMeters` is used exclusively in `drummeter.html`, serving as the core visual component of a standalone drum meter widget. There are no external callers or dependencies beyond this file.
+
+---
+
+### Notes
+
+- **Non-linear drum heights**: The height of each drum element is scaled exponentially:  
+  ```javascript
+  drumMeters[i].style.height = (120 * (10000 / 10 ** (3 - i))) + "px";
+  ```
+  This ensures lower-place drums (like units) have more segments visible, allowing smooth looping during animation.
+
+- **Performance via CSS transforms**: Instead of repositioning via `top` or `margin`, `translateY` is used—this leverages GPU acceleration for smoother animation with `transition: transform 0.3s`.
+
+- **Visual hierarchy via gradient**: Only the first three drums have a gradient overlay (`rgba(255, 120, 120, 0)`), likely to simulate a highlight on non-units digits, adding depth.
+
+---
+
+### See Also
+
+- `syncronize(param)`: Function that drives `drumMeters` by updating their `transform` values based on a number input.
+- `drumContainer`: The parent DOM element (`<div class="drum_container">`) that holds all `drumMeters` and clips overflow to create the "windowed" view.
+- `./assets/images/drummeter.png`: Background image used for all drums—likely a repeating vertical strip of digits 0–9.
+
+***************************************
+Class: drummeter
+***************************************
+
+DrumMeter is a JavaScript class that creates a visual drum-style meter for displaying numeric values in a UI.
+
+It implements an animated, segmented counter resembling mechanical drums in old-school arcade or pinball machines, commonly used to display HP (hit points) and TP (technical points) in game interfaces.
+
+---
+
+### Definition
+
+```javascript
+3:60:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+class DrumMeter {
+    constructor(location, initialParam = 0, label = "HP") {
+        // Create outer container and label
+        this.drumContainer = document.createElement('div');
+        this.drumContainer.classList.add('drum_container');
+
+        this.labeller = document.createElement("span");
+        this.labeller.classList.add("labeller");
+        this.labeller.textContent = label;
+        this.drumContainer.appendChild(this.labeller);
+
+        // Inner container for the drum segments
+        this.drumContainerInner = document.createElement('div');
+        this.drumContainerInner.classList.add('drum_container_inner');
+        this.drumContainer.appendChild(this.drumContainerInner);
+        location.appendChild(this.drumContainer);
+
+        // Create four drum segments (for thousands, hundreds, tens, units)
+        this.drumMeters = [
+            document.createElement("div"),
+            document.createElement("div"),
+            document.createElement("div"),
+            document.createElement("div"),
+        ];
+
+        for (let i = 0; i < 4; i++) {
+            // Apply background: gradient + drum texture for first three; full repeat for last
+            this.drumMeters[i].style.background = i !== 3 
+                ? "linear-gradient(...) left top no-repeat, url(./assets/images/drumme..." 
+                : "url(./assets/images/drummeter.png) left top repeat-y";
+
+            this.drumMeters[i].style.backgroundSize = "80px";
+            this.drumMeters[i].style.width = "80px";
+            this.drumMeters[i].style.position = "absolute";
+            this.drumMeters[i].style.left = (80 * i) + "px";
+            this.drumMeters[i].style.top = "0";
+            this.drumMeters[i].style.height = (120 * (10000 / 10 ** (3 - i))) + "px";
+            this.drumMeters[i].style.transition = "transform 0.1s ease-in-out";
+            if (i < 3) this.drumMeters[i].style.transitionDelay = "0.1s";
+
+            this.drumContainerInner.appendChild(this.drumMeters[i]);
+        }
+
+        this.syncronize(initialParam); // Set initial value
+    }
+
+    syncronize(param) {
+        let destParam = Math.max(0, Math.min(param, 9999)); // Clamp to 0–9999
+
+        // Each drum moves vertically to show correct digit
+        this.drumMeters[0].style.transform = `translateY(${(Math.floor(destParam / 1000) * 120) * -1}px)`;
+        this.drumMeters[1].style.transform = `translateY(${(Math.floor(destParam / 100) * 120) * -1}px)`;
+        this.drumMeters[2].style.transform = `translateY(${(Math.floor(destParam / 10) * 120) * -1}px)`;
+        this.drumMeters[3].style.transform = `translateY(${(destParam % 10 * 120) * -1}px)`;
+    }
+}
+```
+
+- **Type**: Class
+- **Purpose**: Visual representation of a 4-digit number using animated vertical drums
+- **Params**:
+  - `location`: DOM element where the meter will be inserted
+  - `initialParam`: Initial numeric value (default: 0)
+  - `label`: Text label shown above the meter (default: "HP")
+- **Side effects**: Modifies the DOM by appending a complex UI structure; applies CSS transitions for animation
+- **Internal structure**:
+  - `drumMeters`: Array of 4 `<div>` elements, each simulating one digit wheel
+  - Each drum uses `background-image` and `transform: translateY()` to simulate rotation
+  - Digit height is 120px, so each step moves -120px vertically
+- **Value range**: Clamped between 0 and 9999
+
+---
+
+### Example Usages
+
+The `DrumMeter` class is used to display character stats in a duel interface, specifically HP and TP values.
+
+```javascript
+358:359:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+this.hpindicator = new DrumMeter(this.windowMain, this.stats.hpa, "HP");
+this.tpindicator = new DrumMeter(this.windowMain, this.stats.tpa, "TP");
+```
+
+These lines create two drum meters:
+- One for **HP** (hit points), initialized with `this.stats.hpa`
+- One for **TP** (technical points), initialized with `this.stats.tpa`
+
+They are attached to `this.windowMain`, which is likely a character status panel in the UI.
+
+Overall, `DrumMeter` is used exactly twice in the codebase (based on references), both within what appears to be a character UI initialization routine. This suggests it's a specialized UI component used only for primary stat display, not reused for other numeric values.
+
+---
+
+### Notes
+
+- Despite being named "DrumMeter", it doesn't actually rotate — it uses vertical scrolling (`translateY`) of a long background image to simulate drum movement.
+- The first three drums have a gradient overlay (likely to simulate lighting/shading), while the units digit uses a simpler repeated texture.
+- The use of `transition-delay` on the first three drums creates a cascading animation effect when updating, enhancing the mechanical feel.
+
+---
+
+### See Also
+
+- `this.stats.hpa`: Current HP value used to initialize the HP drum meter; represents a character's remaining hit points
+- `this.stats.tpa`: Current TP value used for the TP drum meter; tracks technical/ability resources
+- `drum_container`, `drum_container_inner`: CSS classes applied to container elements; likely styled in an external stylesheet to position and size the meter
+- `./assets/images/drummeter.png`: Background image used for the drum segments; contains repeating digits or tick marks to simulate a spinning wheel

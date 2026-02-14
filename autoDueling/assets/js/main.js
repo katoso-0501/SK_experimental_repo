@@ -1,5 +1,64 @@
 "use strict";
 {
+    class DrumMeter {
+        constructor (location, initialParam = 0, label = "HP") {
+            this.drumContainer = document.createElement('div');
+            this.drumContainer.classList.add('drum_container');
+            
+            this.labeller = document.createElement("span");
+            this.labeller.classList.add("labeller")
+            this.labeller.textContent = label;
+            this.drumContainer.appendChild(this.labeller);
+            this.drumContainerInner = document.createElement('div');
+            this.drumContainerInner.classList.add('drum_container_inner');
+            this.drumContainer.appendChild(this.drumContainerInner);
+            location.appendChild(this.drumContainer);
+            
+            this.drumMeters
+            = [
+                document.createElement("div"),
+                document.createElement("div"),
+                document.createElement("div"),
+                document.createElement("div"),
+            ];
+            for(let i = 0; i < 4; i ++) {
+                if(i !== 3) {
+                    this.drumMeters[i].style.background = "linear-gradient(rgb(255, 255, 255) 0px, rgb(215, 215, 215) 118px, rgba(255, 120, 120, 0) 118px) left top no-repeat,url(./assets/images/drummeter.png) left top repeat-y";
+                } else {
+                    this.drumMeters[i].style.background = "url(./assets/images/drummeter.png) left top repeat-y";
+                }
+                this.drumMeters[i].style.backgroundSize = "80px";
+                this.drumMeters[i].style.width = "80px";
+                this.drumMeters[i].style.position = "absolute";
+                this.drumMeters[i].style.left = (80 * i) + "px";
+                this.drumMeters[i].style.top = "0";
+                this.drumMeters[i].style.height = (120 * (10000 / 10 ** (3 - i))) + "px";
+                this.drumMeters[i].style.transition = "transform 0.1s ease-in-out";
+                if(i < 3) {
+                    this.drumMeters[i].style.transitionDelay = "0.1s";
+                }
+                this.drumContainerInner.appendChild(this.drumMeters[i]);
+            }
+            this.syncronize(initialParam);
+        }
+        syncronize (param) {
+            let destParam = param;
+            if(destParam < 0) {
+                destParam=0;
+            }else if(destParam>9999) {
+                destParam=9999;
+            }
+            this.drumMeters[0].style.transform = 
+            `translateY(${(Math.floor(destParam / 1000) * 120) * -1}px)`;
+            this.drumMeters[1].style.transform = 
+            `translateY(${(Math.floor(destParam / 100) * 120) * -1}px)`;
+            this.drumMeters[2].style.transform = 
+            `translateY(${(Math.floor(destParam / 10) * 120) * -1}px)`;
+            this.drumMeters[3].style.transform = 
+            `translateY(${(destParam * 120) * -1}px)`;
+        }
+    }
+        
     class Background {
         static maximumBgs = 2;
 
@@ -296,15 +355,8 @@
             this.nameindicator.innerHTML = this.stats.charName;
             this.windowMain.appendChild(this.nameindicator);
 
-            this.hpindicator = document.createElement('p');
-            this.hpindicator.classList.add('indicator_hp');
-            this.hpindicator.innerHTML = "HP <span>"+this.stats.hpa+"</span>";
-            this.windowMain.appendChild(this.hpindicator);
-
-            this.tpindicator = document.createElement('p');
-            this.tpindicator.classList.add('indicator_tp');
-            this.tpindicator.innerHTML = "TP <span>"+this.stats.tpa+"</span>";
-            this.windowMain.appendChild(this.tpindicator);
+            this.hpindicator = new DrumMeter(this.windowMain, this.stats.hpa, "HP");
+            this.tpindicator = new DrumMeter(this.windowMain, this.stats.tpa, "TP");
 
             this.ailmentIndicator = document.createElement('div');
             this.ailmentIndicator.classList.add("ailmentBalloon");
@@ -498,8 +550,9 @@
                 this.windowMain.offsetTop
             );
             this.nameindicator.innerHTML = this.stats.charName;
-            this.hpindicator.innerHTML = "HP <span>"+this.stats.hpa+"</span>";
-            this.tpindicator.innerHTML = "TP <span>"+this.stats.tpa+"</span>";
+            this.hpindicator.syncronize(this.stats.hpa);
+            this.tpindicator.syncronize(this.stats.tpa);
+            
             if(this.stats.hpa < this.stats.hp) {
                 this.stats.hpa++;
             } else if(this.stats.hpa > this.stats.hp) {
@@ -1009,6 +1062,7 @@
         "ネッス",
         "しのだ",
         "きし",
+        "ラルフ",
     ];
 
     /* Spell Book */
@@ -1159,8 +1213,8 @@
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.ceil((fps - 4) / 20);
-        maximumSkip = skipSetting;
+        const skipSetting = Math.ceil(fps / 20);
+        maximumSkip = fps >= 120 ? skipSetting + 1 : skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
     },500);

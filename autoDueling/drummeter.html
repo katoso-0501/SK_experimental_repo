@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drummeter</title>
+    <style>
+        .drum_container {
+            height: 30px;
+            overflow: hidden;
+        }
+        .drum_container_inner {
+            position:relative;
+            width: 320px;
+            height: 120px;
+            overflow: hidden;
+            transform: scale(0.2);
+            transform-origin: left top;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <!-- <div class="drum_container"></div> -->
+
+        <input type="number" class="targetChanger" value="0">
+    </main>
+
+    <script>
+        class DrumMeter {
+            constructor() {
+                this.drumContainer = document.createElement('div');
+                this.drumContainer.classList.add('drum_container');
+                this.drumContainerInner = document.createElement('div');
+                this.drumContainerInner.classList.add('drum_container_inner');
+                this.drumContainer.appendChild(this.drumContainerInner);
+                document.querySelector('main').appendChild(this.drumContainer);
+                
+                this.drumMeters
+                = [
+                    document.createElement("div"),
+                    document.createElement("div"),
+                    document.createElement("div"),
+                    document.createElement("div"),
+                ];
+                for(let i = 0; i < 4; i ++) {
+                    if(i !== 3) {
+                        this.drumMeters[i].style.background = "linear-gradient(rgb(255, 255, 255) 0px, rgb(215, 215, 215) 118px, rgba(255, 120, 120, 0) 118px) left top no-repeat,url(./assets/images/drummeter.png) left top repeat-y";
+                    } else {
+                        this.drumMeters[i].style.background = "url(./assets/images/drummeter.png) left top repeat-y";
+                    }
+                    this.drumMeters[i].style.backgroundSize = "80px";
+                    this.drumMeters[i].style.width = "80px";
+                    this.drumMeters[i].style.position = "absolute";
+                    this.drumMeters[i].style.left = (80 * i) + "px";
+                    this.drumMeters[i].style.top = "0";
+                    this.drumMeters[i].style.height = (120 * (10000 / 10 ** (3 - i))) + "px";
+                    this.drumMeters[i].style.transition = "transform 0.3s";
+                    if(i < 3) {
+                        this.drumMeters[i].style.transitionDelay = "0.1s";
+                    }
+                    this.drumContainerInner.appendChild(this.drumMeters[i]);
+                }
+            }
+            syncronize (param) {
+                let destParam = param;
+                if(destParam < 0) {
+                    destParam=0;
+                }else if(destParam>9999) {
+                    destParam=9999;
+                }
+                this.drumMeters[0].style.transform = 
+                `translateY(${(Math.floor(destParam / 1000) * 120) * -1}px)`;
+                this.drumMeters[1].style.transform = 
+                `translateY(${(Math.floor(destParam / 100) * 120) * -1}px)`;
+                this.drumMeters[2].style.transform = 
+                `translateY(${(Math.floor(destParam / 10) * 120) * -1}px)`;
+                this.drumMeters[3].style.transform = 
+                `translateY(${(destParam * 120) * -1}px)`;
+            }
+        }
+        let tgtParam = 0;
+        const drumMeter = new DrumMeter();
+
+
+        document.querySelector('.targetChanger').addEventListener('input', (e)=>{
+            tgtParam = e.target.value;
+            drumMeter.syncronize(tgtParam);
+        });
+    </script>
+</body>
+</html>

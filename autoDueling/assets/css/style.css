@@ -321,6 +321,32 @@ main {
     background-color: #F0F0F0;
 }
 
+.drum_container {
+    position: relative;
+    height: 30px;
+    overflow: hidden;
+    max-width: 100px;
+    margin: 0 auto;
+}
+
+.drum_container .labeller {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.drum_container_inner {
+    position: relative;
+    width: 320px;
+    height: 120px;
+    overflow: hidden;
+    transform: scale(0.2) translateX(180px);
+    transform-origin: left top;
+    
+    @media (width <= 768px) {
+        transform: scale(0.18) translateX(150px);   
+    }
+}
+
 .ailmentBalloon {
     display: none;
     position: absolute;
