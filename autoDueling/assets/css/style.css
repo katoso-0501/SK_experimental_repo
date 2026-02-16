@@ -427,6 +427,39 @@ main {
     border-radius: 8px;
 }
 
+.overlayingBreakdownContainer {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 800;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.overlayingBreakdownContainer.expanded {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.overlayingBreakdownContainer__close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.overlayingBreakdownContainer__main {
+    color: white;
+    width: 90%;
+    height: 80%;
+    overflow-y: auto;
+}
+
 .breakdownContainer {
     display: none;
     position: absolute;
@@ -527,4 +560,17 @@ main {
     100% {
         background-position: -1920px center;
     }
+}
+
+.pseudoPipper 
+{
+    position: fixed;
+    width: calc(100% - 20px);
+    right: 24px;
+    bottom: 24px;
+    z-index: 29;
+    border: 10px solid #FFFFFF;
+    transform-origin: right bottom;
+    scale: 0.75;
+    max-width: 400px;
 }

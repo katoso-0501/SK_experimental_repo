@@ -677,6 +677,13 @@
                 this.rules.background = Math.floor(Math.random()*Background.maximumBgs);
             }
             this.duelBg = new Background(this, {bgId: this.rules.background});
+            this.duelScreen.addEventListener('dblclick', ()=>{
+                if(!this.duelScreen.classList.contains('pseudoPipper')) {
+                    this.popOut();
+                } else {
+                    this.duelScreen.classList.remove("pseudoPipper");
+                }
+            })
 
             this.messageBox = document.createElement('div');
             this.messageBox.classList.add('messageContainer');
@@ -939,6 +946,13 @@
                 brkdwnContainer.classList.toggle("expanded");
                 this.duelScreen.classList.toggle("scrollable");
             });
+        }
+
+        popOut () {
+            document.querySelectorAll(".pseudoPipper").forEach((el)=>{
+                el.classList.remove("pseudoPipper");
+            });
+            this.duelScreen.classList.add('pseudoPipper');
         }
     }
     
@@ -1213,7 +1227,7 @@
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.ceil(fps / 20);
+        const skipSetting = Math.ceil(fps / 12);
         maximumSkip = fps >= 120 ? skipSetting + 1 : skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
