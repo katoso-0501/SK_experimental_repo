@@ -440,6 +440,16 @@ main {
     background: url(../images/ailment_icon_silenced.webp) center center no-repeat ;
     background-size: contain;
 }
+.ailmentBalloon.strange::after {
+    content: "strange";
+    background: url(../images/ailment_icon_strange.webp) center center no-repeat ;
+    background-size: contain;
+}
+.ailmentBalloon.revive::after {
+    content: "revive";
+    background: url(../images/ailment_icon_revive.webp) center center no-repeat ;
+    background-size: contain;
+}
 
 .showBreakdownBtn {
     position: absolute;

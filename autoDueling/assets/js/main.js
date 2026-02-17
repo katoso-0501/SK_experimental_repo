@@ -150,7 +150,7 @@
                     crying: this.duel.rules.duelmode === "suddendeath" ? 1 : 0,
                     // Cannot do PSI actions
                     silenced: 0,
-                    strange: 0,
+                    strange: 1,
                 },
                 shielding: {type:"", duration: 0},
                 reviveEnchanted: this.duel.rules.duelmode === "withrevive" ? 1 : 0,
@@ -242,6 +242,10 @@
             if(ailment === "silenced") {
                 this.stats.ailments.silenced = 0;
                 this.duel.writeMessage(`${this.stats.charName} は コンセントレーションが できるようになった！`);
+            }
+            if(ailment === "strange") {
+                this.stats.ailments.strange = 0;
+                this.duel.writeMessage(`${this.stats.charName} は もとに もどった！`);
             }
         }
 
@@ -392,9 +396,11 @@
         }
 
         setAction () {
+            const lag = this.stats.ailments.strange ? 1000 : 17;
             let targetAlly = this;
             if(this.stats.ailments.strange === 1) {
                 if(Math.random()*2 <= 1) {
+                    targetAlly = this.duel.field.filter (p => p !== "*" && p.stats.iff !== this.stats.iff)[0];
                     this.opponent = this;
                 }
             } else {
@@ -402,21 +408,28 @@
                 const opponentCandidate = this.duel.field.filter(p => p !== "*" && p.stats.iff !== playerIff);
                 this.opponent = opponentCandidate[Math.floor(Math.random()*opponentCandidate.length)];
             }
+            console.log("Target that charater recognizes as ally : " + targetAlly.stats.charName);
 
-            const action = determineMainCharAction(this);
-            if(action === "bash") {
-                this.normalBash(this.opponent);
-            } else if(action === "defend") {
-                this.defend();
-            } else if(action === "lifeup") {
-                this.lifeUp(targetAlly);
-            } else if(action === "psimagnet") {
-                this.psiMagnet();
-            } else if(action === "hypnosis-alpha") {
-                this.hypnosisAlpha();
-            } else {
-                this.duel.writeMessage(`${this.stats.charName} は たちすくんだ！`);
+            if(this.stats.ailments.strange) {
+                this.duel.writeMessage(`${this.stats.charName} は すこしヘンに なっている…`);
             }
+
+            setTimeout(()=>{
+                const action = determineMainCharAction(this);
+                if(action === "bash") {
+                    this.normalBash(this.opponent);
+                } else if(action === "defend") {
+                    this.defend();
+                } else if(action === "lifeup") {
+                    this.lifeUp(targetAlly);
+                } else if(action === "psimagnet") {
+                    this.psiMagnet();
+                } else if(action === "hypnosis-alpha") {
+                    this.hypnosisAlpha();
+                } else {
+                    this.duel.writeMessage(`${this.stats.charName} は たちすくんだ！`);
+                }
+            }, lag);
         }
 
         normalBash (target) {
@@ -449,6 +462,10 @@
                             if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
                                 this.duel.writeMessage(`${target.stats.charName} は めをさました！`);
                                 target.stats.ailments.asleep = 0;
+                            }
+                            if(Math.random()*1.6 <= 1 && target.stats.ailments.strange) {
+                                this.duel.writeMessage(`${target.stats.charName} は もとに もどった！`);
+                                target.stats.ailments.strange = 0;
                             }
                         }
                         this.stats.tp++;
@@ -517,11 +534,13 @@
                         this.duel.writeMessage(`しかし TPがたりなかった！`);
                     }
                 }, 800);
+                setTimeout(() => {
+                    this.endTurn();
+                }, 1800);
             }
-                
-            setTimeout(() => {
-                this.endTurn();
-            }, (2000 + animationTime));
+            // setTimeout(() => {
+            //     this.endTurn();
+            // }, (2000 + animationTime));
         }
 
         faint () {
@@ -534,12 +553,21 @@
                 this.stats.ailments[key] = 0;
             });
             clearInterval(this.seeking);
-            this.ailmentIndicator.classList.remove("expanded");
-            // this.duel.terminate();
+            if(this.stats.reviveEnchanted) {
+                this.ailmentIndicator.classList.remove("poisoned");
+                this.ailmentIndicator.classList.remove("asleep");
+                this.ailmentIndicator.classList.remove("paralysed");
+                this.ailmentIndicator.classList.remove("crying");
+                this.ailmentIndicator.classList.remove("silenced");
+                this.ailmentIndicator.classList.remove("strange");
+            } else {
+                this.ailmentIndicator.classList.remove("expanded");
+            }
         }
 
         invokeRevive () {
             this.duel.writeMessage(`しかし ${this.stats.charName} に かかっていたリヴァイブまほうが ${this.stats.charName} に ちからをくれた！`);
+            this.ailmentIndicator.classList.remove("expanded");
 
             setTimeout(()=>{
                 this.duel.writeMessage(`${this.stats.charName} は カムバックした！`);
@@ -609,6 +637,8 @@
                 this.ailmentIndicator.classList.remove("paralysed");
                 this.ailmentIndicator.classList.remove("crying");
                 this.ailmentIndicator.classList.remove("silenced");
+                this.ailmentIndicator.classList.remove("strange");
+                this.ailmentIndicator.classList.remove("revive");
                 this.ailmentJog = 0;
             }
 
@@ -619,9 +649,11 @@
                 this.stats.ailments.paralysed,
                 this.stats.ailments.crying,
                 this.stats.ailments.silenced,
+                this.stats.ailments.strange,
+                this.stats.reviveEnchanted,
             ];
             
-            if(ailments.join("-") === "0-0-0-0-0") {
+            if(ailments.join("-") === "0-0-0-0-0-0-0") {
                 this.ailmentIndicator.classList.remove('expanded');
             }else {
                 this.ailmentIndicator.classList.add('expanded');
@@ -668,13 +700,35 @@
                     this.ailmentIndicator.classList.add("silenced");
                 }else {
                     this.ailmentIndicator.classList.remove("silenced");
+                    this.ailmentJog++;
+                }
+            }
+
+            if(this.ailmentJog === 5) {
+                if(ailments[5]) {
+                    this.ailmentIndicator.classList.add("strange");
+                }else {
+                    this.ailmentIndicator.classList.remove("strange");
+                    this.ailmentJog++;
+                }
+            }
+            if(this.ailmentJog === 6) {
+                if(ailments[6]) {
+                    this.ailmentIndicator.classList.add("revive");
+                }else {
+                    this.ailmentIndicator.classList.remove("revive");
                 }
             }
             
             this.ailmentJog++;
-            if(this.ailmentJog > ailments.length - 1 && ailments.join("-") !== "0-0-0-0-0"){
+            if(this.ailmentJog > ailments.length - 1 && ailments.join("-") !== "0-0-0-0-0-0-0"){
                 this.ailmentJog = -1;
-                this.seekAilmentState();
+                // console.log(ailments.join("-") !== "0-0-0-0-0-0" ? "Continue" : "End");
+                // if(ailments.join("-") !== "0-0-0-0-0-0") {
+                    // this.seekAilmentState();
+                // }
+            } else {
+                console.log(`${this.stats.charName}、異常ありませんッ!`);
             }
         }
     }
@@ -1142,6 +1196,8 @@
             "func": function (caster, target, duel) {
                 target.stats.hp = target.stats.mhp;
                 popDamage(target.stats.mhp, "heal", duel.duelScreen, target.charPos);
+
+                setTimeout(()=>{duel.seekTurn()}, 1000);
             }
         },
         "psiMagnet" : {
@@ -1160,6 +1216,8 @@
                 }
                 target.stats.tp -= drainValue;
                 caster.stats.tp += drainValue;
+                
+                setTimeout(()=>{duel.seekTurn()}, 1000);
             }
         },
         "hypnosis-alpha" : {
@@ -1178,6 +1236,8 @@
                 } else {
                     duel.writeMessage(`${target.stats.charName} には こうかがなかった！`);
                 }
+                
+                setTimeout(()=>{duel.seekTurn()}, 1000);
             }
         },
         "revive" : {
