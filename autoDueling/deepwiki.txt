@@ -951,3 +951,108 @@ Overall, `DrumMeter` is used exactly twice in the codebase (based on references)
 - `this.stats.tpa`: Current TP value used for the TP drum meter; tracks technical/ability resources
 - `drum_container`, `drum_container_inner`: CSS classes applied to container elements; likely styled in an external stylesheet to position and size the meter
 - `./assets/images/drummeter.png`: Background image used for the drum segments; contains repeating digits or tick marks to simulate a spinning wheel
+
+
+
+**************************************
+Function : duelOutcomeNotify          *
+**************************************
+`duelOutcomeNotify` is a function that displays a temporary popup notification when a duel concludes.  
+It conditionally shows outcome messages (e.g., victory, draw) only if the duel screen is not in the current viewport.
+
+---
+
+### Definition
+
+The `duelOutcomeNotify` function creates a transient UI popup to inform the user of a duel’s result—such as a win, loss, or draw—without interrupting the flow. It intelligently avoids displaying the notification if the duel screen is already visible on the user’s screen, preventing redundant alerts.
+
+It is primarily used in the `terminate` method of a duel instance to summarize the outcome after combat ends.
+
+```javascript
+1182:1221:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+function duelOutcomeNotify(msg, duelScreenPosition, isPipped = 0) {
+    const vport = [window.scrollY, window.scrollY + window.innerHeight];
+
+    // If duel screen is already in view, do not show notification
+    if (vport[0] < duelScreenPosition[0] && vport[1] > duelScreenPosition[1]) {
+        console.log("表示しません"); // "Not showing"
+    } else {
+        if (!isPipped) {
+            const popup = document.createElement('div');
+            popup.classList.add('duelOutcomePopup');
+            popup.textContent = msg;
+            popup.addEventListener('click', () => {
+                // Scroll to duel screen when clicked
+                window.scrollTo({ top: duelScreenPosition[0], behavior: 'smooth' });
+                popup.classList.remove("expanded");
+            });
+            document.querySelector('main').appendChild(popup);
+            popup.classList.add('onBottom'); // Position based on viewport
+            setTimeout(() => popup.classList.add('expanded'), 17);
+            setTimeout(() => popup.classList.remove('expanded'), 4700);
+            setTimeout(() => popup.remove(), 5000); // Auto-remove after 5s
+        }
+    }
+}
+```
+
+- **Params**:
+  - `msg`: The message to display (e.g., "Player A のしょうり！").
+  - `duelScreenPosition`: A two-element array `[top, bottom]` indicating the vertical bounds of the duel screen in the document.
+  - `isPipped`: Optional flag (default: 0) to suppress notification (likely used for embedded/pip-mode displays).
+- **Side effects**: Appends a DOM element to `<main>`, adds event listeners, and triggers smooth scrolling on click.
+- **Returns**: `undefined` — purely a UI side-effect function.
+
+---
+
+### Example Usages
+
+`duelOutcomeNotify` is called in the `terminate` method of a duel object when the battle ends. It reports outcomes like victory, draw, or cancellation.
+
+For example, when both characters are defeated:
+
+```javascript
+1018:1018:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+duelOutcomeNotify(
+  `${this.duelTitle} - ひきわけに なった！`, 
+  [this.duelScreen.offsetTop, this.duelScreen.offsetTop + this.duelScreen.offsetHeight],
+  this.duelScreen.classList.contains('pseudoPipped') // Prevents popup in PIP mode
+);
+```
+
+Similarly, it is used to announce a winner:
+
+```javascript
+1023:1023:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+duelOutcomeNotify(
+  `${this.duelTitle} - ${this.charA.stats.charName} のしょうり！`,
+  [this.duelScreen.offsetTop, this.duelScreen.offsetTop + this.duelScreen.offsetHeight],
+  this.duelScreen.classList.contains('pseudoPipped')
+);
+```
+
+**Usage Summary**:  
+The function is invoked **five times** in the codebase, all within the `terminate` method of what appears to be a `Duel` class. It handles all end-of-duel states:
+- Win for character A
+- Win for character B
+- Mutual defeat (draw)
+- Canceled duel
+- Revive failure (treated as draw)
+
+It is **not used elsewhere**, making it a tightly scoped utility for post-duel feedback.
+
+---
+
+### Notes
+
+- **Viewport-aware behavior**: The function checks whether the duel screen is currently visible using `window.scrollY` and `innerHeight`. If the duel is in view, it suppresses the popup to avoid distraction.
+- **Auto-dismissing UI**: The notification appears with a CSS class `expanded`, then fades out after 4.7 seconds and is removed after 5 seconds.
+- **Click-to-navigate**: Clicking the popup smoothly scrolls the page to the duel screen, acting as both notification and navigation aid.
+
+---
+
+### See Also
+
+- `terminate`: The method in the duel logic that ends the match and calls `duelOutcomeNotify` to report results.
+- `seekTurn`: The main duel loop function that eventually leads to `terminate` being called when a character is defeated.
+- `pseudoPipped`: A CSS class (or flag) used to conditionally disable the notification, likely for picture-in-picture or embedded views.

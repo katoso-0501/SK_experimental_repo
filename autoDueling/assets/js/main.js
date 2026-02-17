@@ -150,7 +150,8 @@
                     crying: this.duel.rules.duelmode === "suddendeath" ? 1 : 0,
                     // Cannot do PSI actions
                     silenced: 0,
-                    strange: 1,
+                    // Sometimes confused who to attack
+                    strange: 0,
                 },
                 shielding: {type:"", duration: 0},
                 reviveEnchanted: this.duel.rules.duelmode === "withrevive" ? 1 : 0,
@@ -727,8 +728,6 @@
                 // if(ailments.join("-") !== "0-0-0-0-0-0") {
                     // this.seekAilmentState();
                 // }
-            } else {
-                console.log(`${this.stats.charName}、異常ありませんッ!`);
             }
         }
     }
@@ -1016,18 +1015,22 @@
                 this.writeMessage(`りょうしゃとも きずつきたおれた…`);
                 this.writeBreakdown("---------------------");
                 this.writeBreakdown(`Draw!`);
+                duelOutcomeNotify(`${this.duelTitle} - ひきわけに なった！`, [this.duelScreen.offsetTop,this.duelScreen.offsetTop + this.duelScreen.offsetHeight], this.duelScreen.classList.contains('pseudoPipper'));
             } else if(this.charB.stats.hpa <= 0){
                 this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
                 this.writeBreakdown("---------------------");
                 this.writeBreakdown(`${this.charA.stats.charName} Wins!`);
+                duelOutcomeNotify(`${this.duelTitle} - ${this.charA.stats.charName} のしょうり！`, [this.duelScreen.offsetTop,this.duelScreen.offsetTop + this.duelScreen.offsetHeight], this.duelScreen.classList.contains('pseudoPipper'));
             }else if(this.charA.stats.hpa <= 0){
                 this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
                 this.writeBreakdown("---------------------");
                 this.writeBreakdown(`${this.charB.stats.charName} Wins!`);
+                duelOutcomeNotify(`${this.duelTitle} - ${this.charB.stats.charName} のしょうり！`, [this.duelScreen.offsetTop,this.duelScreen.offsetTop + this.duelScreen.offsetHeight], this.duelScreen.classList.contains('pseudoPipper'));
             } else {
                 this.writeMessage(`しあいは ちゅうしされた！`);
                 this.writeBreakdown("---------------------");
                 this.writeBreakdown(`Draw!`);
+                duelOutcomeNotify(`${this.duelTitle} - けっちゃくは つかなかった！`, [this.duelScreen.offsetTop,this.duelScreen.offsetTop + this.duelScreen.offsetHeight], this.duelScreen.classList.contains('pseudoPipper'));
             }
             this.charA.parallelProgress();
             this.charB.parallelProgress();
@@ -1064,6 +1067,7 @@
         }
     }
     
+    /* Action Determination */
     function determineMainCharAction (origin) {
         const opinions = [];
         const player = origin.stats;
@@ -1137,8 +1141,8 @@
         return finalDecision;
     }
 
+    /* Pop Damage */
     function popDamage(dmg, type, duelScreen, target, byGimic = false) {
-        console.log(type);
         const dmgInd = document.createElement("div");
         dmgInd.textContent = dmg;
         dmgInd.classList.add('damage-indicator');
@@ -1154,6 +1158,7 @@
         setTimeout(()=>{dmgInd.remove();}, 1000);
     }
 
+    /* Pop Smeeesh */
     function popsmesh(duelScreen, target) {
         flashScreen("#FFFFFF", duelScreen);
         const smesh = document.createElement("div");
@@ -1165,12 +1170,54 @@
         setTimeout(()=>{smesh.remove();}, 1000);
     }
 
+    /* Flash Screen */
     function flashScreen(color, duelScreen) {
         const flasher = document.createElement("div");
         flasher.classList.add('duelScreenFlashing');
         flasher.style.backgroundColor = color;
         duelScreen.appendChild(flasher);
         setTimeout(()=>{flasher.remove();}, 1000);
+    }
+
+    function duelOutcomeNotify (msg, duelScreenPosition, isPipped = 0) {
+        console.log(duelScreenPosition);
+        const vport = [window.scrollY, window.scrollY + window.innerHeight];
+        if(
+            vport[0] < duelScreenPosition[0]
+            &&
+            vport[1] > duelScreenPosition[1]
+        ) {
+            console.log("表示しません");
+        }else{
+            if(!isPipped)
+            {
+                const popup = document.createElement('div');
+                popup.classList.add('duelOutcomePopup');
+                popup.textContent = msg;
+                popup.addEventListener('click', ()=>{
+                    window.scrollTo({
+                        top: duelScreenPosition[0],
+                        behavior: 'smooth'
+                    });
+                    popup.classList.remove("expanded");
+                });
+                document.querySelector('main').appendChild(popup);
+                if(
+                vport[0] < duelScreenPosition[0]
+                ) {
+                    popup.classList.add('onBottom');
+                }
+                setTimeout(()=>{
+                    popup.classList.add('expanded');
+                },17);
+                setTimeout(()=>{
+                    popup.classList.remove('expanded');
+                }, 4700);
+                setTimeout(()=>{
+                    popup.remove();
+                }, 5000);
+            }
+        }
     }
 
     const characterNames = [
@@ -1227,7 +1274,6 @@
             "func" : function (caster, target, duel) {
                 const chance = 1.66 + 2 * (target.stats.hp / target.stats.mhp);
                 const dicing = Math.random()*chance;
-                console.log(`${dicing} <= 1`);
                 if(dicing <= 1 && target.stats.ailments.asleep === 0) {
                     target.stats.ailments.crying = 0;
                     target.stats.ailments.asleep = 1;
@@ -1251,6 +1297,8 @@
                 } else {
                     duel.writeMessage(` * しっぱい！ * `);
                 }
+
+                setTimeout(()=>{duel.seekTurn()}, 1000);
             }
         }
     };

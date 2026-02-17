@@ -550,6 +550,39 @@ main {
     line-height: 1.6;
 }
 
+.duelOutcomePopup {
+    position: fixed;
+    width: 90%;
+    max-width: 540px;
+    background: #0037b9;
+    color: #FFFFFF;
+    padding: 16px 8px;
+    border-radius: 8px;
+    z-index: 9999;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 60px;
+    transform: translateY(-24px);
+    opacity: 0;
+    text-align: center;
+    transition: transform 0.4s, opacity 0.4s;
+    pointer-events: none;
+}
+
+.duelOutcomePopup.onBottom {
+    top: auto;
+    transform: translateY(24px);
+    bottom: 60px;
+}
+
+.duelOutcomePopup.expanded, 
+.duelOutcomePopup.onBottom.expanded {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
 /* Duel Backgrounds */
 .duelBg {
     position: absolute;
