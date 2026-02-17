@@ -150,6 +150,7 @@
                     crying: this.duel.rules.duelmode === "suddendeath" ? 1 : 0,
                     // Cannot do PSI actions
                     silenced: 0,
+                    strange: 0,
                 },
                 shielding: {type:"", duration: 0},
                 reviveEnchanted: this.duel.rules.duelmode === "withrevive" ? 1 : 0,
@@ -391,13 +392,24 @@
         }
 
         setAction () {
+            let targetAlly = this;
+            if(this.stats.ailments.strange === 1) {
+                if(Math.random()*2 <= 1) {
+                    this.opponent = this;
+                }
+            } else {
+                const playerIff = this.stats.iff;
+                const opponentCandidate = this.duel.field.filter(p => p !== "*" && p.stats.iff !== playerIff);
+                this.opponent = opponentCandidate[Math.floor(Math.random()*opponentCandidate.length)];
+            }
+
             const action = determineMainCharAction(this);
             if(action === "bash") {
                 this.normalBash(this.opponent);
             } else if(action === "defend") {
                 this.defend();
             } else if(action === "lifeup") {
-                this.lifeUp();
+                this.lifeUp(targetAlly);
             } else if(action === "psimagnet") {
                 this.psiMagnet();
             } else if(action === "hypnosis-alpha") {
@@ -465,8 +477,8 @@
             }
         }
         
-        lifeUp () {
-            this.psiTrial(this, spellBook.lifeup, 0);
+        lifeUp (target) {
+            this.psiTrial(target, spellBook.lifeup, 0);
         }
 
         psiMagnet () {
@@ -677,13 +689,6 @@
                 this.rules.background = Math.floor(Math.random()*Background.maximumBgs);
             }
             this.duelBg = new Background(this, {bgId: this.rules.background});
-            this.duelScreen.addEventListener('dblclick', ()=>{
-                if(!this.duelScreen.classList.contains('pseudoPipper')) {
-                    this.popOut();
-                } else {
-                    this.duelScreen.classList.remove("pseudoPipper");
-                }
-            })
 
             this.messageBox = document.createElement('div');
             this.messageBox.classList.add('messageContainer');
@@ -702,6 +707,8 @@
             this.hitPointSetting = [];
             this.technicalPointSetting = [];
             this.promisedMessage = [];
+
+            /* Character Settings */
             for(let k = 0; k < 2; k++){
                 if(this.rules.duelmode === "suddendeath") {
                     this.hitPointSetting.push(1);
@@ -717,7 +724,9 @@
                     this.technicalPointSetting.push(Math.floor(Math.random()*500) + 250);
                 }
             }
-            this.sideA = [new LeadChar(this, {
+            this.field = 
+            [
+                new LeadChar(this, {
                 id: 0,
                 iff: 0,
                 charName: characterNames[Math.floor(Math.random()*characterNames.length)],
@@ -730,8 +739,7 @@
                 isDefending: 0,
                 offense: 100,
                 agl: Math.floor(Math.random()*120),
-            }),"*","*","*","*","*"];
-            this.sideB = [new LeadChar(this,{
+            }),new LeadChar(this,{
                     id: 1,
                     iff: 1,
                     charName: characterNames[Math.floor(Math.random()*characterNames.length)],
@@ -744,24 +752,67 @@
                     isDefending: 0,
                     offense: 100,
                     agl: Math.floor(Math.random()*120),
-            }),"*","*","*","*","*",];
+            }),"*","*","*","*",
+            ];
             this.orders = [];
-
-            this.charA = this.sideA[0];
-            this.charB = this.sideB[0];
-
+            this.charA = this.field[0];
+            this.charB = this.field[1];
             this.charA.opponent = this.charB;
             this.charB.opponent = this.charA;
-
             if(this.charA.stats.charName === this.charB.stats.charName){
                 this.charA.stats.charName += "A";
                 this.charB.stats.charName += "B";
             }
-
+            
+            /* Duel Title and menus */
+            this.duelTitle = `${this.charA.stats.charName} VS ${this.charB.stats.charName}`;
             this.writeBreakdown(`ルール：${this.rules.japanname}`);
             this.writeMessage("The engage!");
 
+            this.duelMenuHp = 0;
+            this.composeMenu();
+
             this.parallelProgress();
+        }
+
+        composeMenu () {
+            this.duelMenuHp = 30;
+            this.duelMenu = document.createElement('div');
+            this.duelMenu.classList.add('duelMenu');
+            this.duelMenu.innerHTML = `<span class="duelTitle">${this.duelTitle}</span>`;
+
+            const pippizer = document.createElement('div');
+            pippizer.classList.add('pippize');
+            pippizer.textContent = "pip";
+            this.duelMenu.appendChild(pippizer);
+            pippizer.addEventListener('click', ()=>{
+                if(document.querySelector('.duelPippingIndicator')) {
+                    document.querySelector('.duelPippingIndicator').remove();
+                }
+                if(!this.duelScreen.classList.contains('pseudoPipper')) {
+                    this.popOut();
+                } else {
+                    this.duelScreen.classList.remove("pseudoPipper");
+                }
+            })
+
+            this.duelScreen.appendChild(this.duelMenu);
+
+            this.duelScreen.addEventListener('mousemove', ()=>{
+                this.duelMenuHp = 30;
+                this.duelMenu.classList.add("expanded");
+            });
+            this.duelScreen.addEventListener('click', ()=>{
+                this.duelMenuHp = 30;
+                this.duelMenu.classList.add("expanded");
+            });
+
+            setInterval(()=>{
+                this.duelMenuHp--;
+                if(this.duelMenuHp <= 0) {
+                    this.duelMenu.classList.remove("expanded");
+                }
+            }, 100);
         }
 
         determineOrder () {
@@ -938,13 +989,12 @@
             showBrkdwnBtn.textContent = "うちわけを ひょうじする";
             showBrkdwnBtn.classList.add("showBreakdownBtn");
             this.duelScreen.appendChild(showBrkdwnBtn);
-            const brkdwnContainer = document.createElement("div");
-            brkdwnContainer.classList.add("breakdownContainer");
-            brkdwnContainer.innerHTML = String(this.totalMessage).replace(/\n/g, "<br>");
-            this.duelScreen.appendChild(brkdwnContainer);
+            const brkdwnTitle = document.querySelector('.overlayingBreakdownContainer__main h2');
+            const brkdwnContainer = document.querySelector('.overlayingBreakdownContainer__main p');
             showBrkdwnBtn.addEventListener('click', ()=>{
-                brkdwnContainer.classList.toggle("expanded");
-                this.duelScreen.classList.toggle("scrollable");
+                brkdwnTitle.textContent = this.duelTitle;
+                brkdwnContainer.innerHTML = String(this.totalMessage).replace(/\n/g, "<br>");
+                document.querySelector('.overlayingBreakdownContainer').classList.add('expanded');
             });
         }
 
@@ -952,6 +1002,10 @@
             document.querySelectorAll(".pseudoPipper").forEach((el)=>{
                 el.classList.remove("pseudoPipper");
             });
+            const pippingIndi = document.createElement('div');
+            pippingIndi.innerHTML = "いま このデュエルは ピップしてあるよ";
+            pippingIndi.classList.add('duelPippingIndicator');
+            document.querySelector('main').insertBefore(pippingIndi, this.duelScreen);
             this.duelScreen.classList.add('pseudoPipper');
         }
     }
@@ -1172,7 +1226,6 @@
     });
 
     function setBg (bgNo) {
-        console.log(typeof bgNo);
         if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1 && parseInt(bgNo) >= -1) {
             return parseInt(bgNo);
         } else {
@@ -1180,6 +1233,7 @@
         }
     }
 
+    /* Duel starters */
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
         const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : setBg(bgSwitcher.value)});
         duelMain.push(a);
@@ -1227,8 +1281,8 @@
     requestAnimationFrame(f);
 
     let k = setInterval(()=>{
-        const skipSetting = Math.ceil(fps / 12);
-        maximumSkip = fps >= 120 ? skipSetting + 1 : skipSetting;
+        const skipSetting = Math.ceil(fps / 10);
+        maximumSkip = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
     },500);
@@ -1236,4 +1290,10 @@
     document.querySelector('.textFramer').addEventListener('click', () =>{
         document.querySelector('.textFramer').style.opacity = 0;
     });
+
+    // Breakdowns
+    document.querySelector('.overlayingBreakdownContainer__close').addEventListener('click', e=>{
+        e.stopPropagation();
+        document.querySelector('.overlayingBreakdownContainer').classList.remove('expanded');
+    })
 }
