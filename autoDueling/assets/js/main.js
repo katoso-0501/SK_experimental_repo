@@ -126,11 +126,11 @@
             this.duel = duel;
             
             this.duel.charID++;
-            console.log(`ID: ${this.duel.charID}`);
             this.actable = 0;
             this.actionTime = 0;
-            this.charPos = [0,0];
+            this.charPos = [this.duel.duelScreen.offsetWidth / 2,0];
             this.takenDamage = 0;
+            this.customMessages = {};
             this.stats =
             {
                 id: this.duel.charID,
@@ -181,7 +181,7 @@
             this.duel.centralCharContainer.appendChild(this.charContainer);
             this.charPos =
             [
-                this.duel.centralCharContainer.offsetLeft,
+                this.duel.centralCharContainer.offsetLeft + this.duel.centralCharContainer.offsetWidth / 2,
                 this.duel.centralCharContainer.offsetTop,
             ];
         }
@@ -192,7 +192,12 @@
             this.stats.hpa = this.stats.mhp;
             this.stats.tp = this.stats.mtp;
             this.stats.tpa = this.stats.mtp;
-            this.stats.charName = this.stats.coreName;
+            if(this.stats.coreName ===  "narazu") {
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                this.stats.charName = "ならずもの" + alphabet[this.duel.namesakes.narazu];
+                this.customMessages.fainted = `${this.stats.charName} は こうさんした！`;
+                this.duel.namesakes.narazu++;
+            }
         }
 
         whereAreYou () {
@@ -280,10 +285,25 @@
         }
 
         setAction () {
-            this.duel.writeMessage(this.stats.charName+' : わたしもいつかこうどうできるようになってみたい。');
-            setTimeout(()=>{
-                this.endTurn();
-            }, 2000);
+            let lag  = 17;
+            if(this.stats.coreName === "narazu") {
+                if(this.stats.ailments.paralysed) {
+                    this.paralysing();
+                }else {
+                    if(this.stats.ailments.strange) {
+                        this.duel.writeMessage(`${this.stats.charName} は すこしヘンに なっている…`);
+                        lag = 1000;
+                    }
+                    setTimeout(()=>{
+                        otherCharAction.narazu(this, this.duel);
+                    }, lag);
+                }
+            }else{
+                this.duel.writeMessage(this.stats.charName+' : わたしもいつかこうどうできるようになってみたい。');
+                setTimeout(()=>{
+                    this.endTurn();
+                }, 2000);
+            }
         }
 
         endTurn () {
@@ -356,6 +376,10 @@
                 popDamage(dmg, "damage", this.duel.duelScreen, this.charPos, byGimic);
             }
 
+            if(!(this instanceof LeadChar)) {
+                    this.duel.writeMessage(`${this.stats.charName} は ${dmg} ダメージを うけた！`);
+            }
+
             if(this.stats.hp<=0) {
                 this.duel.shakeScreen(1,this);
             }else{
@@ -382,12 +406,22 @@
                 this.stats.tp = this.stats.mtp;
             }
 
+            const a = this.stats.ailments;
+            const ailmentSuffix
+            = `${a.poisoned ? "どく " : ""}${a.paralysed ? "まひ " : ""}${a.asleep ? "ねむり " : ""}${a.strange ? "へん " : ""}${a.crying ? "なみだとまらない " : ""}${a.silenced ? "PSIふういん" : ""}`;
+
             this.charContainer.textContent = 
-            `${this.stats.charName} : HP ${this.stats.hp}`;
+            `${this.stats.charName} - HP:${this.stats.hp} IFF:${this.stats.iff} ${ailmentSuffix}`;
         }
 
         faint () {
-            this.duel.writeMessage(`${this.stats.charName}はきずつきたおれた…`);
+            if(this.customMessages.fainted) {
+
+                this.duel.writeMessage(`${this.customMessages.fainted}`);
+            }else{
+                this.duel.writeMessage(`${this.stats.charName}はきずつきたおれた…`);
+
+            }
             this.charContainer.remove();
 
             setTimeout(()=>{
@@ -406,7 +440,6 @@
             this.setStats(initStat);
             this.actable = 1;
             this.opponent = [];
-
             this.recognizing = {
                 "rule" : ""
             }
@@ -424,7 +457,6 @@
         }
         
         defineStatusIndi () {
-
             this.windowMain = document.createElement('div');
             this.windowMain.classList.add('windowMain');
             this.windowMain.classList.add(`window${this.stats.id}`);
@@ -475,7 +507,6 @@
                 const opponentCandidate = this.duel.field.filter(p => p !== "*" && p.stats.iff !== playerIff);
                 this.opponent = opponentCandidate[Math.floor(Math.random()*opponentCandidate.length)];
             }
-            // console.log("Target that charater recognizes as ally : " + targetAlly.stats.charName);
 
             if(this.stats.ailments.strange) {
                 this.duel.writeMessage(`${this.stats.charName} は すこしヘンに なっている…`);
@@ -501,7 +532,6 @@
 
         normalBash (target) {
             if(!this.stats.ailments.paralysed){
-                
                 let damage =  Math.floor(Math.random()*80) + 60;
                 const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
                 this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
@@ -803,6 +833,9 @@
     class Duel {
         constructor (rules) {
             this.rules = rules;
+            this.namesakes = {
+                narazu: 0
+            };
             // Initialize Duel Screen
             this.duelScreen = document.createElement("div");
             this.duelScreen.classList.add("duelScreen");
@@ -852,7 +885,6 @@
             this.field = 
             [
                 new LeadChar(this, {
-                // id: 0,
                 iff: 0,
                 coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
                 charName: "",
@@ -864,28 +896,27 @@
                 tpa: 0,
                 isDefending: 0,
                 offense: 100,
-                agl: Math.floor(Math.random()*120),
-            }),new LeadChar(this,{
-                    // id: 1,
-                    iff: 1,
-                    coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
-                    charName: "",
-                    mhp: this.hitPointSetting[1],
-                    hp: 0,
-                    hpa: 0,
-                    tp: 0,
-                    mtp: this.technicalPointSetting[1],
-                    tpa: 0,
-                    isDefending: 0,
-                    offense: 100,
-                    agl: Math.floor(Math.random()*120),
+                agl: Math.floor(Math.random()*200) + 10,
+            }),new LeadChar(this, {
+                iff: 1,
+                coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
+                charName: "",
+                mhp: this.hitPointSetting[1],
+                hp: 0,
+                hpa: 0,
+                tp: 0,
+                mtp: this.technicalPointSetting[1],
+                tpa: 0,
+                isDefending: 0,
+                offense: 100,
+                agl: Math.floor(Math.random()*200) + 10,
             }),
             ];
 
             if(this.rules.duelmode === "withbystander") {
                 for( let i = 0; i< 10; i ++){
-                    this.field.push(new CharBase(this, {coreName:"ならずもの",iff:2,agl:255,mhp: Math.floor(Math.random()*200) + 1}));
-                    this.field[this.field.length-1].actable = 0;
+                    this.field.push(new CharBase(this, {coreName: "narazu",iff:2,agl:Math.floor(Math.random()*30) + 30,mhp: Math.floor(Math.random()*440) + 60,mtp:0,}));
+                    this.field[this.field.length-1].actable = 1;
                 }
             }
 
@@ -958,23 +989,6 @@
             }, 100);
         }
 
-        determineOrder () {
-            // this.orders = [this.charA, this.charB];
-            const tempAgl = [
-                this.charA.stats.agl + Math.random()*5 - 2,
-                this.charB.stats.agl + Math.random()*5 - 2,
-            ];
-            // tempAgl.sort((a, b) => b - a);
-            this.orders = [];
-            if(tempAgl[0] <= tempAgl[1]) {
-                this.orders.unshift(this.charA);
-                this.orders.push(this.charB);
-            }else{
-                this.orders.unshift(this.charB);
-                this.orders.push(this.charA);
-            }
-        }
-
         newDetermineOrder () {
             try {
                 // console.log(this.field);
@@ -1004,18 +1018,22 @@
         seekTurn () {
             let othersFainted = 0;
             if(this.charB.stats.hpa<=0 && this.charA.stats.hpa<=0) {
+                othersFainted = 1;
                 this.charA.faint();
                 this.charB.faint();
                 if(!this.charB.stats.reviveEnchanted && !this.charA.stats.reviveEnchanted){
                     this.terminate();
                 }else if(this.charA.stats.reviveEnchanted) {
+                othersFainted = 1;
                     this.writeMessage(`${this.charA.stats.charName} は きずつきたおれた…`);
                     this.charA.invokeRevive();
                 }else if(this.charB.stats.reviveEnchanted) {
+                othersFainted = 1;
                     this.writeMessage(`${this.charB.stats.charName} は きずつきたおれた…`);
                     this.charB.invokeRevive();
                 }
             }else if(this.charB.stats.hpa <= 0 ){
+                othersFainted = 1;
                 this.charB.faint();
                 if(this.charB.stats.reviveEnchanted === 0){
                     this.terminate();
@@ -1026,6 +1044,7 @@
                     }, 1000);
                 }
             }else if (this.charA.stats.hpa <= 0 ){
+                othersFainted = 1;
                 this.charA.faint();
                 if(this.charA.stats.reviveEnchanted === 0){
                     this.terminate();
@@ -1053,7 +1072,7 @@
             ){
                 const j = this.field.filter(f => !(f instanceof LeadChar));
                 j.forEach(k => { 
-                    if(k.stats.hpa <= 0) {
+                    if(k.stats.hpa <= 0 && othersFainted === 0) {
                         othersFainted=1;
                         k.faint();
                     }
@@ -1162,6 +1181,11 @@
             showBrkdwnBtn.textContent = "うちわけを ひょうじする";
             showBrkdwnBtn.classList.add("showBreakdownBtn");
             this.duelScreen.appendChild(showBrkdwnBtn);
+            const closeDuelBtn = document.createElement('div');
+            closeDuelBtn.textContent = "デュエルを とじる";
+            closeDuelBtn.classList.add("closeDuelBtn");
+            this.duelScreen.appendChild(closeDuelBtn);
+
             const brkdwnTitle = document.querySelector('.overlayingBreakdownContainer__main h2');
             const brkdwnContainer = document.querySelector('.overlayingBreakdownContainer__main p');
             showBrkdwnBtn.addEventListener('click', ()=>{
@@ -1169,6 +1193,10 @@
                 brkdwnContainer.innerHTML = String(this.totalMessage).replace(/\n/g, "<br>");
                 document.querySelector('.overlayingBreakdownContainer').classList.add('expanded');
             });
+
+            closeDuelBtn.addEventListener('click', ()=>{
+                this.exitDuel();
+            })
         }
 
         popOut () {
@@ -1180,6 +1208,19 @@
             pippingIndi.classList.add('duelPippingIndicator');
             document.querySelector('main').insertBefore(pippingIndi, this.duelScreen);
             this.duelScreen.classList.add('pseudoPipper');
+        }
+
+        exitDuel () {
+            if(this.gameFlag === 1){
+                this.terminate();
+            }
+
+            if(this.duelScreen.classList.contains("pseudoPipper")) {
+                document.querySelector('.duelPippingIndicator').remove();
+            }
+
+            duelMain.splice(duelMain.indexOf(this), 1);
+            this.duelScreen.remove();
         }
     }
     
@@ -1418,9 +1459,60 @@
         }
     };
 
-    const narazuAction = {
-        actiona : function (myself, duel) {
+    const otherCharAction = {
+        narazu : function (myself, duel) {
+            const targetCandidates =
+            [
+                duel.charA,
+                duel.charB,
+            ];
+            if(myself.stats.ailments.strange) {
+                targetCandidates.push(...duel.field.filter(v=>v.stats.id >= 3));
+            }
+            const target = targetCandidates[Math.floor(Math.random()*targetCandidates.length)];
+            duel.writeMessage(`${myself.stats.charName}は ${target.stats.charName} を ひっぱたいた！`);
 
+            setTimeout(()=>{
+                let damage =  Math.floor(Math.random()*20) + 1;
+                const chanceOfMiss = myself.stats.ailments.crying ? 1.65 : 16;
+
+                if(target instanceof LeadChar) {
+                    target.recognize('opponentSleeping', 0);
+                }
+
+                if(Math.random()*chanceOfMiss <= 1){
+                    duel.writeMessage(`The missed!`);
+                }else{
+                    /* SMEEEEESH */
+                    if(Math.random()*16 <= 1){
+                        damage = damage * 3;
+                        if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
+                            target.stats.shielding.duration = 1;
+                        }
+                        duel.writeBreakdown(`SMEEEEEEEESH!!`);
+                        popsmesh(duel.duelScreen, target.charPos);
+                        myself.stats.tp += 4;
+                    /* Target is defending */
+                    } else if(target.stats.isDefending) {
+                        damage = Math.floor(damage * 0.3);
+                    } else {
+                    /* Other cases, wakes target up when hit */
+                        if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
+                            duel.writeMessage(`${target.stats.charName} は めをさました！`);
+                            target.stats.ailments.asleep = 0;
+                        }
+                        if(Math.random()*1.6 <= 1 && target.stats.ailments.strange) {
+                            duel.writeMessage(`${target.stats.charName} は もとに もどった！`);
+                            target.stats.ailments.strange = 0;
+                        }
+                    }
+                    target.takeDamage(damage, "physical");
+                }
+            }, 700);
+
+            setTimeout(()=>{
+                duel.seekTurn();
+            }, 1700);
         }
     };
     

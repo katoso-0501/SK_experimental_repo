@@ -472,7 +472,8 @@ main {
     background-size: contain;
 }
 
-.showBreakdownBtn {
+.showBreakdownBtn,
+.closeDuelBtn {
     position: absolute;
     left: 10%;
     top: 50%;
@@ -483,8 +484,12 @@ main {
     padding: 6px 0;
     background-color: var(--base-bg);
     border-radius: 8px;
+    z-index : 900;
 }
 
+.closeDuelBtn {
+    top: calc(50% + 40px);
+}
 
 .textFramer {
     position: fixed;

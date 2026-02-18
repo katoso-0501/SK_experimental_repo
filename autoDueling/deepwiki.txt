@@ -1,3 +1,81 @@
+
+
+**************************************
+CharBase.parallelProgress.ailmentSuffix       *
+**************************************
+`ailmentSuffix` is a local string variable that dynamically constructs a human-readable label for active status ailments on a character in a duel system.  
+It aggregates Japanese text representations of various negative status conditions (e.g. poison, paralysis) based on the current state of a character’s `ailments` object.
+
+This variable is not globally accessible or directly invoked—it exists solely within the scope of the `parallelProgress` method of the `CharBase` class, where it is used to update the character's UI display. Its primary purpose is to provide real-time visual feedback about a character’s afflictions during gameplay.
+
+---
+
+### Definition
+
+The `ailmentSuffix` variable is defined inside the `parallelProgress` method of the `CharBase` class. It uses template literal syntax to conditionally concatenate Japanese status labels based on boolean values in the `this.stats.ailments` object.
+
+```javascript
+401:403:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+const a = this.stats.ailments;
+const ailmentSuffix = 
+    `${a.poisoned ? "どく " : ""}` +
+    `${a.paralysed ? "まひ " : ""}` +
+    `${a.asleep ? "ねむり " : ""}` +
+    `${a.strange ? "へん " : ""}` +
+    `${a.crying ? "なみだとまらない" : ""}` +
+    `${a.silenced ? "PSIふういん" : ""}`;
+```
+
+- **Type**: `string` (constructed from conditional expressions)
+- **Scope**: Local to the `parallelProgress()` method
+- **Side effects**: None — it is a pure derivation from current state
+- **Purpose**: To generate a space-separated string of Japanese status effect names reflecting active ailments
+- **Used in**: Updating `this.charContainer.textContent` for UI display
+
+The resulting `ailmentSuffix` value is appended to the character’s HP readout, allowing players to see at a glance which status effects are currently active.
+
+---
+
+### Example Usages
+
+The `ailmentSuffix` is used exactly once in the codebase, within the same function where it is defined. It contributes to updating the character’s status display in the UI.
+
+```javascript
+405:406:/c:/Users/katos/Desktop/2020A-Katoso/autoDueling/assets/js/main.js
+this.charContainer.textContent = 
+    `${this.stats.charName} : HP ${this.stats.hp} ${ailmentSuffix}`;
+```
+
+This line sets the visible text of a character’s status container to include their name, current HP, and any active ailments—such as `"ナターシャ : HP 42 どく まひ "` if both poisoned and paralyzed.
+
+**Usage Summary**:  
+- Called exclusively within `parallelProgress()`  
+- Invoked on every frame update cycle for each character  
+- Part of the core UI refresh mechanism in the duel system  
+- Used by both player (`LeadChar`) and AI-controlled characters inheriting from `CharBase`  
+- Central to user feedback during status-based combat mechanics  
+
+It is not exported, referenced elsewhere, or logged—it serves a single, focused role in presentation logic.
+
+---
+
+### Notes
+
+- Despite its name suggesting a suffix in English, `ailmentSuffix` contains full Japanese words rather than abbreviated or grammatical suffixes—this may reflect localization conventions in the game's design.
+- The space at the end of each condition (e.g. `"どく "`) ensures readable separation when multiple ailments are present, but could lead to trailing whitespace; however, this does not affect rendering.
+- The order of conditions in the string is fixed and does not prioritize severity or duration, meaning less critical effects like `"へん "` (strange) appear alongside more impactful ones like `"PSIふういん"` (PSI seal).
+
+---
+
+### See Also
+
+- `CharBase`: Base class for all duel participants; defines `parallelProgress()` and holds `stats.ailments`. This is where `ailmentSuffix` is constructed and used.
+- `parallelProgress()`: The method responsible for synchronizing character stats and UI elements each frame; `ailmentSuffix` is a key part of its display logic.
+- `stats.ailments`: An object on each character containing boolean flags for each status effect; directly drives the value of `ailmentSuffix`.
+- `LeadChar`: Subclass of `CharBase` representing player characters; inherits the use of `ailmentSuffix` through `parallelProgress`.
+
+
+
 ******************************
 Duel                        *
 ******************************
