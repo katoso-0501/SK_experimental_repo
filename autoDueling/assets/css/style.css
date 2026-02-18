@@ -288,9 +288,30 @@ main {
     border: 10px solid #F0F0F0;
     border-radius: 8px;
     padding: 8px;
-    margin-bottom: 128px;
+    margin-bottom: 32px;
     min-height: 40px;
     background-color: var(--base-bg);
+}
+
+.centralCharContainer {
+    position: relative;
+    z-index: 2;
+    min-height: 80px;
+    max-height: 200px;
+    margin-bottom: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+    
+}
+
+.centralCharContainer > div {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background: var(--base-bg);
+    padding: 8px;
+    margin-bottom: 4px;
 }
 
 .windowFlexBox {

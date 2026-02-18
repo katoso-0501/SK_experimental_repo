@@ -99,7 +99,8 @@
                 && this.duel.charB.stats.hpa>0
             ) {
                 this.gimmickWorking = 1;
-                const target = Math.random()*2 <= 1 ? this.duel.charA : this.duel.charB;
+                const target = this.duel.field[Math.floor(Math.random()*this.duel.field.length)];
+                // const target = Math.random()*2 <= 1 ? this.duel.charA : this.duel.charB;
                 this.duel.writeMessage("らくらいだ！");
                 flashScreen("#ffef00", this.duel.duelScreen);
 
@@ -121,17 +122,21 @@
     }
 
     class CharBase {
-        constructor (duel) {
+        constructor (duel, initStat = null) {
             this.duel = duel;
+            
+            this.duel.charID++;
+            console.log(`ID: ${this.duel.charID}`);
             this.actable = 0;
             this.actionTime = 0;
             this.charPos = [0,0];
             this.takenDamage = 0;
             this.stats =
             {
-                id: 0,
+                id: this.duel.charID,
                 iff: 999,
-                charName: "Dummy",
+                coreName: "Dummy",
+                charName: "",
                 mhp: 100,
                 hp: 100,
                 mtp: 100,
@@ -160,6 +165,25 @@
                     defense : 0,
                 },
             }
+            this.stats.charName = this.stats.coreName;
+
+            if(initStat) {
+                this.setStats(initStat);
+            }
+
+            this.defineStatusIndi();
+        }
+
+        defineStatusIndi () {
+            this.charContainer = document.createElement("div");
+            this.charContainer.classList.add("subChar");
+            this.charContainer.textContent = `${this.stats.charName}`;
+            this.duel.centralCharContainer.appendChild(this.charContainer);
+            this.charPos =
+            [
+                this.duel.centralCharContainer.offsetLeft,
+                this.duel.centralCharContainer.offsetTop,
+            ];
         }
 
         setStats (stats) {
@@ -168,12 +192,17 @@
             this.stats.hpa = this.stats.mhp;
             this.stats.tp = this.stats.mtp;
             this.stats.tpa = this.stats.mtp;
+            this.stats.charName = this.stats.coreName;
+        }
+
+        whereAreYou () {
+            return this.duel.field.indexOf(this);
         }
         
         initAction () {
             this.actionTime = 0;
             this.stats.isDefending = 0;
-            this.windowMain.classList.add("acting");
+            if(this instanceof LeadChar)  this.windowMain.classList.add("acting");
             if(this.stats.ailments.poisoned) {
                 this.poisonDamage();
             } else if(this.stats.ailments.asleep) {
@@ -251,7 +280,7 @@
         }
 
         setAction () {
-            this.duel.writeMessage('わたしもいつかこうどうできるようになってみたい。');
+            this.duel.writeMessage(this.stats.charName+' : わたしもいつかこうどうできるようになってみたい。');
             setTimeout(()=>{
                 this.endTurn();
             }, 2000);
@@ -283,7 +312,8 @@
             //     to = 1000 * this.duel.promisedMessage.length;
             // }
             this.duel.promisedMessage = [];
-            this.windowMain.classList.remove("acting");
+            if(this instanceof LeadChar) this.windowMain.classList.remove("acting");
+            
             setTimeout(()=>{
                 this.duel.seekTurn();
             },to);
@@ -334,6 +364,40 @@
 
             this.takenDamage += dmg;
         }
+        
+        parallelProgress () {
+            this.stats.hpa= this.stats.hp;
+            this.stats.tpa= this.stats.tp;
+
+
+            if(this.stats.hp < 0) {
+                this.stats.hp = 0;
+            }else if(this.stats.hp > this.stats.mhp) {
+                this.stats.hp = this.stats.mhp;
+            }
+
+            if(this.stats.tp < 0) {
+                this.stats.tp = 0;
+            }else if(this.stats.tp > this.stats.mtp) {
+                this.stats.tp = this.stats.mtp;
+            }
+
+            this.charContainer.textContent = 
+            `${this.stats.charName} : HP ${this.stats.hp}`;
+        }
+
+        faint () {
+            this.duel.writeMessage(`${this.stats.charName}はきずつきたおれた…`);
+            this.charContainer.remove();
+
+            setTimeout(()=>{
+                if(this.actable){
+                    this.duel.orders.splice(this.duel.orders.indexOf(this),1);
+                }
+                this.duel.field.splice(this.duel.field.indexOf(this),1);
+                this.duel.seekTurn();
+            },1000);
+        }
     }
 
     class LeadChar extends CharBase {
@@ -351,6 +415,15 @@
             }else if(this.duel.rules.duelmode==="suddendeath"){
                 this.recognizing.rule = "suddendeath";
             }
+
+            this.charPos =
+            [
+                this.windowMain.offsetLeft,
+                this.windowMain.offsetTop,
+            ];
+        }
+        
+        defineStatusIndi () {
 
             this.windowMain = document.createElement('div');
             this.windowMain.classList.add('windowMain');
@@ -373,14 +446,7 @@
             this.ailmentJog = 0;
             this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
             this.seekAilmentState ();
-
             this.reductionLagger = 0;
-
-            this.charPos =
-            [
-                this.windowMain.offsetLeft,
-                this.windowMain.offsetTop,
-            ];
         }
 
         adjustCharPos (x, y) {
@@ -409,7 +475,7 @@
                 const opponentCandidate = this.duel.field.filter(p => p !== "*" && p.stats.iff !== playerIff);
                 this.opponent = opponentCandidate[Math.floor(Math.random()*opponentCandidate.length)];
             }
-            console.log("Target that charater recognizes as ally : " + targetAlly.stats.charName);
+            // console.log("Target that charater recognizes as ally : " + targetAlly.stats.charName);
 
             if(this.stats.ailments.strange) {
                 this.duel.writeMessage(`${this.stats.charName} は すこしヘンに なっている…`);
@@ -440,7 +506,9 @@
                 const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
                 this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
 
-                target.recognize('opponentSleeping', 0);
+                if(target instanceof LeadChar) {
+                    target.recognize('opponentSleeping', 0);
+                }
 
                 setTimeout(()=>{
                     if(Math.random()*chanceOfMiss <= 1){
@@ -746,11 +814,15 @@
             this.messageBox = document.createElement('div');
             this.messageBox.classList.add('messageContainer');
             this.duelScreen.appendChild(this.messageBox);
+            this.centralCharContainer = document.createElement('div');
+            this.centralCharContainer.classList.add('centralCharContainer');
+            this.duelScreen.appendChild(this.centralCharContainer);
             this.windowContainer = document.createElement('div');
             this.windowContainer.classList.add('windowFlexBox');
             this.duelScreen.appendChild(this.windowContainer);
             document.querySelector("main").appendChild(this.duelScreen);
 
+            this.charID = 0;
             this.skipper = 0;
             this.startTime = performance.now();
             this.message = "";
@@ -780,9 +852,10 @@
             this.field = 
             [
                 new LeadChar(this, {
-                id: 0,
+                // id: 0,
                 iff: 0,
-                charName: characterNames[Math.floor(Math.random()*characterNames.length)],
+                coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
+                charName: "",
                 mhp: this.hitPointSetting[0],
                 hp: 0,
                 hpa: 0,
@@ -793,9 +866,10 @@
                 offense: 100,
                 agl: Math.floor(Math.random()*120),
             }),new LeadChar(this,{
-                    id: 1,
+                    // id: 1,
                     iff: 1,
-                    charName: characterNames[Math.floor(Math.random()*characterNames.length)],
+                    coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
+                    charName: "",
                     mhp: this.hitPointSetting[1],
                     hp: 0,
                     hpa: 0,
@@ -805,16 +879,27 @@
                     isDefending: 0,
                     offense: 100,
                     agl: Math.floor(Math.random()*120),
-            }),"*","*","*","*",
+            }),
             ];
+
+            if(this.rules.duelmode === "withbystander") {
+                for( let i = 0; i< 10; i ++){
+                    this.field.push(new CharBase(this, {coreName:"ならずもの",iff:2,agl:255,mhp: Math.floor(Math.random()*200) + 1}));
+                    this.field[this.field.length-1].actable = 0;
+                }
+            }
+
             this.orders = [];
             this.charA = this.field[0];
             this.charB = this.field[1];
             this.charA.opponent = this.charB;
             this.charB.opponent = this.charA;
-            if(this.charA.stats.charName === this.charB.stats.charName){
-                this.charA.stats.charName += "A";
-                this.charB.stats.charName += "B";
+            if(this.charA.stats.coreName === this.charB.stats.coreName){
+                this.charA.stats.charName =  this.charA.stats.coreName + "A";
+                this.charB.stats.charName = this.charB.stats.coreName + "B";
+            }else {
+                this.charA.stats.charName = this.charA.stats.coreName;
+                this.charB.stats.charName = this.charB.stats.coreName;
             }
             
             /* Duel Title and menus */
@@ -846,6 +931,11 @@
                     this.popOut();
                 } else {
                     this.duelScreen.classList.remove("pseudoPipper");
+                    
+                    window.scrollTo({
+                        top: this.duelScreen.getBoundingClientRect().top,
+                        behavior: "smooth"
+                    });
                 }
             })
 
@@ -885,26 +975,34 @@
             }
         }
 
-        test () {
-            const newOrder = [];
-            const a = [{ name: "hitani", agl: 53},{name: "sakuma", agl: 18 }];
-            const b = [{ name: "saraqui", agl: 25},{name: "paserja", agl: 42 }];
-            const c = [...a,...b];
-
-            c.forEach(v=>{v.tempAgl = v.agl + Math.floor(Math.random()*15) - 7});
-            for(let agl = 999; agl > 0; agl --){
-                c.forEach(v=>{
-                    if(v.tempAgl === agl){
-                        newOrder.push(v);
-                        console.log("Yes "+ v.name +", yer are in order " + newOrder.length + ".");
-                    }
+        newDetermineOrder () {
+            try {
+                // console.log(this.field);
+                const newOrder = [];
+                const a = this.field.filter(char => char !== "*" && char.actable);
+    
+                a.forEach(v=>{
+                    v.stats.tempAgl = v.stats.agl + Math.floor(Math.random()*15) - 7;
+                    v.stats.tempAgl = v.stats.tempAgl < 1 ? 1 : v.stats.tempAgl;
                 });
+                for(let agl = 999; agl > 0; agl --){
+                    a.forEach(char=>{
+                        if(char.stats.tempAgl === agl){
+                            newOrder.push(char);
+                            console.log(`${char.stats.charName}のじゅんばんは ${newOrder.length} ばんめです (このターンのすばやさ: ${char.stats.tempAgl} / ほんらいの すばやさ: ${char.stats.agl})`);
+                        }
+                    });
+                }
+                // console.log(newOrder);
+                this.orders = newOrder;
+            } catch (err){
+                console.log("おやおや、どっかもんだいがあるみたいだよ？！ メッセージ:" + err.message);
             }
-            console.log(newOrder);
 
         }
 
         seekTurn () {
+            let othersFainted = 0;
             if(this.charB.stats.hpa<=0 && this.charA.stats.hpa<=0) {
                 this.charA.faint();
                 this.charB.faint();
@@ -941,11 +1039,30 @@
                 if(this.orders.length <= 0 && this.gameFlag) {
                     this.totalTurn ++;
                     this.writeBreakdown(` ********** Turn ${this.totalTurn} **********`);
-                    this.determineOrder();
+                    this.newDetermineOrder();
                 }
+            }
+
+            
+            if(
+                othersFainted === 0 
+                &&
+                this.charB.stats.hpa>0 
+                &&
+                this.charA.stats.hpa>0
+            ){
+                const j = this.field.filter(f => !(f instanceof LeadChar));
+                j.forEach(k => { 
+                    if(k.stats.hpa <= 0) {
+                        othersFainted=1;
+                        k.faint();
+                    }
+                });
             }
             
             if(
+                othersFainted === 0 
+                &&
                 this.orders.length >= 1
                 &&
                 this.charB.stats.hpa>0 
@@ -975,8 +1092,9 @@
             if(this.gameFlag === 1){
                 this.skipper++;
                 if(this.skipper > maximumSkip) {
-                    this.charA.parallelProgress();
-                    this.charB.parallelProgress();
+                    // this.charA.parallelProgress();
+                    // this.charB.parallelProgress();
+                    this.field.forEach(f=>f.parallelProgress());
                     this.skipper = 0;
                 }
                 window.requestAnimationFrame(this.parallelProgress.bind(this));
@@ -998,9 +1116,7 @@
                         this.duelScreen.classList.add("damageShakeCritical");
                     }
                 }
-            )
-            // setTimeout(()=>{
-            // }, 17);
+            );
         }
 
         terminate () {
@@ -1180,14 +1296,13 @@
     }
 
     function duelOutcomeNotify (msg, duelScreenPosition, isPipped = 0) {
-        console.log(duelScreenPosition);
         const vport = [window.scrollY, window.scrollY + window.innerHeight];
         if(
             vport[0] < duelScreenPosition[0]
             &&
             vport[1] > duelScreenPosition[1]
         ) {
-            console.log("表示しません");
+            // console.log("表示しません");
         }else{
             if(!isPipped)
             {
@@ -1302,6 +1417,12 @@
             }
         }
     };
+
+    const narazuAction = {
+        actiona : function (myself, duel) {
+
+        }
+    };
     
     const duelMain = [];
 
@@ -1378,6 +1499,13 @@
         setTimeout(()=>{a.seekTurn();}, 1000);
         setTimeout(()=>{a.terminate();}, 30000);
     });
+    
+    document.querySelector('.withBystander').addEventListener('click', ()=>{
+        const a = new Duel({duelmode : "withbystander", japanname: "withならずもの", background : setBg(bgSwitcher.value)});
+        duelMain.push(a);
+        setTimeout(()=>{a.seekTurn();}, 1000);
+    });
+
 
     // Frame-skip settings
     let fps = 0;
