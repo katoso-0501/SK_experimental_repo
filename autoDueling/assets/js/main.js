@@ -124,12 +124,12 @@
     class CharBase {
         constructor (duel, initStat = null) {
             this.duel = duel;
-            
             this.duel.charID++;
             this.actable = 0;
             this.actionTime = 0;
             this.charPos = [this.duel.duelScreen.offsetWidth / 2,0];
             this.takenDamage = 0;
+            this.opponent = this.duel.charA;
             this.customMessages = {};
             this.stats =
             {
@@ -197,6 +197,12 @@
                 this.stats.charName = "ならずもの" + alphabet[this.duel.namesakes.narazu];
                 this.customMessages.fainted = `${this.stats.charName} は こうさんした！`;
                 this.duel.namesakes.narazu++;
+            }
+            if(this.stats.coreName ===  "starman") {
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                this.stats.charName = "スターマン" + alphabet[this.duel.namesakes.starman];
+                this.customMessages.fainted = `${this.stats.charName} を たおした！`;
+                this.duel.namesakes.starman++;
             }
         }
 
@@ -298,6 +304,16 @@
                         otherCharAction.narazu(this, this.duel);
                     }, lag);
                 }
+            } else if(this.stats.coreName === "starman") {
+                this.opponent = this.duel.charA;
+                if(this.stats.ailments.strange) {
+                    this.duel.writeMessage(`${this.stats.charName} は すこしヘンに なっている…`);
+                    lag = 1000;
+                }
+                setTimeout(()=>{
+                    otherCharAction.starman(this, this.duel);
+                }, lag);
+                
             }else{
                 this.duel.writeMessage(this.stats.charName+' : わたしもいつかこうどうできるようになってみたい。');
                 setTimeout(()=>{
@@ -337,6 +353,67 @@
             setTimeout(()=>{
                 this.duel.seekTurn();
             },to);
+        }
+
+        defend () {
+            if(!this.stats.ailments.paralysed){
+                this.duel.writeMessage(`${this.stats.charName} は ガードしている`);
+                this.stats.isDefending=1;
+                
+                setTimeout(()=>{
+                    this.endTurn();
+                }, 1000);
+            }else{
+                this.paralysing();
+            }
+        }
+        
+        lifeUp (target) {
+            this.psiTrial(target, spellBook.lifeup, 0);
+        }
+
+        psiMagnet () {
+            this.psiTrial(this.opponent, spellBook.psiMagnet, 0);
+        }
+
+        hypnosisAlpha () {
+            this.psiTrial(this.opponent, spellBook["hypnosis-alpha"], 0);
+        }
+
+        psiTrial (target, spell, animationTime) {
+            let success = 0;
+            this.duel.writeMessage(`${this.stats.charName} は ${spell.title} をこころみた！`);
+
+            if(
+                this.duel.rules.duelmode !== "nomagic" && 
+                this.stats.tp >= spell.cost && 
+                this.stats.ailments.silenced === 0
+            ){
+                success = 1;
+                this.stats.tp -= spell.cost;
+            }
+
+            if(success){
+                setTimeout(()=>{
+                    spell.func(this, target, this.duel);
+                },(1200 + animationTime));
+            }else{
+                setTimeout(()=>{
+                    if(this.duel.rules.duelmode === "nomagic"){
+                        this.duel.writeMessage(`だが せいやくで PSIは つかえない！`);
+                        if(this instanceof LeadChar) {
+                            this.recognize('rule','nomagic');
+                        } 
+                    } else if(this.stats.ailments.silenced) {
+                        this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
+                    } else {
+                        this.duel.writeMessage(`しかし TPがたりなかった！`);
+                    }
+                }, 800);
+                setTimeout(() => {
+                    this.endTurn();
+                }, 1800);
+            }
         }
 
         takeDamage(dmg, type, byGimic = false) {
@@ -580,68 +657,6 @@
             }
         }
 
-        defend () {
-            if(!this.stats.ailments.paralysed){
-                this.duel.writeMessage(`${this.stats.charName} は ガードしている`);
-                this.stats.isDefending=1;
-                
-                setTimeout(()=>{
-                    this.endTurn();
-                }, 1000);
-            }else{
-                this.paralysing();
-            }
-        }
-        
-        lifeUp (target) {
-            this.psiTrial(target, spellBook.lifeup, 0);
-        }
-
-        psiMagnet () {
-            this.psiTrial(this.opponent, spellBook.psiMagnet, 0);
-        }
-
-        hypnosisAlpha () {
-            this.psiTrial(this.opponent, spellBook["hypnosis-alpha"], 0);
-        }
-
-        psiTrial (target, spell, animationTime) {
-            let success = 0;
-            this.duel.writeMessage(`${this.stats.charName} は ${spell.title} をこころみた！`);
-
-            if(
-                this.duel.rules.duelmode !== "nomagic" && 
-                this.stats.tp >= spell.cost && 
-                this.stats.ailments.silenced === 0
-            ){
-                success = 1;
-                this.stats.tp -= spell.cost;
-            }
-
-            if(success){
-                setTimeout(()=>{
-                    spell.func(this, target, this.duel);
-                },(1200 + animationTime));
-            }else{
-                setTimeout(()=>{
-                    if(this.duel.rules.duelmode === "nomagic"){
-                        this.duel.writeMessage(`だが せいやくで PSIは つかえない！`);
-                        this.recognize('rule','nomagic');
-                    } else if(this.stats.ailments.silenced) {
-                        this.duel.writeMessage(`しかし PSIは ふうじこまれている！`);
-                    } else {
-                        this.duel.writeMessage(`しかし TPがたりなかった！`);
-                    }
-                }, 800);
-                setTimeout(() => {
-                    this.endTurn();
-                }, 1800);
-            }
-            // setTimeout(() => {
-            //     this.endTurn();
-            // }, (2000 + animationTime));
-        }
-
         faint () {
             this.windowMain.classList.add("fainted");
             this.stats.hp = 0;
@@ -695,7 +710,7 @@
             if(this.stats.hpa < this.stats.hp) {
                 this.stats.hpa++;
             } else if(this.stats.hpa > this.stats.hp) {
-                if(this.stats.isDefending) {
+                if(this.stats.isDefending && this.duel.rules.duelmode !== "nomagic") {
                     this.reductionLagger++;
                     if(this.reductionLagger>=4) {
                         this.stats.hpa--;
@@ -834,7 +849,8 @@
         constructor (rules) {
             this.rules = rules;
             this.namesakes = {
-                narazu: 0
+                narazu: 0,
+                starman: 0,
             };
             // Initialize Duel Screen
             this.duelScreen = document.createElement("div");
@@ -919,6 +935,12 @@
                     this.field[this.field.length-1].actable = 1;
                 }
             }
+
+            if(document.querySelector(".enableWithStarman").checked) {
+                this.field.push(new CharBase(this, {coreName: "starman", iff: Math.floor(Math.random()*4), mhp: 609, agl: 255, mtp: 1000}));
+                this.field[this.field.length-1].actable = 1;
+            }
+            
 
             this.orders = [];
             this.charA = this.field[0];
@@ -1448,7 +1470,7 @@
         },
         "revive" : {
             "title" : "リヴァイブ",
-            "cost" : 100,
+            "cost" : 80,
             "desc" : "リヴァイブのじゅもんをじぶんにふよする",
             "func" : function (caster, target, duel) {
                 if(Math.random()*4 <= 3) {
@@ -1460,16 +1482,53 @@
 
                 setTimeout(()=>{caster.endTurn()}, 1000);
             }
-        }
+        },
+        "psi-starstorm-alpha" : {
+            "title" : "PKスターストームα",
+            "cost" : 36,
+            "desc" : "ほしをおとし　てきぜんいんに　ダメージ",
+            "func" : function (caster, target, duel) {
+                let lag = 1000;
+                try {
+                    const enemyList = duel.field.filter(
+                        enemy =>
+                            enemy.stats.iff !== caster.stats.iff
+                    );
+                    
+                    if(enemyList.length >= 1) {
+                        lag = 517 + (300 * enemyList.length);
+                        for(let i = 0; i < enemyList.length; i++) {
+                            setTimeout(()=>{
+                                let dmg = Math.floor(Math.random()*300) + 200;
+                                enemyList[i].takeDamage(dmg, "psi", false);
+                            }, (17 + (300 * i))
+                            );
+                        }
+                    }
+                } catch (err) {
+                    duel.writeMessage(`じゅもんは　ふはつにおわった！`);
+                    duel.writeBreakdown(`げんいん : ${err.message}`);
+                }
+                setTimeout(()=>{caster.endTurn()}, lag);
+            }
+        },
     };
 
     const otherCharAction = {
+        starman : function (myself, duel) {
+            if(Math.random () * 3 >= 1 || duel.totalTurn <= 1) {
+                myself.psiTrial(this.opponent, spellBook["psi-starstorm-alpha"], 0);
+            } else {
+                const i = duel.field.filter( e=> e.stats.iff === myself.stats.iff);
+            
+                myself.lifeUp(i[Math.floor(Math.random()*i.length)]);
+            }
+        },
         narazu : function (myself, duel) {
             const targetCandidates =
-            [
-                duel.charA,
-                duel.charB,
-            ];
+            [];
+            targetCandidates.push(...duel.field.filter(v=>v.stats.iff !== myself.stats.iff));
+
             if(myself.stats.ailments.strange) {
                 targetCandidates.push(...duel.field.filter(v=>v.stats.id >= 3));
             }
@@ -1657,6 +1716,7 @@
         }
     });
 
+    // Duel list Maker
     function acquireDuels () {
         const list = document.querySelector('.duellingListContainer');
         if(duelMain.length <= 0) {
@@ -1714,5 +1774,10 @@
         if(document.querySelector('.duellingList').classList.contains('expanded')) {
             setTimeout(acquireDuels,2000);
         }
+    }    
+
+    const url = String(window.location.href).slice(0,4);
+    if(url !== "http") {
+        duelOutcomeNotify("これは ほんばんかんきょう じゃないよ！", [99999, 100000], 0);
     }
 }

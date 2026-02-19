@@ -17,6 +17,7 @@ body {
     position: relative;
 }
 
+/* FPS Viewer */
 .textFramer {
     opacity: 0;
 }
@@ -25,6 +26,7 @@ body {
     opacity: 1;
 }
 
+/* Wrapper Left*/
 .wrapperLeft {
     width: 16%;
     padding: 16px 2%;
@@ -35,7 +37,7 @@ body {
     
     @media (width <= 768px) {
         transition: transform 0.4s;
-        padding: 16px 2%;
+        padding: 64px 2% 16px;
         width: 76%;
         min-height: 0;
         transform: translateX(-100%);
@@ -61,8 +63,9 @@ body {
 
 .wrapperLeftBtn {
     cursor: pointer;
-    padding: 7px 0;
+    padding: 15px 0;
     border-top: 1px solid #a0a0a0;
+    border-bottom: 1px solid #a0a0a0;
 }
 
 .systemMenuCheckers {
@@ -70,6 +73,31 @@ body {
     flex-flow: column;
     gap: 8px;
     color: #FFFFFF;
+    margin-bottom: 16px;
+}
+
+.systemMenuCheckers input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    width: 0;
+    opacity: 0;
+}
+
+.systemMenuCheckers input[type="checkbox"] + span {
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    border: 2px solid #303030;
+    transition: all .4s;
+}
+
+.systemMenuCheckers input[type="checkbox"]:checked + span {
+    color: var(--base-bg);
+    border: 2px solid var(--base-bg);
+    font-weight: 700;
 }
 
 .wrapperRight {
@@ -82,6 +110,7 @@ body {
     }
 }
 
+/* Wrapper on right side */
 header {
     background: url(../images/pattern-checkboard.png), var(--base-bg);
     background-blend-mode: soft-light;
