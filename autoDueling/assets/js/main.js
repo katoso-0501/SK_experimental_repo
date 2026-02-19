@@ -1218,9 +1218,13 @@
             if(this.duelScreen.classList.contains("pseudoPipper")) {
                 document.querySelector('.duelPippingIndicator').remove();
             }
+            this.duelScreen.classList.add('animating_shrinkingOut');
 
-            duelMain.splice(duelMain.indexOf(this), 1);
-            this.duelScreen.remove();
+            setTimeout(()=>{
+                duelMain.splice(duelMain.indexOf(this), 1);
+                this.duelScreen.remove();
+            },1000)
+
         }
     }
     
@@ -1400,7 +1404,7 @@
                 target.stats.hp = target.stats.mhp;
                 popDamage(target.stats.mhp, "heal", duel.duelScreen, target.charPos);
 
-                setTimeout(()=>{duel.seekTurn()}, 1000);
+                setTimeout(()=>{caster.endTurn()}, 1000);
             }
         },
         "psiMagnet" : {
@@ -1420,7 +1424,7 @@
                 target.stats.tp -= drainValue;
                 caster.stats.tp += drainValue;
                 
-                setTimeout(()=>{duel.seekTurn()}, 1000);
+                setTimeout(()=>{caster.endTurn()}, 1000);
             }
         },
         "hypnosis-alpha" : {
@@ -1439,7 +1443,7 @@
                     duel.writeMessage(`${target.stats.charName} には こうかがなかった！`);
                 }
                 
-                setTimeout(()=>{duel.seekTurn()}, 1000);
+                setTimeout(()=>{caster.endTurn()}, 1000);
             }
         },
         "revive" : {
@@ -1454,7 +1458,7 @@
                     duel.writeMessage(` * しっぱい！ * `);
                 }
 
-                setTimeout(()=>{duel.seekTurn()}, 1000);
+                setTimeout(()=>{caster.endTurn()}, 1000);
             }
         }
     };
@@ -1511,7 +1515,7 @@
             }, 700);
 
             setTimeout(()=>{
-                duel.seekTurn();
+                myself.endTurn();
             }, 1700);
         }
     };
@@ -1538,14 +1542,6 @@
         }
     });
 
-    document.querySelector('.bgAnimationDisabler').addEventListener("change", chk=>{
-        if(chk.target.checked) {
-                document.querySelector('main').classList.add('noBgAnimation');
-        } else {
-            document.querySelector('main').classList.remove('noBgAnimation');
-        }
-    });
-
     function setBg (bgNo) {
         if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1 && parseInt(bgNo) >= -1) {
             return parseInt(bgNo);
@@ -1553,6 +1549,37 @@
             return -1;
         }
     }
+
+    /* Left-side Menu */
+    document.querySelector('.starterAndMenu__spMenu').addEventListener('click', ()=>{
+        document.querySelector('.wrapperLeft').classList.add('expanded');
+    });
+
+    document.querySelector('.wrapperLeftClose').addEventListener('click', ()=>{
+        document.querySelector('.wrapperLeft').classList.remove('expanded');
+    });
+    
+    document.querySelector('.showDuellingList').addEventListener('click', ()=>{
+        document.querySelector('.wrapperLeft').classList.remove('expanded');
+        document.querySelector('.duellingList').classList.add('expanded');
+        acquireDuels();
+    });
+    
+    /* Chkbox Settings */
+    document.querySelector('.bgAnimationDisabler').addEventListener("change", chk=>{
+        if(chk.target.checked) {
+                document.querySelector('main').classList.add('noBgAnimation');
+        } else {
+            document.querySelector('main').classList.remove('noBgAnimation');
+        }
+    });
+    document.querySelector('.framePerSecondShower').addEventListener("change", chk=>{
+        if(chk.target.checked) {
+            document.querySelector('.textFramer').classList.add('expanded');
+        } else {
+            document.querySelector('.textFramer').classList.remove('expanded');
+        }
+    });
 
     /* Duel starters */
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
@@ -1598,7 +1625,6 @@
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
-
     // Frame-skip settings
     let fps = 0;
     let maximumSkip = 0;
@@ -1607,21 +1633,86 @@
        requestAnimationFrame(f);
     }
     requestAnimationFrame(f);
-
     let k = setInterval(()=>{
         const skipSetting = Math.ceil(fps / 10);
         maximumSkip = skipSetting;
         document.querySelector('.textFramer').textContent = (`${fps * 2} fps / スキップするべきフレーム ${skipSetting}`);
         fps=0;
     },500);
-    
-    document.querySelector('.textFramer').addEventListener('click', () =>{
-        document.querySelector('.textFramer').style.opacity = 0;
+
+    // Overlay closer
+    document.querySelectorAll('.overlayCloser').forEach(x=>{
+        x.addEventListener('click', e=>{
+            e.preventDefault();
+            document.querySelectorAll('.overlay').forEach(f=>f.classList.remove('expanded'));
+        });
     });
 
-    // Breakdowns
-    document.querySelector('.overlayingBreakdownContainer__close').addEventListener('click', e=>{
-        e.stopPropagation();
-        document.querySelector('.overlayingBreakdownContainer').classList.remove('expanded');
-    })
+    document.querySelector('.duellingList__purger').addEventListener("click", e => {
+        e.preventDefault();
+
+        if(document.querySelector('.duellingList').classList.contains('expanded')) {
+            const k = duelMain.filter(duel => duel.gameFlag !== 1);
+            k.forEach(l => l.exitDuel());
+        }
+    });
+
+    function acquireDuels () {
+        const list = document.querySelector('.duellingListContainer');
+        if(duelMain.length <= 0) {
+            list.innerHTML = "まだ デュエルが かいさいされてないようです";
+        } else {
+            list.innerHTML = "";
+            duelMain.forEach(duel => {
+                const p = document.createElement('p');
+                const progress = document.createElement('span');
+
+                if(duel.gameFlag) {
+                    progress.innerHTML = `<span class="duellingListCurrentProgress__ongoing">デュエルちゅう</span>`;
+                }else{
+                    progress.innerHTML = `<span class="duellingListCurrentProgress__end">しゅうりょう</span>`;
+                }
+                p.appendChild(progress);
+
+                const charA = document.createElement("span");
+                const charB = document.createElement("span");
+                charA.innerHTML = `${duel.charA.stats.charName}`;
+                charB.innerHTML = `${duel.charB.stats.charName}`;
+
+               
+                if(!duel.gameFlag) {
+                    if(duel.charA.stats.hpa <= 0 || duel.charB.stats.hpa <= 0)
+                    {
+                        
+                        if(duel.charA.stats.hpa <= 0) {
+                            charA.classList.add('loser');
+                        } else {
+                            charA.classList.add('winner');
+                        }
+                        
+                        if(duel.charB.stats.hpa <= 0) {
+                            charB.classList.add('loser');
+                        }else{
+                            charB.classList.add('winner');
+                        }
+                    }
+                }
+
+               p.appendChild(charA);
+               p.innerHTML += " VS ";
+               p.appendChild(charB);
+
+               p.addEventListener('click', () => {
+                window.scrollTo(0, duel.duelScreen.offsetTop);
+                document.querySelectorAll('.overlay').forEach(f=>f.classList.remove('expanded'));
+               });
+
+               list.appendChild(p);
+            });
+        }
+
+        if(document.querySelector('.duellingList').classList.contains('expanded')) {
+            setTimeout(acquireDuels,2000);
+        }
+    }
 }

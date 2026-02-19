@@ -3,7 +3,7 @@
     --base-bg: #19a7ff;
 }
 
-body,h1,h2,h3,h4,h5,h6,p,span,i,a,img,figure,ul,li,ol,div {
+body,h1,h2,h3,h4,h5,h6,p,span,i,a,img,figure,ul,li,ol,div,img,figure,figcaption {
     margin: 0;
     padding: 0;
     line-height: 1;
@@ -17,6 +17,71 @@ body {
     position: relative;
 }
 
+.textFramer {
+    opacity: 0;
+}
+
+.textFramer.expanded {
+    opacity: 1;
+}
+
+.wrapperLeft {
+    width: 16%;
+    padding: 16px 2%;
+    height: 100%;
+    position: fixed;
+    background: #202020;
+    color: #FFFFFF;
+    
+    @media (width <= 768px) {
+        transition: transform 0.4s;
+        padding: 16px 2%;
+        width: 76%;
+        min-height: 0;
+        transform: translateX(-100%);
+        z-index: 999;
+    }
+}
+
+.wrapperLeftClose {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    font-size: 32px;
+    color: #FFFFFF;
+    
+    @media (width > 768px) {
+        display: none;
+    }
+}
+
+.wrapperLeft.expanded {
+    transform: translateX(0);
+}
+
+.wrapperLeftBtn {
+    cursor: pointer;
+    padding: 7px 0;
+    border-top: 1px solid #a0a0a0;
+}
+
+.systemMenuCheckers {
+    display: flex;
+    flex-flow: column;
+    gap: 8px;
+    color: #FFFFFF;
+}
+
+.wrapperRight {
+    width: 80%;
+    padding-left: 20%;
+    @media (width <= 768px) {
+        position: relative;
+        padding-left: 0;
+        width: 100%;
+    }
+}
+
 header {
     background: url(../images/pattern-checkboard.png), var(--base-bg);
     background-blend-mode: soft-light;
@@ -26,7 +91,6 @@ header {
 }
 
 h1 {
-    /* padding:0; */
     font-size: 20px;
     font-weight: 700;
     text-align: center;
@@ -53,20 +117,53 @@ h1 {
     border: 2px solid #FFFFFF;
 }
 
+.starterAndMenu {
+    position: sticky;
+    width: calc(100% - 48px);
+    padding-left: 48px;
+    left: 0;
+    top: 0;
+    z-index: 998;
+    background-color: rgba(0,0,0,0.65);
+    
+    @media (width > 768px) {
+        width: 100%;
+        padding-left: 0;
+    }
+}
+
+.starterAndMenu__spMenu {
+    position: absolute;
+    left: 16px;
+    top: 8px;
+    width: 32px;
+    height: 32px;
+    transform: rotate(90deg);
+    color: #FFFFFF;
+    cursor: pointer;
+    background-color: transparent;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height:32px;
+    user-select: none;
+
+    @media (width > 768px) {
+        display: none;
+    }
+}
 /*
 Duel Starters
 */
 .duel_starter_group {
     display: block;
-    padding: 4px 8px;
-    background-color: rgba(0,0,0,0.65);
-    position: sticky;
-    width: 100%;
-    left: 0;
-    top: 0;
-    z-index: 998;
+    padding: 4px 8px 8px 4px;
+    width: calc(100% - 12px);
     box-sizing: border-box;
     overflow-x: auto;
+    @media (width > 768px) {
+
+    }
 }
 
 .duel_starter_group::-webkit-scrollbar {
@@ -529,8 +626,8 @@ main {
     max-width: 400px;
 }
 
-/* Breakdowns */
-.overlayingBreakdownContainer {
+/* Overlays */
+.overlay {
     position: fixed;
     opacity: 0;
     pointer-events: none;
@@ -541,24 +638,24 @@ main {
     height: 100%;
     background: rgba(0,0,0,0.8);
     transition: opacity 0.4s;
+    color: #FFFFFF;
 }
 
-.overlayingBreakdownContainer.expanded {
+.overlay.expanded {
     opacity: 1;
     pointer-events: all;
 }
 
-.overlayingBreakdownContainer__close {
+.overlayCloser {
     position: absolute;
     right: 20px;
     top: 20px;
-    color: white;
+    color: #FFFFFF;
     font-size: 24px;
     text-decoration: none;
 }
 
 .overlayingBreakdownContainer__main {
-    color: white;
     width: 90%;
     max-width: 540px;
     height: calc(100% - 100px);
@@ -576,6 +673,75 @@ main {
     line-height: 1.6;
 }
 
+/* デュエルリスト */
+.duellingListContainer {
+    display: flex;
+    flex-flow: column;
+    gap: 16px;
+    padding-top: 3px;
+    width: 90%;
+    max-width: 540px;
+    height: calc(100% - 100px);
+    margin: 72px auto 0;
+    overflow-y: auto;
+}
+
+.duellingListContainer p {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.duellingListContainer .winner {
+    color: #aaff90;
+    font-weight: 700;
+}
+
+.duellingListContainer .loser {
+    color: #ff4000;
+    font-weight: 700;
+}
+
+.duellingListCurrentProgress__ongoing {
+    display: block;
+    width: 116px;
+    text-align: center;
+    background-color : #202020;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+.duellingListCurrentProgress__end {
+    display: block;
+    width: 120px;
+    text-align: center;
+    background-color : #50b101;
+    color: #FFFFFF;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 14px;  
+    padding: 8px 0;  
+}
+
+.duellingList__purger {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    font-size: 13px;
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* Duel Outcome notification */
 .duelOutcomePopup {
     position: fixed;
     width: 90%;
@@ -609,7 +775,24 @@ main {
     transform: translateY(0);
 }
 
-/* Duel Backgrounds */
+/*  _/_/_/_/_/_/_/_/_/_/
+Disappearing Animations
+ _/_/_/_/_/_/_/_/_/_/ */
+.animating_shrinkingOut {
+    pointer-events: none;
+    animation: shrinkingOut 0.91s ease-in-out forwards;
+}
+
+@keyframes shrinkingOut {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+/* デュエル背景 */
 .duelBg {
     position: absolute;
     width: 100%;

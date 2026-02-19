@@ -7,54 +7,87 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="textFramer">0 fps</div>
-    <header>
-        <h1>シン・オートデュエリングシステム</h1>
-        <div class="bgSwitcher">
-            <label>
-                はいけいきりかえ:
-                <input type="text" class="bgSwitcher_input" value="0" maxlength="2">
-            </label>
-            <p class="bgLabel">オーソドックス</p>
-            <label>
-                <input type="checkbox" class="bgAnimationDisabler">
-                はいけいを うごかさない
-            </label>
-        </div>
-    </header>
-    <div class="duel_starter_group">
-        <div class="duel_starter_group__inner">
-            <div class="normalDuelBtn">
-                ふつうのデュエル
+    <!-- Left content on PC -->
+    <div class="wrapperLeft">
+        <div class="wrapperLeftClose">X</div>
+        <div class="systemMenuInner">
+            <div class="systemMenuCheckers">
+                <label>
+                    <input type="checkbox" class="bgAnimationDisabler">
+                    はいけいを うごかさない
+                </label>
+                <label>
+                    <input type="checkbox" class="framePerSecondShower">
+                    FPSを ひょうじする
+                </label>
             </div>
-            <div class="noMagDuelBtn">
-                PSIなしデュエル
-            </div>
-            <div class="withReviveBtn">
-                リヴァイブつき
-            </div>
-            <div class="suddenDeath">
-                サドンデス
-            </div>
-            <div class="poisonRelying">
-                どくまかせ！？
-            </div>
-            <div class="thirtySecondsBtn">
-                30びょうでちゅうし
-            </div>
-            <div class="withBystander">
-                withならずもの
-            </div>
+
+            <div class="showDuellingList wrapperLeftBtn">デュエルのリストを みる</div>
         </div>
     </div>
-    <div class="overlayingBreakdownContainer">
-        <a href="#" class="overlayingBreakdownContainer__close">X</a>
+
+    <!-- Right content on PC -->
+    <div class="wrapperRight">
+        <header>
+            <h1>シン・オートデュエリングシステム</h1>
+            <div class="bgSwitcher">
+                <label>
+                    はいけいきりかえ:
+                    <input type="text" class="bgSwitcher_input" value="0" maxlength="2">
+                </label>
+                <p class="bgLabel">オーソドックス</p>
+            </div>
+        </header>
+        <div class="starterAndMenu">
+            <div class="starterAndMenu__spMenu">...</div>
+            <div class="duel_starter_group">
+                <div class="duel_starter_group__inner">
+                    <div class="normalDuelBtn">
+                        ふつうのデュエル
+                    </div>
+                    <div class="noMagDuelBtn">
+                        PSIなしデュエル
+                    </div>
+                    <div class="withReviveBtn">
+                        リヴァイブつき
+                    </div>
+                    <div class="suddenDeath">
+                        サドンデス
+                    </div>
+                    <div class="poisonRelying">
+                        どくまかせ！？
+                    </div>
+                    <div class="thirtySecondsBtn">
+                        30びょうでちゅうし
+                    </div>
+                    <div class="withBystander">
+                        withならずもの
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main></main>
+    </div>
+
+    <!-- FPS Indication -->
+    <div class="textFramer">0 fps</div>
+    
+    <!-- Overlay Components -->
+    <div class="overlayingBreakdownContainer overlay">
+        <a href="#" class="overlayingBreakdownContainer__close overlayCloser">X</a>
         <div class="overlayingBreakdownContainer__main">
             <h2>Title</h2>
             <p>Paragraph</p>
         </div>
     </div>
-    <main></main>
+    
+    <div class="duellingList overlay">
+        <a href="#" class="duellingList__close overlayCloser">X</a>
+        <a href="#" class="duellingList__purger">しゅうりょうした デュエルをとじる</a>
+        <div class="duellingListContainer">
+            デュエルを しゅとくしています…
+        </div>
+    </div>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
