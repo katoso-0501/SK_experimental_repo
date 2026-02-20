@@ -181,7 +181,8 @@ h1 {
     text-shadow: 0 0 5px #000000, 0 0 5px #000000;
 }
 
-.bgSwitcher {
+.bgSwitcher,
+.toppings {
     width: 90%;
     margin: 0 auto;
     padding: 8px 16px;
@@ -191,10 +192,11 @@ h1 {
     box-sizing: border-box;
 }
 
-.bgSwitcher input[type="text"] {
+.bgSwitcher input[type="text"], 
+.toppings input[type="number"] {
     background-color: #202020;
     color: #FFFFFF;
-    width: 24px;
+    width: 40px;
     padding: 4px 4px;
     font-size: 20px;
     border: 2px solid #FFFFFF;
@@ -481,17 +483,41 @@ main {
     margin-bottom: 16px;
     overflow-y: auto;
     display: flex;
-    flex-flow: column;
-    
+    flex-flow: row;
+    gap: 8px;
+    opacity: 1;
+
+    @media (width <= 768px) {
+        flex-flow: column;
+    }
 }
 
-.centralCharContainer > div {
+.centralCharContainer__side0, 
+.centralCharContainer__side1, 
+.centralCharContainer__side2 {
+    flex: 1;
+} 
+
+.centralCharContainer__side1 {
+    order: 2;
+    
+    @media (width <= 768px) {
+        order: initial;
+    }
+}
+
+.centralCharContainer .subChar {
     width: 100%;
     box-sizing: border-box;
     border-radius: 8px;
-    background: var(--base-bg);
+    background: #3782c7;
     padding: 8px;
     margin-bottom: 4px;
+    transition-behavior: allow-discrete;
+}
+
+.centralCharContainer .subChar.acting {
+    background-color: var(--base-bg);
 }
 
 .windowFlexBox {
@@ -500,7 +526,7 @@ main {
     gap: 24px;
 }
 
-.windowFlexBox > div {
+.windowFlexBox .windowMain {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -513,13 +539,13 @@ main {
     background-size: 25px;
 }
 
-.windowFlexBox > div.fainted {
+.windowFlexBox .windowMain.fainted {
     background-color: #f33a1e;
     border-color: #ff8080;
 }
 
 
-.windowFlexBox > div > p {
+.windowFlexBox .windowMain > p {
     margin: 0;
 }
 
