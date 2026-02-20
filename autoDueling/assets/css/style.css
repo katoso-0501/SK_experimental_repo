@@ -26,6 +26,60 @@ body {
     opacity: 1;
 }
 
+/* _/_/_/_/_/_/_/_/_/_/
+Popup Menu
+ _/_/_/_/_/_/_/_/_/_/ */
+.popup_menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: max-content;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0;
+    transform: scale(0.7);
+    pointer-events: none;
+    transform-origin: left top;
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+    overflow: hidden;
+}
+
+.popup_menu.expanded {
+    pointer-events: all;
+    opacity: 1;
+    transform: scale(1);
+    z-index: 99999;
+}
+
+.popup_menu ul {
+    list-style: none;
+}
+
+.popup_menu li {
+    cursor: pointer;
+}
+
+.popup_menu li + li {
+    border-top: 1px solid #e0e0e0;
+}
+
+.popup_menu a {
+    padding: 8px 16px;
+    width: calc(100% - 32px);
+    height: 100%;
+    display: block;
+    color: #202020;
+    text-decoration: none;
+    transition: 0.4s;
+    
+    background-color: #f9f9f9;
+}
+.popup_menu a:hover {
+    background-color: #e2e2e2;
+}
+
 /* Wrapper Left*/
 .wrapperLeft {
     width: 16%;
@@ -745,6 +799,18 @@ main {
     font-weight: 700;
     font-size: 14px;
     padding: 8px 0;
+}
+
+.duellingListCurrentProgress__cancelled {
+    display: block;
+    width: 120px;
+    text-align: center;
+    background-color : #747474;
+    color: #FFFFFF;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 14px;  
+    padding: 8px 0;  
 }
 
 .duellingListCurrentProgress__end {

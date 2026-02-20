@@ -142,6 +142,7 @@
                 mtp: 100,
                 tp: 100,
                 offense: 100,
+                defense: 100,
                 isDefending: 0,
                 agl: 0,
                 ailments: {
@@ -292,6 +293,19 @@
 
         setAction () {
             let lag  = 17;
+            
+            let targetAlly = this;
+            if(this.stats.ailments.strange === 1) {
+                if(Math.random()*2 <= 1) {
+                    targetAlly = this.duel.field.filter (p => p !== "*" && p.stats.iff !== this.stats.iff)[0];
+                    this.opponent = this;
+                }
+            } else {
+                const playerIff = this.stats.iff;
+                const opponentCandidate = this.duel.field.filter(p => p !== "*" && p.stats.iff !== playerIff);
+                this.opponent = opponentCandidate[Math.floor(Math.random()*opponentCandidate.length)];
+            }
+
             if(this.stats.coreName === "narazu") {
                 if(this.stats.ailments.paralysed) {
                     this.paralysing();
@@ -609,7 +623,7 @@
 
         normalBash (target) {
             if(!this.stats.ailments.paralysed){
-                let damage =  Math.floor(Math.random()*80) + 60;
+                let damage = calcDamage(this.stats.offense, target.stats.defense);
                 const chanceOfMiss = this.stats.ailments.crying ? 1.65 : 16;
                 this.duel.writeMessage(`${this.stats.charName} の こうげき！`);
 
@@ -631,7 +645,7 @@
                             popsmesh(this.duel.duelScreen, target.charPos);
                             this.stats.tp += 4;
                         /* Target is defending */
-                        }else if(target.stats.isDefending) {
+                        } else if(target.stats.isDefending) {
                             damage = Math.floor(damage * 0.3);
                         } else {
                         /* Other cases, wakes target up when hit */
@@ -852,7 +866,10 @@
                 narazu: 0,
                 starman: 0,
             };
+
+            // ************************
             // Initialize Duel Screen
+            // ************************
             this.duelScreen = document.createElement("div");
             this.duelScreen.classList.add("duelScreen");
             if(this.rules.background===-1) {
@@ -871,6 +888,8 @@
             this.duelScreen.appendChild(this.windowContainer);
             document.querySelector("main").appendChild(this.duelScreen);
 
+            // Various Variables
+            // ************************
             this.charID = 0;
             this.skipper = 0;
             this.startTime = performance.now();
@@ -911,7 +930,8 @@
                 mtp: this.technicalPointSetting[0],
                 tpa: 0,
                 isDefending: 0,
-                offense: 100,
+                offense: Math.floor(Math.random()*115) + 140,
+                defense: Math.floor(Math.random()*115) + 140,
                 agl: Math.floor(Math.random()*200) + 10,
             }),new LeadChar(this, {
                 iff: 1,
@@ -924,14 +944,25 @@
                 mtp: this.technicalPointSetting[1],
                 tpa: 0,
                 isDefending: 0,
-                offense: 100,
+                offense: Math.floor(Math.random()*115) + 140,
+                defense: Math.floor(Math.random()*115) + 140,
                 agl: Math.floor(Math.random()*200) + 10,
             }),
             ];
 
             if(this.rules.duelmode === "withbystander") {
                 for( let i = 0; i< 10; i ++){
-                    this.field.push(new CharBase(this, {coreName: "narazu",iff:2,agl:Math.floor(Math.random()*30) + 30,mhp: Math.floor(Math.random()*440) + 60,mtp:0,}));
+                    this.field.push(new CharBase(this, 
+                        {
+                            coreName: "narazu",
+                            iff: 2,
+                            agl: Math.floor(Math.random()*30) + 30,
+                            offense: Math.random()* 32 <= 1 ?
+                            65536
+                            : Math.floor(Math.random()*40) + 80,
+                            defense: 36,
+                            mhp: Math.floor(Math.random()*440) + 60,
+                            mtp: 0,}));
                     this.field[this.field.length-1].actable = 1;
                 }
             }
@@ -972,11 +1003,7 @@
             this.duelMenu.classList.add('duelMenu');
             this.duelMenu.innerHTML = `<span class="duelTitle">${this.duelTitle}</span>`;
 
-            const pippizer = document.createElement('div');
-            pippizer.classList.add('pippize');
-            pippizer.textContent = "pip";
-            this.duelMenu.appendChild(pippizer);
-            pippizer.addEventListener('click', ()=>{
+            const a = function () {
                 if(document.querySelector('.duelPippingIndicator')) {
                     document.querySelector('.duelPippingIndicator').remove();
                 }
@@ -986,11 +1013,27 @@
                     this.duelScreen.classList.remove("pseudoPipper");
                     
                     window.scrollTo({
-                        top: this.duelScreen.getBoundingClientRect().top,
+                        top: this.duelScreen.offsetTop,
                         behavior: "smooth"
                     });
                 }
-            })
+            }
+
+            const d = function () {
+                if(this.gameFlag) {
+                    this.terminatedOnHalfway = true;
+                    this.terminate();
+                }
+            }
+            
+            const hamburgerer = document.createElement("div");
+            hamburgerer.classList.add("duelMenuExpander");
+            hamburgerer.innerHTML = "&#9776;";
+            this.duelMenu.appendChild(hamburgerer);
+            
+            hamburgerer.addEventListener('click',e=>{
+                toggleMenuDialog(0, e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)]]);
+            });
 
             this.duelScreen.appendChild(this.duelMenu);
 
@@ -1013,7 +1056,6 @@
 
         newDetermineOrder () {
             try {
-                // console.log(this.field);
                 const newOrder = [];
                 const a = this.field.filter(char => char !== "*" && char.actable);
     
@@ -1025,11 +1067,9 @@
                     a.forEach(char=>{
                         if(char.stats.tempAgl === agl){
                             newOrder.push(char);
-                            console.log(`${char.stats.charName}のじゅんばんは ${newOrder.length} ばんめです (このターンのすばやさ: ${char.stats.tempAgl} / ほんらいの すばやさ: ${char.stats.agl})`);
                         }
                     });
                 }
-                // console.log(newOrder);
                 this.orders = newOrder;
             } catch (err){
                 console.log("おやおや、どっかもんだいがあるみたいだよ？！ メッセージ:" + err.message);
@@ -1536,7 +1576,7 @@
             duel.writeMessage(`${myself.stats.charName}は ${target.stats.charName} を ひっぱたいた！`);
 
             setTimeout(()=>{
-                let damage =  Math.floor(Math.random()*20) + 1;
+                let damage = calcDamage(myself.stats.offense, target.stats.defense);
                 const chanceOfMiss = myself.stats.ailments.crying ? 1.65 : 16;
 
                 if(target instanceof LeadChar) {
@@ -1730,7 +1770,13 @@
                 if(duel.gameFlag) {
                     progress.innerHTML = `<span class="duellingListCurrentProgress__ongoing">デュエルちゅう</span>`;
                 }else{
-                    progress.innerHTML = `<span class="duellingListCurrentProgress__end">しゅうりょう</span>`;
+                    if(duel.terminatedOnHalfway) {
+
+                        progress.innerHTML = `<span class="duellingListCurrentProgress__cancelled">しあいちゅうし</span>`;
+                    }else{
+
+                        progress.innerHTML = `<span class="duellingListCurrentProgress__end">しゅうりょう</span>`;
+                    }
                 }
                 p.appendChild(progress);
 
@@ -1774,10 +1820,97 @@
         if(document.querySelector('.duellingList').classList.contains('expanded')) {
             setTimeout(acquireDuels,2000);
         }
-    }    
+    }
+
+    
+    /* ****************************** 
+    Codes about context menu dialog 
+    ****************************** */
+    const menu = document.querySelector('.popup_menu');
+    let charHandler = 0;
+
+    function toggleMenuDialog (charID, x, y, actions = []) {
+        const actionsArray = [];
+        document.querySelectorAll('.popup_menu li').forEach(f=>f.remove());
+        if(actions.length > 0){
+            actions.forEach(action => {
+                actionsArray.push(action);
+            });
+        }
+
+        actionsArray.forEach(list => {
+            // action is an array with [label, callback]
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = "#";
+            a.textContent=list[0];
+            li.appendChild(a);
+            if(list[1]) a.addEventListener('click', list[1]);
+            document.querySelector('.popup_menu ul').appendChild(li);
+        });
+
+        document.querySelectorAll('.popup_menu li').forEach((li, index) => {
+            li.children[0].addEventListener('click', f => {
+                f.preventDefault();
+            });
+        });
+
+        menu.classList.toggle("expanded");
+
+        charHandler = charID;
+        let to = "";
+        if(x > window.innerWidth - (menu.offsetWidth)) {
+            x -= (menu.offsetWidth - 0);
+            to += "right ";
+        } else {
+            to += "left ";
+        }
+        if(y > window.innerHeight - (menu.offsetHeight + 50)) {
+            y -= (menu.offsetHeight + 25);
+            to += "bottom";
+        }else{
+            to += "top";
+        }
+
+        menu.style.transformOrigin = to;
+        menu.style.left = x + 'px';
+        menu.style.top = (y + 20) + 'px';
+    }
+
+    document.addEventListener('click', e => {
+        if(
+            !e.target.classList.contains("popup_menu") &&
+            !e.target.classList.contains("duelMenuExpander") 
+        ) {
+            document.querySelector('.popup_menu').classList.remove("expanded");
+        }
+    });
 
     const url = String(window.location.href).slice(0,4);
     if(url !== "http") {
         duelOutcomeNotify("これは ほんばんかんきょう じゃないよ！", [99999, 100000], 0);
+    }
+
+    function calcDamage (o, d, smesh = 0) {
+        let off = o;
+        let def = d;
+
+        console.log("Attacker Off : " + off +  "    Defender Def : " + def);
+
+        if(smesh) { def = 0}
+
+        
+        let minimum =  (off * 1.13) - (def * 0.77);
+        let maximum = (Math.random()* (off - (def * 0.37))) + minimum;
+
+        let dmg = Math.floor((Math.random() * (maximum - minimum) ) + minimum);
+        
+        console.log(`${minimum} ～ ${maximum}`);
+
+        // console.log(`Math.floor(Math.random() * ${maximum - minimum} ) + ${minimum})`);
+        
+        if(dmg<1){dmg=1;}
+        
+        return dmg;
     }
 }
