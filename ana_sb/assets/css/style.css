@@ -315,6 +315,14 @@ Screen Locking
     max-height: 320px;
     transition: 0.4s;
     overflow: hidden;
+    transition: all 0.4s;
+    transition-behavior: allow-discrete;
+}
+
+@starting-style {
+    .more_movie_adder__group {
+        height: 0;
+    }
 }
 
 .more_movie_adder__group::after {

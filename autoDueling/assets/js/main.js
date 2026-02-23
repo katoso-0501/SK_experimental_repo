@@ -220,6 +220,11 @@
             this.actionTime = 0;
             this.stats.isDefending = 0;
             this.windowMain.classList.add("acting");
+            this.duel.centralCharContainer.scrollTo (
+                { top: this.windowMain.offsetTop,
+                    behavior: "smooth"
+                }
+            );
             if(this.stats.ailments.poisoned) {
                 this.poisonDamage();
             } else if(this.stats.ailments.asleep) {
@@ -1900,17 +1905,15 @@
         duelOutcomeNotify("これは ほんばんかんきょう じゃないよ！", [99999, 100000], 0);
     }
 
-    function calcDamage (o, d, smesh = 0) {
+    function calcDamage (o, d) {
         let off = o;
         let def = d;
 
         console.log("Attacker Off : " + off +  "    Defender Def : " + def);
 
-        if(smesh) { def = 0}
-
         
         let minimum =  (off * 1.13) - (def * 0.77);
-        let maximum = (Math.random()* (off - (def * 0.37))) + minimum;
+        let maximum = (off - (def * 0.37)) + minimum;
 
         let dmg = Math.floor((Math.random() * (maximum - minimum) ) + minimum);
         
