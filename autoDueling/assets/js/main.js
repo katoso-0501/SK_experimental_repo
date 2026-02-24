@@ -104,6 +104,10 @@
                 const planet = document.createElement('div');
                 planet.classList.add('duelBg_02__planet');
                 this.mat.appendChild(planet);
+
+                const board = document.createElement('div');
+                board.classList.add('duelBg_02__board');
+                this.mat.appendChild(board);
                 setTimeout(()=>{
                     if(this.duel.field.length <= 10) {
                         this.moveBg02();
@@ -166,14 +170,13 @@
                 && this.duel.charA.stats.hpa>0
                 && this.duel.charB.stats.hpa>0
             ) {
-                console.log("action");
                 this.gimmickWorking = 1;
                 const target = this.duel.field[Math.floor(Math.random()*this.duel.field.length)];
                 this.duel.writeMessage(`そらから　りゅうせいが　らくちゃくしてきた！`);
 
                 const starFall = document.createElement("div");
                 starFall.classList.add('duelBg_02__fallenStar');
-                starFall.style.top = "calc(50% + 30px)";
+                starFall.style.top = `${45 + Math.floor(Math.random()*10)}%`;
                 starFall.style.left = (Math.random()*60 + 20) +"%";
                 starFall.style.transform = `translate(${(Math.random()* 300) * -1 }%, ${(3000) * -1 }%)`;
                 this.mat.append(starFall);
@@ -187,9 +190,51 @@
                     this.duel.shakeScreen(0,target);
                     this.gimmickWorking = 0;
                     if(Math.random()*3 <= 1) {
-                        target.takeDamage(Math.floor(Math.random()*219) + 80, "physical", true);
+                        let fallDamage = Math.floor(Math.random()*219) + 80;
+                        if(Math.random()*1.5 <= 1) {
+                            if(
+                                target.stats.shielding.type === "shield" && 
+                                target.stats.shielding.duration>0
+                            ){
+                                target.stats.shielding.duration = 1;
+                            }
+                            popsmesh(this.duel.duelScreen, target.charPos);
+                            this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
+                            fallDamage *= 3;
+                        }
+                        target.takeDamage(fallDamage, "physical", true);
                     }
                 },1000);
+
+                if(Math.random()*3 <= 1) {
+                    const lag = Math.floor(Math.random()*60000) + 1500;
+                    setTimeout(()=>{
+                        if(this.duel.gameFlag===1){
+                            this.duel.writeMessage(`とつぜん　りゅうせいが　ばくはつした！`);
+                            starFall.classList.add('bursting');
+                            starFall.style.transform = `scale(4)`;
+                            starFall.style.opacity = `0`;
+                            this.duel.shakeScreen(0, target);
+
+                            setTimeout(()=>{
+                                const burstTarget =
+                                this.duel.field[
+                                    Math.floor(Math.random()*this.duel.field.length)
+                                ];
+                                if(burstTarget) {
+                                    this.duel.field.filter(
+                                        f => f.stats.iff === burstTarget.stats.iff
+                                    ).forEach(char =>
+                                        {
+                                         char.takeDamage(Math.floor(Math.random()*219) + 80, "physical", true);   
+                                        }
+                                    );
+                                }
+                                starFall.remove();
+                            },1000);
+                        }
+                    },lag);
+                }
             }
 
             if(this.duel.gameFlag===1){
@@ -1708,41 +1753,6 @@
 
             setTimeout(()=>{
                 normalBashFunc(myself, target, duel);
-                // let damage = calcDamage(myself.stats.offense, target.stats.defense);
-                // const chanceOfMiss = myself.stats.ailments.crying ? 1.65 : 16;
-
-                // if(target instanceof LeadChar) {
-                //     target.recognize('opponentSleeping', 0);
-                // }
-
-                // if(Math.random()*chanceOfMiss <= 1){
-                //     duel.writeMessage(`The missed!`);
-                // }else{
-                //     /* SMEEEEESH */
-                //     if(Math.random()*16 <= 1){
-                //         damage = damage * 3;
-                //         if(target.stats.shielding.type === "shield" && target.stats.shielding.duration>0){
-                //             target.stats.shielding.duration = 1;
-                //         }
-                //         duel.writeBreakdown(`SMEEEEEEEESH!!`);
-                //         popsmesh(duel.duelScreen, target.charPos);
-                //         myself.stats.tp += 4;
-                //     /* Target is defending */
-                //     } else if(target.stats.isDefending) {
-                //         damage = Math.floor(damage * 0.3);
-                //     } else {
-                //     /* Other cases, wakes target up when hit */
-                //         if(Math.random()*1.6 <= 1 && target.stats.ailments.asleep) {
-                //             duel.writeMessage(`${target.stats.charName} は めをさました！`);
-                //             target.stats.ailments.asleep = 0;
-                //         }
-                //         if(Math.random()*1.6 <= 1 && target.stats.ailments.strange) {
-                //             duel.writeMessage(`${target.stats.charName} は もとに もどった！`);
-                //             target.stats.ailments.strange = 0;
-                //         }
-                //     }
-                //     target.takeDamage(damage, "physical");
-                // }
             }, 700);
 
             setTimeout(()=>{

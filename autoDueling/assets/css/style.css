@@ -1016,6 +1016,16 @@ Disappearing Animations
     background:linear-gradient(184deg, #d1edff 0%, #87e8ff 30%, #005fce 80%);
 }
 
+.duelBg_02__board {
+    
+    position: absolute;
+    width: 90%;
+    height: 32px;
+    left: 5%;
+    top: 55%;
+    background: #ef7700;
+}
+
 .noBgAnimation .duelBg_02 {
     animation: none;
 }
@@ -1025,10 +1035,24 @@ Disappearing Animations
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #801000;
+    background: linear-gradient(33deg, #c41f05 0%, #801000 100%);
+    clip-path: polygon(50% 0%, 74% 14%, 86% 34%, 100% 49%, 89% 84%, 61% 92%, 10% 80%, 16% 61%, 7% 29%, 28% 13%);
 }
 
 .duelBg_02__fallenStar.animating {
     transition: 1s linear;
     transform: translate(0,0);
+}
+
+.duelBg_02__fallenStar.bursting {
+    transition: 1s ease-in-out;
+    clip-path: initial;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(#FFFFFF 0%, #FF9900 25%, #FF3200 50%, #FF320000 100%);
+}
+
+.noBgAnimation .duelBg_02__fallenStar {
+    transition: none !important;
 }
