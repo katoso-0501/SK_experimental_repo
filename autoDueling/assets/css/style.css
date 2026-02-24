@@ -988,3 +988,47 @@ Disappearing Animations
         background-position: -1920px center;
     }
 }
+
+/* バックグラウンド 02 -- テーマ：アース・フロム・スペース
+--------------------------------------------*/
+.duelBg_02 {
+    background: linear-gradient(34deg, #020262 0%, #202020 100%);
+    width: 100%;
+    height: 100%;
+}
+
+.duelBg_02__star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background:#FFFFFF;
+}
+
+.duelBg_02__planet {
+    position: absolute;
+    width: 200%;
+    height: 300px;
+    left: -50%;
+    top: 50%;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #139ed3, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF;
+    background:linear-gradient(184deg, #d1edff 0%, #87e8ff 30%, #005fce 80%);
+}
+
+.noBgAnimation .duelBg_02 {
+    animation: none;
+}
+
+.duelBg_02__fallenStar {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #801000;
+}
+
+.duelBg_02__fallenStar.animating {
+    transition: 1s linear;
+    transform: translate(0,0);
+}
