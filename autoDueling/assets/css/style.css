@@ -185,15 +185,20 @@ h1 {
 .bgSwitcher,
 .toppings {
     width: 90%;
-    margin: 0 auto;
+    margin: 8px auto 0;
     padding: 8px 16px;
     border: 7px solid #FFFFFF;
     border-radius: 8px;
     background-color: #101010;
     box-sizing: border-box;
+    display: flex;
+    flex-flow: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.bgSwitcher input[type="text"], 
+.bgSwitcher input[type="number"], 
 .toppings input[type="number"] {
     background-color: #202020;
     color: #FFFFFF;
@@ -983,7 +988,7 @@ Disappearing Animations
 /* バックグラウンド 01 -- テーマ：落雷
 --------------------------------------------*/
 .duelBg_01 {
-    background: url(../images/background01_part01_seamless.png) center repeat-x;
+    background: url(../images/background01_part01_seamless.webp) center repeat-x;
     background-size: cover;
     animation: duelBG01flowingClouds 45s infinite linear;
 }
@@ -1051,7 +1056,7 @@ Disappearing Animations
     top: 0;
     transform-origin:  center top;
     transform: scaleY(0.66);
-    background: url(../images/background02_cloudy.png) repeat;
+    background: url(../images/background02_cloudy.webp) repeat;
     background-size: 1200px;
 }
 

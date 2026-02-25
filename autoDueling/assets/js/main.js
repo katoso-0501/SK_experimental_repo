@@ -1671,6 +1671,7 @@
         "ラルフ",
     ];
 
+    // Normal Bash
     function normalBashFunc (attacker, target, duel) {
         let damage = calcDamage(attacker.stats.offense, target.stats.defense);
         const chanceOfMiss = attacker.stats.ailments.crying ? 1.65 : 16;
@@ -1712,8 +1713,21 @@
             target.takeDamage(damage, "physical");
         }
     }
+    
+    // Damage Calculation
+    function calcDamage (o, d) {
+        let off = o;
+        let def = d;
+        
+        let minimum =  (off * 1.13) - (def * 0.77);
+        let maximum = (off - (def * 0.37)) + minimum;
 
-    /* Spell Book */
+        let dmg = Math.floor((Math.random() * (maximum - minimum) ) + minimum);
+        if(dmg<1) dmg=1;
+        return dmg;
+    }
+
+    // Spell Book 
     const spellBook = {
         "lifeup" : {
             "title" : "ライフアップ",
@@ -2048,8 +2062,6 @@
     Codes about context menu dialog 
     ****************************** */
     const menu = document.querySelector('.popup_menu');
-    let charHandler = 0;
-
     function toggleMenuDialog (charID, x, y, actions = []) {
         const actionsArray = [];
         document.querySelectorAll('.popup_menu li').forEach(f=>f.remove());
@@ -2075,10 +2087,7 @@
                 f.preventDefault();
             });
         });
-
         menu.classList.toggle("expanded");
-
-        charHandler = charID;
         let to = "";
         if(x > window.innerWidth - (menu.offsetWidth)) {
             x -= (menu.offsetWidth - 0);
@@ -2111,19 +2120,37 @@
     if(url !== "http") {
         duelOutcomeNotify("これは ほんばんかんきょう じゃないよ！", [99999, 100000], 0);
     }
-
-    function calcDamage (o, d) {
-        let off = o;
-        let def = d;
-        
-        let minimum =  (off * 1.13) - (def * 0.77);
-        let maximum = (off - (def * 0.37)) + minimum;
-
-        let dmg = Math.floor((Math.random() * (maximum - minimum) ) + minimum);
-        
-
-        if(dmg<1){dmg=1;}
-        
-        return dmg;
-    }
+    
+}
+{
+    const hab = document.createElement("div");
+    hab.style.opacity = "0";
+    hab.style.pointerEvents = "none";
+    hab.style.position = "absolute";
+    hab.style.top = "0";
+    hab.style.left = "0";
+    hab.style.width = "100%";
+    hab.style.height = "100%";
+    hab.style.overflow = "hidden";
+    document.querySelector('body').appendChild(hab);
+    const l = 
+    [
+        document.createElement('img'),
+        document.createElement('img'),
+        document.createElement('img'),
+        document.createElement('img'),
+    ];
+    l[0].src = "./assets/images/background02_atlas.webp";
+    l[1].src = "./assets/images/background02_cloudy.webp";
+    l[2].src = "./assets/images/background00_part01.svg";
+    l[3].src = "./assets/images/background01_part01_seamless.webp";
+    l.forEach(k => {
+        k.addEventListener('load', ()=>{
+            console.log("Picture is ready");
+            hab.appendChild(k);
+        });
+    });
+    setTimeout(()=>{
+        hab.remove();
+    },10000);
 }
