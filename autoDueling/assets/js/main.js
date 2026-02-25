@@ -91,28 +91,74 @@
             }
 
             if(this.bgSettings.bgId === 2) {
+                this.gapFromCentre = 0;
+                this.calculateGapFromCentre();
+                
                 this.stageCapacity = 10;
                 this.mat.classList.add('duelBg_02');
-                for (let i = 0; i< 89; i++) {
+                for (let i = 0; i< 155; i++) {
+                    let xy = [Math.random()*100, Math.random()*67];
                     const s = document.createElement('div');
                     s.classList.add("duelBg_02__star");
-                    
-                    s.style.left = (Math.random()*100) + "%";
-                    s.style.top = (Math.random()*67) + "%";
+                    s.style.transform = `scale(${Math.random()*1 + 0.6})`;
+                    s.style.left = xy[0] + "%";
+                    s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 5)}px)`;
                     this.mat.appendChild(s);
+
+                    window.addEventListener("scroll",()=>{
+                        if(
+                            !(document.querySelector('.bgAnimationDisabler').checked)
+                            &&
+                            !(this.duel.duelScreen.classList.contains("pseudoPipper"))
+                        ) {
+                            s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 4.5)}px)`;
+                        } else {
+                            s.style.top = xy[1] + "%";
+                        }
+                    });
                 }
                 const planet = document.createElement('div');
                 planet.classList.add('duelBg_02__planet');
+
+                const atlas = document.createElement('div');
+                atlas.classList.add('duelBg_02__atlas');
+                atlas.style.backgroundPosition = `${Math.random()*200}% ${Math.random()*40}%`;
+                planet.appendChild(atlas);
+
+                const cloud = document.createElement('div');
+                cloud.classList.add('duelBg_02__cloud');
+                planet.appendChild(cloud);
+
                 this.mat.appendChild(planet);
+                window.addEventListener("scroll",()=>{
+                    if(
+                            !(document.querySelector('.bgAnimationDisabler').checked)
+                            &&
+                            !(this.duel.duelScreen.classList.contains("pseudoPipper"))
+                        ) {
+                        planet.style.top = `calc(50% + ${(this.gapFromCentre / 5) * -1}px)`;
+                    } else {
+                        planet.style.top = `50%`;
+                    }
+                });
 
                 const board = document.createElement('div');
                 board.classList.add('duelBg_02__board');
                 this.mat.appendChild(board);
+
                 setTimeout(()=>{
                     if(this.duel.field.length <= 10) {
                         this.moveBg02();
                     }
                 },1000);
+            }
+        }
+
+        calculateGapFromCentre () {
+            if(typeof this.duel.duelScreen.offsetHeight !== "undefined") {
+                this.gapFromCentre = (this.duel.duelScreen.offsetTop +  (this.duel.duelScreen.offsetHeight / 2)) - (window.scrollY + (window.innerHeight / 2));
+
+                window.requestAnimationFrame(this.calculateGapFromCentre.bind(this));
             }
         }
 
@@ -126,7 +172,6 @@
             ) {
                 this.gimmickWorking = 1;
                 const target = this.duel.field[Math.floor(Math.random()*this.duel.field.length)];
-                // const target = Math.random()*2 <= 1 ? this.duel.charA : this.duel.charB;
                 this.duel.writeMessage("らくらいだ！");
                 flashScreen("#ffef00", this.duel.duelScreen);
 
@@ -135,6 +180,7 @@
                     target.takeDamage(Math.floor(Math.random()*80) + 80, "thunder", true);
                     if(Math.random()*8 <= 1) {
                         target.stats.ailments.paralysed = 1;
+                        target.stats.isDefending = 0;
                         this.duel.writeMessage(`${target.stats.charName} の からだは しびれてしまった！`);
                     }
                 },600);
@@ -164,81 +210,113 @@
         moveBg02 () {
             const probabilityOfEvent = 300;
 
+            if(Math.random()*100 <= 1 && !(document.querySelector('.bgAnimationDisabler').checked)) {
+                this.moveBg02_shootStar();
+            }
+
             if(
                 Math.random()*probabilityOfEvent <= 1
+                && this.duel.gameFlag===1
                 && this.gimmickWorking===0
                 && this.duel.charA.stats.hpa>0
                 && this.duel.charB.stats.hpa>0
             ) {
-                this.gimmickWorking = 1;
-                const target = this.duel.field[Math.floor(Math.random()*this.duel.field.length)];
-                this.duel.writeMessage(`そらから　りゅうせいが　らくちゃくしてきた！`);
-
-                const starFall = document.createElement("div");
-                starFall.classList.add('duelBg_02__fallenStar');
-                starFall.style.top = `${45 + Math.floor(Math.random()*10)}%`;
-                starFall.style.left = (Math.random()*60 + 20) +"%";
-                starFall.style.transform = `translate(${(Math.random()* 300) * -1 }%, ${(3000) * -1 }%)`;
-                this.mat.append(starFall);
-
-                setTimeout(()=>{
-                    starFall.classList.add('animating');
-                    starFall.style.transform = `translate(0,0)`;
-                },29);
-
-                setTimeout(()=>{
-                    this.duel.shakeScreen(0,target);
-                    this.gimmickWorking = 0;
-                    if(Math.random()*3 <= 1) {
-                        let fallDamage = Math.floor(Math.random()*219) + 80;
-                        if(Math.random()*1.5 <= 1) {
-                            if(
-                                target.stats.shielding.type === "shield" && 
-                                target.stats.shielding.duration>0
-                            ){
-                                target.stats.shielding.duration = 1;
-                            }
-                            popsmesh(this.duel.duelScreen, target.charPos);
-                            this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
-                            fallDamage *= 3;
-                        }
-                        target.takeDamage(fallDamage, "physical", true);
-                    }
-                },1000);
-
-                if(Math.random()*3 <= 1) {
-                    const lag = Math.floor(Math.random()*60000) + 1500;
-                    setTimeout(()=>{
-                        if(this.duel.gameFlag===1){
-                            this.duel.writeMessage(`とつぜん　りゅうせいが　ばくはつした！`);
-                            starFall.classList.add('bursting');
-                            starFall.style.transform = `scale(4)`;
-                            starFall.style.opacity = `0`;
-                            this.duel.shakeScreen(0, target);
-
-                            setTimeout(()=>{
-                                const burstTarget =
-                                this.duel.field[
-                                    Math.floor(Math.random()*this.duel.field.length)
-                                ];
-                                if(burstTarget) {
-                                    this.duel.field.filter(
-                                        f => f.stats.iff === burstTarget.stats.iff
-                                    ).forEach(char =>
-                                        {
-                                         char.takeDamage(Math.floor(Math.random()*219) + 80, "physical", true);   
-                                        }
-                                    );
-                                }
-                                starFall.remove();
-                            },1000);
-                        }
-                    },lag);
-                }
+                this.moveBg02_activateGimic_1();
             }
+            
+            window.requestAnimationFrame(this.moveBg02.bind(this));
+        }
 
-            if(this.duel.gameFlag===1){
-                window.requestAnimationFrame(this.moveBg02.bind(this));
+        moveBg02_shootStar () {
+            let x = Math.random()*100;
+            let y = Math.random()*15;
+            const shoot = document.createElement("div");
+            shoot.classList.add('moveBg02_shootStar');
+            shoot.classList.add('firstPhase');
+            shoot.style.left = x + "%";
+            shoot.style.top = y + "%";
+            this.mat.appendChild(shoot);
+            
+            setTimeout(()=>{
+                shoot.classList.remove('firstPhase');
+                shoot.classList.add("secondPhase");
+                x -= Math.random()*20 + 10;
+                y += Math.random()*50 + 20;
+                shoot.style.left = x + "%";
+                shoot.style.top = y + "%";
+                shoot.style.transform = `rotate(${Math.random()*20 + 35}deg)`;
+            },400);
+
+            setTimeout(()=>{
+               shoot.remove();
+            },1500);
+        }
+
+        moveBg02_activateGimic_1 () {
+            this.gimmickWorking = 1;
+            const target = this.duel.field[Math.floor(Math.random()*this.duel.field.length)];
+            this.duel.writeMessage(`そらから　りゅうせいが　らくちゃくしてきた！`);
+
+            const starFall = document.createElement("div");
+            starFall.classList.add('duelBg_02__fallenStar');
+            starFall.style.top = `${45 + Math.floor(Math.random()*10)}%`;
+            starFall.style.left = (Math.random()*60 + 20) +"%";
+            starFall.style.transform = `translate(${(Math.random()* 300) * -1 }%, ${(3000) * -1 }%)`;
+            this.mat.append(starFall);
+
+            setTimeout(()=>{
+                starFall.classList.add('animating');
+                starFall.style.transform = `translate(0,0)`;
+            },29);
+
+            setTimeout(()=>{
+                this.duel.shakeScreen(0,target);
+                this.gimmickWorking = 0;
+                if(Math.random()*(3.2 - (0.12 * this.duel.field.length)) <= 1) {
+                    let fallDamage = Math.floor(Math.random()*219) + 80;
+                    if(Math.random()*1.5 <= 1) {
+                        if(
+                            target.stats.shielding.type === "shield" && 
+                            target.stats.shielding.duration>0
+                        ){
+                            target.stats.shielding.duration = 1;
+                        }
+                        popsmesh(this.duel.duelScreen, [target.charPos[0], target.charPos[1] - 30]);
+                        this.duel.writeBreakdown(`SMEEEEEEEESH!!`);
+                        fallDamage *= 3;
+                    }
+                    target.takeDamage(fallDamage, "physical", true);
+                }
+            },1000);
+
+            if(Math.random()*3 <= 1) {
+                const lag = Math.floor(Math.random()*60000) + 1500;
+                setTimeout(()=>{
+                    if(this.duel.gameFlag===1){
+                        this.duel.writeMessage(`とつぜん　りゅうせいが　ばくはつした！`);
+                        starFall.classList.add('bursting');
+                        starFall.style.transform = `scale(4)`;
+                        starFall.style.opacity = `0`;
+                        this.duel.shakeScreen(0, target);
+
+                        setTimeout(()=>{
+                            const burstTarget =
+                            this.duel.field[
+                                Math.floor(Math.random()*this.duel.field.length)
+                            ];
+                            if(burstTarget) {
+                                this.duel.field.filter(
+                                    f => f.stats.iff === burstTarget.stats.iff
+                                ).forEach(char =>
+                                    {
+                                        char.takeDamage(Math.floor(Math.random()*219) + 80, "physical", true);   
+                                    }
+                                );
+                            }
+                            starFall.remove();
+                        },1000);
+                    }
+                },lag);
             }
         }
     }
@@ -1515,7 +1593,7 @@
         dmgInd.style.left = target[0]+"px";
         dmgInd.style.top = byGimic ?  target[1] - 35 +"px" : target[1]+"px";
         duelScreen.appendChild(dmgInd);
-        setTimeout(()=>{dmgInd.remove();}, 1000);
+        setTimeout(()=>{dmgInd.remove();}, 1500);
     }
 
     /* Pop Smeeesh */
@@ -1527,7 +1605,7 @@
         smesh.style.left = target[0]+"px";
         smesh.style.top = target[1] - 30 +"px";
         duelScreen.appendChild(smesh);
-        setTimeout(()=>{smesh.remove();}, 1000);
+        setTimeout(()=>{smesh.remove();}, 1500);
     }
 
     /* Flash Screen */

@@ -440,9 +440,17 @@ main {
 .damage-smesh {
     position: absolute;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 20px;
+    color: transparent;
+    background: linear-gradient(-77deg,
+    #eb6a00 0%,
+    #ff3415 100%
+    );
+    background-clip: text;
+    overflow: hidden;
     transform: translate(-50%, 0);
     animation: damageIndiSpan 0.7s 1 linear forwards;
+    filter: drop-shadow(0 0 1px #4d4d4d) drop-shadow(0 0 1px #4d4d4d) drop-shadow(0 0 1px #4d4d4d);
     z-index: 4;
 }
 
@@ -479,8 +487,7 @@ main {
 .centralCharContainer {
     position: relative;
     z-index: 2;
-    min-height: 80px;
-    max-height: 200px;
+    height: 200px;
     margin-bottom: 16px;
     overflow-y: auto;
     display: flex;
@@ -493,13 +500,18 @@ main {
     }
 }
 
+.pseudoPipper 
+.centralCharContainer {
+    flex-flow: column;
+}
+
 .centralCharContainer__side0, 
 .centralCharContainer__side1, 
 .centralCharContainer__side2 {
     flex: 1;
 } 
 
-.centralCharContainer__side1 {
+div:not(.pseudoPipper) .centralCharContainer__side1 {
     order: 2;
     
     @media (width <= 768px) {
@@ -992,7 +1004,7 @@ Disappearing Animations
 /* バックグラウンド 02 -- テーマ：アース・フロム・スペース
 --------------------------------------------*/
 .duelBg_02 {
-    background: linear-gradient(34deg, #020262 0%, #202020 100%);
+    background: linear-gradient(358deg, #051748 0%, #020202 100%);
     width: 100%;
     height: 100%;
 }
@@ -1012,12 +1024,38 @@ Disappearing Animations
     left: -50%;
     top: 50%;
     border-radius: 50%;
-    box-shadow: 0 0 15px #139ed3, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF, 0 0 40px #FFFFFF;
-    background:linear-gradient(184deg, #d1edff 0%, #87e8ff 30%, #005fce 80%);
+    box-shadow: 0 0 15px #edf8ff, 0 0 22px #edf8ff, 0 0 30px #4dd7ff, 0 0 40px #FFFFFF, 0 040px #FFFFFF;
+    background: linear-gradient(184deg, #edf8ff 0%, #d3f7ff 21%, #60dbf8 40%, #005fce 80%);
+    overflow: hidden;
+}
+
+.duelBg_02__atlas {
+    position: absolute;
+    mix-blend-mode: overlay;
+    width: 100%;
+    height: 160%;
+    left: 0;
+    top: 0;
+    transform-origin:  center top;
+    transform: scaleY(0.66);
+    background: url(../images/background02_atlas.webp) repeat-x;
+    background-size: 2200px;
+}
+
+.duelBg_02__cloud {
+    position: absolute;
+    mix-blend-mode: overlay;
+    width: 100%;
+    height: 160%;
+    left: 0;
+    top: 0;
+    transform-origin:  center top;
+    transform: scaleY(0.66);
+    background: url(../images/background02_cloudy.png) repeat;
+    background-size: 1200px;
 }
 
 .duelBg_02__board {
-    
     position: absolute;
     width: 90%;
     height: 32px;
@@ -1036,7 +1074,12 @@ Disappearing Animations
     height: 60px;
     border-radius: 50%;
     background: linear-gradient(33deg, #c41f05 0%, #801000 100%);
-    clip-path: polygon(50% 0%, 74% 14%, 86% 34%, 100% 49%, 89% 84%, 61% 92%, 10% 80%, 16% 61%, 7% 29%, 28% 13%);
+}
+
+@supports (clip-path : polygon(50% 0%, 74% 14%, 86% 34%, 100% 49%, 89% 84%, 61% 92%, 10% 80%, 16% 61%, 7% 29%, 28% 13%)) {
+    .duelBg_02__fallenStar {
+        clip-path: polygon(50% 0%, 74% 14%, 86% 34%, 100% 49%, 89% 84%, 61% 92%, 10% 80%, 16% 61%, 7% 29%, 28% 13%);
+    }
 }
 
 .duelBg_02__fallenStar.animating {
@@ -1055,4 +1098,84 @@ Disappearing Animations
 
 .noBgAnimation .duelBg_02__fallenStar {
     transition: none !important;
+}
+
+.moveBg02_shootStar {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #FFFFFF;
+    filter: drop-shadow(0 0 5px #FFFFFF) drop-shadow(0 0 5px #FFFFFF);
+}
+
+.moveBg02_shootStar:before {
+    content: "";
+    left: 0;
+    bottom: -3px;
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #FFFFFF;
+    transform: translateX(-50%) scaleY(0.1) rotate(45deg) ;
+}
+
+.moveBg02_shootStar:after {
+    content: "";
+    left: 0;
+    bottom: -3px;
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #FFFFFF;
+    transform: translateX(-50%) scaleY(0.1) rotate(-45deg);
+}
+
+.moveBg02_shootStar.firstPhase{
+    animation: moveBg02_shootingStarPrimary 0.3s 1 ease-out;
+}
+
+@keyframes moveBg02_shootingStarPrimary {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(1080deg) scale(0.1);
+        opacity: 0;
+    }
+}
+
+.moveBg02_shootStar.secondPhase {
+    opacity: 1;
+    width: 2px;
+    height: 8px;
+    border-radius: 12px;
+    transition: left 1s, top 1s;
+    animation: moveBg02_shootingStarSecondary 1s 1 ease-out forwards;
+}
+
+@keyframes moveBg02_shootingStarSecondary {
+    0% {
+        height: 8px;
+        opacity: 1;
+        margin-left: 0px;
+    }
+    25% {
+        height: 120px;
+        opacity: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    75% {
+        height: 16px;
+        opacity: 0.6;
+        margin-left: 5%;
+    }
+    100% {
+        height: 1px;
+        opacity: 0;
+        margin-left: 7%;
+    }
 }
