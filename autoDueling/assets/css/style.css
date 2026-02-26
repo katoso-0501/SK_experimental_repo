@@ -184,6 +184,8 @@ h1 {
 
 .bgSwitcher,
 .toppings {
+    position: relative;
+    z-index: 1;
     width: 90%;
     margin: 8px auto 0;
     padding: 8px 16px;
@@ -208,6 +210,86 @@ h1 {
     border: 2px solid #FFFFFF;
 }
 
+/*
+Background details
+*/
+.bgSwitcher_details {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    padding: 4px 2px;
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    text-decoration: none;
+    transition: all .4s;
+}
+
+.bgSwitcher_details:hover {
+    background-color: var(--base-bg);
+}
+
+.bgDetailSettingsInner {
+    display: flex;
+    flex-flow: column;
+    gap: 24px;
+    margin: 48px 5% 0;
+
+    @media (width > 768px) {
+        flex-flow: row;
+    }
+}
+
+.bgDetailSettings__list {
+    flex: 1;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    
+    @media (width > 768px) {
+        overflow:visible;
+        display: flex;
+        flex-flow: column;
+        gap: 8px;
+    }
+}
+
+.bgDetailSettings__list li {
+    display: inline-flex;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all .4s;
+    margin-right: 8px;
+    
+    @media (width > 768px) {margin-right: 0;}
+}
+
+.bgDetailSettings__list li:hover {
+    background-color: var(--base-bg);
+}
+
+.bgDetailSettings__main {
+    flex: 3;
+    display: flex;
+    flex-flow: column;
+    gap: 8px;
+
+}
+
+.bgDetailSettingsBgDescription {
+    line-height: 1.5;
+}
+
+/*
+Duel Starters
+*/
 .starterAndMenu {
     position: sticky;
     width: calc(100% - 48px);
@@ -243,9 +325,7 @@ h1 {
         display: none;
     }
 }
-/*
-Duel Starters
-*/
+
 .duel_starter_group {
     display: block;
     padding: 4px 8px 8px 4px;

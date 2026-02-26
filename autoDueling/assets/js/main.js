@@ -62,11 +62,37 @@
     class Background {
         static maximumBgs = 3;
 
+        static backgroundInfo =[
+            {
+                name: "オーソドックス",
+                capacity: 999,
+                hitRateModification: 0,
+                desc: "とくに　かわったしかけも　タネもない　シンプルなはいけい。"
+            },
+            {
+                name: "あくてんこうの たたかい",
+                capacity: 999,
+                hitRateModification: 0,
+                desc: "なぜ　こんなてんきのひに　けっとうをする　シチュエーションがおおいのだろうか。　…これはきいちゃダメなやつ？"
+            },
+            {
+                name: "アース・フロム・スペース",
+                capacity: 10,
+                hitRateModification: -3,
+                desc: "たいきけんがいでの　たたかい。ときおりりゅうせいやら　なにやらがふりそそぐ！　よく「うちゅうなのにこきゅうはだいじょうぶなの？」ときかれるけど　このステージのうえはさんそはっせいそうちがあるから　まったくもんだいはない！…………らしい。",
+            },
+        ];
+
         constructor (duel, bgSettings) {
             this.duel = duel;
             this.bgSettings = bgSettings;
             this.stageCapacity = 999;
             this.gimmickWorking = 0;
+
+            this.duel.parameterModification =
+            {
+                hitRate: Background.backgroundInfo[this.bgSettings.bgId].hitRateModification,
+            }
 
             this.mat = document.createElement('div');
             this.mat.classList.add('duelBg');
@@ -1674,7 +1700,8 @@
     // Normal Bash
     function normalBashFunc (attacker, target, duel) {
         let damage = calcDamage(attacker.stats.offense, target.stats.defense);
-        const chanceOfMiss = attacker.stats.ailments.crying ? 1.65 : 16;
+        let chanceOfMiss = attacker.stats.ailments.crying ? 1.65 : 16;
+        chanceOfMiss += (duel.parameterModification.hitRate * 0.6);
 
         if(target instanceof LeadChar) {
             target.recognize('opponentSleeping', 0);
@@ -1855,28 +1882,33 @@
     
     const duelMain = [];
 
-    /* Back Ground Settings */
+    /* ************************** 
+    Back Ground Settings 
+    ************************** */
     const bgSwitcher = document.querySelector('.bgSwitcher_input');
     bgSwitcher.addEventListener('change', ()=>{
-        const bgNo = parseInt(bgSwitcher.value);
-        if(bgNo === -1) {
-            document.querySelector('.bgLabel').textContent = "ランダム"
-        }
-        if(bgNo === 0) {
-            document.querySelector('.bgLabel').textContent = "オーソドックス"
-        }
-        if(bgNo === 1) {
-            document.querySelector('.bgLabel').textContent = "らくらい"
-        }
-        if(bgNo === 2) {
-            document.querySelector('.bgLabel').textContent = "アース・フロム・スペース"
+        let bgNo = parseInt(bgSwitcher.value);
+        
+        if(bgNo >= Background.maximumBgs || bgNo <= -2) {
+            bgSwitcher.value = bgNo = -1;
         }
 
-        if(bgNo >= Background.maximumBgs || bgNo <= -2) {
-            bgSwitcher.value = -1;
-            document.querySelector('.bgLabel').textContent = "ランダム";
+        if(bgNo === -1) {
+            document.querySelector('.bgLabel').textContent = "ランダム"
+        } else {
+            document.querySelector('.bgLabel').textContent = `${Background.backgroundInfo[bgNo].name}`;
         }
+
+        earnBgDetail(bgNo);
     });
+    
+    function earnBgDetail(bgno) {
+        document.querySelector('.bgDetailSettingsBgTitle').textContent = Background.backgroundInfo[bgno].name;
+        document.querySelector('.bgDetailSettingsBgCapacity').innerHTML = `ていいん: <span>${Background.backgroundInfo[bgno].capacity}</span>`;
+        document.querySelector('.bgDetailSettingsBgDescription').innerHTML = Background.backgroundInfo[bgno].desc;
+    }
+
+    earnBgDetail(0);
 
     function setBg (bgNo) {
         if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1 && parseInt(bgNo) >= -1) {
@@ -1885,6 +1917,25 @@
             return -1;
         }
     }
+
+    document.querySelector('.bgSwitcher_details').addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector('.bgDetailSettings').classList.add('expanded');
+    });
+    Background.backgroundInfo.forEach( (bg, index) => {
+        const listContainer = document.querySelector('.bgDetailSettings__list');
+        const item = document.createElement('li');
+        item.classList.add('bgDetailSettings__listItem');
+        item.textContent = bg.name;
+
+        item.addEventListener('click', () => {
+            bgSwitcher.value = index;
+            earnBgDetail(index);
+            // document.querySelector('.bgDetailSettings').classList.remove('expanded');
+        });
+
+        listContainer.appendChild(item);
+    })
 
     document.querySelectorAll('.toppings input').forEach(item => {
         item.addEventListener('change', e => {
@@ -2146,7 +2197,9 @@
     l[3].src = "./assets/images/background01_part01_seamless.webp";
     l.forEach(k => {
         k.addEventListener('load', ()=>{
-            console.log("Picture is ready");
+            k.style.position ="absolute";
+            k.style.top = "0";
+            k.style.left = "0";
             hab.appendChild(k);
         });
     });
