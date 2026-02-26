@@ -109,74 +109,11 @@
             }
 
             if(this.bgSettings.bgId === 1) {
-                this.mat.classList.add('duelBg_01');
-                this.gimmickWorking = 0;
-                setTimeout(()=>{
-                    this.moveBg01();
-                }, 1000);
+                this.initBg01();
             }
 
             if(this.bgSettings.bgId === 2) {
-                this.gapFromCentre = 0;
-                this.calculateGapFromCentre();
-                
-                this.stageCapacity = 10;
-                this.mat.classList.add('duelBg_02');
-                for (let i = 0; i< 155; i++) {
-                    let xy = [Math.random()*100, Math.random()*67];
-                    const s = document.createElement('div');
-                    s.classList.add("duelBg_02__star");
-                    s.style.transform = `scale(${Math.random()*1 + 0.6})`;
-                    s.style.left = xy[0] + "%";
-                    s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 5)}px)`;
-                    this.mat.appendChild(s);
-
-                    window.addEventListener("scroll",()=>{
-                        if(
-                            !(document.querySelector('.bgAnimationDisabler').checked)
-                            &&
-                            !(this.duel.duelScreen.classList.contains("pseudoPipper"))
-                        ) {
-                            s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 4.5)}px)`;
-                        } else {
-                            s.style.top = xy[1] + "%";
-                        }
-                    });
-                }
-                const planet = document.createElement('div');
-                planet.classList.add('duelBg_02__planet');
-
-                const atlas = document.createElement('div');
-                atlas.classList.add('duelBg_02__atlas');
-                atlas.style.backgroundPosition = `${Math.random()*200}% ${Math.random()*40}%`;
-                planet.appendChild(atlas);
-
-                const cloud = document.createElement('div');
-                cloud.classList.add('duelBg_02__cloud');
-                planet.appendChild(cloud);
-
-                this.mat.appendChild(planet);
-                window.addEventListener("scroll",()=>{
-                    if(
-                            !(document.querySelector('.bgAnimationDisabler').checked)
-                            &&
-                            !(this.duel.duelScreen.classList.contains("pseudoPipper"))
-                        ) {
-                        planet.style.top = `calc(50% + ${(this.gapFromCentre / 5) * -1}px)`;
-                    } else {
-                        planet.style.top = `50%`;
-                    }
-                });
-
-                const board = document.createElement('div');
-                board.classList.add('duelBg_02__board');
-                this.mat.appendChild(board);
-
-                setTimeout(()=>{
-                    if(this.duel.field.length <= 10) {
-                        this.moveBg02();
-                    }
-                },1000);
+                this.initBg02();
             }
         }
 
@@ -186,6 +123,14 @@
 
                 window.requestAnimationFrame(this.calculateGapFromCentre.bind(this));
             }
+        }
+
+        initBg01 () {
+            this.mat.classList.add('duelBg_01');
+            this.gimmickWorking = 0;
+            setTimeout(()=>{
+                this.moveBg01();
+            }, 1000);
         }
 
         moveBg01 () {
@@ -231,6 +176,75 @@
                 this.moveBg02();
                 this.duel.seekTurn();
             },2000);
+        }
+        
+        initBg02 () {
+            
+                this.gapFromCentre = 0;
+                this.calculateGapFromCentre();
+                
+                this.stageCapacity = 10;
+                this.mat.classList.add('duelBg_02');
+
+                const starBoard = document.createElement('div');
+                starBoard.classList.add('duelBg_02__starBoard');
+                this.mat.appendChild(starBoard);
+                for (let i = 0; i< 155; i++) {
+                    let xy = [Math.random()*100, Math.random()*67];
+                    const s = document.createElement('div');
+                    s.classList.add("duelBg_02__star");
+                    s.style.transform = `scale(${Math.random()*1 + 0.6})`;
+                    s.style.left = xy[0] + "%";
+                    s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 5)}px)`;
+                    starBoard.appendChild(s);
+                }
+                
+                window.addEventListener("scroll",()=>{
+                    if(
+                        !(document.querySelector('.bgAnimationDisabler').checked)
+                        &&
+                        !(this.duel.duelScreen.classList.contains("pseudoPipper"))
+                    ) {
+                        starBoard.style.top = `${(this.gapFromCentre / 5)}px`;
+                    } else {
+                        starBoard.style.top = "0px";
+                    }
+                });
+
+                const planet = document.createElement('div');
+                planet.classList.add('duelBg_02__planet');
+
+                const atlas = document.createElement('div');
+                atlas.classList.add('duelBg_02__atlas');
+                atlas.style.backgroundPosition = `${Math.random()*200}% ${Math.random()*40}%`;
+                planet.appendChild(atlas);
+
+                const cloud = document.createElement('div');
+                cloud.classList.add('duelBg_02__cloud');
+                planet.appendChild(cloud);
+
+                this.mat.appendChild(planet);
+                window.addEventListener("scroll",()=>{
+                    if(
+                            !(document.querySelector('.bgAnimationDisabler').checked)
+                            &&
+                            !(this.duel.duelScreen.classList.contains("pseudoPipper"))
+                        ) {
+                        planet.style.top = `calc(50% + ${(this.gapFromCentre / 5) * -1}px)`;
+                    } else {
+                        planet.style.top = `50%`;
+                    }
+                });
+
+                const board = document.createElement('div');
+                board.classList.add('duelBg_02__board');
+                this.mat.appendChild(board);
+
+                setTimeout(()=>{
+                    if(this.duel.field.length <= 10) {
+                        this.moveBg02();
+                    }
+                },1000);
         }
 
         moveBg02 () {
@@ -1643,6 +1657,7 @@
         setTimeout(()=>{flasher.remove();}, 1000);
     }
 
+    /* Duel Outcome Notify */
     function duelOutcomeNotify (msg, duelScreenPosition, isPipped = 0) {
         const vport = [window.scrollY, window.scrollY + window.innerHeight];
         if(
@@ -1697,7 +1712,7 @@
         "ラルフ",
     ];
 
-    // Normal Bash
+    /* Normal Bash */
     function normalBashFunc (attacker, target, duel) {
         let damage = calcDamage(attacker.stats.offense, target.stats.defense);
         let chanceOfMiss = attacker.stats.ailments.crying ? 1.65 : 16;
@@ -1885,38 +1900,47 @@
     /* ************************** 
     Back Ground Settings 
     ************************** */
-    const bgSwitcher = document.querySelector('.bgSwitcher_input');
-    bgSwitcher.addEventListener('change', ()=>{
-        let bgNo = parseInt(bgSwitcher.value);
-        
-        if(bgNo >= Background.maximumBgs || bgNo <= -2) {
-            bgSwitcher.value = bgNo = -1;
-        }
+    let bgNo = 0;
+
+    document.querySelector('.bgPrev').addEventListener('click', () => {
+        bgNo --;
+        if(bgNo <= -2) bgNo = Background.maximumBgs - 1;
 
         if(bgNo === -1) {
             document.querySelector('.bgLabel').textContent = "ランダム"
         } else {
             document.querySelector('.bgLabel').textContent = `${Background.backgroundInfo[bgNo].name}`;
         }
+        earnBgDetail(bgNo);
+    });
 
+    document.querySelector('.bgNext').addEventListener('click', () => {
+        bgNo ++;
+        if(bgNo >= Background.maximumBgs) bgNo = -1;
+
+        if(bgNo === -1) {
+            document.querySelector('.bgLabel').textContent = "ランダム"
+        } else {
+            document.querySelector('.bgLabel').textContent = `${Background.backgroundInfo[bgNo].name}`;
+        }
+        console.log(bgNo);
         earnBgDetail(bgNo);
     });
     
     function earnBgDetail(bgno) {
-        document.querySelector('.bgDetailSettingsBgTitle').textContent = Background.backgroundInfo[bgno].name;
-        document.querySelector('.bgDetailSettingsBgCapacity').innerHTML = `ていいん: <span>${Background.backgroundInfo[bgno].capacity}</span>`;
-        document.querySelector('.bgDetailSettingsBgDescription').innerHTML = Background.backgroundInfo[bgno].desc;
-    }
+        if(bgNo >= 0) {
+            document.querySelector('.bgDetailSettingsBgTitle').innerHTML = Background.backgroundInfo[bgno].name;
+            document.querySelector('.bgDetailSettingsBgCapacity').innerHTML = `ていいん: <span>${Background.backgroundInfo[bgno].capacity}</span>`;
 
-    earnBgDetail(0);
-
-    function setBg (bgNo) {
-        if(typeof bgNo === "string" && parseInt(bgNo) <= Background.maximumBgs - 1 && parseInt(bgNo) >= -1) {
-            return parseInt(bgNo);
-        } else {
-            return -1;
+            if(Background.backgroundInfo[bgNo].hitRateModification !== 0) {
+                document.querySelector('.bgDetailSettingsBgCapacity').innerHTML += `<br >めいちゅうほせい: ${Background.backgroundInfo[bgno].hitRateModification > 0 ? "+" : ""}${Background.backgroundInfo[bgno].hitRateModification}`;
+            }
+            
+            document.querySelector('.bgDetailSettingsBgDescription').innerHTML = Background.backgroundInfo[bgno].desc;
         }
     }
+    earnBgDetail(0);
+
 
     document.querySelector('.bgSwitcher_details').addEventListener('click', e => {
         e.preventDefault();
@@ -1927,11 +1951,10 @@
         const item = document.createElement('li');
         item.classList.add('bgDetailSettings__listItem');
         item.textContent = bg.name;
-
         item.addEventListener('click', () => {
-            bgSwitcher.value = index;
+            bgNo = index;
+            document.querySelector('.bgLabel').textContent = `${Background.backgroundInfo[index].name}`;
             earnBgDetail(index);
-            // document.querySelector('.bgDetailSettings').classList.remove('expanded');
         });
 
         listContainer.appendChild(item);
@@ -1980,31 +2003,31 @@
 
     /* Duel starters */
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : setBg(bgSwitcher.value)});
+        const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : bgNo});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : setBg(bgSwitcher.value)});
+        const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : bgNo});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : setBg(bgSwitcher.value)});
+        const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : bgNo});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.suddenDeath').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : setBg(bgSwitcher.value)});
+        const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : bgNo});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.poisonRelying').addEventListener('click', ()=>{
-        const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : setBg(bgSwitcher.value)});
+        const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : bgNo});
         duelMain.push(a);
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
