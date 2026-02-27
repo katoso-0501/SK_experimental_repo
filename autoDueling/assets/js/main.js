@@ -269,7 +269,7 @@
 
         moveBg02_shootStar () {
             let x = Math.random()*100;
-            let y = Math.random()*15;
+            let y = Math.random()*55;
             const shoot = document.createElement("div");
             shoot.classList.add('moveBg02_shootStar');
             shoot.classList.add('firstPhase');
@@ -835,7 +835,7 @@
             }
             this.windowMain.remove();
             // setTimeout(()=>{
-            if(this.actable){
+            if(this.actable && this.duel.orders.indexOf(this) >= 0){
                 this.duel.orders.splice(this.duel.orders.indexOf(this),1);
             }
             this.duel.field.splice(this.duel.field.indexOf(this),1);
@@ -1291,7 +1291,6 @@
                 }
             }
             
-
             this.orders = [];
             this.charA = this.field[0];
             this.charB = this.field[1];
