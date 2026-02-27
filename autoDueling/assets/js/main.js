@@ -418,6 +418,7 @@
         defineStatusIndi () {
             this.windowMain = document.createElement("div");
             this.windowMain.classList.add("subChar");
+            
             this.windowMain.textContent = `${this.stats.charName}`;
             if(this.stats.iff === 0) {
                 this.duel.sides[0].appendChild(this.windowMain);
@@ -444,9 +445,29 @@
                     }
                     windo.style.top = this.duel.duelScreen.offsetTop + this.duel.centralCharContainer.offsetTop - windo.offsetHeight - 10 + "px";
                     scopeStats();
-                    
                 }
-                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],]);
+
+                const b = function () {
+                    if(this.duel.gameFlag){
+                        this.stats.hp = this.stats.mhp;
+                        this.stats.tp = this.stats.mtp;
+                        Object.entries(this.stats.ailments).forEach(n =>{
+                            this.stats.ailments[n[0]] = 0;
+                        });
+                        popDamage("99999", "heal", this.duel.duelScreen, this.charPos);
+                    }
+                }
+                
+                const c = function () {
+                    if(this.duel.gameFlag){
+                        this.stats.hp = 0;
+                        this.stats.tp = 0;
+                        this.stats.reviveEnchanted = 0;
+                        this.takeDamage(99999, "unintelligible", false);
+                    }
+                };
+
+                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],["ぜんかいふくさせる",b.bind(this)],["こうげきする",c.bind(this)]]);
             });
         }
         
@@ -473,14 +494,11 @@
                 this.duel.namesakes.starman++;
             }
         }
-
-        whereAreYou () {
-            return this.duel.field.indexOf(this);
-        }
         
         initAction () {
             this.actionTime = 0;
             this.stats.isDefending = 0;
+            this.duel.currentActingPlayer = this.stats.charName;
             this.windowMain.classList.add("acting");
             if(document.querySelector('.followSubChar').checked && !(this instanceof LeadChar))
             {
@@ -758,6 +776,9 @@
                     this.stats.hp -= dmg;
                 }
                 popDamage(dmg, "damage", this.duel.duelScreen, this.charPos, byGimic);
+            } else if(type==="unintelligible") {
+                this.stats.hp -= 99999;
+                popDamage(99999, "damage", this.duel.duelScreen, this.charPos, byGimic);
             }
             
             if(!(this instanceof LeadChar)) {
@@ -778,6 +799,7 @@
         parallelProgress () {
             this.stats.hpa = this.stats.hp;
             this.stats.tpa = this.stats.tp;
+            
 
             if(this.stats.hp < 0) {
                 this.stats.hp = 0;
@@ -848,7 +870,8 @@
         defineStatusIndi () {
             this.windowMain = document.createElement('div');
             this.windowMain.classList.add('windowMain');
-            this.windowMain.classList.add(`window${this.stats.id}`);
+
+            
             
             this.nameindicator = document.createElement('span');
             this.nameindicator.classList.add('indicator_name');
@@ -881,8 +904,30 @@
                     }
                     windo.style.top = this.duel.duelScreen.offsetTop + this.windowMain.offsetTop - windo.offsetHeight - 10 + "px";
                     scopeStats();
-                }
-                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],]);
+                };
+                
+                const b = function () {
+                    if(this.duel.gameFlag){
+                        this.stats.hp = this.stats.mhp;
+                        this.stats.tp = this.stats.mtp;
+                        this.stats.reviveEnchanted = 1;
+                        Object.entries(this.stats.ailments).forEach(n =>{
+                            this.stats.ailments[n[0]] = 0;
+                        });
+                        popDamage("99999", "heal", this.duel.duelScreen, this.charPos);
+                    }
+                };
+
+                const c = function () {
+                    if(this.duel.gameFlag){
+                        this.stats.hp = 0;
+                        this.stats.tp = 0;
+                        this.stats.reviveEnchanted = 0;
+                        this.takeDamage(99999, "unintelligible", false);
+                    }
+                };
+
+                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],["ぜんかいふくさせる",b.bind(this)],["こうげきする",c.bind(this)]]);
             });
         }
 
@@ -979,6 +1024,7 @@
             this.nameindicator.innerHTML = this.stats.charName;
             this.hpindicator.syncronize(this.stats.hpa);
             this.tpindicator.syncronize(this.stats.tpa);
+            
             
             if(this.stats.hpa < this.stats.hp) {
                 this.stats.hpa++;
@@ -1136,6 +1182,7 @@
             this.messageBox.classList.add('messageContainer');
             this.duelScreen.appendChild(this.messageBox);
             
+            // Central Container
             this.centralCharContainer = document.createElement('div');
             this.centralCharContainer.classList.add('centralCharContainer');
             this.duelScreen.appendChild(this.centralCharContainer);
@@ -1148,9 +1195,17 @@
                 this.sides[i].classList.add("centralCharContainer__side"+i);
                 this.centralCharContainer.appendChild(this.sides[i]);
             }
-
             this.windowContainer = document.createElement('div');
             this.windowContainer.classList.add('windowFlexBox');
+
+            // Turn Sequence Viewer
+            this.turnSequenceViewer = document.createElement('div');
+            this.turnSequenceViewer.classList.add('turnSequenceViewer');
+            this.turnSequenceViewerInner = document.createElement('div');
+            this.turnSequenceViewerInner.classList.add('turnSequenceViewerInner');
+            this.turnSequenceViewer.appendChild(this.turnSequenceViewerInner);
+            this.duelScreen.appendChild(this.turnSequenceViewer);
+
             this.duelScreen.appendChild(this.windowContainer);
             document.querySelector("main").appendChild(this.duelScreen);
 
@@ -1166,6 +1221,7 @@
             this.hitPointSetting = [];
             this.technicalPointSetting = [];
             this.promisedMessage = [];
+            this.currentActingPlayer = "";
 
             /* Character Settings */
             for(let k = 0; k < 2; k++){
@@ -1290,6 +1346,10 @@
                     this.terminate();
                 }
             }
+
+            const f = function () {
+                this.turnSequenceViewer.classList.toggle("expanded");
+            }
             
             const hamburgerer = document.createElement("div");
             hamburgerer.classList.add("duelMenuExpander");
@@ -1297,7 +1357,7 @@
             this.duelMenu.appendChild(hamburgerer);
             
             hamburgerer.addEventListener('click',e=>{
-                toggleMenuDialog(e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)]]);
+                toggleMenuDialog(e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)],["ターン順序を表示",f.bind(this)]]);
             });
 
             this.duelScreen.appendChild(this.duelMenu);
@@ -1344,6 +1404,7 @@
 
         seekTurn () {
             let othersFainted = 0;
+            acquireSequences(this);
             if(this.field.length > this.duelBg.stageCapacity) {
                 othersFainted = 1;
                 this.duelBg.capacityOver02();
@@ -1711,6 +1772,7 @@
         }
     }
 
+    /* Main Character Name */
     const characterNames = [
         "そう",
         "かあさん",
@@ -1878,6 +1940,7 @@
         },
     };
 
+    // Action for other characters (Narazu and Starman)
     const otherCharAction = {
         starman : function (myself, duel) {
             if(Math.random () * 3 >= 1 || duel.totalTurn <= 1) {
@@ -2049,6 +2112,7 @@
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
+    /* Initially-set Parameters */
     const preferredStats = [];
     redefineMainCharPreferredStats();
 
@@ -2226,6 +2290,24 @@
         document.querySelector('.scopingCharDetails').classList.remove('expanded');
     });
 
+    // Acquire Sequences
+    function acquireSequences (duel) {
+        let htmls = "";
+        htmls += duel.totalTurn + "ターン *******************<br >";
+        htmls +=` ${duel.currentActingPlayer}<br>`;
+        duel.orders.forEach(order => {
+            htmls +=`｜ ${order.stats.charName} <br>`;
+        });
+        htmls += "↓";
+        duel.turnSequenceViewerInner.innerHTML = htmls;
+    }
+
+    setInterval(()=>{
+        duelMain.forEach(d => {
+            acquireSequences (d)
+        });
+    },2000);
+
     
     /* ****************************** 
     Codes about context menu dialog 
@@ -2289,8 +2371,17 @@
     if(url !== "http") {
         duelOutcomeNotify("これは ほんばんかんきょう じゃないよ！", [99999, 100000], 0);
     }
-    
+
+    document.querySelector('.duelSettingExpander__bg').addEventListener('click', e => {
+        document.querySelector('.toppings').classList.remove('expanded');
+        document.querySelector('.bgSwitcher').classList.toggle('expanded');
+    });
+    document.querySelector('.duelSettingExpander__topping').addEventListener('click', e => {
+            document.querySelector('.bgSwitcher').classList.remove('expanded');
+        document.querySelector('.toppings').classList.toggle('expanded');
+    });
 }
+
 {
     const hab = document.createElement("div");
     hab.style.opacity = "0";
