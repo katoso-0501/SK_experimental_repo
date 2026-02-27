@@ -64,12 +64,25 @@
                 }
             }
             syncronize (param) {
-                let destParam = param;
-                if(destParam < 0) {
-                    destParam=0;
-                }else if(destParam>9999) {
-                    destParam=9999;
-                }
+                let destParam = Math.max(0, Math.min(9999, param));
+
+                // 各桁の回転量を計算（下の桁の進捗を上の桁に加算する）
+                // const d3 = destParam;                // 1の位
+                // const d2 = destParam / 10;           // 10の位
+                // const d1 = destParam / 100;          // 100の位
+                // const d0 = destParam / 1000;         // 1000の位
+
+                // const values = [d0, d1, d2, d3];
+
+                // this.drumMeters.forEach((meter, i) => {
+                //     meter.style.transform = `translateY(${(values[i] * 120) * -1}px)`;
+                // });
+                // let destParam = param;
+                // if(destParam < 0) {
+                //     destParam=0;
+                // }else if(destParam>9999) {
+                //     destParam=9999;
+                // }
                 this.drumMeters[0].style.transform = 
                 `translateY(${(Math.floor(destParam / 1000) * 120) * -1}px)`;
                 this.drumMeters[1].style.transform = 

@@ -834,12 +834,15 @@
 
             }
             this.windowMain.remove();
+            // setTimeout(()=>{
+            if(this.actable){
+                this.duel.orders.splice(this.duel.orders.indexOf(this),1);
+            }
+            this.duel.field.splice(this.duel.field.indexOf(this),1);
+            acquireSequences(this.duel);
 
+  
             setTimeout(()=>{
-                if(this.actable){
-                    this.duel.orders.splice(this.duel.orders.indexOf(this),1);
-                }
-                this.duel.field.splice(this.duel.field.indexOf(this),1);
                 this.duel.seekTurn();
             },1000);
         }
@@ -870,17 +873,12 @@
         defineStatusIndi () {
             this.windowMain = document.createElement('div');
             this.windowMain.classList.add('windowMain');
-
-            
-            
             this.nameindicator = document.createElement('span');
             this.nameindicator.classList.add('indicator_name');
             this.nameindicator.innerHTML = this.stats.charName;
             this.windowMain.appendChild(this.nameindicator);
-
             this.hpindicator = new DrumMeter(this.windowMain, this.stats.hpa, "HP");
             this.tpindicator = new DrumMeter(this.windowMain, this.stats.tpa, "TP");
-
             this.ailmentIndicator = document.createElement('div');
             this.ailmentIndicator.classList.add("ailmentBalloon");
             this.windowMain.appendChild(this.ailmentIndicator);
@@ -1348,6 +1346,7 @@
             }
 
             const f = function () {
+                acquireSequences(this);
                 this.turnSequenceViewer.classList.toggle("expanded");
             }
             
@@ -1357,7 +1356,15 @@
             this.duelMenu.appendChild(hamburgerer);
             
             hamburgerer.addEventListener('click',e=>{
-                toggleMenuDialog(e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)],["ターン順序を表示",f.bind(this)]]);
+                toggleMenuDialog(
+                    e.clientX, 
+                    e.clientY, 
+                    [
+                        ["ピップする",a.bind(this)],
+                        ["じゅんばんを ひょうじする",f.bind(this)],
+                        ["デュエルを ちゅうしする",d.bind(this)],
+                    ]
+                );
             });
 
             this.duelScreen.appendChild(this.duelMenu);
@@ -1404,7 +1411,6 @@
 
         seekTurn () {
             let othersFainted = 0;
-            acquireSequences(this);
             if(this.field.length > this.duelBg.stageCapacity) {
                 othersFainted = 1;
                 this.duelBg.capacityOver02();
@@ -1482,9 +1488,11 @@
                 if(this.orders[0].actable){
                     this.orders[0].initAction();
                     this.orders.shift();
+                    acquireSequences(this);
                 }else{
                     this.orders.shift();
                     this.seekTurn();
+                    acquireSequences(this);
                 }
             }
         }
@@ -1502,8 +1510,6 @@
             if(this.gameFlag === 1){
                 this.skipper++;
                 if(this.skipper > maximumSkip) {
-                    // this.charA.parallelProgress();
-                    // this.charB.parallelProgress();
                     this.field.forEach(f=>f.parallelProgress());
                     this.skipper = 0;
                 }
@@ -2283,7 +2289,6 @@
             document.querySelector('.scopingCharAilments').textContent = "";
         }
     }
-
     document.querySelector('.scopingCharDetails__close').addEventListener('click', e => {
         e.preventDefault();
         scopingChar = null;
@@ -2292,22 +2297,31 @@
 
     // Acquire Sequences
     function acquireSequences (duel) {
-        let htmls = "";
-        htmls += duel.totalTurn + "ターン *******************<br >";
-        htmls +=` ${duel.currentActingPlayer}<br>`;
+        const turnContainer = duel.turnSequenceViewerInner;
+        turnContainer.innerHTML = "";
+        
+        const turnGroup = document.createElement('div');
+        turnGroup.classList.add('turnSequenceViewer__turnGroup');
+
+        const turnIndi = document.createElement('div');
+        turnIndi.classList.add('turnSequenceViewer__turnIndicator');
+        turnIndi.textContent = `ターン ${duel.totalTurn}`;
+        turnGroup.appendChild(turnIndi);
+
+        const actingPlayer = document.createElement('div');
+        actingPlayer.classList.add('turnSequenceViewer__actingPlayer');
+        actingPlayer.textContent = duel.currentActingPlayer;
+        turnGroup.appendChild(actingPlayer);
+
         duel.orders.forEach(order => {
-            htmls +=`｜ ${order.stats.charName} <br>`;
+            const orderContainer = document.createElement('div');
+            orderContainer.classList.add('turnSequenceViewer__orderContainer');
+            orderContainer.innerHTML = `${order.stats.charName}`;
+            turnGroup.appendChild(orderContainer);
         });
-        htmls += "↓";
-        duel.turnSequenceViewerInner.innerHTML = htmls;
+
+        turnContainer.appendChild(turnGroup);
     }
-
-    setInterval(()=>{
-        duelMain.forEach(d => {
-            acquireSequences (d)
-        });
-    },2000);
-
     
     /* ****************************** 
     Codes about context menu dialog 

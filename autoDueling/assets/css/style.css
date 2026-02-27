@@ -84,7 +84,7 @@ Popup Menu
 .wrapperLeft {
     width: 16%;
     padding: 16px 2%;
-    height: 100%;
+    height: calc(100% - 32px);
     position: fixed;
     background: #202020;
     color: #FFFFFF;
@@ -92,6 +92,8 @@ Popup Menu
     @media (width <= 768px) {
         transition: transform 0.4s;
         padding: 64px 2% 16px;
+        
+        height: calc(100% - 80px);
         width: 76%;
         min-height: 0;
         transform: translateX(-100%);
@@ -154,7 +156,20 @@ Popup Menu
     font-weight: 700;
 }
 
+.duelSettingExpander {
+    /* position: absolute;
+    bottom: 72px;
+    left: 0; */
+    width: 100%;
+    display: flex;
+    margin-top: 32px;
+    gap: 8px;
+    justify-content: center;
+    z-index: 999;
+}
+
 .duelSettingExpander > div {
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -893,25 +908,93 @@ Turn Sequence Viewer
 .turnSequenceViewer {
     z-index: 9;
     position: absolute;
-    left: 8px;
-    top: 92px;
+    left: 0;
+    bottom: 0;
     width: 90%;
     max-width: 320px;
     overflow-y: auto;
     height: calc(100% - 120px);
     box-sizing: border-box;
     pointer-events: none;
+    transform: translateX(-24px);
     opacity: 0;
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    padding: 8px;
+    background: linear-gradient(90deg, #00000080 0%,#00000000 60%);
+    padding: 0 16px;
+    transition: all 0.4s;
 }
 
 .turnSequenceViewer.expanded {
     opacity: 1;
+    transform: translateX(0px);
     pointer-events: all;
 }
 
+.turnSequenceViewerInner {
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.turnSequenceViewerInner:before {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 2px;
+    background-color: #FFFFFF;
+    height: calc(100% - 8px);
+}
+
+.turnSequenceViewerInner:after {
+    content : "";
+    display: block;
+    position: absolute;
+    left: 8px;
+    bottom: -8px;
+    border: 8px solid transparent;
+    border-top-color: #FFFFFF;
+}
+
+.turnSequenceViewer__turnGroup {
+    display: flex;
+    flex-flow: column;
+    gap: 4px;
+    position: relative;
+}
+
+.turnSequenceViewer__turnIndicator {
+    font-size: 14px;
+    border-radius: 8px;
+    width: max-content;
+    padding: 4px 8px;
+    background: #002033;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.turnSequenceViewer__actingPlayer {
+    width: 100%;
+    font-weight: 700;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #204dff;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 8px 4px;
+    margin-bottom: 8px;
+}
+
+.turnSequenceViewer__orderContainer {
+    width: 60%;
+    font-weight: 500;
+    font-size: 13px;
+    background: #05619b;
+    padding: 8px 4px;
+    border-radius: 8px;
+}
+
+/* Breakdown and Close Duel Buttons */
 .showBreakdownBtn,
 .closeDuelBtn {
     position: absolute;
