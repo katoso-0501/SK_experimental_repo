@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <!-- Popup Menu -->
     <div class="popup_menu">
         <ul></ul>
     </div>
@@ -27,6 +28,10 @@
                 <label>
                     <input type="checkbox" class="followSubChar">
                     <span>サブキャラを ついじゅうする</span>
+                </label>
+                <label>
+                    <input type="checkbox" class="applyCloserStats">
+                    <span>ステータスのばらつきを すくなくする</span>
                 </label>
             </div>
 
@@ -126,6 +131,21 @@
             デュエルを しゅとくしています…
         </div>
     </div>
+    
+    <!-- Scoping Char -->
+    <div class="scopingCharDetails">
+        <a href="#" class="scopingCharDetails__close">X</a>
+        <div class="scopingCharDetails__main">
+            <h2 class="scopingCharName">Name</h2>
+            <div class="scopingCharAilments"></div>
+            <p>HP: <span class="scopingCharHp"></span></p>
+            <p>TP: <span class="scopingCharTp"></span></p>
+            <p>オフェンス: <span class="scopingCharOff"></span></p>
+            <p>ディフェンス: <span class="scopingCharDef"></span></p>
+            <p>スピード: <span class="scopingCharAgl"></span></p>
+        </div>
+    </div>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>

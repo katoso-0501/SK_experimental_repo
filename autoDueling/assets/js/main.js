@@ -118,11 +118,12 @@
         }
 
         calculateGapFromCentre () {
-            if(typeof this.duel.duelScreen.offsetHeight !== "undefined") {
+            try {
                 this.gapFromCentre = (this.duel.duelScreen.offsetTop +  (this.duel.duelScreen.offsetHeight / 2)) - (window.scrollY + (window.innerHeight / 2));
-
-                window.requestAnimationFrame(this.calculateGapFromCentre.bind(this));
+            } catch (e) {
+                this.gapFromCentre = 0;
             }
+            window.requestAnimationFrame(this.calculateGapFromCentre.bind(this));
         }
 
         initBg01 () {
@@ -179,7 +180,6 @@
         }
         
         initBg02 () {
-            
                 this.gapFromCentre = 0;
                 this.calculateGapFromCentre();
                 
@@ -194,8 +194,8 @@
                     const s = document.createElement('div');
                     s.classList.add("duelBg_02__star");
                     s.style.transform = `scale(${Math.random()*1 + 0.6})`;
-                    s.style.left = xy[0] + "%";
-                    s.style.top = `calc( ${xy[1]}% + ${(this.gapFromCentre / 5)}px)`;
+                    s.style.left = `${xy[0]}%`;
+                    s.style.top = `${xy[1]}%`;
                     starBoard.appendChild(s);
                 }
                 
@@ -431,11 +431,22 @@
                 this.windowMain.offsetLeft + this.windowMain.offsetWidth / 2,
                 this.windowMain.offsetTop,
             ];
-            this.windowMain.addEventListener('click', ()=>{
-                console.log(
-                    "Stats:",
-                    this.stats
-                );
+            this.windowMain.addEventListener('click', (e)=>{
+                const a = function () {
+                    scopingChar = this;
+                    document.querySelector('.scopingCharDetails').classList.add('expanded');
+                    
+                    const windo = document.querySelector('.scopingCharDetails');
+                    if(window.innerWidth <= 768) {
+                        windo.style.left = "5%";
+                    } else {
+                        windo.style.left = this.duel.duelScreen.offsetLeft + this.duel.centralCharContainer.offsetLeft + (this.duel.centralCharContainer.offsetWidth / 2) - (windo.offsetWidth / 2) + "px";
+                    }
+                    windo.style.top = this.duel.duelScreen.offsetTop + this.duel.centralCharContainer.offsetTop - windo.offsetHeight - 10 + "px";
+                    scopeStats();
+                    
+                }
+                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],]);
             });
         }
         
@@ -857,6 +868,22 @@
             this.seeking = setInterval(()=>{this.seekAilmentState ();}, 2000);
             this.seekAilmentState ();
             this.reductionLagger = 0;
+            
+            this.windowMain.addEventListener('click', (e)=>{
+                const a = function () {
+                    scopingChar = this;
+                    document.querySelector('.scopingCharDetails').classList.add('expanded');
+                    const windo = document.querySelector('.scopingCharDetails');
+                    if(window.innerWidth <= 768 ) {
+                        windo.style.left = "5%";
+                    } else {
+                        windo.style.left = this.duel.duelScreen.offsetLeft + this.windowMain.offsetLeft + "px";
+                    }
+                    windo.style.top = this.duel.duelScreen.offsetTop + this.windowMain.offsetTop - windo.offsetHeight - 10 + "px";
+                    scopeStats();
+                }
+                toggleMenuDialog(e.clientX, e.clientY, [["ステータスを みる",a.bind(this)],]);
+            });
         }
 
         recognize (name, val) {
@@ -1083,10 +1110,6 @@
             this.ailmentJog++;
             if(this.ailmentJog > ailments.length - 1 && ailments.join("-") !== "0-0-0-0-0-0-0"){
                 this.ailmentJog = -1;
-                // console.log(ailments.join("-") !== "0-0-0-0-0-0" ? "Continue" : "End");
-                // if(ailments.join("-") !== "0-0-0-0-0-0") {
-                    // this.seekAilmentState();
-                // }
             }
         }
     }
@@ -1162,36 +1185,26 @@
             }
             this.field = 
             [
-                new LeadChar(this, {
-                iff: 0,
-                coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
-                charName: "",
-                mhp: this.hitPointSetting[0],
-                hp: 0,
-                hpa: 0,
-                tp: 0,
-                mtp: this.technicalPointSetting[0],
-                tpa: 0,
-                isDefending: 0,
-                offense: Math.floor(Math.random()*115) + 140,
-                defense: Math.floor(Math.random()*115) + 140,
-                agl: Math.floor(Math.random()*200) + 10,
-            }),new LeadChar(this, {
-                iff: 1,
-                coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
-                charName: "",
-                mhp: this.hitPointSetting[1],
-                hp: 0,
-                hpa: 0,
-                tp: 0,
-                mtp: this.technicalPointSetting[1],
-                tpa: 0,
-                isDefending: 0,
-                offense: Math.floor(Math.random()*115) + 140,
-                defense: Math.floor(Math.random()*115) + 140,
-                agl: Math.floor(Math.random()*200) + 10,
-            }),
+                new LeadChar(this, preferredStats[0]),new LeadChar(this, preferredStats[1]),
             ];
+            
+            if(this.rules.duelmode === "nomagic") {
+                this.field[0].stats.mtp  = this.field[1].stats.mtp = this.field[0].stats.tpa = this.field[1].stats.tpa = 0;
+            }
+
+            if(this.rules.duelmode === "suddendeath") {
+                this.field[0].stats.mhp = this.field[1].stats.mhp = this.field[0].stats.hpa = this.field[1].stats.hpa = 1;
+                this.field[0].stats.mtp = this.field[1].stats.mtp = this.field[0].stats.tpa = this.field[1].stats.tpa = 0;
+            }
+            
+            if(this.rules.duelmode === "poisonrelying") {
+                this.field[0].stats.mhp = 999;
+                this.field[1].stats.mhp = 999;
+                this.field[0].stats.mtp = 0;
+                this.field[1].stats.mtp = 0;
+                this.field[0].stats.hp = 999;
+                this.field[1].stats.hp = 999;
+            }
 
             if(document.querySelector('.noOfNarazu').value>=1) {
                 for( let i = 0; i< parseInt(document.querySelector('.noOfNarazu').value); i ++){
@@ -1204,7 +1217,7 @@
                             65536
                             : Math.floor(Math.random()*40) + 80,
                             defense: 36,
-                            mhp: Math.floor(Math.random()*440) + 60,
+                            mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*440) + 60,
                             mtp: 0,
                         }));
                     this.field[this.field.length-1].actable = 1;
@@ -1216,7 +1229,7 @@
                     this.field.push(new CharBase(this, {
                         coreName: "starman",
                         iff: Math.floor(Math.random()*4),
-                        mhp: Math.floor(Math.random()*200) + 500,
+                        mhp: this.rules.duelmode === "suddendeath" ? 1 : Math.floor(Math.random()*200) + 500,
                         agl: Math.floor(Math.random()*40) + 80,
                         mtp: 1000
                     }));
@@ -1284,7 +1297,7 @@
             this.duelMenu.appendChild(hamburgerer);
             
             hamburgerer.addEventListener('click',e=>{
-                toggleMenuDialog(0, e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)]]);
+                toggleMenuDialog(e.clientX, e.clientY, [["ピップする",a.bind(this)],["デュエルを ちゅうしする",d.bind(this)]]);
             });
 
             this.duelScreen.appendChild(this.duelMenu);
@@ -1941,7 +1954,6 @@
     }
     earnBgDetail(0);
 
-
     document.querySelector('.bgSwitcher_details').addEventListener('click', e => {
         e.preventDefault();
         document.querySelector('.bgDetailSettings').classList.add('expanded');
@@ -1967,7 +1979,7 @@
             } else if(parseInt(e.target.value) > 99) {
                 e.target.value = "99";
             }
-        })
+        });
     })
 
     /* Left-side Menu */
@@ -2005,35 +2017,90 @@
     document.querySelector('.normalDuelBtn').addEventListener('click', ()=>{
         const a = new Duel({duelmode: "normal", japanname: "ふつうのデュエル", background : bgNo});
         duelMain.push(a);
+        redefineMainCharPreferredStats();
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.noMagDuelBtn').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "nomagic", japanname: "PSIなしデュエル", background : bgNo});
         duelMain.push(a);
+        redefineMainCharPreferredStats();
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.withReviveBtn').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "withrevive", japanname: "リヴァイブつき", background : bgNo});
         duelMain.push(a);
+        redefineMainCharPreferredStats();
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.suddenDeath').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "suddendeath", japanname: "サドンデス", background : bgNo});
         duelMain.push(a);
+        redefineMainCharPreferredStats();
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
     document.querySelector('.poisonRelying').addEventListener('click', ()=>{
         const a = new Duel({duelmode : "poisonrelying", japanname: "どくまかせ！？", background : bgNo});
         duelMain.push(a);
+        redefineMainCharPreferredStats();
         setTimeout(()=>{a.seekTurn();}, 1000);
     });
 
+    const preferredStats = [];
+    redefineMainCharPreferredStats();
 
-    // Frame-skip settings
+    function redefineMainCharPreferredStats () {
+        if(preferredStats.length > 0) {
+            preferredStats.splice(0, preferredStats.length);
+        }
+
+        const a = [{
+            iff: 0,
+            coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
+            charName: "",
+            mhp: Math.floor(Math.random()*520) + 350,
+            hp: 0,
+            hpa: 0,
+            tp: 0,
+            mtp: Math.floor(Math.random()*500) + 250,
+            tpa: 0,
+            isDefending: 0,
+            offense: Math.floor(Math.random()*115) + 140,
+            defense: Math.floor(Math.random()*115) + 140,
+            agl: Math.floor(Math.random()*200) + 10,
+        },
+        {
+            iff: 1,
+            coreName : characterNames[Math.floor(Math.random()*characterNames.length)],
+            charName: "",
+            mhp: Math.floor(Math.random()*520) + 350,
+            hp: 0,
+            hpa: 0,
+            tp: 0,
+            mtp: Math.floor(Math.random()*500) + 250,
+            tpa: 0,
+            isDefending: 0,
+            offense: Math.floor(Math.random()*115) + 140,
+            defense: Math.floor(Math.random()*115) + 140,
+            agl: Math.floor(Math.random()*200) + 10,
+        }
+        ];
+        if(document.querySelector('.applyCloserStats').checked) {
+            a[1].mhp = a[0].mhp + (Math.floor(Math.random()*200) - 100);
+            a[1].mtp = a[0].mtp + (Math.floor(Math.random()*100) - 50);
+        }
+        preferredStats.push(...a);
+    }
+    document.querySelector('.applyCloserStats').addEventListener('change', e => {
+        redefineMainCharPreferredStats();
+    });
+
+    /* ****************************** 
+     Frame-skip settings
+     ****************************** */
     let fps = 0;
     let maximumSkip = 0;
     const f = function(){
@@ -2052,7 +2119,7 @@
     document.querySelectorAll('.overlayCloser').forEach(x=>{
         x.addEventListener('click', e=>{
             e.preventDefault();
-            document.querySelectorAll('.overlay').forEach(f=>f.classList.remove('expanded'));
+            document.querySelectorAll('.overlay').forEach(f=>f.classList.remove('expanded'));scopingChar = null;
         });
     });
 
@@ -2131,18 +2198,44 @@
         }
     }
 
+    // Scoping stats
+    let scopingChar = null;
+    function scopeStats () {
+        try {
+            const stats = scopingChar.stats;
+            const statsPrefix = `${stats.ailments.asleep ? "ねむっている " : ""}${stats.ailments.poisoned ? "どく " : ""}${stats.ailments.crying ? "なみだがとまらない " : ""}${stats.ailments.paralysed ? "まひ " : ""}${stats.ailments.silenced ? "PSIふういん " : ""}${stats.ailments.strange ? "へんになっている " : ""}`;
+
+            document.querySelector('.scopingCharName').textContent = stats.charName;
+            document.querySelector('.scopingCharAilments').textContent = statsPrefix;
+            document.querySelector('.scopingCharHp').textContent = `${stats.hp} / ${stats.mhp}`;
+            document.querySelector('.scopingCharTp').textContent = `${stats.tp} / ${stats.mtp}`;
+            document.querySelector('.scopingCharOff').textContent = `${stats.offense}`;
+            document.querySelector('.scopingCharDef').textContent = `${stats.defense}`;
+            document.querySelector('.scopingCharAgl').textContent = `${stats.agl}`;
+        
+
+            setTimeout(scopeStats,1000);
+        } catch (e) {
+            document.querySelector('.scopingCharAilments').textContent = "";
+        }
+    }
+
+    document.querySelector('.scopingCharDetails__close').addEventListener('click', e => {
+        e.preventDefault();
+        scopingChar = null;
+        document.querySelector('.scopingCharDetails').classList.remove('expanded');
+    });
+
     
     /* ****************************** 
     Codes about context menu dialog 
     ****************************** */
     const menu = document.querySelector('.popup_menu');
-    function toggleMenuDialog (charID, x, y, actions = []) {
+    function toggleMenuDialog (x, y, actions = []) {
         const actionsArray = [];
         document.querySelectorAll('.popup_menu li').forEach(f=>f.remove());
         if(actions.length > 0){
-            actions.forEach(action => {
-                actionsArray.push(action);
-            });
+            actions.forEach(action => {actionsArray.push(action);});
         }
 
         actionsArray.forEach(list => {
@@ -2184,7 +2277,9 @@
     document.addEventListener('click', e => {
         if(
             !e.target.classList.contains("popup_menu") &&
-            !e.target.classList.contains("duelMenuExpander") 
+            !e.target.classList.contains("duelMenuExpander") &&
+            !e.target.classList.contains("subChar") && 
+            !e.target.classList.contains("windowMain")
         ) {
             document.querySelector('.popup_menu').classList.remove("expanded");
         }
