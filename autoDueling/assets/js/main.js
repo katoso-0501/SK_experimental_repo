@@ -163,7 +163,7 @@
         }
 
         capacityOver02 () {
-            this.duel.writeMessage(`この ステージには 10たいしかのれない！`);
+            this.duel.writeMessage(`この ステージには ${this.stageCapacity}たい しかのれない！`);
             setTimeout(()=>{
                 for (let i = this.duel.field.length; i > this.stageCapacity; i --) {
                     const toFall = this.duel.field.filter( k => k.stats.id >= 3);
@@ -216,7 +216,7 @@
 
                 const atlas = document.createElement('div');
                 atlas.classList.add('duelBg_02__atlas');
-                atlas.style.backgroundPosition = `${Math.random()*200}% ${Math.random()*40}%`;
+                atlas.style.backgroundPosition = `${Math.random()*4000}px ${(Math.random()*600) * -1}px`;
                 planet.appendChild(atlas);
 
                 const cloud = document.createElement('div');
@@ -435,13 +435,14 @@
             this.windowMain.addEventListener('click', (e)=>{
                 const a = function () {
                     scopingChar = this;
-                    document.querySelector('.scopingCharDetails').classList.add('expanded');
-                    
                     const windo = document.querySelector('.scopingCharDetails');
+                    
+                    windo.classList.add('expanded');
+                    
                     if(window.innerWidth <= 768) {
                         windo.style.left = "5%";
                     } else {
-                        windo.style.left = this.duel.duelScreen.offsetLeft + this.duel.centralCharContainer.offsetLeft + (this.duel.centralCharContainer.offsetWidth / 2) - (windo.offsetWidth / 2) + "px";
+                        windo.style.left = this.duel.duelScreen.offsetLeft + this.windowMain.parentNode.offsetLeft + (this.windowMain.parentNode.offsetWidth / 2) - (windo.offsetWidth / 2) + "px";
                     }
                     windo.style.top = this.duel.duelScreen.offsetTop + this.duel.centralCharContainer.offsetTop - windo.offsetHeight - 10 + "px";
                     scopeStats();
@@ -893,8 +894,8 @@
             this.windowMain.addEventListener('click', (e)=>{
                 const a = function () {
                     scopingChar = this;
-                    document.querySelector('.scopingCharDetails').classList.add('expanded');
                     const windo = document.querySelector('.scopingCharDetails');
+                    windo.classList.add('expanded');
                     if(window.innerWidth <= 768 ) {
                         windo.style.left = "5%";
                     } else {
@@ -1610,7 +1611,9 @@
             if(this.gameFlag === 1){
                 this.terminate();
             }
-
+            document.querySelector('.scopingCharDetails').classList.remove('expanded');
+            document.querySelector('.scopingCharDetails').style.left = "0";
+            document.querySelector('.scopingCharDetails').style.top = "0";
             if(this.duelScreen.classList.contains("pseudoPipper")) {
                 document.querySelector('.duelPippingIndicator').remove();
             }
