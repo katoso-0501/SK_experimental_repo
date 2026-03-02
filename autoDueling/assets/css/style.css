@@ -157,11 +157,9 @@ Popup Menu
 }
 
 .duelSettingExpander {
-    /* position: absolute;
-    bottom: 72px;
-    left: 0; */
     width: 100%;
     display: flex;
+    flex-flow: column;
     margin-top: 32px;
     gap: 8px;
     justify-content: center;
@@ -169,15 +167,21 @@ Popup Menu
 }
 
 .duelSettingExpander > div {
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 8px;
+    padding: 8px 8px;
     font-size: 14px;
+    border-radius: 8px;
     border: 2px solid #FFFFFF;
     color: #FFFFFF;
+    transition: 0.4s;
     cursor: pointer;
+}
+
+.duelSettingExpander > div:hover {
+    background-color: var(--base-bg);
+    border-color: var(--base-bg);
 }
 
 .wrapperRight {
@@ -634,6 +638,37 @@ main {
     font-weight: 700;
 }
 
+.duelMenuExpander {
+    cursor: pointer;
+    height: 18px;
+    width: 24px;
+    position: relative;
+}
+
+.duelMenuExpander  div:nth-child(1),
+.duelMenuExpander  div:nth-child(2),
+.duelMenuExpander  div:nth-child(3) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.duelMenuExpander  div:nth-child(2)
+{
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.duelMenuExpander  div:nth-child(3) {
+    top: 100%;
+    transform: translateY(-100%);
+}
+
 .damage-indicator {
     position: absolute;
     text-shadow: 0 0 7px #34343488;
@@ -896,6 +931,11 @@ div:not(.pseudoPipper) .centralCharContainer__side1 {
     background: url(../images/ailment_icon_strange.webp) center center no-repeat ;
     background-size: contain;
 }
+.ailmentBalloon.fire::after {
+    content: "fire";
+    background: url(../images/ailment_icon_fire.webp) center center no-repeat ;
+    background-size: contain;
+}
 .ailmentBalloon.revive::after {
     content: "revive";
     background: url(../images/ailment_icon_revive.webp) center center no-repeat ;
@@ -934,7 +974,15 @@ Turn Sequence Viewer
     padding-bottom: 24px;
 }
 
-.turnSequenceViewerInner:before {
+.turnSequenceViewer__turnGroup {
+    display: flex;
+    flex-flow: column;
+    gap: 4px;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.turnSequenceViewer__turnGroup:before {
     content : "";
     display: block;
     position: absolute;
@@ -943,9 +991,10 @@ Turn Sequence Viewer
     width: 2px;
     background-color: #FFFFFF;
     height: calc(100% - 8px);
+    z-index: -1;
 }
 
-.turnSequenceViewerInner:after {
+.turnSequenceViewer__turnGroup:after {
     content : "";
     display: block;
     position: absolute;
@@ -953,14 +1002,9 @@ Turn Sequence Viewer
     bottom: -8px;
     border: 8px solid transparent;
     border-top-color: #FFFFFF;
+    z-index: -1;
 }
 
-.turnSequenceViewer__turnGroup {
-    display: flex;
-    flex-flow: column;
-    gap: 4px;
-    position: relative;
-}
 
 .turnSequenceViewer__turnIndicator {
     font-size: 14px;
