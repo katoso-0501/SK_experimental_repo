@@ -1005,6 +1005,33 @@ Turn Sequence Viewer
     z-index: -1;
 }
 
+.turnSequenceViewer__orderCloseBtn {
+    display: block;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+.turnSequenceViewer__orderCloseBtn:before,
+.turnSequenceViewer__orderCloseBtn:after  {
+    content: "";
+    position: absolute;
+    width: 13px;
+    left: 2px;
+    top: 8px;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.turnSequenceViewer__orderCloseBtn:after {
+    transform: rotate(-45deg);
+}
 
 .turnSequenceViewer__turnIndicator {
     font-size: 14px;
@@ -1030,6 +1057,7 @@ Turn Sequence Viewer
 }
 
 .turnSequenceViewer__orderContainer {
+    position: relative;
     width: 60%;
     font-weight: 500;
     font-size: 13px;
